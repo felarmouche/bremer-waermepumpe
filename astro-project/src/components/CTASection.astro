@@ -1,0 +1,25 @@
+---
+interface Props {
+    headline: string;
+    text?: string;
+    primaryCTA: { label: string; href: string };
+    secondaryCTA?: { label: string; href: string };
+    variant?: "default" | "highlight";
+}
+const { headline, text, primaryCTA, secondaryCTA, variant = "default" } = Astro.props;
+
+const bgClass = variant === "highlight" ? "bg-highlight" : "bg-surface-alt";
+---
+
+<section class:list={[bgClass, "py-16 md:py-24 lg:py-32"]}>
+    <div class="max-w-2xl mx-auto px-4 sm:px-6 text-center">
+        <h2 class="text-2xl md:text-3xl font-bold tracking-tight text-text">{headline}</h2>
+        {text && <p class="text-text-muted mt-4 leading-relaxed">{text}</p>}
+        <div class="flex flex-col sm:flex-row justify-center gap-4 mt-10">
+            <a href={primaryCTA.href} class="btn-accent">{primaryCTA.label}</a>
+            {secondaryCTA && (
+                <a href={secondaryCTA.href} class="btn-secondary">{secondaryCTA.label}</a>
+            )}
+        </div>
+    </div>
+</section>

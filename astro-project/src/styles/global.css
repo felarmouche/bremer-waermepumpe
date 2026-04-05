@@ -1,0 +1,175 @@
+@import "tailwindcss";
+
+/*
+  =========================================================
+  Global design system for a brutal-minimal heat pump site
+  =========================================================
+
+  How to use this palette:
+  - background: default page background
+  - surface: cards, forms, white content blocks
+  - surface-alt: alternating sections, subtle contrast areas
+  - text: main headings and body emphasis
+  - text-muted: secondary copy, descriptions, metadata
+  - border: default borders, inputs, dividers
+  - border-strong: stronger borders, focus frames, important separators
+  - primary: brand green for identity elements
+  - primary-hover: hover state for primary brand elements
+  - accent: main CTA color for conversion actions
+  - accent-hover: hover state for CTA buttons
+  - highlight: subtle success/info background panels
+*/
+
+@theme {
+  /* Page backgrounds */
+  --color-background: #FFFFFF; /* Main site background */
+  --color-surface: #F7F7F3; /* Cards, forms, content boxes */
+  --color-surface-alt: #F0F1EC; /* Alternate sections / subtle contrast */
+
+  /* Text */
+  --color-text: #1C1F1A; /* Main headings, strong body text */
+  --color-text-muted: #5C6258; /* Supporting text, descriptions, labels */
+
+  /* Borders */
+  --color-border: #D9DDD3; /* Default borders, inputs, dividers */
+  --color-border-strong: #AAB2A2; /* Stronger dividers, active outlines */
+
+  /* Brand green */
+  --color-primary: #1B4D3E; /* Brand accents, icons, emphasis */
+  --color-primary-hover: #174734; /* Hover for primary elements */
+
+  /* Conversion green */
+  --color-accent: #ea5600; /* Main CTA buttons */
+  --color-accent-hover: #ea6600; /* CTA hover */
+
+
+
+  /* Utility highlight */
+  --color-highlight: #DCEBDD; /* Success/info backgrounds */
+
+}
+
+/*
+  =========================================================
+  Base styles
+  =========================================================
+*/
+
+:root {
+  color-scheme: light;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: theme(--color-background);
+  color: theme(--color-text);
+  font-feature-settings: "liga" 1, "kern" 1;
+}
+
+/*
+  =========================================================
+  Optional semantic utility classes
+  These are helpful when you want consistent naming in markup
+  =========================================================
+*/
+
+@layer components {
+  /*
+    Use for standard page sections
+    Example:
+    <section class="section-shell">...</section>
+  */
+  .section-shell {
+    @apply bg-background text-text;
+  }
+
+  /*
+    Use for cards, lead forms, trust boxes, quote boxes
+    Example:
+    <div class="surface-card">...</div>
+  */
+  .surface-card {
+    @apply bg-surface border border-border;
+  }
+
+  /*
+    Use for alternating content sections
+    Example:
+    <section class="surface-alt-block">...</section>
+  */
+  .surface-alt-block {
+    @apply bg-surface-alt;
+  }
+
+  /*
+    Use for the main CTA button
+    Example:
+    <a class="btn-accent">Jetzt Angebot anfordern</a>
+  */
+  .btn-accent {
+    @apply inline-flex items-center justify-center bg-accent px-6 py-3 text-sm font-semibold tracking-wide text-white transition-colors hover:bg-accent-hover;
+  }
+
+  /*
+    Use for secondary buttons
+    Example:
+    <a class="btn-secondary">Mehr erfahren</a>
+  */
+  .btn-secondary {
+    @apply inline-flex items-center justify-center border border-border bg-surface px-6 py-3 text-sm font-semibold tracking-wide text-text transition-colors hover:border-border-strong hover:bg-surface-alt;
+  }
+
+  /*
+    Use for brand-colored text emphasis, icons, small labels
+    Avoid using this for long body paragraphs
+  */
+  .text-brand {
+    @apply text-primary;
+  }
+
+  /*
+    Use for trust or info panels
+    Example:
+    <div class="notice-success">Förderung möglich</div>
+  */
+  .notice-success {
+    @apply border border-border bg-highlight text-text;
+  }
+
+  /*
+    Use for form inputs if you want a shared input style
+  */
+  .input-base {
+    @apply w-full border border-border bg-surface px-4 py-3 text-text outline-none transition-colors placeholder:text-text-muted focus:border-border-strong;
+  }
+}
+
+/*
+  =========================================================
+  Usage notes
+  =========================================================
+
+  Good usage:
+  - bg-background for the whole page
+  - bg-surface for forms and cards
+  - bg-surface-alt for alternating sections
+  - text-text for headings and important content
+  - text-text-muted for supporting text
+  - bg-accent for main CTA only
+  - text-primary for icons, checkmarks, small highlights
+
+  Avoid:
+  - using primary/accent green for large body text
+  - making every border green
+  - using accent on too many elements
+  - pure black on pure white everywhere
+  - too many shadow effects
+
+  Best visual rhythm:
+  - mostly neutral layout
+  - green only where it matters
+  - CTA should stand out more than brand accents
+*/

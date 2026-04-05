@@ -1,0 +1,71 @@
+---
+import { Image } from "astro:assets";
+
+interface Props {
+    imageSrc?: ImageMetadata;
+    headline: string;
+    subtext: string;
+    primaryCTA: { label: string; href: string };
+    secondaryCTA?: { label: string; href: string };
+}
+
+const { imageSrc, headline, subtext, primaryCTA, secondaryCTA } = Astro.props;
+---
+
+<section
+    class="relative w-full max-h-[60vh] py-12 flex items-center justify-center text-center overflow-hidden"
+>
+    <div class="absolute inset-0 -z-10 h-full w-full overflow-hidden">
+        <Image
+            src={imageSrc}
+            alt="Wärmepumpe an einem Haus in Bremen"
+            class="h-full w-full object-cover"
+            sizes="(max-width: 768px) 100vw, 50vw"
+            priority
+        />
+    </div>
+    <div
+        class="absolute inset-0 -z-10 h-full w-full bg-gradient-to-t from-black/30 to-black/50"
+    >
+    </div>
+
+    <div
+        class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 bg-primary/70 backdrop:blur-xs"
+    >
+        <div class="mx-auto text-center max-w-4xl py-16">
+            <h1
+                class="text-4xl font-bold leading-tight tracking-tight text-white lg:text-5xl"
+            >
+                {headline}
+            </h1>
+
+            <p
+                class="mt-6 max-w-xl text-center mx-auto text-base leading-7 text-white sm:text-lg sm:leading-8"
+            >
+                {subtext}
+            </p>
+
+            <div
+                class="mt-10 text-center flex flex-col mx-auto justify-center items-center gap-4 sm:flex-row sm:flex-wrap"
+            >
+                <a
+                    href={primaryCTA.href}
+                    class="btn-accent w-full sm:w-auto text-center"
+                >
+                    {primaryCTA.label}
+                </a>
+
+                {
+                    secondaryCTA && (
+                        <a
+                            href={secondaryCTA.href}
+                            class="btn-secondary w-full sm:w-auto text-center"
+                        >
+                            {secondaryCTA.label}
+                        </a>
+                    )
+                }
+            </div>
+        </div>
+    </div>
+</section>

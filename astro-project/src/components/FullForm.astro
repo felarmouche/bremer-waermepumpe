@@ -1,0 +1,101 @@
+---
+interface FormField {
+    name: string;
+    label: string;
+    type: "text" | "email" | "tel" | "select" | "textarea" | "number";
+    placeholder?: string;
+    required?: boolean;
+    options?: { value: string; label: string }[];
+    pattern?: string;
+}
+
+interface Props {
+    formId?: string;
+    submitLabel?: string;
+    fields: FormField[];
+    showCallbackOption?: boolean;
+}
+const {
+    formId = "full-form",
+    submitLabel = "Anfrage senden",
+    fields,
+    showCallbackOption = false,
+} = Astro.props;
+---
+
+<form
+    id={formId}
+    action="#"
+    method="POST"
+    class="surface-card p-6 md:p-8"
+    data-fullform
+>
+    <div class="space-y-4">
+        {fields.map((field) => (
+            <div>
+                <label class="block font-semibold text-sm text-text mb-1" for={`${formId}-${field.name}`}>
+                    {field.label}{field.required && <span class="text-accent ml-1">*</span>}
+                </label>
+                {field.type === "select" ? (
+                    <select
+                        id={`${formId}-${field.name}`}
+                        name={field.name}
+                        required={field.required}
+                        class="input-base"
+                    >
+                        <option value="" disabled selected>{field.placeholder || "Bitte wählen"}</option>
+                        {field.options?.map((opt) => (
+                            <option value={opt.value}>{opt.label}</option>
+                        ))}
+                    </select>
+                ) : field.type === "textarea" ? (
+                    <textarea
+                        id={`${formId}-${field.name}`}
+                        name={field.name}
+                        placeholder={field.placeholder}
+                        required={field.required}
+                        rows={4}
+                        class="input-base"
+                    />
+                ) : (
+                    <input
+                        id={`${formId}-${field.name}`}
+                        type={field.type}
+                        name={field.name}
+                        placeholder={field.placeholder}
+                        required={field.required}
+                        pattern={field.pattern}
+                        class="input-base"
+                    />
+                )}
+            </div>
+        ))}
+
+        {showCallbackOption && (
+            <label class="flex items-center gap-2 text-sm text-text-muted cursor-pointer">
+                <input type="checkbox" name="rueckruf" class="accent-accent" />
+                Ich möchte einen Rückruf
+            </label>
+        )}
+
+        <label class="flex items-start gap-2 text-sm text-text-muted cursor-pointer">
+            <input type="checkbox" required class="mt-1 accent-accent" />
+            <span>Ich stimme der Verarbeitung meiner Daten gemäß der <a href="/datenschutz/" class="underline hover:text-primary">Datenschutzerklärung</a> zu.</span>
+        </label>
+
+        <button type="submit" class="btn-accent w-full md:w-auto">{submitLabel}</button>
+    </div>
+
+    <div class="notice-success p-4 mt-6 hidden" data-form-success>
+        Vielen Dank für Ihre Anfrage! Wir melden uns in Kürze bei Ihnen.
+    </div>
+</form>
+
+<script is:inline>
+    document.querySelectorAll("[data-fullform]").forEach(function (form) {
+        form.addEventListener("submit", function (e) {
+            e.preventDefault();
+            form.querySelector("[data-form-success]")?.classList.remove("hidden");
+        });
+    });
+</script>

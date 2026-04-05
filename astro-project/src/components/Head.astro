@@ -1,0 +1,43 @@
+---
+interface Props {
+    title: string;
+    description: string;
+    canonical?: string;
+}
+const { title, description, canonical } = Astro.props;
+---
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="index, follow" />
+
+<link rel="icon" href="/favicon.ico" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+<title>{title}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:type" content="website" />
+<meta property="og:url" content={canonical} />
+
+<script is:inline type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "Wärme Guru",
+    "description": "Wärmepumpen-Beratung und Installation in Bremen",
+    "url": canonical,
+    "areaServed": {
+        "@type": "City",
+        "name": "Bremen"
+    },
+    "serviceArea": {
+        "@type": "GeoCircle",
+        "geoMidpoint": {
+            "@type": "GeoCoordinates",
+            "latitude": 53.0793,
+            "longitude": 8.8017
+        }
+    }
+})} />

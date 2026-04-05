@@ -1,0 +1,517 @@
+---
+import Layout from "../layout/Layout.astro";
+import HeroSection from "../components/HeroSection.astro";
+import TrustBar from "../components/TrustBar.astro";
+import SectionShell from "../components/SectionShell.astro";
+import ProcessSection from "../components/ProcessSection.astro";
+import FAQSection from "../components/FAQSection.astro";
+import CTASection from "../components/CTASection.astro";
+import heroImage from "../images/foerderung-bremen-hero.webp";
+
+const title = "Wärmepumpe Förderung Bremen – KfW 458, Boni & Eigenanteil";
+const description =
+    "KfW-Förderung bis 70% für Wärmepumpen in Bremen: Basisförderung, Klimabonus, Einkommensbonus. Stand April 2026 – kostenlose Ersteinschätzung anfragen.";
+const canonical = Astro.url.href;
+
+const trustItems = [
+    { text: "Bis zu 70% KfW-Förderung" },
+    { text: "Aktuell: Stand April 2026" },
+    { text: "Antrag vor Umsetzung stellen" },
+    { text: "KfW + BAFA strukturiert erklärt" },
+];
+
+const ratSteps = [
+    {
+        number: 1,
+        title: "Gebäude und Heizsystem prüfen lassen",
+        description:
+            "Welcher Zustand liegt vor? Was muss angepasst werden? Die Ausgangslage entscheidet über Technik und förderfähige Kosten.",
+    },
+    {
+        number: 2,
+        title: "Förderfähigkeit sauber bewerten",
+        description:
+            "Welche Boni greifen bei Ihrer Situation? Welche Kosten sind tatsächlich förderfähig?",
+    },
+    {
+        number: 3,
+        title: "Fachunternehmen oder Experten einbinden",
+        description:
+            "BzA (Bestätigung zum Antrag) durch einen Energieeffizienz-Experten oder zugelassenen Fachbetrieb erstellen lassen.",
+    },
+    {
+        number: 4,
+        title: "Antrag rechtzeitig vor Umsetzung stellen",
+        description:
+            "Erst nach Förderzusage darf die Maßnahme starten. Liefer- oder Leistungsvertrag mit förderkonformer Bedingung vorbereiten.",
+    },
+    {
+        number: 5,
+        title: "Technik, Kosten und Nachweise abstimmen",
+        description:
+            'Saubere Nachweisführung für die Auszahlung sicherstellen. Alle Belege nach Abschluss über „Meine KfW" einreichen.',
+    },
+];
+
+const faqs = [
+    {
+        question: "Wie viel Förderung bekomme ich für eine Wärmepumpe?",
+        answer: "Für förderfähige Wärmepumpen beträgt die Basisförderung 30 %. Dazu können – je nach persönlicher und technischer Ausgangslage – 5 % Effizienzbonus, 20 % Klimageschwindigkeitsbonus und 30 % Einkommensbonus kommen. Insgesamt ist die Förderung auf maximal 70 % der förderfähigen Kosten gedeckelt.",
+    },
+    {
+        question: "Gilt die Förderung auch für Altbauten in Bremen?",
+        answer: "Ja. Voraussetzung ist, dass das Wohngebäude ein Bestandsgebäude ist und der Bauantrag bzw. die Bauanzeige mindestens fünf Jahre zurückliegt. Damit kommen auch viele ältere Häuser in Bremen und Bremerhaven grundsätzlich infrage.",
+    },
+    {
+        question: "Muss ich den Antrag stellen, bevor die Arbeiten beginnen?",
+        answer: "Ja. Vor Beginn der Umsetzung muss der Antrag gestellt werden. Dafür braucht es bereits eine BzA (Bestätigung zum Antrag) und einen passenden Liefer- oder Leistungsvertrag, der an die Förderzusage geknüpft ist. Erst nach Förderzusage sollte die Maßnahme starten.",
+    },
+    {
+        question: "Wo beantrage ich die Förderung?",
+        answer: 'Den Zuschuss für den eigentlichen Heizungstausch beantragen Privatpersonen über das Portal „Meine KfW". Ergänzende Effizienzmaßnahmen wie eine reine Heizungsoptimierung laufen weiterhin über das BAFA.',
+    },
+    {
+        question: "Kann ich zusätzlich eine Energieberatung fördern lassen?",
+        answer: "Ja. Die BAFA-Energieberatung für Wohngebäude wird mit 50 % des förderfähigen Beratungshonorars unterstützt – aktuell bis 650 Euro bei Ein- oder Zweifamilienhäusern und bis 850 Euro bei Wohngebäuden ab drei Wohneinheiten.",
+    },
+];
+---
+
+<Layout title={title} description={description} canonical={canonical}>
+    <HeroSection
+        imageSrc={heroImage}
+        headline="Heizungsförderung in Bremen und Bremerhaven: Zuschüsse für Ihre Wärmepumpe richtig nutzen"
+        subtext="Wer eine alte Heizung ersetzt, kann den Umstieg auf eine moderne Wärmepumpe deutlich günstiger realisieren, als viele Eigentümer vermuten."
+        primaryCTA={{
+            label: "Jetzt in die Warteliste eintragen",
+            href: "/eignungscheck/",
+        }}
+        secondaryCTA={{ label: "Fördercheck starten", href: "/foerdercheck/" }}
+    />
+
+    <TrustBar items={trustItems} />
+
+    {/* Intro + Redaktionshinweis */}
+    <SectionShell>
+        <article class="max-w-3xl">
+            <p class="text-text-muted leading-relaxed">
+                Gerade in Norddeutschland, wo viele Bestandsimmobilien,
+                Reihenhäuser und Altbremer Häuser modernisiert werden, ist die <strong
+                    class="text-text">Förderung für den Heizungstausch</strong
+                > ein zentraler Baustein der Investitionsplanung.
+            </p>
+            <div
+                class="notice-success rounded p-4 mt-6 text-sm leading-relaxed"
+            >
+                <p>
+                    <strong>Hinweis der Redaktion:</strong> Die Förderlandschaft in
+                    Deutschland (Gebäudeenergiegesetz &amp; BEG) unterliegt fortlaufenden
+                    politischen Anpassungen. Die auf dieser Seite genannten Fördersätze,
+                    Bedingungen und Boni beziehen sich auf die offizielle Richtlinie
+                    (<strong>KfW Programm 458</strong>) mit <strong
+                        >Stand April 2026</strong
+                    >. Alle Angaben ohne Gewähr. Eine genaue Prüfung erfolgt vor
+                    Antragstellung durch einen zertifizierten Energieberater.
+                </p>
+            </div>
+            <p class="text-text-muted leading-relaxed mt-6">
+                Für Wohngebäude läuft die Förderung heute im Wesentlichen
+                zweigleisig: Die <strong class="text-text">KfW</strong> fördert den
+                eigentlichen Heizungstausch, also zum Beispiel den Einbau einer neuen
+                förderfähigen Wärmepumpe. Das <strong class="text-text"
+                    >BAFA</strong
+                > fördert ergänzende Maßnahmen, etwa bestimmte Optimierungen an der
+                bestehenden Heiztechnik oder eine geförderte Energieberatung. Wer
+                frühzeitig plant, kann Fördermittel, technische Beratung und Modernisierungsschritte
+                sinnvoll miteinander verbinden.
+            </p>
+        </article>
+    </SectionShell>
+
+    {/* Welche Förderung gibt es */}
+    <SectionShell variant="alt">
+        <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
+            Welche Förderung gibt es für eine Wärmepumpe?
+        </h2>
+        <p class="text-text-muted max-w-3xl mb-8">
+            Für den Austausch einer alten Heizung gegen eine neue,
+            klimafreundliche Heizlösung können Eigentümer bestehender
+            Wohngebäude einen Zuschuss über die <strong class="text-text"
+                >KfW-Heizungsförderung 458</strong
+            > erhalten. Gefördert werden unter anderem elektrisch angetriebene Wärmepumpen
+            sowie bestimmte Umfeldmaßnahmen und Fachplanungsleistungen. Der Zuschuss
+            kann <strong class="text-text"
+                >bis zu 70 % der förderfähigen Kosten</strong
+            > erreichen.
+        </p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div class="surface-card p-5">
+                <div class="text-3xl font-bold text-primary mb-3">30%</div>
+                <h3 class="font-semibold text-text">Basisförderung</h3>
+                <p class="text-text-muted text-sm mt-2">
+                    Die Grundlage für alle förderfähigen Wärmepumpen im Bestand
+                    – wenn technische Anforderungen eingehalten und der Antrag
+                    korrekt gestellt wird.
+                </p>
+            </div>
+            <div class="surface-card p-5">
+                <div class="text-3xl font-bold text-primary mb-3">+20%</div>
+                <h3 class="font-semibold text-text">
+                    Klimageschwindigkeitsbonus
+                </h3>
+                <p class="text-text-muted text-sm mt-2">
+                    Möglich bei Austausch einer Öl-, Kohle-, Gasetagen- oder
+                    Nachtspeicherheizung sowie bei Ersatz einer mindestens 20
+                    Jahre alten Gas- oder Biomasseheizung.
+                </p>
+            </div>
+            <div class="surface-card p-5">
+                <div class="text-3xl font-bold text-primary mb-3">+30%</div>
+                <h3 class="font-semibold text-text">Einkommensbonus</h3>
+                <p class="text-text-muted text-sm mt-2">
+                    Für selbst bewohnte Immobilien mit einem zu versteuernden
+                    Haushaltsjahreseinkommen von maximal 40.000 Euro.
+                </p>
+            </div>
+            <div class="surface-card p-5">
+                <div class="text-3xl font-bold text-primary mb-3">+5%</div>
+                <h3 class="font-semibold text-text">Effizienzbonus</h3>
+                <p class="text-text-muted text-sm mt-2">
+                    Für Wärmepumpen mit natürlichen Kältemitteln oder mit
+                    Wasser, Erdreich oder Abwasser als Wärmequelle – besonders
+                    effiziente Systeme werden zusätzlich begünstigt.
+                </p>
+            </div>
+        </div>
+
+        <div
+            class="bg-highlight border border-border rounded p-5 mt-6 flex flex-col sm:flex-row items-center justify-between gap-4"
+        >
+            <div>
+                <p class="font-bold text-text text-lg">
+                    Maximale Förderung: <span class="text-primary">70%</span>
+                </p>
+                <p class="text-text-muted text-sm mt-0.5">
+                    auf förderfähige Kosten des Heizungstauschs (insgesamt
+                    begrenzt)
+                </p>
+            </div>
+            <a href="/foerdercheck/" class="btn-accent shrink-0"
+                >Fördercheck starten</a
+            >
+        </div>
+    </SectionShell>
+
+    {/* Maximale Förderung */}
+    <SectionShell>
+        <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
+            Wie hoch ist die maximale Förderung?
+        </h2>
+        <p class="text-text-muted max-w-3xl mb-6">
+            Für ein Einfamilienhaus berücksichtigt die KfW grundsätzlich <strong
+                class="text-text">förderfähige Kosten bis 30.000 Euro</strong
+            >. In Mehrfamilienhäusern gelten gestaffelte Obergrenzen:
+        </p>
+        <div
+            class="surface-card overflow-hidden max-w-lg divide-y divide-border"
+        >
+            <div class="flex items-center justify-between px-5 py-4 text-sm">
+                <span class="text-text-muted">Erste Wohneinheit</span>
+                <span class="font-semibold text-text">30.000 €</span>
+            </div>
+            <div class="flex items-center justify-between px-5 py-4 text-sm">
+                <span class="text-text-muted">2. bis 6. Wohneinheit (je)</span>
+                <span class="font-semibold text-text">15.000 €</span>
+            </div>
+            <div class="flex items-center justify-between px-5 py-4 text-sm">
+                <span class="text-text-muted">Ab der 7. Wohneinheit (je)</span>
+                <span class="font-semibold text-text">8.000 €</span>
+            </div>
+            <div
+                class="flex items-center justify-between px-5 py-4 text-sm bg-highlight"
+            >
+                <span class="font-semibold text-text">Maximaler Fördersatz</span
+                >
+                <span class="font-bold text-primary text-base">max. 70%</span>
+            </div>
+        </div>
+        <p class="text-text-muted mt-6 max-w-3xl text-sm leading-relaxed">
+            <em>Für die Praxis heißt das:</em> Nicht nur die Wahl der Wärmepumpe ist
+            entscheidend, sondern auch die Frage, welche Kosten tatsächlich förderfähig
+            sind, welche Boni greifen und ob die Antragstellung sauber vorbereitet
+            wurde. Gerade hier lohnt sich eine strukturierte Förderprüfung vor Vertragsabschluss.
+        </p>
+    </SectionShell>
+
+    {/* Welche Kosten sind förderfähig */}
+    <SectionShell variant="alt">
+        <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
+            Welche Kosten können gefördert werden?
+        </h2>
+        <p class="text-text-muted max-w-3xl mb-6">
+            Förderfähig sind nicht nur Kauf und Einbau der neuen Heizungsanlage.
+            Die KfW berücksichtigt auch:
+        </p>
+        <ul class="space-y-3 max-w-3xl mb-6">
+            <li class="flex items-start gap-3">
+                <span class="text-primary font-bold mt-0.5 shrink-0"
+                    >&#10003;</span
+                >
+                <span class="text-text-muted"
+                    ><strong class="text-text"
+                        >Fachplanung und Baubegleitung</strong
+                    ></span
+                >
+            </li>
+            <li class="flex items-start gap-3">
+                <span class="text-primary font-bold mt-0.5 shrink-0"
+                    >&#10003;</span
+                >
+                <span class="text-text-muted"
+                    ><strong class="text-text">Akustische Fachplanung</strong> (Schallschutz)</span
+                >
+            </li>
+            <li class="flex items-start gap-3">
+                <span class="text-primary font-bold mt-0.5 shrink-0"
+                    >&#10003;</span
+                >
+                <span class="text-text-muted"
+                    ><strong class="text-text"
+                        >Vorbereitende und wiederherstellende Maßnahmen</strong
+                    ></span
+                >
+            </li>
+            <li class="flex items-start gap-3">
+                <span class="text-primary font-bold mt-0.5 shrink-0"
+                    >&#10003;</span
+                >
+                <span class="text-text-muted"
+                    ><strong class="text-text"
+                        >Technisch notwendige Umfeldmaßnahmen</strong
+                    > (z. B. Optimierung des Heizsystems im Zusammenhang mit dem Heizungstausch)</span
+                >
+            </li>
+        </ul>
+        <p class="text-text-muted max-w-3xl text-sm leading-relaxed">
+            Wer etwa in einem Bremer Reihenhaus Leitungswege anpassen,
+            Fundamente vorbereiten oder den Schallschutz sinnvoll lösen muss,
+            sollte diese Punkte frühzeitig mitdenken – sie können ebenfalls
+            förderfähig sein.
+        </p>
+    </SectionShell>
+
+    {/* Voraussetzungen */}
+    <SectionShell>
+        <h2 class="text-2xl md:text-3xl font-bold text-text mb-6">
+            Welche Voraussetzungen müssen erfüllt sein?
+        </h2>
+        <div class="max-w-3xl space-y-4 text-text-muted leading-relaxed">
+            <p>
+                Damit die KfW-Förderung greift, muss es sich um ein <strong
+                    class="text-text">bestehendes Wohngebäude</strong
+                > handeln, dessen Bauantrag oder Bauanzeige <strong
+                    class="text-text">mindestens fünf Jahre</strong
+                > zurückliegt. Außerdem muss der Einbau der neuen Heizungsanlage mit
+                einer Optimierung des Heizungsverteilungssystems verbunden sein (einschließlich
+                hydraulischem Abgleich).
+            </p>
+            <p>
+                Vor dem Antrag brauchen Eigentümer außerdem eine <strong
+                    class="text-text">Bestätigung zum Antrag (BzA)</strong
+                >. Diese wird von einer Energieeffizienz-Expertin bzw. einem
+                Energieeffizienz-Experten oder von einem zugelassenen
+                Fachunternehmen erstellt.
+            </p>
+        </div>
+        <div
+            class="notice-success border-l-4 border-primary rounded p-5 mt-8 max-w-3xl"
+        >
+            <p class="font-semibold text-text mb-1">
+                Wichtig: Reihenfolge beachten
+            </p>
+            <p class="text-text-muted text-sm leading-relaxed">
+                Vor Beginn der Umsetzung muss der Antrag gestellt werden. Dafür
+                braucht es bereits einen Liefer- oder Leistungsvertrag mit <em
+                    >förderkonformer Bedingung</em
+                > (aufschiebende/auflösende Bedingung). <strong
+                    class="text-text"
+                    >Erst nach Förderzusage sollte die Maßnahme gestartet
+                    werden.</strong
+                >
+            </p>
+        </div>
+    </SectionShell>
+
+    {/* Wo beantragen */}
+    <SectionShell variant="alt">
+        <h2 class="text-2xl md:text-3xl font-bold text-text mb-6">
+            Wo wird die Förderung beantragt?
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl">
+            <div class="surface-card p-6">
+                <h3 class="font-semibold text-text mb-2">
+                    KfW – Heizungstausch
+                </h3>
+                <p class="text-text-muted text-sm leading-relaxed">
+                    Den Zuschuss für den Heizungstausch beantragen Eigentümer
+                    über das Kundenportal <strong class="text-text"
+                        >„Meine KfW"</strong
+                    >. Für die Antragstellung wird die BzA-ID aus der
+                    Bestätigung zum Antrag benötigt. Nach Abschluss der Arbeiten
+                    werden die Nachweise dort eingereicht, damit die Auszahlung
+                    erfolgen kann.
+                </p>
+            </div>
+            <div class="surface-card p-6 border-l-4 border-primary">
+                <h3 class="font-semibold text-text mb-2">
+                    BAFA – Ergänzende Maßnahmen
+                </h3>
+                <p class="text-text-muted text-sm leading-relaxed">
+                    Für zusätzliche Maßnahmen außerhalb des eigentlichen
+                    Heizungstauschs – etwa bestimmte Effizienzmaßnahmen oder
+                    Heizungsoptimierung – ist weiterhin das <strong
+                        class="text-text">BAFA</strong
+                    > zuständig.
+                </p>
+            </div>
+        </div>
+        <p
+            class="notice-success rounded p-4 mt-6 text-sm font-medium text-text max-w-3xl"
+        >
+            Merksatz: <strong
+                >Heizungstausch = KfW &nbsp;|&nbsp; Ergänzende Einzelmaßnahmen =
+                BAFA</strong
+            >
+        </p>
+    </SectionShell>
+
+    {/* Ergänzende Maßnahmen + Energieberatung */}
+    <SectionShell>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-4xl">
+            <div>
+                <h2 class="text-xl md:text-2xl font-bold text-text mb-4">
+                    Förderung für ergänzende Maßnahmen
+                </h2>
+                <p class="text-text-muted leading-relaxed text-sm">
+                    Über das BAFA kann weiterhin eine Heizungsoptimierung
+                    gefördert werden. Der <strong class="text-text"
+                        >Grundfördersatz beträgt 15 %</strong
+                    > der förderfähigen Ausgaben. Ist die Maßnahme Teil eines geförderten
+                    individuellen Sanierungsfahrplans (iSFP), kann ein zusätzlicher
+                    Bonus von 5 Prozentpunkten möglich sein.
+                </p>
+                <p class="text-text-muted leading-relaxed text-sm mt-3">
+                    Das ist besonders interessant, wenn Eigentümer ihre
+                    Immobilie Schritt für Schritt modernisieren möchten – etwa
+                    zunächst mit hydraulischem Abgleich, Pumpentausch oder
+                    Heizkörperanpassung und später mit der eigentlichen
+                    Wärmepumpe.
+                </p>
+            </div>
+            <div>
+                <h2 class="text-xl md:text-2xl font-bold text-text mb-4">
+                    Lohnt sich eine Energieberatung?
+                </h2>
+                <p class="text-text-muted leading-relaxed text-sm">
+                    Ja, häufig sogar sehr. Das BAFA fördert die Energieberatung
+                    für Wohngebäude mit <strong class="text-text"
+                        >50 % des förderfähigen Beratungshonorars</strong
+                    > – aktuell bis 650 Euro bei Ein- oder Zweifamilienhäusern und
+                    bis 850 Euro bei Wohngebäuden ab drei Wohneinheiten.
+                </p>
+                <p class="text-text-muted leading-relaxed text-sm mt-3">
+                    Das ist besonders wertvoll, wenn Unsicherheit besteht, ob
+                    das Haus schon fit für eine Wärmepumpe ist, ob zuerst
+                    Heizkörper oder Dämmmaßnahmen sinnvoller wären oder wie die
+                    Fördermittel optimal kombiniert werden können.
+                </p>
+            </div>
+        </div>
+    </SectionShell>
+
+    {/* Für wen */}
+    <SectionShell variant="alt">
+        <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
+            Für wen ist diese Förderung besonders interessant?
+        </h2>
+        <p class="text-text-muted mb-6 max-w-3xl">
+            Die Förderkulisse ist grundsätzlich relevant für:
+        </p>
+        <ul class="space-y-3 max-w-2xl">
+            <li class="flex items-start gap-3">
+                <span class="text-primary font-bold mt-0.5 shrink-0"
+                    >&#10003;</span
+                >
+                <span class="text-text-muted"
+                    >Eigentümer <strong class="text-text"
+                        >selbst genutzter</strong
+                    > Einfamilienhäuser</span
+                >
+            </li>
+            <li class="flex items-start gap-3">
+                <span class="text-primary font-bold mt-0.5 shrink-0"
+                    >&#10003;</span
+                >
+                <span class="text-text-muted"
+                    >Eigentümer <strong class="text-text">vermieteter</strong> Einfamilienhäuser</span
+                >
+            </li>
+            <li class="flex items-start gap-3">
+                <span class="text-primary font-bold mt-0.5 shrink-0"
+                    >&#10003;</span
+                >
+                <span class="text-text-muted"
+                    >Eigentümer von <strong class="text-text"
+                        >Eigentumswohnungen</strong
+                    ></span
+                >
+            </li>
+            <li class="flex items-start gap-3">
+                <span class="text-primary font-bold mt-0.5 shrink-0"
+                    >&#10003;</span
+                >
+                <span class="text-text-muted"
+                    ><strong class="text-text"
+                        >Wohnungseigentümergemeinschaften (WEG)</strong
+                    ></span
+                >
+            </li>
+            <li class="flex items-start gap-3">
+                <span class="text-primary font-bold mt-0.5 shrink-0"
+                    >&#10003;</span
+                >
+                <span class="text-text-muted"
+                    >Eigentümer kleiner und größerer <strong class="text-text"
+                        >Mehrfamilienhäuser</strong
+                    ></span
+                >
+            </li>
+        </ul>
+        <p class="text-text-muted mt-6 max-w-3xl text-sm">
+            Entscheidend ist weniger die Gebäudeform als die saubere technische
+            und förderrechtliche Vorbereitung.
+        </p>
+    </SectionShell>
+
+    {/* Unser Rat – ProcessSection */}
+    <ProcessSection heading="Unser Rat: So gehen Sie vor" steps={ratSteps} />
+
+    {/* CTA */}
+    <CTASection
+        headline="Möchten Sie Ihre individuelle Förderung berechnen lassen?"
+        text="Finden Sie heraus, ob Sie den vollen 70%-Zuschuss für Ihre Immobilie ausschöpfen können. Tragen Sie sich unverbindlich in unsere Warteliste ein – wir vermitteln Ihnen einen Vor-Ort-Check durch einen regionalen Energie-Experten und Fachbetrieb."
+        primaryCTA={{
+            label: "Jetzt in die Warteliste eintragen",
+            href: "/eignungscheck/",
+        }}
+        secondaryCTA={{ label: "Fördercheck starten", href: "/foerdercheck/" }}
+        variant="highlight"
+    />
+
+    {/* FAQ */}
+    <FAQSection
+        heading="FAQ: Die 5 wichtigsten Fragen zur Wärmepumpen-Förderung"
+        items={faqs}
+    />
+</Layout>

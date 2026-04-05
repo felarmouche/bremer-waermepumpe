@@ -1,0 +1,729 @@
+---
+import Layout from "../layout/Layout.astro";
+import HeroSection from "../components/HeroSection.astro";
+import TrustBar from "../components/TrustBar.astro";
+import SectionShell from "../components/SectionShell.astro";
+import ProcessSection from "../components/ProcessSection.astro";
+import FAQSection from "../components/FAQSection.astro";
+import CTASection from "../components/CTASection.astro";
+import heroImage from "../images/heat-pump-bremen-hero.png";
+
+const title = "Wärmepumpe Bremen – Eignung, Kosten & Förderung";
+const description =
+    "Wärmepumpe nachrüsten in Bremen: Eignung prüfen, Kosten verstehen und bis zu 70% Förderung sichern. Kostenlose Ersteinschätzung.";
+const canonical = Astro.url.href;
+
+const trustItems = [
+    { text: "Lokale Beratung in Bremen" },
+    { text: "Kostenfreie Ersteinschätzung" },
+    { text: "Meisterbetrieb" },
+    { text: "Über 200 Projekte realisiert" },
+];
+
+const processSteps = [
+    {
+        number: 1,
+        title: "Gebäude aufnehmen",
+        description:
+            "Haus, Heizsystem, Dämmstandard und Wärmebedarf werden geprüft.",
+    },
+    {
+        number: 2,
+        title: "Eignung bewerten",
+        description:
+            "Es zeigt sich, ob eine Wärmepumpe direkt passt oder Anpassungen nötig sind.",
+    },
+    {
+        number: 3,
+        title: "Passendes System auswählen",
+        description: "Nutzung, Budget und Grundstückssituation entscheiden.",
+    },
+    {
+        number: 4,
+        title: "Förderung prüfen",
+        description: "Klären, welche Förderung möglich ist.",
+    },
+    {
+        number: 5,
+        title: "Installation und Inbetriebnahme",
+        description: "Saubere Einstellung für effizienten Betrieb.",
+    },
+];
+
+const faqs = [
+    {
+        question: "Funktioniert eine Wärmepumpe im Altbau?",
+        answer: "In vielen Fällen ja – aber es hängt von Faktoren wie Dämmstandard, Heizkörpern und Vorlauftemperatur ab. Wir prüfen das individuell für Ihr Haus in Bremen.",
+    },
+    {
+        question: "Geht das auch ohne Fußbodenheizung?",
+        answer: "Ja, eine Wärmepumpe kann auch mit Heizkörpern funktionieren. Entscheidend ist die Vorlauftemperatur. In vielen Bremer Bestandsgebäuden ist das mit optimierten Heizkörpern möglich.",
+    },
+    {
+        question: "Wie laut ist eine Wärmepumpe?",
+        answer: "Moderne Luft-Wasser-Wärmepumpen arbeiten im Bereich von 35–50 dB. Die Aufstellung planen wir so, dass Schallschutzanforderungen eingehalten werden.",
+    },
+    {
+        question: "Was kostet eine Wärmepumpe in Bremen?",
+        answer: "Die Gesamtkosten liegen je nach Objekt typischerweise zwischen 25.000 und 50.000 Euro vor Förderung. Faktoren wie Altbau-Anpassungen beeinflussen den Preis.",
+    },
+    {
+        question: "Welche Förderung gibt es aktuell?",
+        answer: "Über die BEG-Förderung (KfW 458) sind Zuschüsse von bis zu 70 % der förderfähigen Kosten möglich. Die genaue Höhe hängt von Ihrer individuellen Situation ab.",
+    },
+    {
+        question: "Wie läuft die Anfrage ab?",
+        answer: "Sie senden uns Ihre Hausdaten über unser Formular. Wir prüfen die Eignung, schätzen Kosten und Förderung ein und melden uns innerhalb weniger Werktage bei Ihnen.",
+    },
+    {
+        question:
+            "Kann ich eine Wärmepumpe nachrüsten, ohne komplett zu sanieren?",
+        answer: "In vielen Fällen ja. Nicht jedes Haus muss vollständig kernsaniert werden. Oft reichen bereits einzelne Maßnahmen wie der Austausch von Heizkörpern, Verbesserungen an Fenstern oder eine Optimierung des Heizsystems aus.",
+    },
+    {
+        question:
+            "Welche Wärmepumpe ist für ein Reihenhaus am besten geeignet?",
+        answer: "Für viele Reihenhäuser ist die Luft-Wasser-Wärmepumpe die praktikabelste Lösung, weil sie sich meist mit überschaubarem Aufwand nachrüsten lässt. Wichtig sind jedoch Platzverhältnisse, das Schallthema, die Leitungsführung und der tatsächliche Wärmebedarf des Hauses.",
+    },
+    {
+        question: "Ist eine Wärmepumpe im norddeutschen Klima zuverlässig?",
+        answer: "Ja, moderne Wärmepumpen sind grundsätzlich für den ganzjährigen Betrieb ausgelegt. Wichtig ist jedoch eine fachgerechte Planung, die richtige Gerätegröße, ein sinnvoller Aufstellort und eine sauber abgestimmte Installation. Dann arbeitet die Anlage auch unter norddeutschen Wetterbedingungen zuverlässig und effizient.",
+    },
+];
+---
+
+<Layout title={title} description={description} canonical={canonical}>
+    <HeroSection
+        imageSrc={heroImage}
+        headline="Wärmepumpe Bremen: Effizient heizen, modernisieren und Energiekosten senken"
+        subtext="Eine Wärmepumpe ist für viele Hausbesitzer eine zukunftssichere Lösung – von der ersten Einschätzung bis zur Installation."
+        primaryCTA={{
+            label: "Jetzt in die Warteliste eintragen",
+            href: "/eignungscheck/",
+        }}
+        secondaryCTA={{
+            label: "Kosten & Förderung prüfen",
+            href: "/waermepumpe-kosten-foerderung-bremen/",
+        }}
+    />
+
+    <TrustBar items={trustItems} />
+
+    <!-- Intro -->
+    <SectionShell>
+        <article class="max-w-3xl">
+            <p class="text-text leading-relaxed text-base sm:text-lg">
+                Eine <strong>Wärmepumpe in Bremen</strong> ist für viele Hausbesitzer
+                eine zukunftssichere Lösung, um die Heizkosten zu senken und unabhängiger
+                von fossilen Energieträgern zu werden. Gerade in einer Stadt wie Bremen,
+                mit feuchtem Klima, vielen Reihenhäusern, klassischen Altbauten und
+                dicht bebauten Wohngebieten, ist eine gute Planung besonders wichtig.
+                Denn nicht jede Lösung passt zu jedem Gebäude.
+            </p>
+            <p class="text-text-muted leading-relaxed mt-5">
+                Auf diesem unabhängigen Informationsportal erfahren Eigentümer
+                in Bremen und Umgebung, wie sie die passende Wärmepumpe für ihr
+                Haus finden – von der ersten Einschätzung bis zur Vorbereitung
+                auf die Installation. Ob Neubau, sanierter Altbau oder die Frage
+                „<strong>Wärmepumpe nachrüsten Bremen</strong>": Wir zeigen
+                objektiv, worauf es wirklich ankommt.
+            </p>
+        </article>
+    </SectionShell>
+
+    <!-- Warum sich eine WP lohnt -->
+    <SectionShell variant="alt">
+        <h2
+            class="text-2xl md:text-3xl font-bold tracking-tight text-text mb-4"
+        >
+            Warum sich eine Wärmepumpe lohnt
+        </h2>
+        <p class="text-text-muted leading-relaxed max-w-2xl mb-8">
+            Moderne Systeme nutzen kostenlose Umweltenergie aus Luft, Erdreich
+            oder Wasser und wandeln sie in Heizwärme um. Das macht sie zu einer
+            besonders effizienten Heiztechnik für Wohnhäuser.
+        </p>
+        <p class="font-semibold text-text mb-4">Ihre Vorteile im Überblick:</p>
+        <ul class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8 max-w-3xl">
+            {
+                [
+                    "Niedrigere laufende Heizkosten bei guter Planung und passender Auslegung",
+                    "Weniger Abhängigkeit von Gas- und Ölpreisen",
+                    "Klimafreundliche Heizlösung mit deutlich geringeren Emissionen",
+                    "Kombinierbar mit Photovoltaik für noch mehr Eigenverbrauch",
+                    "Hohe Fördermöglichkeiten für Austausch und Modernisierung",
+                    "Wartungsarm im Vergleich zu vielen klassischen Heizsystemen",
+                    "Attraktive Lösung für Sanierung und Neubau",
+                ].map((item) => (
+                    <li class="flex items-start gap-3 text-text-muted text-sm leading-relaxed">
+                        <span class="text-primary font-bold mt-0.5 shrink-0">
+                            ✓
+                        </span>
+                        {item}
+                    </li>
+                ))
+            }
+        </ul>
+        <p class="text-text-muted leading-relaxed max-w-2xl text-sm">
+            Gerade in Bremen spielt der Gebäudebestand eine große Rolle. Viele
+            Häuser sind älter, teilweise modernisiert und haben individuelle
+            Voraussetzungen. Genau deshalb ist eine pauschale Empfehlung selten
+            sinnvoll. Entscheidend ist immer, wie gut Haus, Heizflächen und
+            Wärmebedarf zusammenpassen.
+        </p>
+    </SectionShell>
+
+    <!-- Für welche Gebäude geeignet -->
+    <SectionShell>
+        <h2
+            class="text-2xl md:text-3xl font-bold tracking-tight text-text mb-4"
+        >
+            Für welche Gebäude ist eine Wärmepumpe geeignet?
+        </h2>
+        <p class="text-text leading-relaxed font-medium mb-6">
+            Die kurze Antwort: Für deutlich mehr Häuser, als viele Eigentümer
+            denken.
+        </p>
+        <p class="text-text-muted leading-relaxed mb-6 max-w-2xl">
+            Eine Wärmepumpe funktioniert besonders effizient, wenn sie mit
+            möglichst niedrigen Vorlauftemperaturen arbeiten kann. Das ist ideal
+            bei:
+        </p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8 mb-10">
+            <div>
+                <p
+                    class="font-semibold text-text text-sm mb-3 uppercase tracking-wide"
+                >
+                    Optimale Ausgangsbedingungen
+                </p>
+                <ul class="space-y-2">
+                    {
+                        [
+                            "Fußbodenheizungen",
+                            "Groß dimensionierten Heizkörpern",
+                            "Gut gedämmten Gebäuden",
+                            "Modernisierten Fenstern und Gebäudehüllen",
+                        ].map((item) => (
+                            <li class="flex items-start gap-2 text-text-muted text-sm leading-relaxed">
+                                <span class="text-primary shrink-0 mt-0.5">
+                                    →
+                                </span>
+                                {item}
+                            </li>
+                        ))
+                    }
+                </ul>
+            </div>
+            <div>
+                <p
+                    class="font-semibold text-text text-sm mb-3 uppercase tracking-wide"
+                >
+                    Typische gute Voraussetzungen
+                </p>
+                <ul class="space-y-2">
+                    {
+                        [
+                            "Bereits durchgeführte Sanierungen an Dach, Fassade oder Fenstern",
+                            "Niedriger bis mittlerer Wärmebedarf",
+                            "Ausreichend Platz für Innen- oder Außeneinheit",
+                            "Moderne Heizkörper oder Flächenheizung",
+                            "Bereitschaft zur ganzheitlichen Heizungsmodernisierung",
+                        ].map((item) => (
+                            <li class="flex items-start gap-2 text-text-muted text-sm leading-relaxed">
+                                <span class="text-primary shrink-0 mt-0.5">
+                                    →
+                                </span>
+                                {item}
+                            </li>
+                        ))
+                    }
+                </ul>
+            </div>
+        </div>
+        <p class="text-text-muted leading-relaxed max-w-2xl text-sm">
+            Doch auch in älteren Häusern kann eine Wärmepumpe wirtschaftlich
+            betrieben werden. Wer eine <strong
+                >Wärmepumpe nachrüsten in Bremen</strong
+            > möchte, sollte das Gebäude individuell prüfen lassen. Gerade typische
+            <strong>Bremer Reihenhäuser</strong>, Doppelhaushälften und
+            klassische Altbauten haben oft mehr Potenzial als zunächst vermutet.
+        </p>
+    </SectionShell>
+
+    <!-- Altbau nachrüsten -->
+    <SectionShell variant="alt">
+        <h2
+            class="text-2xl md:text-3xl font-bold tracking-tight text-text mb-4"
+        >
+            Wärmepumpe nachrüsten in Bremen: Was im Altbau wichtig ist
+        </h2>
+        <p class="text-text-muted leading-relaxed mb-4 max-w-2xl">
+            Viele Eigentümer fragen sich, ob sich eine Wärmepumpe im Altbau
+            überhaupt lohnt. Die Antwort lautet: oft ja – wenn die Planung
+            stimmt.
+        </p>
+        <p class="text-text-muted leading-relaxed mb-2 text-sm">
+            In Bremen gibt es zahlreiche ältere Wohnhäuser mit unterschiedlichem
+            energetischem Zustand. Dazu gehören:
+        </p>
+        <ul
+            class="list-disc list-inside space-y-1 mb-8 text-text-muted text-sm"
+        >
+            <li>Klassische Bremer Reihenhäuser</li>
+            <li>Einfamilienhäuser aus den 50er bis 80er Jahren</li>
+            <li>Teilmodernisierte Altbauten</li>
+            <li>Bestandsimmobilien mit begrenztem Platzangebot</li>
+        </ul>
+        <p class="font-semibold text-text mb-6">
+            Diese Punkte sollten vorab geprüft werden:
+        </p>
+        <div class="space-y-5 max-w-2xl">
+            {
+                [
+                    {
+                        title: "Heizlast des Gebäudes",
+                        text: "Wie viel Wärme braucht das Haus tatsächlich? Eine seriöse Planung beginnt nicht mit dem Gerät, sondern mit dem Bedarf.",
+                    },
+                    {
+                        title: "Vorlauftemperatur",
+                        text: "Je niedriger die benötigte Heiztemperatur, desto effizienter arbeitet die Wärmepumpe.",
+                    },
+                    {
+                        title: "Zustand der Gebäudehülle",
+                        text: "Gedämmte Dächer, moderne Fenster und reduzierte Wärmeverluste verbessern die Wirtschaftlichkeit deutlich.",
+                    },
+                    {
+                        title: "Heizkörper und Flächenheizung",
+                        text: "Nicht immer ist sofort eine Fußbodenheizung nötig. Häufig reichen größere oder modernere Heizkörper bereits aus.",
+                    },
+                    {
+                        title: "Platz und Schallschutz",
+                        text: "In dichter bebauten Wohnlagen ist die Positionierung der Außeneinheit besonders wichtig.",
+                    },
+                ].map((block) => (
+                    <div class="border-l-4 border-primary pl-5">
+                        <h3 class="font-semibold text-text mb-1">
+                            {block.title}
+                        </h3>
+                        <p class="text-text-muted text-sm leading-relaxed">
+                            {block.text}
+                        </p>
+                    </div>
+                ))
+            }
+        </div>
+        <p
+            class="mt-8 text-sm text-text-muted leading-relaxed italic max-w-2xl"
+        >
+            Wichtig: Eine Wärmepumpe ist kein Standardprodukt von der Stange.
+            Wer im Bestand modernisiert, sollte mit einem erfahrenen
+            Heizungsbauer in Bremen zusammenarbeiten, der sowohl Technik als
+            auch Gebäudesituation realistisch beurteilt.
+        </p>
+    </SectionShell>
+
+    <!-- Welche Wärmepumpe -->
+    <SectionShell>
+        <h2
+            class="text-2xl md:text-3xl font-bold tracking-tight text-text mb-4"
+        >
+            Welche Wärmepumpe ist sinnvoll?
+        </h2>
+        <p class="text-text-muted leading-relaxed mb-10 max-w-2xl">
+            Nicht jede Wärmequelle passt zu jedem Grundstück. Welche Lösung
+            sinnvoll ist, hängt von Gebäude, Budget, Platz und
+            Genehmigungssituation ab.
+        </p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Luft-Wasser -->
+            <div class="surface-card p-6 flex flex-col">
+                <h3 class="font-bold text-text text-lg mb-2">
+                    Luft-Wasser-Wärmepumpe
+                </h3>
+                <p class="text-text-muted text-sm leading-relaxed mb-6">
+                    Die <strong>Luft-Wasser-Wärmepumpe</strong> ist meist die erste
+                    Wahl. Sie nutzt die Außenluft als Energiequelle und ist vergleichsweise
+                    flexibel planbar.
+                </p>
+                <div class="mt-auto space-y-5">
+                    <div>
+                        <p
+                            class="text-xs font-semibold text-primary uppercase tracking-wide mb-2"
+                        >
+                            Vorteile
+                        </p>
+                        <ul class="space-y-1.5">
+                            {
+                                [
+                                    "Meist geringerer Installationsaufwand",
+                                    "Ideal für viele Bestandsgebäude",
+                                    "Kein großer Eingriff ins Grundstück nötig",
+                                    "Gute Lösung für Reihenhäuser und kleinere Grundstücke",
+                                    "Vergleichsweise schnelle Nachrüstung möglich",
+                                ].map((v) => (
+                                    <li class="flex items-start gap-2 text-text-muted text-xs leading-relaxed">
+                                        <span class="text-primary shrink-0 font-bold">
+                                            ✓
+                                        </span>
+                                        {v}
+                                    </li>
+                                ))
+                            }
+                        </ul>
+                    </div>
+                    <div>
+                        <p
+                            class="text-xs font-semibold text-text-muted uppercase tracking-wide mb-2"
+                        >
+                            Zu beachten
+                        </p>
+                        <ul class="space-y-1.5">
+                            {
+                                [
+                                    "Außengerät muss sinnvoll platziert werden",
+                                    "Schallschutz und Nachbarschaftssituation sind wichtig",
+                                    "Effizienz hängt stark von der Auslegung ab",
+                                ].map((v) => (
+                                    <li class="flex items-start gap-2 text-text-muted text-xs leading-relaxed">
+                                        <span class="shrink-0">!</span>
+                                        {v}
+                                    </li>
+                                ))
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sole-Wasser -->
+            <div class="surface-card p-6 flex flex-col">
+                <h3 class="font-bold text-text text-lg mb-2">
+                    Sole-Wasser-Wärmepumpe
+                </h3>
+                <p class="text-text-muted text-sm leading-relaxed mb-6">
+                    Diese Systeme gewinnen Wärme aus dem Erdreich und arbeiten
+                    sehr effizient. Sie kommen vor allem infrage, wenn
+                    ausreichend Grundstücksfläche vorhanden ist oder geologische
+                    Voraussetzungen passen.
+                </p>
+                <div class="mt-auto space-y-5">
+                    <div>
+                        <p
+                            class="text-xs font-semibold text-primary uppercase tracking-wide mb-2"
+                        >
+                            Vorteile
+                        </p>
+                        <ul class="space-y-1.5">
+                            {
+                                [
+                                    "Sehr gute Effizienz",
+                                    "Konstante Wärmequelle",
+                                    "Niedrige Betriebskosten bei guter Planung",
+                                ].map((v) => (
+                                    <li class="flex items-start gap-2 text-text-muted text-xs leading-relaxed">
+                                        <span class="text-primary shrink-0 font-bold">
+                                            ✓
+                                        </span>
+                                        {v}
+                                    </li>
+                                ))
+                            }
+                        </ul>
+                    </div>
+                    <div>
+                        <p
+                            class="text-xs font-semibold text-text-muted uppercase tracking-wide mb-2"
+                        >
+                            Zu beachten
+                        </p>
+                        <ul class="space-y-1.5">
+                            {
+                                [
+                                    "Höherer Planungs- und Installationsaufwand",
+                                    "Nicht auf jedem Grundstück realisierbar",
+                                    "Oft höhere Anfangsinvestition",
+                                ].map((v) => (
+                                    <li class="flex items-start gap-2 text-text-muted text-xs leading-relaxed">
+                                        <span class="shrink-0">!</span>
+                                        {v}
+                                    </li>
+                                ))
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Grundwasser -->
+            <div class="surface-card p-6 flex flex-col">
+                <h3 class="font-bold text-text text-lg mb-2">
+                    Grundwasser-Wärmepumpe
+                </h3>
+                <p class="text-text-muted text-sm leading-relaxed mb-6">
+                    Eine technisch interessante, aber in der Praxis oft
+                    anspruchsvollere Lösung. Sie bietet hohe Effizienz, ist
+                    jedoch stark von den örtlichen Gegebenheiten abhängig.
+                </p>
+                <div class="mt-auto space-y-5">
+                    <div>
+                        <p
+                            class="text-xs font-semibold text-primary uppercase tracking-wide mb-2"
+                        >
+                            Vorteile
+                        </p>
+                        <ul class="space-y-1.5">
+                            {
+                                [
+                                    "Sehr effiziente Wärmequelle",
+                                    "Niedrige Betriebskosten möglich",
+                                ].map((v) => (
+                                    <li class="flex items-start gap-2 text-text-muted text-xs leading-relaxed">
+                                        <span class="text-primary shrink-0 font-bold">
+                                            ✓
+                                        </span>
+                                        {v}
+                                    </li>
+                                ))
+                            }
+                        </ul>
+                    </div>
+                    <div>
+                        <p
+                            class="text-xs font-semibold text-text-muted uppercase tracking-wide mb-2"
+                        >
+                            Zu beachten
+                        </p>
+                        <ul class="space-y-1.5">
+                            {
+                                [
+                                    "Genehmigungsabhängig",
+                                    "Aufwendigere Planung",
+                                    "Nicht für jedes Grundstück geeignet",
+                                ].map((v) => (
+                                    <li class="flex items-start gap-2 text-text-muted text-xs leading-relaxed">
+                                        <span class="shrink-0">!</span>
+                                        {v}
+                                    </li>
+                                ))
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <p class="mt-8 text-text-muted leading-relaxed text-sm max-w-2xl">
+            Gerade im feuchten Bremer Klima ist eine saubere Planung
+            entscheidend. Moderne Geräte sind für den ganzjährigen Betrieb
+            ausgelegt, doch Qualität und Installation machen im Alltag einen
+            spürbaren Unterschied.
+        </p>
+    </SectionShell>
+
+    <!-- Was kostet -->
+    <SectionShell variant="alt">
+        <h2
+            class="text-2xl md:text-3xl font-bold tracking-tight text-text mb-4"
+        >
+            Was kostet eine Wärmepumpe in Bremen?
+        </h2>
+        <p class="text-text-muted leading-relaxed mb-8 max-w-2xl">
+            Die Kosten hängen stark davon ab, welches System installiert wird,
+            wie aufwendig die Nachrüstung ist und ob zusätzliche Arbeiten nötig
+            sind. Zu den typischen Kostenfaktoren gehören die Auswahl des Typs,
+            eventueller Austausch einzelner Heizkörper, Elektroarbeiten,
+            Fundament und Schallschutzmaßnahmen.
+        </p>
+        <div class="surface-card overflow-hidden max-w-xl">
+            <div class="px-6 pt-5 pb-4 border-b border-border">
+                <p class="font-semibold text-text text-sm">
+                    Beispielrechnung für ein Bremer Reihenhaus (ca. 120 m²,
+                    teilsaniert)
+                </p>
+            </div>
+            <div class="divide-y divide-border text-sm">
+                <div
+                    class="flex justify-between items-start gap-4 px-6 py-4 text-text-muted"
+                >
+                    <span
+                        >Anschaffung & Installation (Luft-Wasser-Wärmepumpe)</span
+                    >
+                    <span class="shrink-0 font-medium tabular-nums"
+                        >ca. 25.000 – 32.000 €</span
+                    >
+                </div>
+                <div
+                    class="flex justify-between items-start gap-4 px-6 py-4 text-text-muted"
+                >
+                    <span
+                        >Abzüglich staatlicher Förderung (z.B. 50 – 70 % über
+                        KfW)</span
+                    >
+                    <span class="shrink-0 font-medium tabular-nums"
+                        >− 15.000 – 22.400 €</span
+                    >
+                </div>
+                <div
+                    class="flex justify-between items-start gap-4 px-6 py-4 bg-highlight font-bold text-text"
+                >
+                    <span>Echter Eigenanteil</span>
+                    <span class="shrink-0 tabular-nums"
+                        >ca. 10.000 – 14.000 €</span
+                    >
+                </div>
+            </div>
+            <p
+                class="px-6 py-4 text-xs text-text-muted italic leading-relaxed border-t border-border"
+            >
+                Hinweis: Dies ist eine grobe Schätzung. Die genauen Kosten
+                müssen durch einen Fachbetrieb individuell berechnet werden.
+            </p>
+        </div>
+        <p class="mt-8 text-text-muted leading-relaxed max-w-2xl text-sm">
+            Gerade bei Bestandsimmobilien sollte nicht nur auf den
+            Anschaffungspreis geschaut werden. Wichtiger sind langfristige
+            Betriebskosten, Lebensdauer und eine möglichst hohe Effizienz im
+            Alltag.
+        </p>
+    </SectionShell>
+
+    <!-- Förderung -->
+    <SectionShell>
+        <h2
+            class="text-2xl md:text-3xl font-bold tracking-tight text-text mb-4"
+        >
+            Förderung für die Wärmepumpe: Welche Zuschüsse möglich sind
+        </h2>
+        <p class="text-text-muted leading-relaxed mb-6 max-w-2xl">
+            Das Thema Förderung ist für viele Eigentümer ein zentraler Punkt.
+            Wer eine alte Heizung ersetzt und auf eine moderne Wärmepumpe
+            umsteigt, kann je nach Ausgangssituation von massiven Zuschüssen
+            (BAFA / KfW) profitieren.
+        </p>
+        <div class="notice-success max-w-2xl mb-6">
+            <p class="font-semibold text-sm mb-3">Wichtig bei der Förderung:</p>
+            <ul class="space-y-2 text-sm">
+                <li class="flex items-start gap-2">
+                    <span class="shrink-0 mt-0.5">•</span>
+                    Förderprogramme können sich ändern
+                </li>
+                <li class="flex items-start gap-2">
+                    <span class="shrink-0 mt-0.5">•</span>
+                    Voraussetzungen müssen <strong>vor Antragstellung</strong> geprüft
+                    werden
+                </li>
+                <li class="flex items-start gap-2">
+                    <span class="shrink-0 mt-0.5">•</span>
+                    Nicht jede Maßnahme ist automatisch förderfähig
+                </li>
+                <li class="flex items-start gap-2">
+                    <span class="shrink-0 mt-0.5">•</span>
+                    Kombinationen mit anderen Sanierungsschritten können sinnvoll
+                    sein
+                </li>
+            </ul>
+        </div>
+        <p class="text-text-muted leading-relaxed max-w-2xl text-sm">
+            Wer eine Wärmepumpe plant, sollte die Förderung nicht nebenbei
+            behandeln. Eine frühzeitige Prüfung kann einen erheblichen
+            finanziellen Unterschied machen.
+        </p>
+    </SectionShell>
+
+    <!-- Bremer Klima -->
+    <SectionShell variant="alt">
+        <h2
+            class="text-2xl md:text-3xl font-bold tracking-tight text-text mb-4"
+        >
+            Wärmepumpe und Bremer Klima: Was regional besonders wichtig ist
+        </h2>
+        <p class="text-text-muted leading-relaxed mb-6 max-w-2xl">
+            Bremen hat ein norddeutsch geprägtes, oft feuchtes und windiges
+            Klima. Das wirkt sich zwar nicht grundsätzlich negativ auf den
+            Einsatz einer Wärmepumpe aus, stellt aber bestimmte Anforderungen an
+            Planung und Montage.
+        </p>
+        <ul class="space-y-4 max-w-2xl">
+            {
+                [
+                    {
+                        lead: "Feuchtigkeit und Witterung:",
+                        text: "Außeneinheiten müssen robust platziert und fachgerecht installiert werden.",
+                    },
+                    {
+                        lead: "Dichte Bebauung:",
+                        text: "In vielen Wohnlagen stehen Häuser nah beieinander. Deshalb sind Schallentwicklung und Standortwahl extrem wichtig.",
+                    },
+                    {
+                        lead: "Reihenhäuser und kleine Grundstücke:",
+                        text: "Hier braucht es clevere Lösungen für Aufstellung und Leitungsführung.",
+                    },
+                    {
+                        lead: "Altbauten mit individuellem Sanierungsstand:",
+                        text: "Eine objektive Bestandsaufnahme ist unverzichtbar.",
+                    },
+                ].map((item) => (
+                    <li class="flex items-start gap-3 text-text-muted text-sm leading-relaxed">
+                        <span class="text-primary shrink-0 mt-0.5">→</span>
+                        <span>
+                            <strong class="text-text">{item.lead}</strong>{" "}
+                            {item.text}
+                        </span>
+                    </li>
+                ))
+            }
+        </ul>
+    </SectionShell>
+
+    <!-- Heizungsbauer -->
+    <SectionShell>
+        <h2
+            class="text-2xl md:text-3xl font-bold tracking-tight text-text mb-4"
+        >
+            Worauf Sie bei einem Heizungsbauer achten sollten
+        </h2>
+        <p class="text-text-muted leading-relaxed max-w-2xl">
+            Wenn Sie eine Wärmepumpe in Bremen planen, ist die Wahl des
+            richtigen Partners entscheidend. Ein guter Fachbetrieb verkauft
+            nicht einfach irgendein Gerät, sondern betrachtet das gesamte
+            Gebäude. Achten Sie auf realistische Einschätzungen im Bestand, eine
+            saubere Heizlastberechnung und Unterstützung bei den
+            Förderformalitäten.
+        </p>
+    </SectionShell>
+
+    <!-- Prozess -->
+    <ProcessSection
+        heading="So läuft die Planung einer Wärmepumpe ab"
+        steps={processSteps}
+    />
+
+    <!-- Für Neubau und Sanierung -->
+    <SectionShell variant="alt">
+        <h2
+            class="text-2xl md:text-3xl font-bold tracking-tight text-text mb-4"
+        >
+            Wärmepumpe Bremen: Für Neubau und Sanierung eine starke Lösung
+        </h2>
+        <p class="text-text-muted leading-relaxed max-w-2xl">
+            Ob Neubau oder Modernisierung – die Wärmepumpe ist für viele Häuser
+            eine wirtschaftlich und technisch überzeugende Heizlösung. Wer heute
+            modernisiert, denkt an die nächsten Jahrzehnte. Genau deshalb lohnt
+            sich eine Lösung, die Energie spart, Fördermöglichkeiten nutzt und
+            langfristig Sicherheit bietet.
+        </p>
+    </SectionShell>
+
+    <!-- CTA -->
+    <CTASection
+        headline="Jetzt Potenzial für Ihr Haus prüfen"
+        text="Sie möchten wissen, wie viel Förderung Ihnen zusteht und ob Ihr Haus (oder Reihenhaus) für eine Wärmepumpe geeignet ist? Tragen Sie sich hier völlig unverbindlich in unsere Warteliste für einen kostenlosen Vor-Ort-Check durch einen regionalen Fachbetrieb ein."
+        primaryCTA={{
+            label: "Jetzt in die Warteliste eintragen",
+            href: "/eignungscheck/",
+        }}
+        variant="highlight"
+    />
+
+    <!-- FAQ -->
+    <FAQSection heading="FAQ: Häufige Fragen zur Wärmepumpe" items={faqs} />
+</Layout>

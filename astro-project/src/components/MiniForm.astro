@@ -1,0 +1,54 @@
+---
+interface Props {
+    formId?: string;
+    submitLabel?: string;
+}
+const { formId = "mini-form", submitLabel = "Jetzt prüfen" } = Astro.props;
+---
+
+<form
+    id={formId}
+    action="#"
+    method="POST"
+    class="surface-card p-6 max-w-md"
+>
+    <p class="font-semibold text-text mb-4">Schnell-Check: Ist Ihr Haus geeignet?</p>
+    <div class="space-y-3">
+        <input
+            type="text"
+            name="plz"
+            placeholder="PLZ"
+            pattern="[0-9]{5}"
+            required
+            class="input-base"
+        />
+        <select name="gebaeudetyp" required class="input-base">
+            <option value="" disabled selected>Gebäudetyp wählen</option>
+            <option value="einfamilienhaus">Einfamilienhaus</option>
+            <option value="reihenhaus">Reihenhaus</option>
+            <option value="doppelhaushaelfte">Doppelhaushälfte</option>
+            <option value="mehrfamilienhaus">Mehrfamilienhaus</option>
+        </select>
+        <input
+            type="text"
+            name="kontakt"
+            placeholder="Telefon oder E-Mail"
+            required
+            class="input-base"
+        />
+        <button type="submit" class="btn-accent w-full">{submitLabel}</button>
+    </div>
+    <p class="text-xs text-text-muted mt-3">Ihre Daten werden vertraulich behandelt.</p>
+    <div class="notice-success p-4 mt-4 hidden" data-form-success>
+        Vielen Dank! Wir melden uns in Kürze bei Ihnen.
+    </div>
+</form>
+
+<script is:inline>
+    document.querySelectorAll("#mini-form").forEach(function (form) {
+        form.addEventListener("submit", function (e) {
+            e.preventDefault();
+            form.querySelector("[data-form-success]")?.classList.remove("hidden");
+        });
+    });
+</script>
