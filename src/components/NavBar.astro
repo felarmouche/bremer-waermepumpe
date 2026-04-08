@@ -1,96 +1,123 @@
 ---
 import { Image } from "astro:assets";
 import logo from "../assets/Logo.png";
+
 const pathname = Astro.url.pathname;
 
 const navLinks = [
-    { href: "/waermepumpe-altbau-bremen/", label: "Altbau" },
-    {
-        href: "/waermepumpe-kosten-foerderung-bremen/",
-        label: "Kosten & Förderung",
-    },
+  { href: "/waermepumpe-altbau-bremen/", label: "Altbau" },
+  {
+    href: "/waermepumpe-kosten-foerderung-bremen/",
+    label: "Kosten & Förderung",
+  },
 ];
 
 function isActive(href: string): boolean {
-    if (href === "/") return pathname === "/" || pathname === "";
-    return pathname.startsWith(href);
+  if (href === "/") return pathname === "/" || pathname === "";
+  return pathname.startsWith(href);
 }
 ---
 
-<div class="flex flex-row items-center justify-between p-4 px-12">
+<div data-header-nav class="flex flex-col">
+  <div class="flex flex-row items-center justify-between px-4 sm:px-6 lg:px-12 py-4 max-w-7xl mx-auto w-full">
     <a
-        href="/"
-        class="text-2xl font-bold text-primary uppercase hover:text-primary-hover transition-colors"
+      href="/"
+      class="text-2xl font-bold text-primary uppercase hover:text-primary-hover transition-colors"
     >
-        <Image
-            src={logo}
-            alt="Bremer Wärmepumpe Logo"
-            class="w-50 h-auto inline-block mr-2"
-            priority
-        />
+      <Image
+        src={logo}
+        alt="Bremer Wärmepumpe Logo"
+        class="w-30 md:w-50 h-auto inline-block mr-2"
+        priority
+      />
     </a>
 
     <button
-        data-nav-toggle
-        class="md:hidden p-2 text-text hover:text-primary transition-colors"
-        aria-label="Menü öffnen"
-        aria-expanded="false"
+      data-nav-toggle
+      class="md:hidden p-2 text-text hover:text-primary transition-colors"
+      aria-label="Menü öffnen"
+      aria-expanded="false"
+      type="button"
     >
-        <svg
-            class="w-6 h-6"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-        >
-            <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M4 6h16M4 12h16M4 18h16"></path>
-        </svg>
+      <svg
+        class="w-6 h-6"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M4 6h16M4 12h16M4 18h16"></path>
+      </svg>
     </button>
 
     <nav class="hidden md:flex items-center gap-6">
-        {
-            navLinks.map((link) => (
-                <a
-                    href={link.href}
-                    class:list={[
-                        "text-sm transition-colors",
-                        isActive(link.href)
-                            ? "text-primary font-semibold"
-                            : "text-text-muted hover:text-text",
-                    ]}
-                >
-                    {link.label}
-                </a>
-            ))
-        }
-        <a href="/eignungscheck/" class="btn-accent text-sm py-2 px-4">
-            Eignung prüfen
-        </a>
+      {
+        navLinks.map((link) => (
+          <a
+            href={link.href}
+            class:list={[
+              "text-sm transition-colors",
+              isActive(link.href)
+                ? "text-primary font-semibold"
+                : "text-text-muted hover:text-text",
+            ]}
+          >
+            {link.label}
+          </a>
+        ))
+      }
+      <a href="/kontakt/" class="btn-accent text-sm py-2 px-4">
+        Jetzt Beratung anfragen
+      </a>
     </nav>
+  </div>
+
+  <nav
+    data-nav-mobile
+    class="overflow-hidden max-h-0 transition-[max-height] duration-300 ease-in-out border-t border-border bg-surface md:hidden"
+  >
+    <div class="flex flex-col p-4 gap-3">
+      {
+        navLinks.map((link) => (
+          <a
+            href={link.href}
+            class:list={[
+              "text-sm transition-colors py-1",
+              isActive(link.href)
+                ? "text-primary font-semibold"
+                : "text-text-muted hover:text-text",
+            ]}
+          >
+            {link.label}
+          </a>
+        ))
+      }
+      <a href="/kontakt/" class="btn-accent text-sm text-center mt-2">
+        Jetzt Beratung anfragen
+      </a>
+    </div>
+  </nav>
 </div>
 
-<nav data-nav-mobile class="hidden border-t border-border bg-surface md:hidden">
-    <div class="flex flex-col p-4 gap-3">
-        {
-            navLinks.map((link) => (
-                <a
-                    href={link.href}
-                    class:list={[
-                        "text-sm transition-colors py-1",
-                        isActive(link.href)
-                            ? "text-primary font-semibold"
-                            : "text-text-muted hover:text-text",
-                    ]}
-                >
-                    {link.label}
-                </a>
-            ))
-        }
-        <a href="/eignungscheck/" class="btn-accent text-sm text-center mt-2">
-            Eignung prüfen
-        </a>
-    </div>
-</nav>
+<script>
+  document.querySelectorAll("[data-header-nav]").forEach((header) => {
+    const button = header.querySelector("[data-nav-toggle]");
+    const mobileNav = header.querySelector("[data-nav-mobile]");
+
+    if (!button || !mobileNav) return;
+
+    button.addEventListener("click", () => {
+      const isOpen = mobileNav.style.maxHeight && mobileNav.style.maxHeight !== "0px";
+      if (isOpen) {
+        mobileNav.style.maxHeight = "0px";
+        button.setAttribute("aria-expanded", "false");
+      } else {
+        mobileNav.style.maxHeight = mobileNav.scrollHeight + "px";
+        button.setAttribute("aria-expanded", "true");
+      }
+    });
+  });
+</script>

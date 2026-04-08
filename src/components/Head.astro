@@ -3,8 +3,11 @@ interface Props {
     title: string;
     description: string;
     canonical?: string;
+    ogImage?: string;
 }
-const { title, description, canonical } = Astro.props;
+const { title, description, canonical, ogImage } = Astro.props;
+const siteUrl = "https://bremer-waermepumpe.de";
+const resolvedOgImage = ogImage ? `${siteUrl}${ogImage}` : `${siteUrl}/og-image.jpg`;
 ---
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -21,13 +24,31 @@ const { title, description, canonical } = Astro.props;
 <meta property="og:description" content={description} />
 <meta property="og:type" content="website" />
 <meta property="og:url" content={canonical} />
+<meta property="og:image" content={resolvedOgImage} />
+<meta property="og:locale" content="de_DE" />
+<meta property="og:site_name" content="Bremer Wärmepumpe" />
 
 <script is:inline type="application/ld+json" set:html={JSON.stringify({
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
     "name": "Wärme Guru",
     "description": "Wärmepumpen-Beratung und Installation in Bremen",
-    "url": canonical,
+    "url": siteUrl,
+    "telephone": "+49 XXXX XXXXXXX",
+    "email": "info@bremer-waermepumpe.de",
+    "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "[Straße und Hausnummer]",
+        "addressLocality": "Bremen",
+        "postalCode": "[PLZ]",
+        "addressRegion": "HB",
+        "addressCountry": "DE"
+    },
+    "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 53.0793,
+        "longitude": 8.8017
+    },
     "areaServed": {
         "@type": "City",
         "name": "Bremen"
@@ -39,5 +60,7 @@ const { title, description, canonical } = Astro.props;
             "latitude": 53.0793,
             "longitude": 8.8017
         }
-    }
+    },
+    "priceRange": "€€",
+    "image": resolvedOgImage
 })} />

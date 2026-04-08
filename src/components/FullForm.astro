@@ -14,21 +14,24 @@ interface Props {
     submitLabel?: string;
     fields: FormField[];
     showCallbackOption?: boolean;
+    formspreeEndpoint?: string;
 }
 const {
     formId = "full-form",
     submitLabel = "Anfrage senden",
     fields,
     showCallbackOption = false,
+    formspreeEndpoint = "https://formspree.io/f/YOUR_FORM_ID",
 } = Astro.props;
 ---
 
 <form
     id={formId}
-    action="#"
+    action={formspreeEndpoint}
     method="POST"
     class="surface-card p-6 md:p-8"
     data-fullform
+    data-endpoint={formspreeEndpoint}
 >
     <div class="space-y-4">
         {fields.map((field) => (
@@ -83,11 +86,14 @@ const {
             <span>Ich stimme der Verarbeitung meiner Daten gemäß der <a href="/datenschutz/" class="underline hover:text-primary">Datenschutzerklärung</a> zu.</span>
         </label>
 
-        <button type="submit" class="btn-accent w-full md:w-auto">{submitLabel}</button>
+        <button type="submit" class="btn-accent w-full md:w-auto" data-submit-btn>{submitLabel}</button>
     </div>
 
-    <div class="notice-success p-4 mt-6 hidden" data-form-success>
+    <div class="notice-success mt-6 hidden" data-form-success>
         Vielen Dank für Ihre Anfrage! Wir melden uns in Kürze bei Ihnen.
+    </div>
+    <div class="notice-error mt-6 hidden" data-form-error>
+        Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut oder kontaktieren Sie uns telefonisch.
     </div>
 </form>
 
@@ -95,7 +101,34 @@ const {
     document.querySelectorAll("[data-fullform]").forEach(function (form) {
         form.addEventListener("submit", function (e) {
             e.preventDefault();
-            form.querySelector("[data-form-success]")?.classList.remove("hidden");
+            var btn = form.querySelector("[data-submit-btn]");
+            var successEl = form.querySelector("[data-form-success]");
+            var errorEl = form.querySelector("[data-form-error]");
+            var endpoint = form.getAttribute("data-endpoint");
+            var originalText = btn.textContent;
+
+            btn.disabled = true;
+            btn.textContent = "Wird gesendet…";
+            successEl.classList.add("hidden");
+            errorEl.classList.add("hidden");
+
+            fetch(endpoint, {
+                method: "POST",
+                body: new FormData(form),
+                headers: { "Accept": "application/json" }
+            }).then(function (response) {
+                if (response.ok) {
+                    successEl.classList.remove("hidden");
+                    form.reset();
+                } else {
+                    errorEl.classList.remove("hidden");
+                }
+            }).catch(function () {
+                errorEl.classList.remove("hidden");
+            }).finally(function () {
+                btn.disabled = false;
+                btn.textContent = originalText;
+            });
         });
     });
 </script>

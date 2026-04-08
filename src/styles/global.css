@@ -92,7 +92,7 @@ body {
     <div class="surface-card">...</div>
   */
   .surface-card {
-    @apply bg-surface border border-border;
+    @apply bg-surface border border-border rounded-lg;
   }
 
   /*
@@ -110,7 +110,7 @@ body {
     <a class="btn-accent">Jetzt Angebot anfordern</a>
   */
   .btn-accent {
-    @apply inline-flex items-center justify-center bg-accent px-6 py-3 text-sm font-semibold tracking-wide text-white transition-colors hover:bg-accent-hover;
+    @apply inline-flex items-center justify-center rounded-md bg-accent px-6 py-3 text-sm font-semibold tracking-wide text-white transition-colors hover:bg-accent-hover;
   }
 
   /*
@@ -119,7 +119,7 @@ body {
     <a class="btn-secondary">Mehr erfahren</a>
   */
   .btn-secondary {
-    @apply inline-flex items-center justify-center border border-border bg-surface px-6 py-3 text-sm font-semibold tracking-wide text-text transition-colors hover:border-border-strong hover:bg-surface-alt;
+    @apply inline-flex items-center justify-center rounded-md border border-border bg-surface px-6 py-3 text-sm font-semibold tracking-wide text-text transition-colors hover:border-border-strong hover:bg-surface-alt;
   }
 
   /*
@@ -136,14 +136,18 @@ body {
     <div class="notice-success">Förderung möglich</div>
   */
   .notice-success {
-    @apply border border-border bg-highlight text-text;
+    @apply border border-border bg-highlight text-text rounded-md p-4;
   }
 
   /*
     Use for form inputs if you want a shared input style
   */
   .input-base {
-    @apply w-full border border-border bg-surface px-4 py-3 text-text outline-none transition-colors placeholder:text-text-muted focus:border-border-strong;
+    @apply w-full rounded-md border border-border bg-surface px-4 py-3 text-text outline-none transition-colors placeholder:text-text-muted focus:border-border-strong;
+  }
+
+  .notice-error {
+    @apply border border-red-200 bg-red-50 text-red-700 rounded-md p-4;
   }
 }
 

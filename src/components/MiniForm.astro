@@ -2,15 +2,22 @@
 interface Props {
     formId?: string;
     submitLabel?: string;
+    formspreeEndpoint?: string;
 }
-const { formId = "mini-form", submitLabel = "Jetzt prüfen" } = Astro.props;
+const {
+    formId = "mini-form",
+    submitLabel = "Jetzt prüfen",
+    formspreeEndpoint = "https://formspree.io/f/YOUR_FORM_ID",
+} = Astro.props;
 ---
 
 <form
     id={formId}
-    action="#"
+    action={formspreeEndpoint}
     method="POST"
     class="surface-card p-6 max-w-md"
+    data-miniform
+    data-endpoint={formspreeEndpoint}
 >
     <p class="font-semibold text-text mb-4">Schnell-Check: Ist Ihr Haus geeignet?</p>
     <div class="space-y-3">
@@ -36,19 +43,49 @@ const { formId = "mini-form", submitLabel = "Jetzt prüfen" } = Astro.props;
             required
             class="input-base"
         />
-        <button type="submit" class="btn-accent w-full">{submitLabel}</button>
+        <button type="submit" class="btn-accent w-full" data-submit-btn>{submitLabel}</button>
     </div>
     <p class="text-xs text-text-muted mt-3">Ihre Daten werden vertraulich behandelt.</p>
-    <div class="notice-success p-4 mt-4 hidden" data-form-success>
+    <div class="notice-success mt-4 hidden" data-form-success>
         Vielen Dank! Wir melden uns in Kürze bei Ihnen.
+    </div>
+    <div class="notice-error mt-4 hidden" data-form-error>
+        Fehler beim Senden. Bitte versuchen Sie es erneut.
     </div>
 </form>
 
 <script is:inline>
-    document.querySelectorAll("#mini-form").forEach(function (form) {
+    document.querySelectorAll("[data-miniform]").forEach(function (form) {
         form.addEventListener("submit", function (e) {
             e.preventDefault();
-            form.querySelector("[data-form-success]")?.classList.remove("hidden");
+            var btn = form.querySelector("[data-submit-btn]");
+            var successEl = form.querySelector("[data-form-success]");
+            var errorEl = form.querySelector("[data-form-error]");
+            var endpoint = form.getAttribute("data-endpoint");
+            var originalText = btn.textContent;
+
+            btn.disabled = true;
+            btn.textContent = "Wird gesendet…";
+            successEl.classList.add("hidden");
+            errorEl.classList.add("hidden");
+
+            fetch(endpoint, {
+                method: "POST",
+                body: new FormData(form),
+                headers: { "Accept": "application/json" }
+            }).then(function (response) {
+                if (response.ok) {
+                    successEl.classList.remove("hidden");
+                    form.reset();
+                } else {
+                    errorEl.classList.remove("hidden");
+                }
+            }).catch(function () {
+                errorEl.classList.remove("hidden");
+            }).finally(function () {
+                btn.disabled = false;
+                btn.textContent = originalText;
+            });
         });
     });
 </script>

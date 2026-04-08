@@ -5,6 +5,7 @@ import TrustBar from "../components/TrustBar.astro";
 import SectionShell from "../components/SectionShell.astro";
 import FAQSection from "../components/FAQSection.astro";
 import CTASection from "../components/CTASection.astro";
+import Breadcrumb from "../components/Breadcrumb.astro";
 import heroImage from "../images/hero-altbau-bremen.webp";
 
 const title = "Wärmepumpe Altbau Bremen – Eignung, Vorlauftemperatur & Kosten";
@@ -45,11 +46,15 @@ const faqs: { question: string; answer: string }[] = [
 ---
 
 <Layout title={title} description={description} canonical={canonical}>
+    <Breadcrumb items={[
+        { label: "Startseite", href: "/" },
+        { label: "Wärmepumpe Altbau Bremen" }
+    ]} />
     <HeroSection
         imageSrc={heroImage}
         headline="Wärmepumpe im Altbau Bremen: Sinnvoll modernisieren statt vorschnell ausschließen"
         subtext="Viele Bremer Altbauten sind besser für eine Wärmepumpe geeignet, als Eigentümer vermuten. Entscheidend ist nicht das Baujahr, sondern die Vorlauftemperatur und saubere Planung."
-        primaryCTA={{ label: "Altbau-Eignung prüfen", href: "/eignungscheck/" }}
+        primaryCTA={{ label: "Jetzt Eignung prüfen", href: "/kontakt/" }}
         secondaryCTA={{
             label: "Kosten & Förderung prüfen",
             href: "/waermepumpe-kosten-foerderung-bremen/",
@@ -346,14 +351,10 @@ const faqs: { question: string; answer: string }[] = [
 
     <CTASection
         headline="Ist Ihr Altbau in Bremen bereit für die Wärmepumpe?"
-        text="Die pauschale Aussage, dass Altbau und Wärmepumpe nicht zusammen passen, ist längst widerlegt. Finden Sie heraus, welches Potenzial in Ihrem Haus, Reihenhaus oder Ihrer Stadtvilla steckt. Wir vermitteln Ihnen einen kostenlosen Vor-Ort-Check durch einen regionalen Energie-Experten."
+        text="Finden Sie heraus, welches Potenzial in Ihrem Haus, Reihenhaus oder Ihrer Stadtvilla steckt. Wir prüfen Eignung, Kosten und Förderung – kostenlos und unverbindlich."
         primaryCTA={{
-            label: "Jetzt Vor-Ort-Check anfragen",
-            href: "/eignungscheck/",
-        }}
-        secondaryCTA={{
-            label: "Kosten & Förderung prüfen",
-            href: "/waermepumpe-kosten-foerderung-bremen/",
+            label: "Jetzt Eignung prüfen",
+            href: "/kontakt/",
         }}
         variant="highlight"
     />

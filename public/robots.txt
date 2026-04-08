@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://bremer-waermepumpe.de/sitemap-index.xml

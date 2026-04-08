@@ -6,6 +6,7 @@ import SectionShell from "../components/SectionShell.astro";
 import ProcessSection from "../components/ProcessSection.astro";
 import FAQSection from "../components/FAQSection.astro";
 import CTASection from "../components/CTASection.astro";
+import Breadcrumb from "../components/Breadcrumb.astro";
 import heroImage from "../images/foerderung-bremen-hero.webp";
 
 const title = "Wärmepumpe Förderung Bremen – KfW 458, Boni & Eigenanteil";
@@ -78,15 +79,18 @@ const faqs = [
 ---
 
 <Layout title={title} description={description} canonical={canonical}>
+    <Breadcrumb items={[
+        { label: "Startseite", href: "/" },
+        { label: "Kosten & Förderung" }
+    ]} />
     <HeroSection
         imageSrc={heroImage}
-        headline="Heizungsförderung in Bremen und Bremerhaven: Zuschüsse für Ihre Wärmepumpe richtig nutzen"
+        headline="Wärmepumpe in Bremen: Kosten, Förderung und realistischer Eigenanteil"
         subtext="Wer eine alte Heizung ersetzt, kann den Umstieg auf eine moderne Wärmepumpe deutlich günstiger realisieren, als viele Eigentümer vermuten."
         primaryCTA={{
-            label: "Jetzt in die Warteliste eintragen",
-            href: "/eignungscheck/",
+            label: "Jetzt Förderung checken",
+            href: "/kontakt/",
         }}
-        secondaryCTA={{ label: "Fördercheck starten", href: "/foerdercheck/" }}
     />
 
     <TrustBar items={trustItems} />
@@ -197,8 +201,8 @@ const faqs = [
                     begrenzt)
                 </p>
             </div>
-            <a href="/foerdercheck/" class="btn-accent shrink-0"
-                >Fördercheck starten</a
+            <a href="/kontakt/" class="btn-accent shrink-0"
+                >Jetzt Förderung checken</a
             >
         </div>
     </SectionShell>
@@ -499,13 +503,12 @@ const faqs = [
 
     {/* CTA */}
     <CTASection
-        headline="Möchten Sie Ihre individuelle Förderung berechnen lassen?"
-        text="Finden Sie heraus, ob Sie den vollen 70%-Zuschuss für Ihre Immobilie ausschöpfen können. Tragen Sie sich unverbindlich in unsere Warteliste ein – wir vermitteln Ihnen einen Vor-Ort-Check durch einen regionalen Energie-Experten und Fachbetrieb."
+        headline="Möchten Sie Ihre individuelle Förderung prüfen lassen?"
+        text="Finden Sie heraus, ob Sie den vollen 70%-Zuschuss für Ihre Immobilie ausschöpfen können. Fordern Sie jetzt eine kostenlose Ersteinschätzung durch einen regionalen Fachbetrieb an."
         primaryCTA={{
-            label: "Jetzt in die Warteliste eintragen",
-            href: "/eignungscheck/",
+            label: "Jetzt Förderung checken",
+            href: "/kontakt/",
         }}
-        secondaryCTA={{ label: "Fördercheck starten", href: "/foerdercheck/" }}
         variant="highlight"
     />
 
