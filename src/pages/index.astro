@@ -8,16 +8,16 @@ import FAQSection from "../components/FAQSection.astro";
 import CTASection from "../components/CTASection.astro";
 import heroImage from "../images/heat-pump-bremen-hero.png";
 
-const title = "Wärmepumpe Bremen – Eignung, Kosten & Förderung";
+const title = "Wärmepumpe Bremen – Eignung, Kosten & Förderung verstehen";
 const description =
-    "Wärmepumpe nachrüsten in Bremen: Eignung prüfen, Kosten verstehen und bis zu 70% Förderung sichern. Kostenlose Ersteinschätzung.";
+    "Unabhängiger Ratgeber zu Wärmepumpen in Bremen: Eignung im Altbau, Kosten und KfW-Förderung strukturiert erklärt. Stand 2026.";
 const canonical = Astro.url.href;
 
 const trustItems = [
-    { text: "Lokale Beratung in Bremen" },
-    { text: "Kostenfreie Ersteinschätzung" },
-    { text: "Meisterbetrieb" },
-    { text: "Über 200 Projekte realisiert" },
+    { text: "Unabhängiger Ratgeber" },
+    { text: "Fokus auf Bremen und Umgebung" },
+    { text: "Praktische Tipps für Hausbesitzer" },
+    { text: "Stand 2026" },
 ];
 
 const processSteps = [
@@ -45,15 +45,16 @@ const processSteps = [
     },
     {
         number: 5,
-        title: "Installation und Inbetriebnahme",
-        description: "Saubere Einstellung für effizienten Betrieb.",
+        title: "Umsetzung durch einen Fachbetrieb",
+        description:
+            "Installation und Inbetriebnahme erfolgen durch einen zugelassenen SHK-Meisterbetrieb, der die Anlage sauber einstellt.",
     },
 ];
 
 const faqs = [
     {
         question: "Funktioniert eine Wärmepumpe im Altbau?",
-        answer: "In vielen Fällen ja – aber es hängt von Faktoren wie Dämmstandard, Heizkörpern und Vorlauftemperatur ab. Wir prüfen das individuell für Ihr Haus in Bremen.",
+        answer: "In vielen Fällen ja – aber es hängt von Faktoren wie Dämmstandard, Heizkörpern und Vorlauftemperatur ab. Eine individuelle Prüfung durch einen Fachbetrieb bringt hier Klarheit.",
     },
     {
         question: "Geht das auch ohne Fußbodenheizung?",
@@ -61,19 +62,19 @@ const faqs = [
     },
     {
         question: "Wie laut ist eine Wärmepumpe?",
-        answer: "Moderne Luft-Wasser-Wärmepumpen arbeiten im Bereich von 35–50 dB. Die Aufstellung planen wir so, dass Schallschutzanforderungen eingehalten werden.",
+        answer: "Moderne Luft-Wasser-Wärmepumpen arbeiten im Bereich von 35–50 dB. Bei der Planung ist die Aufstellung so zu wählen, dass die Schallschutzanforderungen der TA Lärm eingehalten werden.",
     },
     {
         question: "Was kostet eine Wärmepumpe in Bremen?",
-        answer: "Die Gesamtkosten liegen je nach Objekt typischerweise zwischen 25.000 und 50.000 Euro vor Förderung. Faktoren wie Altbau-Anpassungen beeinflussen den Preis.",
+        answer: "Die Gesamtkosten liegen je nach Objekt typischerweise zwischen 25.000 und 50.000 Euro vor Förderung – unverbindliche Orientierung, Stand 2026. Faktoren wie Altbau-Anpassungen beeinflussen den Preis.",
     },
     {
         question: "Welche Förderung gibt es aktuell?",
-        answer: "Über die BEG-Förderung (KfW 458) sind Zuschüsse von bis zu 70 % der förderfähigen Kosten möglich. Die genaue Höhe hängt von Ihrer individuellen Situation ab.",
+        answer: "Über die KfW-Heizungsförderung 458 sind Zuschüsse von bis zu 70 % der förderfähigen Kosten möglich. Die genaue Höhe hängt von der individuellen Situation ab. Verbindliche Auskünfte erteilen KfW, BAFA und zertifizierte Energieberater.",
     },
     {
-        question: "Wie läuft die Anfrage ab?",
-        answer: "Sie senden uns Ihre Hausdaten über unser Formular. Wir prüfen die Eignung, schätzen Kosten und Förderung ein und melden uns innerhalb weniger Werktage bei Ihnen.",
+        question: "Wie läuft der Prozess typischerweise ab?",
+        answer: "In der Regel erfolgt zunächst eine Heizlastberechnung, dann die Auswahl einer passenden Wärmepumpe, die Antragstellung für die KfW-Förderung und anschließend die Installation durch einen zugelassenen SHK-Meisterbetrieb.",
     },
     {
         question:
@@ -95,15 +96,15 @@ const faqs = [
 <Layout title={title} description={description} canonical={canonical}>
     <HeroSection
         imageSrc={heroImage}
-        headline="Wärmepumpe Bremen: Eignung prüfen, Kosten verstehen, Angebot erhalten"
-        subtext="Eine Wärmepumpe ist für viele Hausbesitzer eine zukunftssichere Lösung – von der ersten Einschätzung bis zur Installation."
+        headline="Wärmepumpe in Bremen: Eignung, Kosten und Förderung verstehen"
+        subtext="Unabhängiger Ratgeber für Hausbesitzer in Bremen – mit Fokus auf Altbau-Eignung, Kostenstruktur und KfW-Förderung 2026."
         primaryCTA={{
-            label: "Jetzt Wärmepumpen-Beratung anfragen",
-            href: "/kontakt/",
+            label: "Kosten & Förderung ansehen",
+            href: "/waermepumpe-kosten-foerderung/",
         }}
         secondaryCTA={{
-            label: "Kosten & Förderung prüfen",
-            href: "/waermepumpe-kosten-foerderung-bremen/",
+            label: "Altbau-Eignung verstehen",
+            href: "/waermepumpe-altbau-bremen/",
         }}
     />
 
@@ -243,7 +244,7 @@ const faqs = [
         <p class="text-text-muted leading-relaxed max-w-2xl text-sm">
             Doch auch in älteren Häusern kann eine Wärmepumpe wirtschaftlich
             betrieben werden. Wer eine <strong
-                >Wärmepumpe nachrüsten in Bremen</strong
+                >Wärmepumpe in Bremen nachrüsten</strong
             > möchte, sollte das Gebäude individuell prüfen lassen. Gerade typische
             <strong>Bremer Reihenhäuser</strong>, Doppelhaushälften und
             klassische Altbauten haben oft mehr Potenzial als zunächst vermutet.
@@ -584,6 +585,12 @@ const faqs = [
             Betriebskosten, Lebensdauer und eine möglichst hohe Effizienz im
             Alltag.
         </p>
+        <a
+            href="/waermepumpe-kosten-foerderung/"
+            class="my-4 btn-accent text-sm py-2 px-4"
+        >
+            Mehr zu Kosten &amp; Förderung
+        </a>
     </SectionShell>
 
     <!-- Förderung -->
@@ -713,13 +720,17 @@ const faqs = [
         </p>
     </SectionShell>
 
-    <!-- CTA -->
+    <!-- Weiterführende Themen -->
     <CTASection
-        headline="Jetzt Potenzial für Ihr Haus prüfen"
-        text="Sie möchten wissen, ob Ihr Haus für eine Wärmepumpe geeignet ist und welche Förderung möglich ist? Fordern Sie jetzt eine kostenlose Ersteinschätzung durch einen regionalen Fachbetrieb an."
+        headline="Tiefer ins Thema einsteigen"
+        text="Ob Altbau-Eignung, Kostenstruktur oder KfW-Förderung – in den Ratgeber-Kapiteln finden Sie die wichtigsten Informationen strukturiert aufbereitet."
         primaryCTA={{
-            label: "Jetzt unverbindlich prüfen",
-            href: "/kontakt/",
+            label: "Kosten & Förderung",
+            href: "/waermepumpe-kosten-foerderung/",
+        }}
+        secondaryCTA={{
+            label: "Wärmepumpe im Altbau",
+            href: "/waermepumpe-altbau-bremen/",
         }}
         variant="highlight"
     />

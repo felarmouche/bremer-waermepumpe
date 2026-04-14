@@ -4,47 +4,72 @@ import Layout from "../layout/Layout.astro";
 
 <Layout
   title="Impressum – Bremer Wärmepumpe"
-  description="Impressum der Bremer Wärmepumpe. Angaben gemäß § 5 TMG."
+  description="Impressum des privaten Informationsportals Bremer Wärmepumpe. Angaben gemäß § 5 DDG und § 18 Abs. 2 MStV."
 >
   <section class="max-w-3xl mx-auto px-4 py-16 sm:py-20">
     <h1 class="text-3xl sm:text-4xl font-bold text-text mb-8">Impressum</h1>
 
     <div class="prose prose-lg max-w-none space-y-6 text-text-muted">
-      <!-- TODO: Bitte durch vollständige Impressumsangaben ersetzen -->
+      <!--
+        HINWEIS AN DICH (wird nicht gerendert):
+        Dies ist ein Privatpersonen-Impressum. Bitte ersetze VOR dem Go-live sämtliche
+        Platzhalter in eckigen Klammern [ … ] durch deine tatsächlichen Daten.
+        Eine ladungsfähige Anschrift (Straße, Hausnummer, PLZ, Ort) ist zwingend –
+        Postfach reicht nicht.
+      -->
 
-      <h2 class="text-xl font-semibold text-text">Angaben gemäß § 5 TMG</h2>
+      <h2 class="text-xl font-semibold text-text">Angaben gemäß § 5 DDG</h2>
       <p>
-        <strong>[Firmenname einfügen]</strong><br />
+        <strong>[Vor- und Nachname]</strong><br />
         [Straße und Hausnummer]<br />
-        [PLZ] Bremen
+        [PLZ] [Ort]
       </p>
-
-      <h2 class="text-xl font-semibold text-text">Vertreten durch</h2>
-      <p>[Vor- und Nachname des Geschäftsführers / Inhabers]</p>
 
       <h2 class="text-xl font-semibold text-text">Kontakt</h2>
       <p>
-        Telefon: [Telefonnummer]<br />
-        E-Mail: [E-Mail-Adresse]
+        E-Mail: [ihre-email@example.de]
       </p>
 
-      <h2 class="text-xl font-semibold text-text">Handwerksregister</h2>
-      <p>
-        Eingetragen bei der Handwerkskammer Bremen<br />
-        Betriebsnummer: [Betriebsnummer]
-      </p>
-
-      <h2 class="text-xl font-semibold text-text">Umsatzsteuer-ID</h2>
-      <p>
-        Umsatzsteuer-Identifikationsnummer gemäß § 27a UStG:<br />
-        [USt-IdNr. einfügen]
-      </p>
-
-      <h2 class="text-xl font-semibold text-text">Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV</h2>
+      <h2 class="text-xl font-semibold text-text">Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</h2>
       <p>
         [Vor- und Nachname]<br />
         [Straße und Hausnummer]<br />
-        [PLZ] Bremen
+        [PLZ] [Ort]
+      </p>
+
+      <h2 class="text-xl font-semibold text-text">Art des Angebots</h2>
+      <p>
+        Diese Website ist ein <strong>privates, nicht-kommerzielles Informationsangebot</strong>
+        rund um das Thema Wärmepumpen in Bremen und Umgebung. Es handelt sich nicht um eine
+        gewerbliche Tätigkeit. Es werden keine Waren oder Dienstleistungen angeboten und keine
+        Leads an Dritte weitergegeben. Die veröffentlichten Inhalte stellen keine Rechts-,
+        Steuer- oder Energieberatung dar und ersetzen keine individuelle Fachberatung.
+      </p>
+
+      <h2 class="text-xl font-semibold text-text">Haftung für Inhalte</h2>
+      <p>
+        Die Inhalte dieser Seiten wurden mit größtmöglicher Sorgfalt erstellt. Für die
+        Richtigkeit, Vollständigkeit und Aktualität der Inhalte kann jedoch keine Gewähr
+        übernommen werden. Insbesondere Angaben zu Fördermitteln, Preisen und technischen
+        Voraussetzungen können sich jederzeit ändern.
+      </p>
+
+      <h2 class="text-xl font-semibold text-text">Haftung für Links</h2>
+      <p>
+        Dieses Angebot enthält Links zu externen Websites Dritter, auf deren Inhalte kein
+        Einfluss besteht. Deshalb kann für diese fremden Inhalte auch keine Gewähr übernommen
+        werden. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder
+        Betreiber der Seiten verantwortlich. Bei Bekanntwerden von Rechtsverletzungen werden
+        derartige Links umgehend entfernt.
+      </p>
+
+      <h2 class="text-xl font-semibold text-text">Urheberrecht</h2>
+      <p>
+        Die durch den Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten
+        unterliegen dem deutschen Urheberrecht. Beiträge Dritter sind als solche gekennzeichnet.
+        Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der
+        Grenzen des Urheberrechtes bedürfen der schriftlichen Zustimmung des jeweiligen Autors
+        bzw. Erstellers.
       </p>
 
       <h2 class="text-xl font-semibold text-text">Streitschlichtung</h2>
@@ -52,16 +77,9 @@ import Layout from "../layout/Layout.astro";
         Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit:
         <a href="https://ec.europa.eu/consumers/odr/" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">
           https://ec.europa.eu/consumers/odr/
-        </a>
-      </p>
-      <p>
-        Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer
-        Verbraucherschlichtungsstelle teilzunehmen.
-      </p>
-
-      <p class="text-sm text-text-muted border-t border-border pt-6 mt-10">
-        <strong>Hinweis:</strong> Dies ist ein Platzhalter-Impressum. Bitte ersetzen Sie alle Angaben
-        in eckigen Klammern durch Ihre tatsächlichen Daten.
+        </a>.
+        Eine Teilnahme an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle
+        ist weder vorgesehen noch gesetzlich verpflichtend.
       </p>
     </div>
   </section>

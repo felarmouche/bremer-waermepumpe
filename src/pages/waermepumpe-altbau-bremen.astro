@@ -10,14 +10,14 @@ import heroImage from "../images/hero-altbau-bremen.webp";
 
 const title = "Wärmepumpe Altbau Bremen – Eignung, Vorlauftemperatur & Kosten";
 const description =
-    "Wärmepumpe im Altbau in Bremen: Vorlauftemperatur, Heizlast, Heizkörper prüfen. Ehrliche Eignungsbewertung ohne pauschale Versprechen. Kostenlose Ersteinschätzung.";
+    "Unabhängiger Ratgeber zur Wärmepumpe im Altbau in Bremen: Vorlauftemperatur, Heizlast, Heizkörper und Praxisbeispiele – ehrlich eingeordnet, Stand 2026.";
 const canonical = Astro.url.href;
 
 const trustItems = [
-    { text: "Erfahrung mit Bremer Altbauten" },
-    { text: "Sorgfältige Eignungsprüfung" },
-    { text: "Vorlauftemperatur im Fokus" },
-    { text: "Realistische Kostenschätzung" },
+    { text: "Unabhängiger Ratgeber" },
+    { text: "Fokus auf Bremer Altbauten" },
+    { text: "Vorlauftemperatur im Blick" },
+    { text: "Stand 2026" },
 ];
 
 const faqs: { question: string; answer: string }[] = [
@@ -54,10 +54,10 @@ const faqs: { question: string; answer: string }[] = [
         imageSrc={heroImage}
         headline="Wärmepumpe im Altbau Bremen: Sinnvoll modernisieren statt vorschnell ausschließen"
         subtext="Viele Bremer Altbauten sind besser für eine Wärmepumpe geeignet, als Eigentümer vermuten. Entscheidend ist nicht das Baujahr, sondern die Vorlauftemperatur und saubere Planung."
-        primaryCTA={{ label: "Jetzt Eignung prüfen", href: "/kontakt/" }}
+        primaryCTA={{ label: "Mehr zu Kosten & Förderung", href: "/waermepumpe-kosten-foerderung/" }}
         secondaryCTA={{
-            label: "Kosten & Förderung prüfen",
-            href: "/waermepumpe-kosten-foerderung-bremen/",
+            label: "Zurück zur Übersicht",
+            href: "/",
         }}
     />
 
@@ -350,10 +350,14 @@ const faqs: { question: string; answer: string }[] = [
     </SectionShell>
 
     <CTASection
-        headline="Ist Ihr Altbau in Bremen bereit für die Wärmepumpe?"
-        text="Finden Sie heraus, welches Potenzial in Ihrem Haus, Reihenhaus oder Ihrer Stadtvilla steckt. Wir prüfen Eignung, Kosten und Förderung – kostenlos und unverbindlich."
+        headline="Weiter im Ratgeber"
+        text="Zahlreiche Bremer Altbauten lassen sich heute auf Wärmepumpen umrüsten. Welche Fördermittel greifen und welche Kostenstruktur realistisch ist, erklärt das nächste Kapitel."
         primaryCTA={{
-            label: "Jetzt Eignung prüfen",
+            label: "Kosten & Förderung ansehen",
+            href: "/waermepumpe-kosten-foerderung/",
+        }}
+        secondaryCTA={{
+            label: "Über diesen Ratgeber",
             href: "/kontakt/",
         }}
         variant="highlight"

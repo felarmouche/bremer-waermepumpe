@@ -11,12 +11,12 @@ import heroImage from "../images/foerderung-bremen-hero.webp";
 
 const title = "Wärmepumpe Förderung Bremen – KfW 458, Boni & Eigenanteil";
 const description =
-    "KfW-Förderung bis 70% für Wärmepumpen in Bremen: Basisförderung, Klimabonus, Einkommensbonus. Stand April 2026 – kostenlose Ersteinschätzung anfragen.";
+    "Unabhängiger Ratgeber zur KfW-Heizungsförderung 458 für Wärmepumpen in Bremen: Basisförderung, Klimabonus, Einkommensbonus. Stand April 2026, alle Angaben ohne Gewähr.";
 const canonical = Astro.url.href;
 
 const trustItems = [
     { text: "Bis zu 70% KfW-Förderung" },
-    { text: "Aktuell: Stand April 2026" },
+    { text: "Stand April 2026" },
     { text: "Antrag vor Umsetzung stellen" },
     { text: "KfW + BAFA strukturiert erklärt" },
 ];
@@ -79,17 +79,23 @@ const faqs = [
 ---
 
 <Layout title={title} description={description} canonical={canonical}>
-    <Breadcrumb items={[
-        { label: "Startseite", href: "/" },
-        { label: "Kosten & Förderung" }
-    ]} />
+    <Breadcrumb
+        items={[
+            { label: "Startseite", href: "/" },
+            { label: "Kosten & Förderung" },
+        ]}
+    />
     <HeroSection
         imageSrc={heroImage}
         headline="Wärmepumpe in Bremen: Kosten, Förderung und realistischer Eigenanteil"
         subtext="Wer eine alte Heizung ersetzt, kann den Umstieg auf eine moderne Wärmepumpe deutlich günstiger realisieren, als viele Eigentümer vermuten."
         primaryCTA={{
-            label: "Jetzt Förderung checken",
-            href: "/kontakt/",
+            label: "Alle Förderungen im Überblick",
+            href: "#foerderung",
+        }}
+        secondaryCTA={{
+            label: "Wärmepumpe im Altbau",
+            href: "/waermepumpe-altbau-bremen/",
         }}
     />
 
@@ -133,7 +139,7 @@ const faqs = [
     </SectionShell>
 
     {/* Welche Förderung gibt es */}
-    <SectionShell variant="alt">
+    <SectionShell id="foerderung" variant="alt">
         <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
             Welche Förderung gibt es für eine Wärmepumpe?
         </h2>
@@ -201,8 +207,11 @@ const faqs = [
                     begrenzt)
                 </p>
             </div>
-            <a href="/kontakt/" class="btn-accent shrink-0"
-                >Jetzt Förderung checken</a
+            <a
+                href="https://www.kfw.de/inlandsfoerderung/Privatpersonen/Bestehende-Immobilie/F%C3%B6rderprodukte/Heizungsf%C3%B6rderung-f%C3%BCr-Privatpersonen-Wohngeb%C3%A4ude-(458)/"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="btn-accent shrink-0">KfW 458 aufrufen</a
             >
         </div>
     </SectionShell>
@@ -503,11 +512,15 @@ const faqs = [
 
     {/* CTA */}
     <CTASection
-        headline="Möchten Sie Ihre individuelle Förderung prüfen lassen?"
-        text="Finden Sie heraus, ob Sie den vollen 70%-Zuschuss für Ihre Immobilie ausschöpfen können. Fordern Sie jetzt eine kostenlose Ersteinschätzung durch einen regionalen Fachbetrieb an."
+        headline="Nächste Schritte"
+        text="Ob der volle 70%-Zuschuss für Ihre Immobilie erreichbar ist, entscheidet eine individuelle Prüfung durch einen zertifizierten Energieeffizienz-Experten oder ein zugelassenes Fachunternehmen. Offizielle Antragsstellen sind KfW und BAFA."
         primaryCTA={{
-            label: "Jetzt Förderung checken",
-            href: "/kontakt/",
+            label: "KfW 458 aufrufen",
+            href: "https://www.kfw.de/inlandsfoerderung/Privatpersonen/Bestehende-Immobilie/Energieeffizient-sanieren/Heizungsf%C3%B6rderung-Privatpersonen-Wohngeb%C3%A4ude-Eigentum-%28458%29/",
+        }}
+        secondaryCTA={{
+            label: "BAFA Energieberatung",
+            href: "https://www.bafa.de/DE/Energie/Energieeffizienz/Energieberatung/Energieberatung_Wohngebaeude/energieberatung_wohngebaeude_node.html",
         }}
         variant="highlight"
     />

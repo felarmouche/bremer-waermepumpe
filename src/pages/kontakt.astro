@@ -1,216 +1,122 @@
 ---
 import Layout from "../layout/Layout.astro";
 import SectionShell from "../components/SectionShell.astro";
-import TrustBar from "../components/TrustBar.astro";
-import FullForm from "../components/FullForm.astro";
 import Breadcrumb from "../components/Breadcrumb.astro";
 
-const title = "Wärmepumpe in Bremen anfragen – Kostenlose Ersteinschätzung";
+const title = "Über diesen Ratgeber – Wärmepumpe Bremen";
 const description =
-    "Jetzt unverbindlich Eignung, Kosten und Förderung für Ihre Wärmepumpe in Bremen prüfen lassen. Kostenlose Ersteinschätzung durch einen regionalen Fachbetrieb.";
+    "Informationen zu diesem privaten Informationsportal rund um Wärmepumpen in Bremen. Redaktioneller Ratgeber ohne kommerziellen Hintergrund.";
 const canonical = Astro.url.href;
-
-const trustItems = [
-    { text: "Kostenfreie Ersteinschätzung" },
-    { text: "Regionaler Fachbetrieb" },
-    { text: "Antwort innerhalb weniger Werktage" },
-    { text: "100% unverbindlich" },
-];
-
-const formFields = [
-    {
-        name: "name",
-        label: "Ihr Name",
-        type: "text" as const,
-        placeholder: "Vor- und Nachname",
-        required: true,
-    },
-    {
-        name: "plz",
-        label: "PLZ",
-        type: "text" as const,
-        placeholder: "z. B. 28195",
-        required: true,
-        pattern: "[0-9]{5}",
-    },
-    {
-        name: "gebaeudetyp",
-        label: "Gebäudetyp",
-        type: "select" as const,
-        required: true,
-        options: [
-            { value: "einfamilienhaus", label: "Einfamilienhaus" },
-            { value: "reihenhaus", label: "Reihenhaus" },
-            { value: "doppelhaushaelfte", label: "Doppelhaushälfte" },
-            { value: "mehrfamilienhaus", label: "Mehrfamilienhaus" },
-            { value: "eigentumswohnung", label: "Eigentumswohnung" },
-        ],
-    },
-    {
-        name: "baujahr",
-        label: "Ungefähres Baujahr",
-        type: "text" as const,
-        placeholder: "z. B. 1965",
-        required: false,
-    },
-    {
-        name: "aktuelle_heizung",
-        label: "Aktuelle Heizung",
-        type: "select" as const,
-        required: true,
-        options: [
-            { value: "gas", label: "Gasheizung" },
-            { value: "oel", label: "Ölheizung" },
-            { value: "nachtspeicher", label: "Nachtspeicherheizung" },
-            { value: "fernwaerme", label: "Fernwärme" },
-            { value: "sonstige", label: "Sonstige / Unsicher" },
-        ],
-    },
-    {
-        name: "wohnflaeche",
-        label: "Wohnfläche (ca. m²)",
-        type: "number" as const,
-        placeholder: "z. B. 120",
-        required: false,
-    },
-    {
-        name: "email",
-        label: "E-Mail",
-        type: "email" as const,
-        placeholder: "ihre@email.de",
-        required: true,
-    },
-    {
-        name: "telefon",
-        label: "Telefon (optional)",
-        type: "tel" as const,
-        placeholder: "Für Rückruf",
-        required: false,
-    },
-    {
-        name: "nachricht",
-        label: "Ihre Frage oder Anmerkung (optional)",
-        type: "textarea" as const,
-        placeholder: "z. B. Altbau, Förderung, Kosten …",
-        required: false,
-    },
-];
 ---
 
 <Layout title={title} description={description} canonical={canonical}>
     <Breadcrumb items={[
         { label: "Startseite", href: "/" },
-        { label: "Kontakt" }
+        { label: "Über diesen Ratgeber" }
     ]} />
-    <!-- Hero-like header -->
+
     <section class="bg-primary py-16 md:py-20">
         <div class="max-w-3xl mx-auto px-4 sm:px-6 text-center">
             <h1
                 class="text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight tracking-tight"
             >
-                Wärmepumpe in Bremen anfragen
+                Über diesen Ratgeber
             </h1>
             <p class="mt-6 text-white/85 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
-                Eignung, Kosten und Förderung für Ihr Haus prüfen lassen – kostenlos und unverbindlich. Wir melden uns innerhalb weniger Werktage bei Ihnen.
+                Ein privates Informationsportal rund um das Thema Wärmepumpe in Bremen und Umgebung.
             </p>
         </div>
     </section>
 
-    <TrustBar items={trustItems} />
-
-    <!-- Form + Sidebar -->
     <SectionShell>
-        <div class="max-w-5xl mx-auto">
-            <div class="grid grid-cols-1 lg:grid-cols-5 gap-10">
-                <!-- Form (3/5) -->
-                <div class="lg:col-span-3" id="formular">
-                    <h2 class="text-xl md:text-2xl font-bold text-text mb-2">
-                        Kostenlose Ersteinschätzung anfordern
-                    </h2>
-                    <p class="text-text-muted text-sm mb-6 leading-relaxed">
-                        Füllen Sie das Formular aus – wir prüfen Eignung, Kosten und Fördermöglichkeiten für Ihr Haus und melden uns persönlich bei Ihnen.
-                    </p>
-                    <FullForm
-                        formId="kontakt-form"
-                        fields={formFields}
-                        submitLabel="Jetzt unverbindlich anfragen"
-                        showCallbackOption={true}
-                    />
-                </div>
+        <article class="max-w-3xl space-y-6 text-text-muted leading-relaxed">
+            <p>
+                Dieses Portal ist ein <strong class="text-text">privates, nicht-kommerzielles Informationsangebot</strong>.
+                Ziel ist es, Hausbesitzern in Bremen und Umgebung einen strukturierten Überblick zu den Themen
+                Wärmepumpen-Eignung, Kosten und Förderung zu geben – ohne Verkaufsinteresse und ohne Sales-Druck.
+            </p>
+            <p>
+                Die hier veröffentlichten Inhalte werden redaktionell zusammengetragen und auf
+                dem Stand des jeweils genannten Datums wiedergegeben. Förderprogramme, technische
+                Anforderungen und Preisniveaus können sich jederzeit ändern. Für eine individuelle,
+                verbindliche Bewertung Ihres konkreten Hauses wenden Sie sich bitte an einen
+                zugelassenen Fachbetrieb oder eine anerkannte Energieberatung.
+            </p>
 
-                <!-- Sidebar (2/5) -->
-                <aside class="lg:col-span-2 space-y-6">
-                    <div class="surface-card p-6">
-                        <h3 class="font-semibold text-text mb-3">Was passiert nach dem Absenden?</h3>
-                        <ol class="space-y-3 text-sm text-text-muted">
-                            <li class="flex items-start gap-3">
-                                <span class="shrink-0 w-6 h-6 bg-primary text-white text-xs font-bold flex items-center justify-center rounded-full">1</span>
-                                <span>Wir prüfen Ihre Angaben und bewerten die Eignung Ihres Hauses.</span>
-                            </li>
-                            <li class="flex items-start gap-3">
-                                <span class="shrink-0 w-6 h-6 bg-primary text-white text-xs font-bold flex items-center justify-center rounded-full">2</span>
-                                <span>Sie erhalten eine erste Einschätzung zu Kosten und Fördermöglichkeiten.</span>
-                            </li>
-                            <li class="flex items-start gap-3">
-                                <span class="shrink-0 w-6 h-6 bg-primary text-white text-xs font-bold flex items-center justify-center rounded-full">3</span>
-                                <span>Bei Interesse vereinbaren wir einen Vor-Ort-Termin mit einem regionalen Fachbetrieb.</span>
-                            </li>
-                        </ol>
-                    </div>
-
-                    <div class="surface-card p-6">
-                        <h3 class="font-semibold text-text mb-3">Das prüfen wir für Sie</h3>
-                        <ul class="space-y-2 text-sm text-text-muted">
-                            <li class="flex items-start gap-2">
-                                <span class="text-primary font-bold shrink-0 mt-0.5">&#10003;</span>
-                                <span>Eignung Ihres Gebäudes für eine Wärmepumpe</span>
-                            </li>
-                            <li class="flex items-start gap-2">
-                                <span class="text-primary font-bold shrink-0 mt-0.5">&#10003;</span>
-                                <span>Realistische Kosteneinschätzung</span>
-                            </li>
-                            <li class="flex items-start gap-2">
-                                <span class="text-primary font-bold shrink-0 mt-0.5">&#10003;</span>
-                                <span>Fördermöglichkeiten (KfW, BAFA)</span>
-                            </li>
-                            <li class="flex items-start gap-2">
-                                <span class="text-primary font-bold shrink-0 mt-0.5">&#10003;</span>
-                                <span>Passender Wärmepumpen-Typ</span>
-                            </li>
-                            <li class="flex items-start gap-2">
-                                <span class="text-primary font-bold shrink-0 mt-0.5">&#10003;</span>
-                                <span>Altbau-Eignung und nötige Anpassungen</span>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div class="surface-card p-6">
-                        <h3 class="font-semibold text-text mb-3">Kontakt</h3>
-                        <ul class="space-y-2 text-sm text-text-muted">
-                            <li>Bremen und Umgebung</li>
-                            <li>E-Mail: info@waerme-guru.de</li>
-                            <li>Telefon: auf Anfrage</li>
-                        </ul>
-                    </div>
-                </aside>
+            <div class="notice-success rounded p-5">
+                <p class="font-semibold text-text mb-2">
+                    Dies ist keine Rechts-, Steuer- oder Energieberatung.
+                </p>
+                <p class="text-sm leading-relaxed">
+                    Alle Angaben zu Kosten, Förderbeträgen und technischen Voraussetzungen sind
+                    unverbindliche Orientierung. Eine belastbare Einschätzung für Ihr Gebäude
+                    erhalten Sie nur durch eine individuelle Prüfung vor Ort durch einen Fachbetrieb.
+                </p>
             </div>
-        </div>
+
+            <h2 class="text-2xl font-bold text-text mt-10 mb-4">Weiterführende offizielle Quellen</h2>
+            <p>
+                Wer verbindliche Informationen zu Förderung, Anträgen und Energieberatung sucht,
+                findet diese bei den offiziellen Stellen:
+            </p>
+            <ul class="space-y-3 list-disc list-inside">
+                <li>
+                    <a
+                        href="https://www.kfw.de/inlandsfoerderung/Privatpersonen/Bestehende-Immobilie/Energieeffizient-sanieren/Heizungsf%C3%B6rderung-Privatpersonen-Wohngeb%C3%A4ude-Eigentum-%28458%29/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="text-primary hover:underline"
+                    >KfW 458 – Heizungsförderung für Privatpersonen</a>
+                </li>
+                <li>
+                    <a
+                        href="https://www.bafa.de/DE/Energie/Energieeffizienz/Energieberatung/Energieberatung_Wohngebaeude/energieberatung_wohngebaeude_node.html"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="text-primary hover:underline"
+                    >BAFA – Energieberatung für Wohngebäude</a>
+                </li>
+                <li>
+                    <a
+                        href="https://www.verbraucherzentrale-bremen.de/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="text-primary hover:underline"
+                    >Verbraucherzentrale Bremen – unabhängige Beratung</a>
+                </li>
+                <li>
+                    <a
+                        href="https://www.energieberater-bremen.de/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="text-primary hover:underline"
+                    >Energieberater Bremen – Fachverzeichnis</a>
+                </li>
+            </ul>
+
+            <h2 class="text-2xl font-bold text-text mt-10 mb-4">Kontakt &amp; Verantwortlicher</h2>
+            <p>
+                Für presse- oder datenschutzbezogene Anfragen nutzen Sie bitte die
+                im <a href="/impressum/" class="text-primary hover:underline">Impressum</a>
+                hinterlegte E-Mail-Adresse. Angaben nach DSGVO finden Sie in der
+                <a href="/datenschutz/" class="text-primary hover:underline">Datenschutzerklärung</a>.
+            </p>
+        </article>
     </SectionShell>
 
-    <!-- Weiterführende Informationen -->
     <SectionShell variant="alt">
         <div class="max-w-3xl mx-auto text-center">
             <h2 class="text-xl md:text-2xl font-bold text-text mb-6">
-                Sie möchten sich erst informieren?
+                Weiter im Ratgeber
             </h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <a href="/waermepumpe-altbau-bremen/" class="surface-card p-5 hover:border-border-strong transition-colors block cursor-pointer">
                     <h3 class="font-semibold text-text mb-1">Wärmepumpe im Altbau</h3>
                     <p class="text-text-muted text-sm">Eignung, Vorlauftemperatur und Praxisbeispiele aus Bremen.</p>
                 </a>
-                <a href="/waermepumpe-kosten-foerderung-bremen/" class="surface-card p-5 hover:border-border-strong transition-colors block cursor-pointer">
-                    <h3 class="font-semibold text-text mb-1">Kosten & Förderung</h3>
-                    <p class="text-text-muted text-sm">KfW-Förderung bis 70%, Eigenanteil und Beispielrechnungen.</p>
+                <a href="/waermepumpe-kosten-foerderung/" class="surface-card p-5 hover:border-border-strong transition-colors block cursor-pointer">
+                    <h3 class="font-semibold text-text mb-1">Kosten &amp; Förderung</h3>
+                    <p class="text-text-muted text-sm">KfW-Förderung, Eigenanteil und Beispielrechnungen – Stand 2026.</p>
                 </a>
             </div>
         </div>

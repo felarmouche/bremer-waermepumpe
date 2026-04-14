@@ -5,9 +5,10 @@ import logo from "../assets/Logo.png";
 const pathname = Astro.url.pathname;
 
 const navLinks = [
-  { href: "/waermepumpe-altbau-bremen/", label: "Altbau" },
+  { href: "/", label: "Wärmepumpe" },
+  { href: "/waermepumpe-altbau-bremen/", label: "Wärmepumpe für Altbau" },
   {
-    href: "/waermepumpe-kosten-foerderung-bremen/",
+    href: "/waermepumpe-kosten-foerderung/",
     label: "Kosten & Förderung",
   },
 ];
@@ -19,7 +20,9 @@ function isActive(href: string): boolean {
 ---
 
 <div data-header-nav class="flex flex-col">
-  <div class="flex flex-row items-center justify-between px-4 sm:px-6 lg:px-12 py-4 max-w-7xl mx-auto w-full">
+  <div
+    class="flex flex-row items-center justify-between px-4 sm:px-6 lg:px-16 py-4 mx-auto w-full"
+  >
     <a
       href="/"
       class="text-2xl font-bold text-primary uppercase hover:text-primary-hover transition-colors"
@@ -70,7 +73,7 @@ function isActive(href: string): boolean {
         ))
       }
       <a href="/kontakt/" class="btn-accent text-sm py-2 px-4">
-        Jetzt Beratung anfragen
+        Über diesen Ratgeber
       </a>
     </nav>
   </div>
@@ -96,7 +99,7 @@ function isActive(href: string): boolean {
         ))
       }
       <a href="/kontakt/" class="btn-accent text-sm text-center mt-2">
-        Jetzt Beratung anfragen
+        Über diesen Ratgeber
       </a>
     </div>
   </nav>
@@ -105,12 +108,13 @@ function isActive(href: string): boolean {
 <script>
   document.querySelectorAll("[data-header-nav]").forEach((header) => {
     const button = header.querySelector("[data-nav-toggle]");
-    const mobileNav = header.querySelector("[data-nav-mobile]");
+    const mobileNav = header.querySelector("[data-nav-mobile]") as HTMLElement;
 
     if (!button || !mobileNav) return;
 
     button.addEventListener("click", () => {
-      const isOpen = mobileNav.style.maxHeight && mobileNav.style.maxHeight !== "0px";
+      const isOpen =
+        mobileNav.style.maxHeight && mobileNav.style.maxHeight !== "0px";
       if (isOpen) {
         mobileNav.style.maxHeight = "0px";
         button.setAttribute("aria-expanded", "false");

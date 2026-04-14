@@ -26,41 +26,12 @@ const resolvedOgImage = ogImage ? `${siteUrl}${ogImage}` : `${siteUrl}/og-image.
 <meta property="og:url" content={canonical} />
 <meta property="og:image" content={resolvedOgImage} />
 <meta property="og:locale" content="de_DE" />
-<meta property="og:site_name" content="Bremer Wärmepumpe" />
+<meta property="og:site_name" content="Bremer Wärmepumpe – Ratgeber" />
 
 <script is:inline type="application/ld+json" set:html={JSON.stringify({
     "@context": "https://schema.org",
-    "@type": "LocalBusiness",
-    "name": "Wärme Guru",
-    "description": "Wärmepumpen-Beratung und Installation in Bremen",
+    "@type": "WebSite",
+    "name": "Bremer Wärmepumpe – Ratgeber",
     "url": siteUrl,
-    "telephone": "+49 XXXX XXXXXXX",
-    "email": "info@bremer-waermepumpe.de",
-    "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "[Straße und Hausnummer]",
-        "addressLocality": "Bremen",
-        "postalCode": "[PLZ]",
-        "addressRegion": "HB",
-        "addressCountry": "DE"
-    },
-    "geo": {
-        "@type": "GeoCoordinates",
-        "latitude": 53.0793,
-        "longitude": 8.8017
-    },
-    "areaServed": {
-        "@type": "City",
-        "name": "Bremen"
-    },
-    "serviceArea": {
-        "@type": "GeoCircle",
-        "geoMidpoint": {
-            "@type": "GeoCoordinates",
-            "latitude": 53.0793,
-            "longitude": 8.8017
-        }
-    },
-    "priceRange": "€€",
-    "image": resolvedOgImage
+    "inLanguage": "de-DE"
 })} />

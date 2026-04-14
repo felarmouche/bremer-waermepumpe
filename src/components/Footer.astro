@@ -6,35 +6,36 @@ const year = new Date().getFullYear();
     <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div>
-                <p class="text-lg font-bold text-primary uppercase">Wärme Guru</p>
+                <p class="text-lg font-bold text-primary uppercase">Bremer Wärmepumpe</p>
                 <p class="text-text-muted text-sm mt-2">
-                    Ihr lokaler Ansprechpartner für Wärmepumpen in Bremen und Umgebung.
+                    Unabhängiges privates Informationsportal rund um Wärmepumpen in Bremen und Umgebung.
                 </p>
             </div>
             <div>
                 <p class="font-semibold text-text mb-2">Navigation</p>
                 <ul class="space-y-1 text-sm text-text-muted">
                     <li><a href="/" class="hover:text-primary transition-colors">Startseite</a></li>
-                    <li><a href="/waermepumpe-altbau-bremen/" class="hover:text-primary transition-colors">Altbau</a></li>
-                    <li><a href="/waermepumpe-kosten-foerderung-bremen/" class="hover:text-primary transition-colors">Kosten & Förderung</a></li>
-                    <li><a href="/kontakt/" class="hover:text-primary transition-colors">Kontakt</a></li>
+                    <li><a href="/waermepumpe-altbau-bremen/" class="hover:text-primary transition-colors">Wärmepumpe im Altbau</a></li>
+                    <li><a href="/waermepumpe-kosten-foerderung/" class="hover:text-primary transition-colors">Kosten & Förderung</a></li>
+                    <li><a href="/kontakt/" class="hover:text-primary transition-colors">Über diesen Ratgeber</a></li>
                 </ul>
             </div>
             <div>
-                <p class="font-semibold text-text mb-2">Kontakt</p>
+                <p class="font-semibold text-text mb-2">Rechtliches</p>
                 <ul class="space-y-1 text-sm text-text-muted">
-                    <li>Bremen und Umgebung</li>
-                    <li>Telefon: auf Anfrage</li>
-                    <li>E-Mail: info@waerme-guru.de</li>
+                    <li><a href="/impressum/" class="hover:text-primary transition-colors">Impressum</a></li>
+                    <li><a href="/datenschutz/" class="hover:text-primary transition-colors">Datenschutz</a></li>
                 </ul>
             </div>
         </div>
-        <div class="border-t border-border mt-8 pt-6 flex flex-col md:flex-row justify-between items-center text-xs text-text-muted gap-2">
-            <p>&copy; {year} Wärme Guru. Alle Rechte vorbehalten.</p>
-            <div class="flex gap-4">
-                <a href="/impressum/" class="hover:text-primary transition-colors">Impressum</a>
-                <a href="/datenschutz/" class="hover:text-primary transition-colors">Datenschutz</a>
-            </div>
+        <div class="border-t border-border mt-8 pt-6 text-xs text-text-muted leading-relaxed">
+            <p class="mb-4">
+                Dieser Ratgeber ist ein privates, nicht-kommerzielles Informationsangebot.
+                Die Inhalte zu Eignung, Kosten und Förderung sind unverbindliche Orientierung
+                und ersetzen keine individuelle Beratung durch einen zugelassenen Fachbetrieb
+                oder eine anerkannte Energieberatung. Alle Angaben ohne Gewähr, Stand 2026.
+            </p>
+            <p>&copy; {year} Bremer Wärmepumpe – Ratgeber.</p>
         </div>
     </div>
 </footer>
