@@ -46,14 +46,16 @@ const faqs: { question: string; answer: string }[] = [
 ---
 
 <Layout title={title} description={description} canonical={canonical}>
-    <Breadcrumb items={[
-        { label: "Startseite", href: "/" },
-        { label: "Wärmepumpe Altbau Bremen" }
-    ]} />
+    <Breadcrumb
+        items={[
+            { label: "Startseite", href: "/" },
+            { label: "Wärmepumpe Altbau Bremen" },
+        ]}
+    />
     <HeroSection
         imageSrc={heroImage}
-        headline="Wärmepumpe im Altbau Bremen: Sinnvoll modernisieren statt vorschnell ausschließen"
-        subtext="Viele Bremer Altbauten sind besser für eine Wärmepumpe geeignet, als Eigentümer vermuten. Entscheidend ist nicht das Baujahr, sondern die Vorlauftemperatur und saubere Planung."
+        headline="Wärmepumpe im Altbau Bremen"
+        subtext="Viele Bremer Altbauten sind besser für eine Wärmepumpe geeignet, als Eigentümer vermuten."
         primaryCTA={{ label: "Eignung & Förderung prüfen", href: "/check/" }}
         secondaryCTA={{
             label: "Mehr zu Kosten & Förderung",

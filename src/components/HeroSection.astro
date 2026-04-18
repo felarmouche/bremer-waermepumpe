@@ -13,53 +13,57 @@ const { imageSrc, headline, subtext, primaryCTA, secondaryCTA } = Astro.props;
 ---
 
 <section
-    class="relative w-full min-h-[50vh] md:min-h-[60vh] py-16 flex items-center justify-center text-center overflow-hidden"
+    class="relative w-full min-h-[75vh] flex items-center py-24 overflow-hidden bg-gray-900"
 >
-    <div class="absolute inset-0 -z-10 h-full w-full overflow-hidden">
+    <!-- Background Image with Professional Directional Gradient -->
+    <div class="absolute inset-0 z-0 pointer-events-none">
         <Image
             src={imageSrc}
             alt="Wärmepumpe an einem Haus in Bremen"
-            class="h-full w-full object-cover"
-            sizes="(max-width: 768px) 100vw, 50vw"
+            class="h-full w-full object-cover object-center opacity-90"
+            sizes="100vw"
             priority
         />
-    </div>
-    <div
-        class="absolute inset-0 -z-10 h-full w-full bg-gradient-to-t from-black/30 to-black/50"
-    >
+        <!-- 
+          Dark on mobile for readability. 
+          On larger screens, it fades from dark on the left (for text) to transparent on the right (for the image). 
+        -->
+        <div
+            class="absolute inset-0 bg-gray-950/60 sm:bg-gradient-to-r sm:from-gray-950/60 sm:via-gray-950/10 sm:to-transparent"
+        >
+        </div>
     </div>
 
-    <div
-        class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 bg-primary/30 backdrop-blur-xs rounded-xl"
-    >
-        <div class="mx-auto text-center max-w-4xl py-10 md:py-14">
+    <!-- Content Container -->
+    <div class="relative z-10 w-full mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="max-w-3xl">
             <h1
-                class="text-3xl font-bold leading-tight tracking-tight text-white lg:text-5xl"
+                class="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white text-balance leading-[1.15]"
             >
                 {headline}
             </h1>
 
             <p
-                class="mt-6 max-w-xl text-center mx-auto text-base leading-7 text-white sm:text-lg sm:leading-8"
+                class="mt-6 max-w-xl text-lg sm:text-xl text-gray-300 leading-relaxed text-balance"
             >
                 {subtext}
             </p>
 
-            <div
-                class="mt-10 text-center flex flex-col mx-auto justify-center items-center gap-4 sm:flex-row sm:flex-wrap"
-            >
+            <div class="mt-10 flex flex-col sm:flex-row items-start gap-4">
+                <!-- Primary CTA: High contrast, bold, no shiny effects -->
                 <a
                     href={primaryCTA.href}
-                    class="btn-accent w-full sm:w-auto text-center"
+                    class="inline-flex justify-center items-center px-8 py-3.5 text-base font-semibold text-gray-900 bg-white rounded-md transition-colors hover:bg-gray-200 w-full sm:w-auto"
                 >
                     {primaryCTA.label}
                 </a>
 
+                <!-- Secondary CTA: Subtle outline, highly minimal -->
                 {
                     secondaryCTA && (
                         <a
                             href={secondaryCTA.href}
-                            class="inline-flex items-center justify-center rounded-md border border-white/40 bg-white/10 px-6 py-3 text-sm font-semibold tracking-wide text-white transition-colors hover:bg-white/20 hover:border-white/60 w-full sm:w-auto text-center"
+                            class="inline-flex justify-center items-center px-8 py-3.5 text-base font-semibold text-white bg-transparent border-2 border-white/50 rounded-md transition-colors hover:bg-white/10 hover:border-white/60 w-full sm:w-auto"
                         >
                             {secondaryCTA.label}
                         </a>
