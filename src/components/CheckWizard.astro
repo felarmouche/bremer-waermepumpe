@@ -7,23 +7,29 @@
 */
 ---
 
-<section id="check-wizard" class="bg-background py-12 md:py-20" aria-label="Wärmepumpen-Check">
+<section
+  id="check-wizard"
+  class="bg-background py-12 md:py-20"
+  aria-label="Wärmepumpen-Check"
+>
   <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div
-      class="surface-card p-6 md:p-10"
-      data-check-wizard
-    >
+    <div class="surface-card p-6 md:p-10" data-check-wizard>
       <div class="mb-8">
-        <div class="flex items-center justify-between mb-3 text-xs text-text-muted">
+        <div
+          class="flex items-center justify-between mb-3 text-xs text-text-muted"
+        >
           <span data-step-label>Schritt 1 von 3</span>
           <span data-step-meta>Gebäude</span>
         </div>
-        <div class="h-2 w-full bg-surface-alt rounded-full overflow-hidden border border-border">
+        <div
+          class="h-2 w-full bg-surface-alt rounded-full overflow-hidden border border-border"
+        >
           <div
             class="h-full bg-primary transition-[width] duration-300"
             style="width: 33%"
             data-progress-bar
-          ></div>
+          >
+          </div>
         </div>
       </div>
 
@@ -37,7 +43,10 @@
           </p>
 
           <div>
-            <label class="block font-semibold text-sm text-text mb-1" for="cw-plz">
+            <label
+              class="block font-semibold text-sm text-text mb-1"
+              for="cw-plz"
+            >
               Postleitzahl<span class="text-accent ml-1">*</span>
             </label>
             <input
@@ -61,24 +70,65 @@
               Gebäudetyp<span class="text-accent ml-1">*</span>
             </span>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-              <label class="flex items-center gap-2 border border-border rounded-md px-3 py-2 cursor-pointer hover:border-border-strong">
-                <input type="radio" name="gebaeudetyp" value="einfamilienhaus" required data-field class="accent-primary" />
+              <label
+                class="flex items-center gap-2 border border-border rounded-md px-3 py-2 cursor-pointer hover:border-border-strong"
+              >
+                <input
+                  type="radio"
+                  name="gebaeudetyp"
+                  value="einfamilienhaus"
+                  required
+                  data-field
+                  class="accent-primary"
+                />
                 <span class="text-sm">Einfamilienhaus</span>
               </label>
-              <label class="flex items-center gap-2 border border-border rounded-md px-3 py-2 cursor-pointer hover:border-border-strong">
-                <input type="radio" name="gebaeudetyp" value="reihenhaus" data-field class="accent-primary" />
+              <label
+                class="flex items-center gap-2 border border-border rounded-md px-3 py-2 cursor-pointer hover:border-border-strong"
+              >
+                <input
+                  type="radio"
+                  name="gebaeudetyp"
+                  value="reihenhaus"
+                  data-field
+                  class="accent-primary"
+                />
                 <span class="text-sm">Reihenhaus</span>
               </label>
-              <label class="flex items-center gap-2 border border-border rounded-md px-3 py-2 cursor-pointer hover:border-border-strong">
-                <input type="radio" name="gebaeudetyp" value="doppelhaushaelfte" data-field class="accent-primary" />
+              <label
+                class="flex items-center gap-2 border border-border rounded-md px-3 py-2 cursor-pointer hover:border-border-strong"
+              >
+                <input
+                  type="radio"
+                  name="gebaeudetyp"
+                  value="doppelhaushaelfte"
+                  data-field
+                  class="accent-primary"
+                />
                 <span class="text-sm">Doppelhaushälfte</span>
               </label>
-              <label class="flex items-center gap-2 border border-border rounded-md px-3 py-2 cursor-pointer hover:border-border-strong">
-                <input type="radio" name="gebaeudetyp" value="mehrfamilienhaus" data-field class="accent-primary" />
+              <label
+                class="flex items-center gap-2 border border-border rounded-md px-3 py-2 cursor-pointer hover:border-border-strong"
+              >
+                <input
+                  type="radio"
+                  name="gebaeudetyp"
+                  value="mehrfamilienhaus"
+                  data-field
+                  class="accent-primary"
+                />
                 <span class="text-sm">Mehrfamilienhaus</span>
               </label>
-              <label class="flex items-center gap-2 border border-border rounded-md px-3 py-2 cursor-pointer hover:border-border-strong sm:col-span-2">
-                <input type="radio" name="gebaeudetyp" value="sonstiges" data-field class="accent-primary" />
+              <label
+                class="flex items-center gap-2 border border-border rounded-md px-3 py-2 cursor-pointer hover:border-border-strong sm:col-span-2"
+              >
+                <input
+                  type="radio"
+                  name="gebaeudetyp"
+                  value="sonstiges"
+                  data-field
+                  class="accent-primary"
+                />
                 <span class="text-sm">Sonstiges</span>
               </label>
             </div>
@@ -89,20 +139,53 @@
               Baujahr<span class="text-accent ml-1">*</span>
             </span>
             <div class="grid grid-cols-2 gap-2">
-              <label class="flex items-center gap-2 border border-border rounded-md px-3 py-2 cursor-pointer hover:border-border-strong">
-                <input type="radio" name="baujahr" value="vor1977" required data-field class="accent-primary" />
+              <label
+                class="flex items-center gap-2 border border-border rounded-md px-3 py-2 cursor-pointer hover:border-border-strong"
+              >
+                <input
+                  type="radio"
+                  name="baujahr"
+                  value="vor1977"
+                  required
+                  data-field
+                  class="accent-primary"
+                />
                 <span class="text-sm">vor 1977</span>
               </label>
-              <label class="flex items-center gap-2 border border-border rounded-md px-3 py-2 cursor-pointer hover:border-border-strong">
-                <input type="radio" name="baujahr" value="1977_1995" data-field class="accent-primary" />
+              <label
+                class="flex items-center gap-2 border border-border rounded-md px-3 py-2 cursor-pointer hover:border-border-strong"
+              >
+                <input
+                  type="radio"
+                  name="baujahr"
+                  value="1977_1995"
+                  data-field
+                  class="accent-primary"
+                />
                 <span class="text-sm">1977 – 1995</span>
               </label>
-              <label class="flex items-center gap-2 border border-border rounded-md px-3 py-2 cursor-pointer hover:border-border-strong">
-                <input type="radio" name="baujahr" value="1996_2020" data-field class="accent-primary" />
+              <label
+                class="flex items-center gap-2 border border-border rounded-md px-3 py-2 cursor-pointer hover:border-border-strong"
+              >
+                <input
+                  type="radio"
+                  name="baujahr"
+                  value="1996_2020"
+                  data-field
+                  class="accent-primary"
+                />
                 <span class="text-sm">1996 – 2020</span>
               </label>
-              <label class="flex items-center gap-2 border border-border rounded-md px-3 py-2 cursor-pointer hover:border-border-strong">
-                <input type="radio" name="baujahr" value="nach2020" data-field class="accent-primary" />
+              <label
+                class="flex items-center gap-2 border border-border rounded-md px-3 py-2 cursor-pointer hover:border-border-strong"
+              >
+                <input
+                  type="radio"
+                  name="baujahr"
+                  value="nach2020"
+                  data-field
+                  class="accent-primary"
+                />
                 <span class="text-sm">nach 2020</span>
               </label>
             </div>
@@ -113,20 +196,53 @@
               Wohnfläche<span class="text-accent ml-1">*</span>
             </span>
             <div class="grid grid-cols-2 gap-2">
-              <label class="flex items-center gap-2 border border-border rounded-md px-3 py-2 cursor-pointer hover:border-border-strong">
-                <input type="radio" name="flaeche" value="bis100" required data-field class="accent-primary" />
+              <label
+                class="flex items-center gap-2 border border-border rounded-md px-3 py-2 cursor-pointer hover:border-border-strong"
+              >
+                <input
+                  type="radio"
+                  name="flaeche"
+                  value="bis100"
+                  required
+                  data-field
+                  class="accent-primary"
+                />
                 <span class="text-sm">bis 100 m²</span>
               </label>
-              <label class="flex items-center gap-2 border border-border rounded-md px-3 py-2 cursor-pointer hover:border-border-strong">
-                <input type="radio" name="flaeche" value="100_150" data-field class="accent-primary" />
+              <label
+                class="flex items-center gap-2 border border-border rounded-md px-3 py-2 cursor-pointer hover:border-border-strong"
+              >
+                <input
+                  type="radio"
+                  name="flaeche"
+                  value="100_150"
+                  data-field
+                  class="accent-primary"
+                />
                 <span class="text-sm">100 – 150 m²</span>
               </label>
-              <label class="flex items-center gap-2 border border-border rounded-md px-3 py-2 cursor-pointer hover:border-border-strong">
-                <input type="radio" name="flaeche" value="150_220" data-field class="accent-primary" />
+              <label
+                class="flex items-center gap-2 border border-border rounded-md px-3 py-2 cursor-pointer hover:border-border-strong"
+              >
+                <input
+                  type="radio"
+                  name="flaeche"
+                  value="150_220"
+                  data-field
+                  class="accent-primary"
+                />
                 <span class="text-sm">150 – 220 m²</span>
               </label>
-              <label class="flex items-center gap-2 border border-border rounded-md px-3 py-2 cursor-pointer hover:border-border-strong">
-                <input type="radio" name="flaeche" value="ueber220" data-field class="accent-primary" />
+              <label
+                class="flex items-center gap-2 border border-border rounded-md px-3 py-2 cursor-pointer hover:border-border-strong"
+              >
+                <input
+                  type="radio"
+                  name="flaeche"
+                  value="ueber220"
+                  data-field
+                  class="accent-primary"
+                />
                 <span class="text-sm">über 220 m²</span>
               </label>
             </div>
@@ -138,20 +254,32 @@
             Heizung &amp; Technik
           </legend>
           <p class="text-sm text-text-muted mb-6">
-            Die aktuelle Heizung bestimmt, wie Umstieg und Förderung aussehen können.
+            Die aktuelle Heizung bestimmt, wie Umstieg und Förderung aussehen
+            können.
           </p>
 
           <div>
-            <label class="block font-semibold text-sm text-text mb-1" for="cw-heizung">
+            <label
+              class="block font-semibold text-sm text-text mb-1"
+              for="cw-heizung"
+            >
               Aktuelle Heizung<span class="text-accent ml-1">*</span>
             </label>
-            <select id="cw-heizung" name="heizung" class="input-base" required data-field>
+            <select
+              id="cw-heizung"
+              name="heizung"
+              class="input-base"
+              required
+              data-field
+            >
               <option value="" disabled selected>Bitte wählen</option>
               <option value="oel">Ölheizung</option>
               <option value="gas">Gasheizung</option>
+              <option value="gasetage">Gas-Etagenheizung</option>
               <option value="fernwaerme">Fernwärme</option>
               <option value="nachtspeicher">Nachtspeicher / Strom</option>
-              <option value="holz">Holz / Pellets</option>
+              <option value="biomasse">Biomasseheizung (Holz/Pellets)</option>
+              <option value="kohle">Kohleheizung</option>
               <option value="waermepumpe">bereits Wärmepumpe</option>
               <option value="andere">andere / unbekannt</option>
             </select>
@@ -162,24 +290,77 @@
               Alter der Heizung<span class="text-accent ml-1">*</span>
             </span>
             <div class="grid grid-cols-2 gap-2">
-              <label class="flex items-center gap-2 border border-border rounded-md px-3 py-2 cursor-pointer hover:border-border-strong">
-                <input type="radio" name="heizungsalter" value="u5" required data-field class="accent-primary" />
+              <label
+                class="flex items-center gap-2 border border-border rounded-md px-3 py-2 cursor-pointer hover:border-border-strong"
+              >
+                <input
+                  type="radio"
+                  name="heizungsalter"
+                  value="u5"
+                  required
+                  data-field
+                  class="accent-primary"
+                />
                 <span class="text-sm">unter 5 Jahre</span>
               </label>
-              <label class="flex items-center gap-2 border border-border rounded-md px-3 py-2 cursor-pointer hover:border-border-strong">
-                <input type="radio" name="heizungsalter" value="5_15" data-field class="accent-primary" />
+              <label
+                class="flex items-center gap-2 border border-border rounded-md px-3 py-2 cursor-pointer hover:border-border-strong"
+              >
+                <input
+                  type="radio"
+                  name="heizungsalter"
+                  value="5_15"
+                  data-field
+                  class="accent-primary"
+                />
                 <span class="text-sm">5 – 15 Jahre</span>
               </label>
-              <label class="flex items-center gap-2 border border-border rounded-md px-3 py-2 cursor-pointer hover:border-border-strong">
-                <input type="radio" name="heizungsalter" value="15_25" data-field class="accent-primary" />
-                <span class="text-sm">15 – 25 Jahre</span>
+              <label
+                class="flex items-center gap-2 border border-border rounded-md px-3 py-2 cursor-pointer hover:border-border-strong"
+              >
+                <input
+                  type="radio"
+                  name="heizungsalter"
+                  value="15_20"
+                  data-field
+                  class="accent-primary"
+                />
+                <span class="text-sm">15 – 20 Jahre</span>
               </label>
-              <label class="flex items-center gap-2 border border-border rounded-md px-3 py-2 cursor-pointer hover:border-border-strong">
-                <input type="radio" name="heizungsalter" value="ueber25" data-field class="accent-primary" />
+              <label
+                class="flex items-center gap-2 border border-border rounded-md px-3 py-2 cursor-pointer hover:border-border-strong"
+              >
+                <input
+                  type="radio"
+                  name="heizungsalter"
+                  value="20_25"
+                  data-field
+                  class="accent-primary"
+                />
+                <span class="text-sm">20 – 25 Jahre</span>
+              </label>
+              <label
+                class="flex items-center gap-2 border border-border rounded-md px-3 py-2 cursor-pointer hover:border-border-strong"
+              >
+                <input
+                  type="radio"
+                  name="heizungsalter"
+                  value="ueber25"
+                  data-field
+                  class="accent-primary"
+                />
                 <span class="text-sm">über 25 Jahre</span>
               </label>
-              <label class="flex items-center gap-2 border border-border rounded-md px-3 py-2 cursor-pointer hover:border-border-strong sm:col-span-2">
-                <input type="radio" name="heizungsalter" value="unbekannt" data-field class="accent-primary" />
+              <label
+                class="flex items-center gap-2 border border-border rounded-md px-3 py-2 cursor-pointer hover:border-border-strong"
+              >
+                <input
+                  type="radio"
+                  name="heizungsalter"
+                  value="unbekannt"
+                  data-field
+                  class="accent-primary"
+                />
                 <span class="text-sm">unbekannt</span>
               </label>
             </div>
@@ -190,16 +371,41 @@
               Wärmeabgabe im Haus<span class="text-accent ml-1">*</span>
             </span>
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
-              <label class="flex items-center gap-2 border border-border rounded-md px-3 py-2 cursor-pointer hover:border-border-strong">
-                <input type="radio" name="waermeabgabe" value="heizkoerper" required data-field class="accent-primary" />
+              <label
+                class="flex items-center gap-2 border border-border rounded-md px-3 py-2 cursor-pointer hover:border-border-strong"
+              >
+                <input
+                  type="radio"
+                  name="waermeabgabe"
+                  value="heizkoerper"
+                  required
+                  data-field
+                  class="accent-primary"
+                />
                 <span class="text-sm">nur Heizkörper</span>
               </label>
-              <label class="flex items-center gap-2 border border-border rounded-md px-3 py-2 cursor-pointer hover:border-border-strong">
-                <input type="radio" name="waermeabgabe" value="gemischt" data-field class="accent-primary" />
+              <label
+                class="flex items-center gap-2 border border-border rounded-md px-3 py-2 cursor-pointer hover:border-border-strong"
+              >
+                <input
+                  type="radio"
+                  name="waermeabgabe"
+                  value="gemischt"
+                  data-field
+                  class="accent-primary"
+                />
                 <span class="text-sm">gemischt</span>
               </label>
-              <label class="flex items-center gap-2 border border-border rounded-md px-3 py-2 cursor-pointer hover:border-border-strong">
-                <input type="radio" name="waermeabgabe" value="fbh" data-field class="accent-primary" />
+              <label
+                class="flex items-center gap-2 border border-border rounded-md px-3 py-2 cursor-pointer hover:border-border-strong"
+              >
+                <input
+                  type="radio"
+                  name="waermeabgabe"
+                  value="fbh"
+                  data-field
+                  class="accent-primary"
+                />
                 <span class="text-sm">nur Fußbodenheizung</span>
               </label>
             </div>
@@ -210,24 +416,65 @@
               Dämmstandard<span class="text-accent ml-1">*</span>
             </span>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-              <label class="flex items-center gap-2 border border-border rounded-md px-3 py-2 cursor-pointer hover:border-border-strong">
-                <input type="radio" name="daemmung" value="unsaniert" required data-field class="accent-primary" />
+              <label
+                class="flex items-center gap-2 border border-border rounded-md px-3 py-2 cursor-pointer hover:border-border-strong"
+              >
+                <input
+                  type="radio"
+                  name="daemmung"
+                  value="unsaniert"
+                  required
+                  data-field
+                  class="accent-primary"
+                />
                 <span class="text-sm">unsaniert</span>
               </label>
-              <label class="flex items-center gap-2 border border-border rounded-md px-3 py-2 cursor-pointer hover:border-border-strong">
-                <input type="radio" name="daemmung" value="teilsaniert" data-field class="accent-primary" />
+              <label
+                class="flex items-center gap-2 border border-border rounded-md px-3 py-2 cursor-pointer hover:border-border-strong"
+              >
+                <input
+                  type="radio"
+                  name="daemmung"
+                  value="teilsaniert"
+                  data-field
+                  class="accent-primary"
+                />
                 <span class="text-sm">teilsaniert</span>
               </label>
-              <label class="flex items-center gap-2 border border-border rounded-md px-3 py-2 cursor-pointer hover:border-border-strong">
-                <input type="radio" name="daemmung" value="saniert" data-field class="accent-primary" />
+              <label
+                class="flex items-center gap-2 border border-border rounded-md px-3 py-2 cursor-pointer hover:border-border-strong"
+              >
+                <input
+                  type="radio"
+                  name="daemmung"
+                  value="saniert"
+                  data-field
+                  class="accent-primary"
+                />
                 <span class="text-sm">saniert</span>
               </label>
-              <label class="flex items-center gap-2 border border-border rounded-md px-3 py-2 cursor-pointer hover:border-border-strong">
-                <input type="radio" name="daemmung" value="neubau" data-field class="accent-primary" />
+              <label
+                class="flex items-center gap-2 border border-border rounded-md px-3 py-2 cursor-pointer hover:border-border-strong"
+              >
+                <input
+                  type="radio"
+                  name="daemmung"
+                  value="neubau"
+                  data-field
+                  class="accent-primary"
+                />
                 <span class="text-sm">Neubaustandard</span>
               </label>
-              <label class="flex items-center gap-2 border border-border rounded-md px-3 py-2 cursor-pointer hover:border-border-strong sm:col-span-2">
-                <input type="radio" name="daemmung" value="unsicher" data-field class="accent-primary" />
+              <label
+                class="flex items-center gap-2 border border-border rounded-md px-3 py-2 cursor-pointer hover:border-border-strong sm:col-span-2"
+              >
+                <input
+                  type="radio"
+                  name="daemmung"
+                  value="unsicher"
+                  data-field
+                  class="accent-primary"
+                />
                 <span class="text-sm">unsicher</span>
               </label>
             </div>
@@ -247,20 +494,53 @@
               Eigentumsstatus<span class="text-accent ml-1">*</span>
             </span>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-              <label class="flex items-center gap-2 border border-border rounded-md px-3 py-2 cursor-pointer hover:border-border-strong">
-                <input type="radio" name="eigentum" value="selbstgenutzt" required data-field class="accent-primary" />
+              <label
+                class="flex items-center gap-2 border border-border rounded-md px-3 py-2 cursor-pointer hover:border-border-strong"
+              >
+                <input
+                  type="radio"
+                  name="eigentum"
+                  value="selbstgenutzt"
+                  required
+                  data-field
+                  class="accent-primary"
+                />
                 <span class="text-sm">Eigentümer, selbstgenutzt</span>
               </label>
-              <label class="flex items-center gap-2 border border-border rounded-md px-3 py-2 cursor-pointer hover:border-border-strong">
-                <input type="radio" name="eigentum" value="vermietet" data-field class="accent-primary" />
+              <label
+                class="flex items-center gap-2 border border-border rounded-md px-3 py-2 cursor-pointer hover:border-border-strong"
+              >
+                <input
+                  type="radio"
+                  name="eigentum"
+                  value="vermietet"
+                  data-field
+                  class="accent-primary"
+                />
                 <span class="text-sm">Eigentümer, vermietet</span>
               </label>
-              <label class="flex items-center gap-2 border border-border rounded-md px-3 py-2 cursor-pointer hover:border-border-strong">
-                <input type="radio" name="eigentum" value="weg" data-field class="accent-primary" />
+              <label
+                class="flex items-center gap-2 border border-border rounded-md px-3 py-2 cursor-pointer hover:border-border-strong"
+              >
+                <input
+                  type="radio"
+                  name="eigentum"
+                  value="weg"
+                  data-field
+                  class="accent-primary"
+                />
                 <span class="text-sm">Miteigentum / WEG</span>
               </label>
-              <label class="flex items-center gap-2 border border-border rounded-md px-3 py-2 cursor-pointer hover:border-border-strong">
-                <input type="radio" name="eigentum" value="mieter" data-field class="accent-primary" />
+              <label
+                class="flex items-center gap-2 border border-border rounded-md px-3 py-2 cursor-pointer hover:border-border-strong"
+              >
+                <input
+                  type="radio"
+                  name="eigentum"
+                  value="mieter"
+                  data-field
+                  class="accent-primary"
+                />
                 <span class="text-sm">Mieter</span>
               </label>
             </div>
@@ -271,23 +551,56 @@
               Haushaltsjahreseinkommen
             </span>
             <p class="text-xs text-text-muted mb-2">
-              Nur für den KfW-Einkommensbonus. Angabe freiwillig, wird nicht übertragen.
+              Nur für den KfW-Einkommensbonus. Angabe freiwillig, wird nicht
+              übertragen.
             </p>
             <div class="grid grid-cols-2 gap-2">
-              <label class="flex items-center gap-2 border border-border rounded-md px-3 py-2 cursor-pointer hover:border-border-strong">
-                <input type="radio" name="einkommen" value="bis40" data-field class="accent-primary" />
+              <label
+                class="flex items-center gap-2 border border-border rounded-md px-3 py-2 cursor-pointer hover:border-border-strong"
+              >
+                <input
+                  type="radio"
+                  name="einkommen"
+                  value="bis40"
+                  data-field
+                  class="accent-primary"
+                />
                 <span class="text-sm">bis 40.000 €</span>
               </label>
-              <label class="flex items-center gap-2 border border-border rounded-md px-3 py-2 cursor-pointer hover:border-border-strong">
-                <input type="radio" name="einkommen" value="40_90" data-field class="accent-primary" />
+              <label
+                class="flex items-center gap-2 border border-border rounded-md px-3 py-2 cursor-pointer hover:border-border-strong"
+              >
+                <input
+                  type="radio"
+                  name="einkommen"
+                  value="40_90"
+                  data-field
+                  class="accent-primary"
+                />
                 <span class="text-sm">40.000 – 90.000 €</span>
               </label>
-              <label class="flex items-center gap-2 border border-border rounded-md px-3 py-2 cursor-pointer hover:border-border-strong">
-                <input type="radio" name="einkommen" value="ueber90" data-field class="accent-primary" />
+              <label
+                class="flex items-center gap-2 border border-border rounded-md px-3 py-2 cursor-pointer hover:border-border-strong"
+              >
+                <input
+                  type="radio"
+                  name="einkommen"
+                  value="ueber90"
+                  data-field
+                  class="accent-primary"
+                />
                 <span class="text-sm">über 90.000 €</span>
               </label>
-              <label class="flex items-center gap-2 border border-border rounded-md px-3 py-2 cursor-pointer hover:border-border-strong">
-                <input type="radio" name="einkommen" value="keine" data-field class="accent-primary" />
+              <label
+                class="flex items-center gap-2 border border-border rounded-md px-3 py-2 cursor-pointer hover:border-border-strong"
+              >
+                <input
+                  type="radio"
+                  name="einkommen"
+                  value="keine"
+                  data-field
+                  class="accent-primary"
+                />
                 <span class="text-sm">keine Angabe</span>
               </label>
             </div>
@@ -295,26 +608,56 @@
 
           <div>
             <span class="block font-semibold text-sm text-text mb-2">
-              Bereits Förderantrag gestellt?<span class="text-accent ml-1">*</span>
+              Bereits Förderantrag gestellt?<span class="text-accent ml-1"
+                >*</span
+              >
             </span>
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
-              <label class="flex items-center gap-2 border border-border rounded-md px-3 py-2 cursor-pointer hover:border-border-strong">
-                <input type="radio" name="antrag" value="ja" required data-field class="accent-primary" />
+              <label
+                class="flex items-center gap-2 border border-border rounded-md px-3 py-2 cursor-pointer hover:border-border-strong"
+              >
+                <input
+                  type="radio"
+                  name="antrag"
+                  value="ja"
+                  required
+                  data-field
+                  class="accent-primary"
+                />
                 <span class="text-sm">ja</span>
               </label>
-              <label class="flex items-center gap-2 border border-border rounded-md px-3 py-2 cursor-pointer hover:border-border-strong">
-                <input type="radio" name="antrag" value="planung" data-field class="accent-primary" />
+              <label
+                class="flex items-center gap-2 border border-border rounded-md px-3 py-2 cursor-pointer hover:border-border-strong"
+              >
+                <input
+                  type="radio"
+                  name="antrag"
+                  value="planung"
+                  data-field
+                  class="accent-primary"
+                />
                 <span class="text-sm">in Planung</span>
               </label>
-              <label class="flex items-center gap-2 border border-border rounded-md px-3 py-2 cursor-pointer hover:border-border-strong">
-                <input type="radio" name="antrag" value="nein" data-field class="accent-primary" />
+              <label
+                class="flex items-center gap-2 border border-border rounded-md px-3 py-2 cursor-pointer hover:border-border-strong"
+              >
+                <input
+                  type="radio"
+                  name="antrag"
+                  value="nein"
+                  data-field
+                  class="accent-primary"
+                />
                 <span class="text-sm">nein</span>
               </label>
             </div>
           </div>
         </fieldset>
 
-        <div class="flex flex-col sm:flex-row justify-between gap-3 mt-10" data-step-nav>
+        <div
+          class="flex flex-col sm:flex-row justify-between gap-3 mt-10"
+          data-step-nav
+        >
           <button
             type="button"
             class="btn-secondary w-full sm:w-auto hidden"
@@ -339,11 +682,10 @@
         </div>
 
         <p class="text-xs text-text-muted mt-6 text-center" data-hint>
-          Ihre Eingaben verlassen niemals diesen Browser. Keine Anmeldung, keine E-Mail.
+          Ihre Eingaben verlassen niemals diesen Browser. Keine Anmeldung, keine
+          E-Mail.
         </p>
       </form>
-
-      <!-- PHASE-2-HOOK: optional email step would mount here, before the result panel -->
 
       <div data-result-panel class="hidden mt-8">
         <div class="border-t border-border pt-8">
@@ -354,22 +696,66 @@
           <div class="space-y-6">
             <div class="border border-border rounded-lg p-5 bg-surface">
               <div class="flex items-center gap-3 mb-3">
-                <span class="text-xs uppercase tracking-wide text-text-muted">Eignung</span>
-                <span data-eignung-badge class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold"></span>
+                <span class="text-xs uppercase tracking-wide text-text-muted"
+                  >Eignung</span
+                >
+                <span
+                  data-eignung-badge
+                  class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold"
+                ></span>
               </div>
               <p data-eignung-text class="text-text leading-relaxed"></p>
             </div>
 
             <div class="border border-border rounded-lg p-5 bg-surface">
               <div class="flex items-center gap-3 mb-3">
-                <span class="text-xs uppercase tracking-wide text-text-muted">Förderung</span>
-                <span data-foerder-badge class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold"></span>
+                <span class="text-xs uppercase tracking-wide text-text-muted"
+                  >Förderung</span
+                >
+                <span
+                  data-foerder-badge
+                  class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold"
+                ></span>
               </div>
               <p data-foerder-text class="text-text leading-relaxed mb-4"></p>
               <ul data-foerder-list class="space-y-2 text-sm"></ul>
+              <p
+                data-bestand-hinweis
+                class="text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded-md p-3 mt-4 hidden"
+              >
+              </p>
               <p class="text-xs text-text-muted mt-4">
-                Maximal förderfähige Kosten 2026: 30.000 € für ein Einfamilienhaus.
-                Prozentsätze sind Obergrenzen; die tatsächliche Förderhöhe wird im Antrag festgestellt.
+                Maximal förderfähige Kosten April 2026: 30.000 € für ein
+                Einfamilienhaus. Prozentsätze sind Obergrenzen; die tatsächliche
+                Förderhöhe wird im Antrag festgestellt.
+              </p>
+            </div>
+
+            <div
+              data-kosten-block
+              class="border border-border rounded-lg p-5 bg-surface"
+            >
+              <h3 class="text-sm font-semibold text-text mb-2">
+                Orientierende Kostenlage (Stand 2026)
+              </h3>
+              <p class="text-sm text-text leading-relaxed mb-2">
+                Typische Gesamtkosten vor Förderung: <strong
+                  >25.000–50.000 €</strong
+                >.
+              </p>
+              <p class="text-sm text-text-muted leading-relaxed mb-3">
+                Beispiel Reihenhaus teilsaniert: 25.000–32.000 € Anschaffung,
+                15.000–22.400 € Förderung, Eigenanteil ≈ 10.000–14.000 €.
+              </p>
+              <a
+                href="/waermepumpe-kosten-foerderung/"
+                class="text-sm text-primary hover:underline font-medium"
+              >
+                → Detaillierte Kosten- und Förderübersicht
+              </a>
+              <p class="text-xs text-text-muted mt-2">
+                Keine individuelle Schätzung – die tatsächlichen Kosten hängen
+                von Gebäude, Auslegung und Wunschsystem ab.
               </p>
             </div>
 
@@ -379,22 +765,33 @@
             </div>
 
             <div class="flex flex-col sm:flex-row gap-3">
-              <a href="/waermepumpe-kosten-foerderung/" class="btn-secondary w-full sm:w-auto text-center">
+              <a
+                href="/waermepumpe-kosten-foerderung/"
+                class="btn-secondary w-full sm:w-auto text-center"
+              >
                 Mehr zur Förderung
               </a>
-              <a href="/waermepumpe-altbau-bremen/" class="btn-secondary w-full sm:w-auto text-center">
+              <a
+                href="/waermepumpe-altbau-bremen/"
+                class="btn-secondary w-full sm:w-auto text-center"
+              >
                 Altbau-Themen
               </a>
-              <button type="button" class="btn-secondary w-full sm:w-auto" data-restart-btn>
+              <button
+                type="button"
+                class="btn-secondary w-full sm:w-auto"
+                data-restart-btn
+              >
                 Check neu starten
               </button>
             </div>
 
             <p class="text-xs text-text-muted leading-relaxed">
-              Automatisierte Orientierung auf Basis öffentlich verfügbarer Förderregeln
-              (BEG Einzelmaßnahmen / KfW 458, Stand 2026). Keine Rechts-, Steuer- oder Energieberatung.
-              Eine belastbare Aussage liefert nur die Prüfung durch einen zugelassenen Fachbetrieb
-              oder eine anerkannte Energieberatung.
+              Automatisierte Orientierung auf Basis öffentlich verfügbarer
+              Förderregeln (BEG Einzelmaßnahmen / KfW 458, Stand April 2026).
+              Keine Rechts-, Steuer- oder Energieberatung. Eine belastbare
+              Aussage liefert nur die Prüfung durch einen zugelassenen
+              Fachbetrieb oder eine anerkannte Energieberatung.
             </p>
           </div>
         </div>
@@ -428,7 +825,9 @@
 
     function track(eventName, props) {
       if (typeof window.plausible === "function") {
-        try { window.plausible(eventName, props ? { props: props } : undefined); } catch (e) {}
+        try {
+          window.plausible(eventName, props ? { props: props } : undefined);
+        } catch (e) {}
       }
     }
 
@@ -459,9 +858,17 @@
         var f = fields[i];
         if (f.type === "radio") {
           var groupName = f.name;
-          var anyChecked = step.querySelector('input[name="' + groupName + '"]:checked');
-          if (!anyChecked) { ok = false; break; }
-        } else if (!f.value || (f.pattern && !new RegExp("^" + f.pattern + "$").test(f.value))) {
+          var anyChecked = step.querySelector(
+            'input[name="' + groupName + '"]:checked',
+          );
+          if (!anyChecked) {
+            ok = false;
+            break;
+          }
+        } else if (
+          !f.value ||
+          (f.pattern && !new RegExp("^" + f.pattern + "$").test(f.value))
+        ) {
           ok = false;
           break;
         }
@@ -488,91 +895,160 @@
         daemmung: String(fd.get("daemmung") || ""),
         eigentum: String(fd.get("eigentum") || ""),
         einkommen: String(fd.get("einkommen") || ""),
-        antrag: String(fd.get("antrag") || "")
+        antrag: String(fd.get("antrag") || ""),
       };
     }
 
     function scoreEignung(d) {
-      var baujahr = { vor1977: 0, "1977_1995": 15, "1996_2020": 30, nach2020: 40 }[d.baujahr] || 0;
-      var waerme = { heizkoerper: 5, gemischt: 20, fbh: 30 }[d.waermeabgabe] || 0;
-      var daemm = { unsaniert: 0, teilsaniert: 10, saniert: 20, neubau: 25, unsicher: 5 }[d.daemmung] || 0;
-      var typBonus = ["einfamilienhaus", "reihenhaus", "doppelhaushaelfte"].indexOf(d.gebaeudetyp) >= 0 ? 5 : 0;
+      var baujahr =
+        { vor1977: 0, "1977_1995": 10, "1996_2020": 18, nach2020: 22 }[
+          d.baujahr
+        ] || 0;
+      var waerme =
+        { heizkoerper: 10, gemischt: 25, fbh: 35 }[d.waermeabgabe] || 0;
+      var daemm =
+        { unsaniert: 0, teilsaniert: 18, saniert: 30, neubau: 35, unsicher: 8 }[
+          d.daemmung
+        ] || 0;
+      var typBonus =
+        ["einfamilienhaus", "reihenhaus", "doppelhaushaelfte"].indexOf(
+          d.gebaeudetyp,
+        ) >= 0
+          ? 5
+          : 0;
       var total = baujahr + waerme + daemm + typBonus;
 
       var level;
-      if (total >= 70) level = "hoch";
+      if (total >= 65) level = "hoch";
       else if (total >= 40) level = "mittel";
       else level = "niedrig";
 
       var text;
       if (level === "hoch") {
-        text = "Das Gebäude bringt gute Voraussetzungen für eine Wärmepumpe mit. "
-             + "Baujahr, Wärmeabgabe und Dämmstandard sprechen für einen effizienten Betrieb. "
-             + "Eine Vor-Ort-Prüfung (Heizlast, Vorlauftemperatur) bestätigt die Einschätzung.";
+        text =
+          "Das Gebäude bringt gute Voraussetzungen für eine Wärmepumpe mit. " +
+          "Baujahr, Wärmeabgabe und Dämmstandard sprechen für einen effizienten Betrieb. " +
+          "Eine Vor-Ort-Prüfung (Heizlast, Vorlauftemperatur) bestätigt die Einschätzung.";
       } else if (level === "mittel") {
-        text = "Eine Wärmepumpe ist grundsätzlich möglich. Einzelne Punkte – etwa "
-             + "Heizkörperauslegung, Dämmstandard oder Vorlauftemperatur – sollten vor der "
-             + "Installation geprüft und ggf. angepasst werden.";
+        text =
+          "Eine Wärmepumpe ist grundsätzlich möglich. Einzelne Punkte – etwa " +
+          "Heizkörperauslegung, Dämmstandard oder Vorlauftemperatur – sollten vor der " +
+          "Installation geprüft und ggf. angepasst werden.";
       } else {
-        text = "Die Voraussetzungen sind auf den ersten Blick eingeschränkt. Das bedeutet "
-             + "nicht automatisch, dass eine Wärmepumpe ausscheidet, aber es braucht eine "
-             + "sorgfältige Einzelfallprüfung – insbesondere zu Vorlauftemperatur, Heizkörpern "
-             + "und Dämmung.";
+        text =
+          "Die Voraussetzungen sind auf den ersten Blick eingeschränkt. Das bedeutet " +
+          "nicht automatisch, dass eine Wärmepumpe ausscheidet, aber es braucht eine " +
+          "sorgfältige Einzelfallprüfung – insbesondere zu Vorlauftemperatur, Heizkörpern " +
+          "und Dämmung.";
       }
       return { score: total, level: level, text: text };
     }
 
     function scoreFoerderung(d, eignungLevel) {
       var bausteine = [];
-      var anwendbar = true;
       var mieter = d.eigentum === "mieter";
       var vermietet = d.eigentum === "vermietet";
       var weg = d.eigentum === "weg";
       var selbst = d.eigentum === "selbstgenutzt";
+      var istBestandsgebaeude = d.baujahr !== "nach2020";
 
       if (mieter) {
         return {
           level: "nicht_anwendbar",
-          text: "Als Mieter sind Sie nicht antragsberechtigt. Der Förderantrag muss vom "
-              + "Eigentümer bzw. der Eigentümergemeinschaft gestellt werden.",
+          text:
+            "Als Mieter sind Sie nicht antragsberechtigt. Der Förderantrag muss vom " +
+            "Eigentümer bzw. der Eigentümergemeinschaft gestellt werden.",
           bausteine: [],
-          summe: 0
+          summe: 0,
+          bestandsWarnung: false,
+        };
+      }
+
+      // Heizungstypen, die keinen Heizungstausch fördern
+      if (d.heizung === "waermepumpe") {
+        return {
+          level: "nicht_anwendbar",
+          text:
+            "Sie betreiben bereits eine Wärmepumpe. Ein Heizungstausch Wärmepumpe → Wärmepumpe ist über KfW 458 in der Regel nicht förderfähig. " +
+            "Für Effizienzmaßnahmen an der bestehenden Anlage kommt ggf. die BAFA-Heizungsoptimierung in Frage.",
+          bausteine: [],
+          summe: 0,
+          bestandsWarnung: false,
+        };
+      }
+
+      if (d.heizung === "fernwaerme") {
+        return {
+          level: "nicht_anwendbar",
+          text: "Fernwärme-Anschlüsse haben eigene Förderwege. Ein reiner Heizungstausch von Fernwärme auf Wärmepumpe ist über KfW 458 in der Regel nicht förderfähig.",
+          bausteine: [],
+          summe: 0,
+          bestandsWarnung: false,
         };
       }
 
       if (selbst || weg) {
-        bausteine.push({ name: "Grundförderung KfW 458", pct: 30, hinweis: "Basis-Zuschuss für den Heizungstausch" });
+        bausteine.push({
+          name: "Grundförderung KfW 458",
+          pct: 30,
+          hinweis: "Basis-Zuschuss für den Heizungstausch",
+          anwendbar: istBestandsgebaeude,
+        });
       } else if (vermietet) {
-        bausteine.push({ name: "Grundförderung KfW 458 (vermietet)", pct: 30, hinweis: "Auch für vermieteten Wohnraum" });
+        bausteine.push({
+          name: "Grundförderung KfW 458 (vermietet)",
+          pct: 30,
+          hinweis: "Auch für vermieteten Wohnraum",
+          anwendbar: istBestandsgebaeude,
+        });
       }
 
-      var fossil = d.heizung === "oel" || d.heizung === "gas" || d.heizung === "nachtspeicher";
-      var alt = d.heizungsalter === "15_25" || d.heizungsalter === "ueber25";
-      if (fossil && (selbst || weg || vermietet)) {
-        if (alt || d.heizung === "oel") {
-          bausteine.push({
-            name: "Klimageschwindigkeits-Bonus",
-            pct: 20,
-            hinweis: "Für den Austausch einer funktionierenden Öl- / Gas- / Nachtspeicher-Heizung"
-          });
-        }
+      // Klimageschwindigkeits-Bonus
+      var immerBonus =
+        ["oel", "kohle", "gasetage", "nachtspeicher"].indexOf(d.heizung) >= 0;
+      var ab20Jahre =
+        ["gas", "biomasse"].indexOf(d.heizung) >= 0 &&
+        ["20_25", "ueber25"].indexOf(d.heizungsalter) >= 0;
+
+      if ((immerBonus || ab20Jahre) && (selbst || weg || vermietet)) {
+        bausteine.push({
+          name: "Klimageschwindigkeits-Bonus",
+          pct: 20,
+          hinweis: "Für den Austausch einer funktionierenden alten Heizung",
+        });
       }
 
+      // Einkommens-Bonus
       if (selbst && d.einkommen === "bis40") {
         bausteine.push({
           name: "Einkommens-Bonus",
           pct: 30,
-          hinweis: "Für selbstnutzende Eigentümer mit Haushaltseinkommen bis 40.000 €"
+          hinweis:
+            "Für selbstnutzende Eigentümer mit Haushaltseinkommen bis 40.000 €",
+        });
+      } else if (selbst && (d.einkommen === "" || d.einkommen === "keine")) {
+        // Informativer Baustein, wird nicht zur Summe addiert
+        bausteine.push({
+          name: "ggf. Einkommens-Bonus",
+          pct: 30,
+          hinweis:
+            "Falls Haushaltseinkommen ≤ 40.000 €: zusätzlich 30 % Bonus möglich.",
+          informativ: true,
         });
       }
 
+      // Effizienz-Bonus
       bausteine.push({
-        name: "Effizienz-Bonus (natürliches Kältemittel)",
+        name: "Effizienz-Bonus",
         pct: 5,
-        hinweis: "Wenn die Wärmepumpe mit natürlichem Kältemittel (z.B. Propan R290) arbeitet"
+        hinweis:
+          "Gilt für Wärmepumpen mit natürlichem Kältemittel (z. B. R290) oder Erdreich-/Grundwasser-/Abwasser-Wärmequelle. Im konkreten Angebot bestätigen lassen.",
       });
 
-      var summe = bausteine.reduce(function (acc, b) { return acc + b.pct; }, 0);
+      // Summe berechnen (ohne informativen Bausteine)
+      var summe = bausteine.reduce(function (acc, b) {
+        return acc + (b.informativ ? 0 : b.pct);
+      }, 0);
       summe = Math.min(summe, 70); // KfW-Deckel 2026
 
       var level;
@@ -588,43 +1064,117 @@
 
       var text;
       if (level === "bereits_gestellt") {
-        text = "Sie haben bereits einen Förderantrag gestellt. Eine erneute Einreichung ist für "
-             + "dasselbe Vorhaben nicht möglich. Prüfen Sie den Status beim BAFA/der KfW, "
-             + "bevor ein Installationsvertrag geschlossen wird.";
+        text =
+          "Sie haben bereits einen Förderantrag gestellt. Eine erneute Einreichung ist für " +
+          "dasselbe Vorhaben nicht möglich. Prüfen Sie den Status beim BAFA/der KfW, " +
+          "bevor ein Installationsvertrag geschlossen wird.";
       } else if (level === "wahrscheinlich") {
-        text = "Auf Basis Ihrer Angaben sind mehrere Förderbausteine grundsätzlich anwendbar. "
-             + "In Kombination ergibt sich eine hohe Förderquote – gedeckelt bei 70 % der "
-             + "förderfähigen Kosten. Die verbindliche Zusage erfolgt durch die KfW.";
+        text =
+          "Auf Basis Ihrer Angaben sind mehrere Förderbausteine grundsätzlich anwendbar. " +
+          "In Kombination ergibt sich eine hohe Förderquote – gedeckelt bei 70 % der " +
+          "förderfähigen Kosten. Die verbindliche Zusage erfolgt durch die KfW.";
       } else if (level === "pruefen") {
-        text = "Die Grundförderung kommt voraussichtlich in Frage. Zusätzliche Boni hängen "
-             + "von Details ab, die im Antragsprozess belegt werden müssen.";
+        text =
+          "Die Grundförderung kommt voraussichtlich in Frage. Zusätzliche Boni hängen " +
+          "von Details ab, die im Antragsprozess belegt werden müssen.";
       } else {
-        text = "Die möglichen Bausteine sind auf Basis Ihrer Angaben eingeschränkt. "
-             + "Eine Einzelfallprüfung lohnt sich dennoch, weil sich Förderkonstellationen "
-             + "laufend ändern können.";
+        text =
+          "Die möglichen Bausteine sind auf Basis Ihrer Angaben eingeschränkt. " +
+          "Eine Einzelfallprüfung lohnt sich dennoch, weil sich Förderkonstellationen " +
+          "laufend ändern können.";
       }
 
-      return { level: level, text: text, bausteine: bausteine, summe: summe };
+      return {
+        level: level,
+        text: text,
+        bausteine: bausteine,
+        summe: summe,
+        bestandsWarnung: !istBestandsgebaeude,
+      };
     }
 
     function buildEmpfehlung(d, eignung, foerder) {
+      var parts = [];
+
       if (d.eigentum === "mieter") {
-        return "Sprechen Sie zunächst mit der Eigentümerin bzw. dem Eigentümer. "
-             + "Erst dann lassen sich sinnvoll Eignung und Fördermöglichkeiten prüfen.";
+        return (
+          "Sprechen Sie zunächst mit der Eigentümerin bzw. dem Eigentümer. " +
+          "Erst dann lassen sich sinnvoll Eignung und Fördermöglichkeiten prüfen."
+        );
       }
+
+      if (d.heizung === "waermepumpe") {
+        return (
+          "Sie betreiben bereits eine Wärmepumpe. Prüfen Sie stattdessen, ob eine BAFA-Heizungsoptimierung " +
+          "oder eine effizientere Anlagenregelung sinnvoll ist. Eine Heizlastberechnung hilft, " +
+          "die Auslegung der bestehenden Anlage zu bewerten."
+        );
+      }
+
+      if (d.heizung === "fernwaerme") {
+        return (
+          "Fernwärme-Anschlüsse haben eigene Förderwege. Eine Heizlastberechnung und " +
+          "Vorlauftemperatur-Prüfung helfen, die konkrete Situation einzuschätzen. " +
+          "Lassen Sie sich von einem Fachbetrieb beraten, ob ein Systemwechsel überhaupt sinnvoll ist."
+        );
+      }
+
+      // Heizlastberechnung immer erwähnen
+      var heizlastText =
+        "Lassen Sie zunächst eine Heizlastberechnung und Vorlauftemperatur-Prüfung vor Ort machen. ";
+
       if (eignung.level === "hoch" && foerder.level === "wahrscheinlich") {
-        return "Die Kombination aus guter Eignung und anwendbaren Förderbausteinen spricht "
-             + "für einen Wechsel. Als nächster Schritt: Fachbetrieb kontaktieren, Heizlast "
-             + "und Vorlauftemperatur prüfen lassen, dann Förderantrag VOR Vertragsschluss stellen.";
+        parts.push(
+          "Die Kombination aus guter Eignung und anwendbaren Förderbausteinen spricht für einen Wechsel. ",
+        );
+        parts.push(heizlastText);
+        parts.push(
+          "Als nächster Schritt: Fachbetrieb kontaktieren, Heizlast und Vorlauftemperatur prüfen lassen, dann Förderantrag VOR Vertragsschluss stellen.",
+        );
+      } else if (eignung.level === "niedrig") {
+        parts.push(heizlastText);
+        parts.push(
+          "Das Ergebnis entscheidet, ob ein Heizkörpertausch oder eine Teilsanierung den Weg zur Wärmepumpe ebnet.",
+        );
+      } else {
+        parts.push(heizlastText);
+        parts.push(
+          "Klären Sie im nächsten Schritt die offenen technischen Punkte (Vorlauftemperatur, Heizkörper, Dämmung) und stellen Sie erst danach den Förderantrag. ",
+        );
+        parts.push(
+          "Der Antrag muss immer VOR Abschluss des Installationsvertrags eingereicht werden.",
+        );
       }
-      if (eignung.level === "niedrig") {
-        return "Lassen Sie zuerst eine Heizlastberechnung und Vorlauftemperatur-Prüfung vor Ort "
-             + "machen. Das Ergebnis entscheidet, ob ein Heizkörpertausch oder eine Teilsanierung "
-             + "den Weg zur Wärmepumpe ebnet.";
+
+      // Hinweis bei unbekanntem Alter bei gas/biomasse
+      if (
+        d.heizungsalter === "unbekannt" &&
+        ["gas", "biomasse"].indexOf(d.heizung) >= 0
+      ) {
+        parts.push(
+          " Alter der Heizung klären — ab 20 Jahren kommt ein Klimabonus von +20 % in Betracht.",
+        );
       }
-      return "Klären Sie im nächsten Schritt die offenen technischen Punkte (Vorlauftemperatur, "
-           + "Heizkörper, Dämmung) und stellen Sie erst danach den Förderantrag. "
-           + "Der Antrag muss immer VOR Abschluss des Installationsvertrags eingereicht werden.";
+
+      // Hinweis bei großer Wohnfläche
+      if (d.flaeche === "ueber220" && d.gebaeudetyp === "einfamilienhaus") {
+        parts.push(
+          " Große Wohnfläche — Heizlast und Geräteauslegung besonders sorgfältig prüfen.",
+        );
+      }
+
+      // Hinweis bei kleiner unsanierter Objekte
+      if (
+        d.flaeche === "bis100" &&
+        d.waermeabgabe === "heizkoerper" &&
+        d.daemmung === "unsaniert"
+      ) {
+        parts.push(
+          " Bei kleinen unsanierten Objekten mit reinen Heizkörpern kann der Eigenanteil anteilig höher ausfallen.",
+        );
+      }
+
+      return parts.join("");
     }
 
     function renderResult() {
@@ -634,27 +1184,38 @@
       var empfehlung = buildEmpfehlung(d, eignung, foerder);
 
       var eBadge = root.querySelector("[data-eignung-badge]");
-      eBadge.textContent = eignung.level === "hoch" ? "Hoch"
-                          : eignung.level === "mittel" ? "Mittel" : "Niedrig";
-      eBadge.className = "inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold "
-                       + (eignung.level === "hoch" ? "bg-highlight text-primary border border-border"
-                         : eignung.level === "mittel" ? "bg-surface-alt text-text border border-border-strong"
-                         : "bg-red-50 text-red-700 border border-red-200");
+      eBadge.textContent =
+        eignung.level === "hoch"
+          ? "Hoch"
+          : eignung.level === "mittel"
+            ? "Mittel"
+            : "Niedrig";
+      eBadge.className =
+        "inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold " +
+        (eignung.level === "hoch"
+          ? "bg-highlight text-primary border border-border"
+          : eignung.level === "mittel"
+            ? "bg-surface-alt text-text border border-border-strong"
+            : "bg-red-50 text-red-700 border border-red-200");
       root.querySelector("[data-eignung-text]").textContent = eignung.text;
 
       var fBadge = root.querySelector("[data-foerder-badge]");
-      var fLabel = {
-        wahrscheinlich: "Förderfähig",
-        pruefen: "Einzelfallprüfung",
-        eingeschraenkt: "Eingeschränkt",
-        nicht_anwendbar: "Nicht anwendbar",
-        bereits_gestellt: "Bereits gestellt"
-      }[foerder.level] || "Prüfen";
+      var fLabel =
+        {
+          wahrscheinlich: "Förderfähig",
+          pruefen: "Einzelfallprüfung",
+          eingeschraenkt: "Eingeschränkt",
+          nicht_anwendbar: "Nicht anwendbar",
+          bereits_gestellt: "Bereits gestellt",
+        }[foerder.level] || "Prüfen";
       fBadge.textContent = fLabel;
-      fBadge.className = "inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold "
-                       + (foerder.level === "wahrscheinlich" ? "bg-highlight text-primary border border-border"
-                         : foerder.level === "nicht_anwendbar" ? "bg-red-50 text-red-700 border border-red-200"
-                         : "bg-surface-alt text-text border border-border-strong");
+      fBadge.className =
+        "inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold " +
+        (foerder.level === "wahrscheinlich"
+          ? "bg-highlight text-primary border border-border"
+          : foerder.level === "nicht_anwendbar"
+            ? "bg-red-50 text-red-700 border border-red-200"
+            : "bg-surface-alt text-text border border-border-strong");
       root.querySelector("[data-foerder-text]").textContent = foerder.text;
 
       var list = root.querySelector("[data-foerder-list]");
@@ -668,15 +1229,62 @@
         foerder.bausteine.forEach(function (b) {
           var li = document.createElement("li");
           li.className = "flex items-start gap-3";
-          li.innerHTML = '<span class="inline-flex items-center px-2 py-0.5 rounded bg-primary/10 text-primary font-semibold text-xs min-w-14 justify-center">bis ' + b.pct + ' %</span>'
-                       + '<span><span class="font-semibold text-text">' + b.name + '</span><br><span class="text-text-muted">' + b.hinweis + '</span></span>';
+          if (b.informativ) {
+            li.className +=
+              " border border-dashed border-border rounded-md p-2 bg-surface-alt/50";
+            li.innerHTML =
+              '<span class="inline-flex items-center px-2 py-0.5 rounded bg-gray-200 text-gray-700 font-semibold text-xs min-w-14 justify-center">ggf. ' +
+              b.pct +
+              " %</span>" +
+              '<span><span class="font-semibold text-text">' +
+              b.name +
+              '</span><br><span class="text-text-muted">' +
+              b.hinweis +
+              "</span></span>";
+          } else if (b.anwendbar === false) {
+            li.className +=
+              " border border-dashed border-amber-300 rounded-md p-2 bg-amber-50/50";
+            li.innerHTML =
+              '<span class="inline-flex items-center px-2 py-0.5 rounded bg-amber-100 text-amber-800 font-semibold text-xs min-w-14 justify-center">bis ' +
+              b.pct +
+              " %</span>" +
+              '<span><span class="font-semibold text-text">' +
+              b.name +
+              '</span><br><span class="text-text-muted">' +
+              b.hinweis +
+              " (nur bei Bestandsgebäude anwendbar)</span></span>";
+          } else {
+            li.innerHTML =
+              '<span class="inline-flex items-center px-2 py-0.5 rounded bg-primary/10 text-primary font-semibold text-xs min-w-14 justify-center">bis ' +
+              b.pct +
+              " %</span>" +
+              '<span><span class="font-semibold text-text">' +
+              b.name +
+              '</span><br><span class="text-text-muted">' +
+              b.hinweis +
+              "</span></span>";
+          }
           list.appendChild(li);
         });
         var sumLi = document.createElement("li");
-        sumLi.className = "flex items-start gap-3 border-t border-border pt-2 mt-2";
-        sumLi.innerHTML = '<span class="inline-flex items-center px-2 py-0.5 rounded bg-primary text-white font-semibold text-xs min-w-14 justify-center">bis ' + foerder.summe + ' %</span>'
-                       + '<span class="font-semibold text-text">Bandbreite gesamt (gedeckelt bei 70 %)</span>';
+        sumLi.className =
+          "flex items-start gap-3 border-t border-border pt-2 mt-2";
+        sumLi.innerHTML =
+          '<span class="inline-flex items-center px-2 py-0.5 rounded bg-primary text-white font-semibold text-xs min-w-14 justify-center">bis ' +
+          foerder.summe +
+          " %</span>" +
+          '<span class="font-semibold text-text">Bandbreite gesamt (gedeckelt bei 70 %)</span>';
         list.appendChild(sumLi);
+      }
+
+      // Bestandsgebäude-Warnung
+      var bestandHinweis = root.querySelector("[data-bestand-hinweis]");
+      if (foerder.bestandsWarnung) {
+        bestandHinweis.textContent =
+          "Hinweis: Für KfW 458 muss der Bauantrag mindestens 5 Jahre zurückliegen. Bei Baujahr 2021+ bitte individuell prüfen.";
+        bestandHinweis.classList.remove("hidden");
+      } else {
+        bestandHinweis.classList.add("hidden");
       }
 
       root.querySelector("[data-empfehlung-text]").textContent = empfehlung;
@@ -689,7 +1297,7 @@
         heizung: d.heizung,
         eigentum: d.eigentum,
         waermeabgabe: d.waermeabgabe,
-        daemmung: d.daemmung
+        daemmung: d.daemmung,
       });
     }
 
