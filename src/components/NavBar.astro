@@ -11,6 +11,7 @@ const navLinks = [
     href: "/waermepumpe-kosten-foerderung/",
     label: "Kosten & Förderung",
   },
+  { href: "/kontakt/", label: "Über diesen Ratgeber" },
 ];
 
 function isActive(href: string): boolean {
@@ -30,7 +31,7 @@ function isActive(href: string): boolean {
       <Image
         src={logo}
         alt="Bremer Wärmepumpe Logo"
-        class="w-30 md:w-50 h-auto inline-block mr-2"
+        class="w-30 md:w-40 h-auto inline-block mr-2"
         priority
       />
     </a>
@@ -72,8 +73,8 @@ function isActive(href: string): boolean {
           </a>
         ))
       }
-      <a href="/kontakt/" class="btn-accent text-sm py-2 px-4">
-        Über diesen Ratgeber
+      <a href="/check/" class="btn-accent text-sm py-2 px-4">
+        Eignung & Förderung prüfen
       </a>
     </nav>
   </div>
@@ -98,8 +99,8 @@ function isActive(href: string): boolean {
           </a>
         ))
       }
-      <a href="/kontakt/" class="btn-accent text-sm text-center mt-2">
-        Über diesen Ratgeber
+      <a href="/check/" class="btn-accent text-sm text-center mt-2">
+        Eignung & Förderung prüfen
       </a>
     </div>
   </nav>

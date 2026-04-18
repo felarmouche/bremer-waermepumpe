@@ -1,0 +1,118 @@
+---
+import Layout from "../layout/Layout.astro";
+import HeroSection from "../components/HeroSection.astro";
+import TrustBar from "../components/TrustBar.astro";
+import SectionShell from "../components/SectionShell.astro";
+import FAQSection from "../components/FAQSection.astro";
+import CTASection from "../components/CTASection.astro";
+import Breadcrumb from "../components/Breadcrumb.astro";
+import CheckWizard from "../components/CheckWizard.astro";
+import heroImage from "../images/heat-pump-bremen-hero.webp";
+
+const title = "Wärmepumpen-Check Bremen – Eignung und Förderung in 2 Minuten";
+const description =
+    "Kostenloser Check für Eignung und Fördermöglichkeiten einer Wärmepumpe in Bremen. Auswertung direkt im Browser, ohne Anmeldung und ohne Datenübermittlung.";
+const canonical = Astro.url.href;
+
+const trustItems = [
+    { text: "Keine Anmeldung nötig" },
+    { text: "Keine Datenübermittlung" },
+    { text: "Automatische Einschätzung" },
+    { text: "Basis: KfW 458, Stand 2026" },
+];
+
+const faqs = [
+    {
+        question: "Was wird beim Check ausgewertet?",
+        answer: "Auf Basis Ihrer Angaben zu Gebäude, Heizung und Eigentum ordnet der Check die technische Eignung für eine Wärmepumpe sowie die grundsätzliche Förderfähigkeit über KfW 458 ein. Das Ergebnis ist eine automatisierte Orientierung und ersetzt keine individuelle Beratung.",
+    },
+    {
+        question: "Werden meine Eingaben gespeichert oder verschickt?",
+        answer: "Nein. Alle Angaben werden ausschließlich im Browser verarbeitet und sind nach dem Schließen oder Neuladen der Seite gelöscht. Es werden keine Daten an den Betreiber, an Drittanbieter oder per E-Mail übermittelt. Details in der Datenschutzerklärung, §7.",
+    },
+    {
+        question: "Wie genau ist die Einschätzung?",
+        answer: "Der Check nutzt öffentlich verfügbare Förderregeln (BEG/KfW 458) und eine vereinfachte Eignungs-Heuristik. Die tatsächliche Eignung hängt von Details ab, die nur eine Vor-Ort-Prüfung (Heizlast, Vorlauftemperatur, Schallsituation) belastbar klärt. Die angegebenen Förderquoten sind Obergrenzen.",
+    },
+    {
+        question: "Muss ich meine E-Mail oder Telefonnummer angeben?",
+        answer: "Nein. Der Check fragt bewusst keine Kontaktdaten ab. Das Ergebnis wird unmittelbar nach dem letzten Schritt angezeigt.",
+    },
+    {
+        question: "Was passiert mit dem Ergebnis?",
+        answer: "Das Ergebnis erscheint direkt auf dieser Seite. Sie können sich den Text notieren, einen Screenshot machen oder die Seite in einem Tab offen lassen. Es gibt keinen Versand und keine Speicherung im Hintergrund.",
+    },
+    {
+        question: "Ersetzt der Check eine Energieberatung?",
+        answer: "Nein. Er ist eine erste Orientierung. Für eine verbindliche Bewertung Ihres Hauses wenden Sie sich bitte an einen zugelassenen SHK-Fachbetrieb oder eine anerkannte Energieberatung.",
+    },
+];
+---
+
+<Layout title={title} description={description} canonical={canonical}>
+    <Breadcrumb
+        items={[
+            { label: "Startseite", href: "/" },
+            { label: "Wärmepumpen-Check" },
+        ]}
+    />
+
+    <TrustBar items={trustItems} />
+
+    <CheckWizard />
+
+    <SectionShell variant="alt">
+        <div class="max-w-3xl">
+            <h2 class="text-2xl md:text-3xl font-bold text-text mb-6">
+                So entsteht die Einschätzung
+            </h2>
+            <p class="text-text-muted leading-relaxed mb-4">
+                Der Check arbeitet mit einer einfachen Heuristik: Baujahr,
+                Wärmeabgabe (Heizkörper oder Fußbodenheizung) und Dämmstandard
+                bestimmen die Eignungseinschätzung. Eigentumsstatus, aktuelle
+                Heizung und Haushaltseinkommen entscheiden, welche
+                Förderbausteine über KfW 458 grundsätzlich anwendbar sind.
+            </p>
+            <p class="text-text-muted leading-relaxed mb-4">
+                Vertiefungen zu den einzelnen Bausteinen finden Sie auf den
+                jeweiligen Ratgeber-Seiten:
+            </p>
+            <ul class="space-y-2 mb-4">
+                <li class="flex items-start gap-2 text-text-muted">
+                    <span class="text-primary shrink-0 mt-0.5">→</span>
+                    <a
+                        href="/waermepumpe-altbau-bremen/"
+                        class="hover:text-primary underline"
+                    >
+                        Wärmepumpe im Altbau: Vorlauftemperatur, Heizkörper,
+                        Dämmung
+                    </a>
+                </li>
+                <li class="flex items-start gap-2 text-text-muted">
+                    <span class="text-primary shrink-0 mt-0.5">→</span>
+                    <a
+                        href="/waermepumpe-kosten-foerderung/"
+                        class="hover:text-primary underline"
+                    >
+                        Kosten &amp; KfW-Förderung 2026: Bausteine, Höhen,
+                        Antragsablauf
+                    </a>
+                </li>
+            </ul>
+            <p class="text-xs text-text-muted leading-relaxed">
+                Die verbindliche Zusage über die Förderung trifft ausschließlich
+                die KfW. Die tatsächliche technische Eignung klärt die
+                Vor-Ort-Prüfung durch einen Fachbetrieb.
+            </p>
+        </div>
+    </SectionShell>
+
+    <FAQSection heading="Häufige Fragen zum Check" items={faqs} />
+
+    <CTASection
+        headline="Noch Fragen zum Ratgeber?"
+        text="Redaktionelle oder datenschutzbezogene Anfragen beantworten wir gerne per E-Mail."
+        primaryCTA={{ label: "Über diesen Ratgeber", href: "/kontakt/" }}
+        secondaryCTA={{ label: "Impressum", href: "/impressum/" }}
+    />
+</Layout>

@@ -4,14 +4,15 @@ interface Props {
     description: string;
     canonical?: string;
     ogImage?: string;
+    noindex?: boolean;
 }
-const { title, description, canonical, ogImage } = Astro.props;
+const { title, description, canonical, ogImage, noindex } = Astro.props;
 const siteUrl = "https://bremer-waermepumpe.de";
 const resolvedOgImage = ogImage ? `${siteUrl}${ogImage}` : `${siteUrl}/og-image.jpg`;
 ---
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta name="robots" content="index, follow" />
+<meta name="robots" content={noindex ? "noindex, follow" : "index, follow"} />
 
 <link rel="icon" href="/favicon.ico" />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -35,3 +36,7 @@ const resolvedOgImage = ogImage ? `${siteUrl}${ogImage}` : `${siteUrl}/og-image.
     "url": siteUrl,
     "inLanguage": "de-DE"
 })} />
+
+<!-- Plausible Analytics (cookieless, DSGVO-konform, keine personenbezogenen Daten) -->
+<script defer is:inline data-domain="bremer-waermepumpe.de" src="https://plausible.io/js/script.js"></script>
+<script is:inline>window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }</script>

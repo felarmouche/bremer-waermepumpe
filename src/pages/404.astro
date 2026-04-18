@@ -1,0 +1,61 @@
+---
+import Layout from "../layout/Layout.astro";
+
+const title = "Seite nicht gefunden – Bremer Wärmepumpe";
+const description =
+    "Die aufgerufene Seite existiert nicht. Zurück zur Startseite oder direkt zu Altbau, Kosten und Eignungscheck.";
+---
+
+<Layout title={title} description={description} noindex={true}>
+    <section class="max-w-3xl mx-auto px-4 py-20 sm:py-28 text-center">
+        <p class="text-sm font-semibold tracking-wider text-primary uppercase mb-3">
+            Fehler 404
+        </p>
+        <h1 class="text-3xl sm:text-4xl font-bold text-text mb-5">
+            Seite nicht gefunden
+        </h1>
+        <p class="text-text-muted text-base sm:text-lg leading-relaxed max-w-xl mx-auto mb-10">
+            Der gesuchte Inhalt existiert nicht oder wurde verschoben.
+            Wählen Sie einen der folgenden Einstiege:
+        </p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-left">
+            <a
+                href="/"
+                class="surface-card p-5 hover:border-border-strong transition-colors block cursor-pointer"
+            >
+                <h2 class="font-semibold text-text mb-1">Startseite</h2>
+                <p class="text-text-muted text-sm">
+                    Überblick Wärmepumpe in Bremen – Eignung, Kosten, Förderung.
+                </p>
+            </a>
+            <a
+                href="/check/"
+                class="surface-card p-5 hover:border-border-strong transition-colors block cursor-pointer"
+            >
+                <h2 class="font-semibold text-text mb-1">Eignungs-Check</h2>
+                <p class="text-text-muted text-sm">
+                    Erste Einschätzung zur Wärmepumpen-Eignung Ihres Hauses.
+                </p>
+            </a>
+            <a
+                href="/waermepumpe-altbau-bremen/"
+                class="surface-card p-5 hover:border-border-strong transition-colors block cursor-pointer"
+            >
+                <h2 class="font-semibold text-text mb-1">Wärmepumpe im Altbau</h2>
+                <p class="text-text-muted text-sm">
+                    Eignung, Vorlauftemperatur und Praxishinweise für Altbauten in Bremen.
+                </p>
+            </a>
+            <a
+                href="/waermepumpe-kosten-foerderung/"
+                class="surface-card p-5 hover:border-border-strong transition-colors block cursor-pointer"
+            >
+                <h2 class="font-semibold text-text mb-1">Kosten &amp; Förderung</h2>
+                <p class="text-text-muted text-sm">
+                    KfW 458, Boni und realistischer Eigenanteil – Stand 2026.
+                </p>
+            </a>
+        </div>
+    </section>
+</Layout>
