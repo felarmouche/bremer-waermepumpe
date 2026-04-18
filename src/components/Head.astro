@@ -8,14 +8,16 @@ interface Props {
 }
 const { title, description, canonical, ogImage, noindex } = Astro.props;
 const siteUrl = "https://bremer-waermepumpe.de";
-const resolvedOgImage = ogImage ? `${siteUrl}${ogImage}` : `${siteUrl}/og-image.jpg`;
+const resolvedOgImage = ogImage
+    ? `${siteUrl}${ogImage}`
+    : `${siteUrl}/og-image.jpg`;
 ---
+
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="robots" content={noindex ? "noindex, follow" : "index, follow"} />
 
 <link rel="icon" href="/favicon.ico" />
-<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
 <title>{title}</title>
 <meta name="description" content={description} />
@@ -29,14 +31,28 @@ const resolvedOgImage = ogImage ? `${siteUrl}${ogImage}` : `${siteUrl}/og-image.
 <meta property="og:locale" content="de_DE" />
 <meta property="og:site_name" content="Bremer Wärmepumpe – Ratgeber" />
 
-<script is:inline type="application/ld+json" set:html={JSON.stringify({
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name": "Bremer Wärmepumpe – Ratgeber",
-    "url": siteUrl,
-    "inLanguage": "de-DE"
-})} />
+<script
+    is:inline
+    type="application/ld+json"
+    set:html={JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        name: "Bremer Wärmepumpe – Ratgeber",
+        url: siteUrl,
+        inLanguage: "de-DE",
+    })}
+/>
 
 <!-- Plausible Analytics (cookieless, DSGVO-konform, keine personenbezogenen Daten) -->
-<script defer is:inline data-domain="bremer-waermepumpe.de" src="https://plausible.io/js/script.js"></script>
-<script is:inline>window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }</script>
+<script
+    defer
+    is:inline
+    data-domain="bremer-waermepumpe.de"
+    src="https://plausible.io/js/script.js"></script>
+<script is:inline>
+    window.plausible =
+        window.plausible ||
+        function () {
+            (window.plausible.q = window.plausible.q || []).push(arguments);
+        };
+</script>
