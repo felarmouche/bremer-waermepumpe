@@ -1,0 +1,19 @@
+---
+interface Props {
+    variant?: "default" | "bordered";
+    class?: string;
+}
+const { variant = "default", class: className = "" } = Astro.props;
+const borderClass =
+    variant === "bordered" ? "border-l-4 border-primary" : "";
+---
+
+<div
+    class:list={[
+        "notice-success rounded p-4 text-sm leading-relaxed",
+        borderClass,
+        className,
+    ]}
+>
+    <slot />
+</div>

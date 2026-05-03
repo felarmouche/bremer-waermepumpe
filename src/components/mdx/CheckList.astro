@@ -1,0 +1,32 @@
+---
+type Item = string | { lead?: string; text: string };
+
+interface Props {
+    items: Item[];
+    marker?: "check" | "arrow" | "diamond";
+    class?: string;
+}
+const { items, marker = "check", class: className = "" } = Astro.props;
+
+const symbol = { check: "✓", arrow: "→", diamond: "◆" }[marker];
+---
+
+<ul class:list={["space-y-3 max-w-3xl", className]}>
+    {
+        items.map((item) => {
+            const lead = typeof item === "string" ? undefined : item.lead;
+            const text = typeof item === "string" ? item : item.text;
+            return (
+                <li class="flex items-start gap-3">
+                    <span class="text-primary font-bold mt-0.5 shrink-0">
+                        {symbol}
+                    </span>
+                    <span class="text-text-muted">
+                        {lead && <strong class="text-text">{lead}</strong>}{" "}
+                        {text}
+                    </span>
+                </li>
+            );
+        })
+    }
+</ul>

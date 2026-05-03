@@ -1,0 +1,34 @@
+---
+interface Spec {
+    lead: string;
+    text: string;
+}
+
+interface Props {
+    specsIntro?: string;
+    specs: Spec[];
+    footnote?: string;
+}
+const { specsIntro, specs, footnote } = Astro.props;
+---
+
+{specsIntro && (
+    <p class="text-text-muted max-w-3xl mb-4 font-semibold">{specsIntro}</p>
+)}
+<ul class="space-y-2 max-w-3xl mb-6">
+    {
+        specs.map((s) => (
+            <li class="flex items-start gap-3">
+                <span class="text-primary font-bold mt-0.5 shrink-0">◆</span>
+                <span class="text-text-muted">
+                    <strong class="text-text">{s.lead}</strong> {s.text}
+                </span>
+            </li>
+        ))
+    }
+</ul>
+{footnote && (
+    <p class="text-text-muted max-w-3xl text-sm leading-relaxed">
+        <em set:html={footnote} />
+    </p>
+)}

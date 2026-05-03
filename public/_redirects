@@ -1,0 +1,6 @@
+# 301-Redirects für die SEO-Cluster-Migration (Mai 2026)
+# Alte kombinierte Kosten/Förderung-URL → neuer Förderung-Hub
+# (Begründung: GSC-Impressionen kamen ausschließlich über Förderungs-Queries)
+
+/waermepumpe-kosten-foerderung    /waermepumpe-foerderung-bremen/   301
+/waermepumpe-kosten-foerderung/   /waermepumpe-foerderung-bremen/   301
