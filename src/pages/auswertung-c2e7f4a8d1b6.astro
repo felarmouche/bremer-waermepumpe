@@ -5,10 +5,11 @@
 //
 // Diese Seite ist server-rendered und liest direkt aus der D1-Datenbank.
 
+import { env } from "cloudflare:workers";
+
 export const prerender = false;
 
-const env = (Astro.locals as { runtime?: { env?: { DB?: D1Database } } }).runtime?.env;
-const db = env?.DB;
+const db = env.DB;
 
 type Row = {
     id: number;

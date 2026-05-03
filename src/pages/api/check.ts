@@ -1,4 +1,5 @@
 import type { APIRoute } from "astro";
+import { env } from "cloudflare:workers";
 
 export const prerender = false;
 
@@ -22,7 +23,7 @@ function pickAllowed(value: unknown, allowed: readonly string[]): string | null 
   return allowed.includes(value) ? value : null;
 }
 
-export const POST: APIRoute = async ({ request, locals }) => {
+export const POST: APIRoute = async ({ request }) => {
   if (request.headers.get("content-type")?.includes("application/json") !== true) {
     return new Response("Bad Request", { status: 400 });
   }
@@ -34,8 +35,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
     return new Response("Bad Request", { status: 400 });
   }
 
-  const env = (locals as { runtime?: { env?: { DB?: D1Database } } }).runtime?.env;
-  const db = env?.DB;
+  const db = env.DB;
   if (!db) {
     return new Response("Server misconfigured", { status: 500 });
   }
