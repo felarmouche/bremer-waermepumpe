@@ -1,16 +1,68 @@
 ---
+interface PageSchema {
+    type?: "Article" | "HowTo";
+    datePublished?: string;
+    dateModified?: string;
+    howToName?: string;
+    howToDescription?: string;
+    howToSteps?: { name: string; text: string }[];
+}
+
 interface Props {
     title: string;
     description: string;
     canonical?: string;
     ogImage?: string;
     noindex?: boolean;
+    pageSchema?: PageSchema;
 }
-const { title, description, canonical, ogImage, noindex } = Astro.props;
+const { title, description, canonical, ogImage, noindex, pageSchema } = Astro.props;
 const siteUrl = "https://bremer-waermepumpe.de";
 const resolvedOgImage = ogImage
     ? `${siteUrl}${ogImage}`
     : `${siteUrl}/og-image.jpg`;
+
+const articleJsonLd =
+    pageSchema?.type === "Article" || pageSchema?.type === "HowTo"
+        ? {
+              "@context": "https://schema.org",
+              "@type": "Article",
+              headline: title,
+              description,
+              image: resolvedOgImage,
+              author: {
+                  "@type": "Organization",
+                  name: "Redaktion bremer-waermepumpe.de",
+                  url: siteUrl,
+              },
+              publisher: {
+                  "@type": "Organization",
+                  name: "Bremer Wärmepumpe – Ratgeber",
+                  url: siteUrl,
+              },
+              ...(pageSchema.datePublished && { datePublished: pageSchema.datePublished }),
+              ...(pageSchema.dateModified && { dateModified: pageSchema.dateModified }),
+              ...(canonical && { mainEntityOfPage: canonical }),
+              inLanguage: "de-DE",
+          }
+        : null;
+
+const howToJsonLd =
+    pageSchema?.type === "HowTo" && pageSchema.howToSteps && pageSchema.howToSteps.length > 0
+        ? {
+              "@context": "https://schema.org",
+              "@type": "HowTo",
+              name: pageSchema.howToName ?? title,
+              description: pageSchema.howToDescription ?? description,
+              step: pageSchema.howToSteps.map((s, i) => ({
+                  "@type": "HowToStep",
+                  position: i + 1,
+                  name: s.name,
+                  text: s.text,
+              })),
+              inLanguage: "de-DE",
+          }
+        : null;
 ---
 
 <meta charset="utf-8" />
@@ -42,6 +94,14 @@ const resolvedOgImage = ogImage
         inLanguage: "de-DE",
     })}
 />
+
+{articleJsonLd && (
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(articleJsonLd)} />
+)}
+
+{howToJsonLd && (
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(howToJsonLd)} />
+)}
 
 <!-- Plausible Analytics (cookieless, DSGVO-konform, keine personenbezogenen Daten) -->
 <script

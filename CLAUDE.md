@@ -16,7 +16,7 @@ npm run astro ...  # Run Astro CLI commands (e.g. astro add, astro check)
 
 ## Architecture
 
-Astro v6 static site for a German-language heat pump business ("Wärme Guru") targeting the Bremen market. Tailwind CSS v4 is integrated via the `@tailwindcss/vite` plugin (configured in `astro-project/astro.config.mjs`).
+Astro v6 static site for a German-language heat pump business targeting the Bremen market. Tailwind CSS v4 is integrated via the `@tailwindcss/vite` plugin (configured in `astro-project/astro.config.mjs`).
 
 - **Language**: All user-facing content is in German (`<html lang="de">`).
 - **Routing**: File-based. Files in `src/pages/` map to URL routes.

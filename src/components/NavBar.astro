@@ -1,23 +1,9 @@
 ---
 import { Image } from "astro:assets";
 import logo from "../assets/Logo.webp";
+import { headerLinks, primaryCta, isActivePath } from "../data/navigation";
 
 const pathname = Astro.url.pathname;
-
-const navLinks = [
-  { href: "/", label: "Wärmepumpe" },
-  { href: "/waermepumpe-altbau-bremen/", label: "Wärmepumpe für Altbau" },
-  {
-    href: "/waermepumpe-kosten-foerderung/",
-    label: "Kosten & Förderung",
-  },
-  { href: "/kontakt/", label: "Über diesen Ratgeber" },
-];
-
-function isActive(href: string): boolean {
-  if (href === "/") return pathname === "/" || pathname === "";
-  return pathname.startsWith(href);
-}
 ---
 
 <div data-header-nav class="flex flex-col">
@@ -59,22 +45,22 @@ function isActive(href: string): boolean {
 
     <nav class="hidden md:flex items-center gap-6">
       {
-        navLinks.map((link) => (
+        headerLinks.map((link) => (
           <a
             href={link.href}
             class:list={[
               "text-sm transition-colors",
-              isActive(link.href)
+              isActivePath(pathname, link.href)
                 ? "text-primary font-semibold"
                 : "text-text-muted hover:text-text",
             ]}
           >
-            {link.label}
+            {link.navLabel ?? link.label}
           </a>
         ))
       }
-      <a href="/check/" class="btn-accent text-sm py-2 px-4">
-        Eignung & Förderung prüfen
+      <a href={primaryCta.href} class="btn-accent text-sm py-2 px-4">
+        {primaryCta.label}
       </a>
     </nav>
   </div>
@@ -85,22 +71,22 @@ function isActive(href: string): boolean {
   >
     <div class="flex flex-col p-4 gap-3">
       {
-        navLinks.map((link) => (
+        headerLinks.map((link) => (
           <a
             href={link.href}
             class:list={[
               "text-sm transition-colors py-1",
-              isActive(link.href)
+              isActivePath(pathname, link.href)
                 ? "text-primary font-semibold"
                 : "text-text-muted hover:text-text",
             ]}
           >
-            {link.label}
+            {link.navLabel ?? link.label}
           </a>
         ))
       }
-      <a href="/check/" class="btn-accent text-sm text-center mt-2">
-        Eignung & Förderung prüfen
+      <a href={primaryCta.href} class="btn-accent text-sm text-center mt-2">
+        {primaryCta.label}
       </a>
     </div>
   </nav>
