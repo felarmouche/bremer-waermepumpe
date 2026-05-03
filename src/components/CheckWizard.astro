@@ -1,9 +1,9 @@
 ---
 /*
-  CheckWizard – 4-Schritt-Assistent für Eignungs- und Fördercheck.
-  Alle Eingaben werden ausschließlich clientseitig verarbeitet.
-  Es werden keine Daten an den Server übermittelt, gespeichert
-  oder per E-Mail versendet. Siehe /datenschutz/ §7.
+  CheckWizard – 3-Schritt-Assistent für Eignungs- und Fördercheck.
+  Auswertung läuft clientseitig. Nach Abschluss werden die
+  kategorialen Auswahlen (ohne PLZ, ohne Kontaktdaten) anonym
+  an /api/check übermittelt und in D1 gespeichert. Siehe /datenschutz/ §7.
 */
 ---
 
@@ -61,7 +61,8 @@
               data-field
             />
             <p class="text-xs text-text-muted mt-1">
-              Nur 5-stellige PLZ. Wird nicht übertragen.
+              Nur 5-stellige PLZ. Wird nur lokal zur Plausibilität geprüft und
+              nicht übertragen.
             </p>
           </div>
 
@@ -551,8 +552,7 @@
               Haushaltsjahreseinkommen
             </span>
             <p class="text-xs text-text-muted mb-2">
-              Nur für den KfW-Einkommensbonus. Angabe freiwillig, wird nicht
-              übertragen.
+              Nur für den KfW-Einkommensbonus. Angabe freiwillig.
             </p>
             <div class="grid grid-cols-2 gap-2">
               <label
@@ -682,8 +682,8 @@
         </div>
 
         <p class="text-xs text-text-muted mt-6 text-center" data-hint>
-          Ihre Eingaben verlassen niemals diesen Browser. Keine Anmeldung, keine
-          E-Mail.
+          Keine Anmeldung, keine Kontaktdaten. Anonyme Statistik-Auswertung
+          gemäß <a href="/datenschutz/#check" class="underline">§7 Datenschutz</a>.
         </p>
       </form>
 
@@ -1299,6 +1299,34 @@
         waermeabgabe: d.waermeabgabe,
         daemmung: d.daemmung,
       });
+
+      // Anonyme Auswertung: PLZ wird absichtlich nicht uebertragen.
+      // Es werden ausschliesslich die kategorialen Auswahlen und das
+      // Scoring-Ergebnis gesendet. Versand ist fire-and-forget; Fehler
+      // beeintraechtigen die Anzeige des Ergebnisses nicht.
+      try {
+        var payload = {
+          gebaeudetyp: d.gebaeudetyp,
+          baujahr: d.baujahr,
+          flaeche: d.flaeche,
+          heizung: d.heizung,
+          heizungsalter: d.heizungsalter,
+          waermeabgabe: d.waermeabgabe,
+          daemmung: d.daemmung,
+          eigentum: d.eigentum,
+          einkommen: d.einkommen,
+          antrag: d.antrag,
+          eignung_level: eignung.level,
+          foerder_level: foerder.level,
+          foerder_summe: foerder.summe,
+        };
+        fetch("/api/check", {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify(payload),
+          keepalive: true,
+        }).catch(function () {});
+      } catch (e) {}
     }
 
     nextBtn.addEventListener("click", function () {

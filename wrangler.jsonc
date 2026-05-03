@@ -15,5 +15,12 @@
 			"binding": "SESSION",
 			"id": "099c8472c44f42ec8eaa2bcb839c1023"
 		}
+	],
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_name": "anonymous-leads",
+			"database_id": "fe079ef8-77de-441f-b57f-d1535a7de5df"
+		}
 	]
 }

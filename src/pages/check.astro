@@ -11,12 +11,12 @@ import heroImage from "../images/heat-pump-bremen-hero.webp";
 
 const title = "Wärmepumpen-Check Bremen – Eignung und Förderung in 2 Minuten";
 const description =
-    "Kostenloser Check für Eignung und Fördermöglichkeiten einer Wärmepumpe in Bremen. Auswertung direkt im Browser, ohne Anmeldung und ohne Datenübermittlung.";
+    "Kostenloser Check für Eignung und Fördermöglichkeiten einer Wärmepumpe in Bremen. Auswertung direkt im Browser, ohne Anmeldung und ohne Kontaktdaten.";
 const canonical = Astro.url.href;
 
 const trustItems = [
     { text: "Keine Anmeldung nötig" },
-    { text: "Keine Datenübermittlung" },
+    { text: "Keine Kontaktdaten" },
     { text: "Automatische Einschätzung" },
     { text: "Basis: KfW 458, Stand 2026" },
 ];
@@ -28,7 +28,7 @@ const faqs = [
     },
     {
         question: "Werden meine Eingaben gespeichert oder verschickt?",
-        answer: "Nein. Alle Angaben werden ausschließlich im Browser verarbeitet und sind nach dem Schließen oder Neuladen der Seite gelöscht. Es werden keine Daten an den Betreiber, an Drittanbieter oder per E-Mail übermittelt. Details in der Datenschutzerklärung, §7.",
+        answer: "Die Auswertung selbst erfolgt im Browser; das Ergebnis sehen Sie sofort, ohne Anmeldung, ohne Kontaktdaten. Nach dem Abschluss werden Ihre kategorialen Auswahlen (Gebäudetyp, Baujahr, Heizung etc.) anonymisiert in einer Datenbank des Betreibers gespeichert, um die Qualität des Tools statistisch auszuwerten. Es werden keine Postleitzahl, keine Namen, keine Kontaktdaten und keine Daten an Dritte übermittelt. Details in der Datenschutzerklärung, §7.",
     },
     {
         question: "Wie genau ist die Einschätzung?",
@@ -40,7 +40,7 @@ const faqs = [
     },
     {
         question: "Was passiert mit dem Ergebnis?",
-        answer: "Das Ergebnis erscheint direkt auf dieser Seite. Sie können sich den Text notieren, einen Screenshot machen oder die Seite in einem Tab offen lassen. Es gibt keinen Versand und keine Speicherung im Hintergrund.",
+        answer: "Das Ergebnis erscheint direkt auf dieser Seite. Sie können sich den Text notieren, einen Screenshot machen oder die Seite in einem Tab offen lassen. Es erfolgt kein Versand an Sie und keine Verknüpfung mit Kontaktdaten – die anonyme Speicherung der kategorialen Auswahlen dient ausschließlich der internen Auswertung.",
     },
     {
         question: "Ersetzt der Check eine Energieberatung?",

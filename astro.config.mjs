@@ -11,7 +11,12 @@ import mdx from '@astrojs/mdx';
 export default defineConfig({
   site: 'https://bremer-waermepumpe.de',
 
-  integrations: [sitemap(), mdx()],
+  integrations: [
+    sitemap({
+      filter: (page) => !/\/auswertung-/.test(page) && !/\/api\//.test(page),
+    }),
+    mdx(),
+  ],
 
   vite: {
     plugins: [tailwindcss()]

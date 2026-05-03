@@ -1,0 +1,314 @@
+---
+// Private Auswertungs-Seite. URL-Slug ist der Dateiname.
+// Slug aendern? Datei einfach umbenennen, z.B. auf
+// "auswertung-NEUERSCHLUESSEL.astro". Nicht in der Sitemap eintragen.
+//
+// Diese Seite ist server-rendered und liest direkt aus der D1-Datenbank.
+
+export const prerender = false;
+
+const env = (Astro.locals as { runtime?: { env?: { DB?: D1Database } } }).runtime?.env;
+const db = env?.DB;
+
+type Row = {
+    id: number;
+    created_at: string;
+    gebaeudetyp: string | null;
+    baujahr: string | null;
+    flaeche: string | null;
+    heizung: string | null;
+    heizungsalter: string | null;
+    waermeabgabe: string | null;
+    daemmung: string | null;
+    eigentum: string | null;
+    einkommen: string | null;
+    antrag: string | null;
+    eignung_level: string | null;
+    foerder_level: string | null;
+    foerder_summe: number | null;
+};
+
+let rows: Row[] = [];
+let total = 0;
+let dbError: string | null = null;
+
+if (!db) {
+    dbError = "D1-Binding 'DB' nicht verfuegbar. Wrangler-Config pruefen.";
+} else {
+    try {
+        const countResult = await db
+            .prepare("SELECT COUNT(*) AS n FROM check_eintraege")
+            .first<{ n: number }>();
+        total = countResult?.n ?? 0;
+
+        const result = await db
+            .prepare(
+                "SELECT * FROM check_eintraege ORDER BY id DESC LIMIT 200",
+            )
+            .all<Row>();
+        rows = result.results ?? [];
+    } catch (e) {
+        dbError =
+            "Datenbank-Abfrage fehlgeschlagen. Tabelle 'check_eintraege' existiert evtl. noch nicht. " +
+            "Schema einspielen: scripts/d1-schema.sql";
+    }
+}
+
+// Aggregationen ueber die letzten 200 Eintraege
+function tally(field: keyof Row): Array<{ key: string; count: number }> {
+    const map = new Map<string, number>();
+    for (const r of rows) {
+        const v = r[field];
+        if (v === null || v === undefined || v === "") continue;
+        const k = String(v);
+        map.set(k, (map.get(k) ?? 0) + 1);
+    }
+    return Array.from(map.entries())
+        .map(([key, count]) => ({ key, count }))
+        .sort((a, b) => b.count - a.count);
+}
+
+const aggregations = {
+    eignung: tally("eignung_level"),
+    foerderung: tally("foerder_level"),
+    gebaeudetyp: tally("gebaeudetyp"),
+    baujahr: tally("baujahr"),
+    heizung: tally("heizung"),
+    eigentum: tally("eigentum"),
+    waermeabgabe: tally("waermeabgabe"),
+    daemmung: tally("daemmung"),
+};
+
+function formatDate(iso: string): string {
+    return iso.replace("T", " ").slice(0, 16);
+}
+---
+
+<!doctype html>
+<html lang="de">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="robots" content="noindex, nofollow" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Auswertung Check-Eintraege</title>
+        <style>
+            * {
+                box-sizing: border-box;
+            }
+            body {
+                font-family:
+                    ui-sans-serif,
+                    system-ui,
+                    -apple-system,
+                    sans-serif;
+                background: #f9fafb;
+                color: #111827;
+                margin: 0;
+                padding: 24px;
+                line-height: 1.5;
+            }
+            h1 {
+                font-size: 22px;
+                margin: 0 0 8px;
+            }
+            h2 {
+                font-size: 16px;
+                margin: 24px 0 8px;
+            }
+            .meta {
+                color: #6b7280;
+                font-size: 13px;
+                margin-bottom: 24px;
+            }
+            .agg-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+                gap: 12px;
+                margin-bottom: 24px;
+            }
+            .agg-card {
+                background: #fff;
+                border: 1px solid #e5e7eb;
+                border-radius: 8px;
+                padding: 12px 14px;
+            }
+            .agg-card h3 {
+                font-size: 12px;
+                text-transform: uppercase;
+                letter-spacing: 0.04em;
+                color: #6b7280;
+                margin: 0 0 8px;
+            }
+            .agg-row {
+                display: flex;
+                justify-content: space-between;
+                font-size: 13px;
+                padding: 2px 0;
+            }
+            .agg-key {
+                color: #374151;
+            }
+            .agg-count {
+                color: #111827;
+                font-weight: 600;
+                font-variant-numeric: tabular-nums;
+            }
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                background: #fff;
+                font-size: 12px;
+                border: 1px solid #e5e7eb;
+                border-radius: 8px;
+                overflow: hidden;
+            }
+            th,
+            td {
+                padding: 6px 8px;
+                text-align: left;
+                border-bottom: 1px solid #f3f4f6;
+                white-space: nowrap;
+            }
+            th {
+                background: #f3f4f6;
+                font-weight: 600;
+                color: #374151;
+                position: sticky;
+                top: 0;
+            }
+            tr:last-child td {
+                border-bottom: none;
+            }
+            tr:hover td {
+                background: #f9fafb;
+            }
+            .scroll {
+                overflow-x: auto;
+                border-radius: 8px;
+            }
+            .err {
+                background: #fef2f2;
+                border: 1px solid #fecaca;
+                color: #991b1b;
+                padding: 12px 14px;
+                border-radius: 8px;
+                margin: 12px 0;
+            }
+            .empty {
+                color: #6b7280;
+                padding: 16px;
+                text-align: center;
+                background: #fff;
+                border: 1px dashed #e5e7eb;
+                border-radius: 8px;
+            }
+            .badge-hoch,
+            .badge-wahrscheinlich {
+                color: #065f46;
+            }
+            .badge-mittel,
+            .badge-pruefen {
+                color: #92400e;
+            }
+            .badge-niedrig,
+            .badge-eingeschraenkt,
+            .badge-nicht_anwendbar {
+                color: #991b1b;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Auswertung Check-Eintraege</h1>
+        <p class="meta">
+            Gesamt-Eintraege: <strong>{total}</strong>
+            {rows.length > 0 && <span> · letzte {rows.length} angezeigt</span>}
+            · Daten anonym (kein PLZ, keine Kontaktdaten)
+        </p>
+
+        {dbError && <div class="err">{dbError}</div>}
+
+        {
+            !dbError && rows.length === 0 && (
+                <div class="empty">
+                    Noch keine Eintraege. Sobald jemand den Check abschliesst,
+                    erscheint die erste Zeile hier.
+                </div>
+            )
+        }
+
+        {
+            rows.length > 0 && (
+                <>
+                    <h2>Aggregationen (letzte {rows.length})</h2>
+                    <div class="agg-grid">
+                        {Object.entries(aggregations).map(([label, items]) => (
+                            <div class="agg-card">
+                                <h3>{label}</h3>
+                                {items.length === 0 ? (
+                                    <div class="agg-row agg-key">—</div>
+                                ) : (
+                                    items.map((it) => (
+                                        <div class="agg-row">
+                                            <span class={`agg-key badge-${it.key}`}>
+                                                {it.key}
+                                            </span>
+                                            <span class="agg-count">{it.count}</span>
+                                        </div>
+                                    ))
+                                )}
+                            </div>
+                        ))}
+                    </div>
+
+                    <h2>Eintraege ({rows.length})</h2>
+                    <div class="scroll">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Zeit</th>
+                                    <th>Eignung</th>
+                                    <th>Foerder.</th>
+                                    <th>Summe</th>
+                                    <th>Gebaeude</th>
+                                    <th>Baujahr</th>
+                                    <th>Flaeche</th>
+                                    <th>Heizung</th>
+                                    <th>Alter</th>
+                                    <th>Abgabe</th>
+                                    <th>Daemmung</th>
+                                    <th>Eigentum</th>
+                                    <th>Eink.</th>
+                                    <th>Antrag</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {rows.map((r) => (
+                                    <tr>
+                                        <td>{formatDate(r.created_at)}</td>
+                                        <td class={`badge-${r.eignung_level ?? ""}`}>
+                                            {r.eignung_level ?? "—"}
+                                        </td>
+                                        <td class={`badge-${r.foerder_level ?? ""}`}>
+                                            {r.foerder_level ?? "—"}
+                                        </td>
+                                        <td>{r.foerder_summe ?? "—"}</td>
+                                        <td>{r.gebaeudetyp ?? "—"}</td>
+                                        <td>{r.baujahr ?? "—"}</td>
+                                        <td>{r.flaeche ?? "—"}</td>
+                                        <td>{r.heizung ?? "—"}</td>
+                                        <td>{r.heizungsalter ?? "—"}</td>
+                                        <td>{r.waermeabgabe ?? "—"}</td>
+                                        <td>{r.daemmung ?? "—"}</td>
+                                        <td>{r.eigentum ?? "—"}</td>
+                                        <td>{r.einkommen ?? "—"}</td>
+                                        <td>{r.antrag ?? "—"}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                </>
+            )
+        }
+    </body>
+</html>

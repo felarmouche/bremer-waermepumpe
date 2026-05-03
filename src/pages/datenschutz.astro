@@ -25,12 +25,14 @@ import Layout from "../layout/Layout.astro";
       <h2 class="text-xl font-semibold text-text">2. Allgemeines zur Datenverarbeitung</h2>
       <p>
         Diese Website ist ein privates Informationsangebot. Es werden keine Kontakt- oder
-        Anfrageformulare mit Datenübermittlung an den Betreiber betrieben, keine Newsletter
-        versendet und keine Daten aktiv an Dritte weitergegeben. Der auf der Seite angebotene
-        Wärmepumpen-Check arbeitet ausschließlich im Browser des Nutzers (siehe §7).
-        Zur anonymen Reichweitenmessung kommt ein cookiefreier Analytics-Dienst zum Einsatz
-        (siehe §8). Personenbezogene Daten werden ansonsten nur in dem Umfang verarbeitet,
-        der für den technischen Betrieb der Website unvermeidbar ist.
+        Anfrageformulare betrieben, die Kontaktdaten an den Betreiber übermitteln, keine
+        Newsletter versendet und keine Daten aktiv an Dritte weitergegeben. Der auf der
+        Seite angebotene Wärmepumpen-Check arbeitet clientseitig; nach Abschluss werden
+        ausschließlich anonyme, kategoriale Auswahlen (ohne Postleitzahl, ohne Kontaktdaten)
+        zu statistischen Zwecken in einer Datenbank des Betreibers gespeichert (siehe §7).
+        Zur anonymen Reichweitenmessung kommt zusätzlich ein cookiefreier Analytics-Dienst
+        zum Einsatz (siehe §8). Personenbezogene Daten werden ansonsten nur in dem Umfang
+        verarbeitet, der für den technischen Betrieb der Website unvermeidbar ist.
       </p>
 
       <h2 class="text-xl font-semibold text-text">3. Server-Log-Dateien</h2>
@@ -120,33 +122,60 @@ import Layout from "../layout/Layout.astro";
 
       <h2 class="text-xl font-semibold text-text">6. Keine Kontakt- oder Lead-Formulare</h2>
       <p>
-        Es werden keine Kontakt-, Anfrage- oder Lead-Formulare mit Datenübermittlung
-        an den Betreiber betrieben. Ein passiver Check-Assistent (siehe §7) verarbeitet
-        Eingaben ausschließlich im Browser und übermittelt sie nicht. Eine Kontaktaufnahme
-        per E-Mail ist über die im
+        Es werden keine Kontakt-, Anfrage- oder Lead-Formulare betrieben, die Namen,
+        E-Mail-Adressen, Telefonnummern oder vergleichbare Kontaktdaten an den Betreiber
+        übermitteln. Der Check-Assistent (siehe §7) erhebt ausdrücklich keine Kontaktdaten.
+        Eine Kontaktaufnahme per E-Mail ist über die im
         <a href="/impressum/" class="text-primary hover:underline">Impressum</a>
         angegebene Adresse freiwillig möglich.
       </p>
 
-      <h2 class="text-xl font-semibold text-text">7. Interaktiver Check (/check/)</h2>
+      <h2 id="check" class="text-xl font-semibold text-text">7. Interaktiver Check (/check/)</h2>
       <p>
         Unter der Adresse <a href="/check/" class="text-primary hover:underline">/check/</a>
         wird ein interaktiver Assistent zur Orientierung über Wärmepumpen-Eignung und
-        Fördermöglichkeiten angeboten. Die Verarbeitung sämtlicher Eingaben erfolgt
-        <strong class="text-text">ausschließlich im Browser des Nutzers</strong>
-        (clientseitig, via JavaScript). Es werden
-        <strong class="text-text">keine Eingaben</strong>
-        an den Betreiber, an Drittanbieter oder an externe Server übermittelt, gespeichert
-        oder per E-Mail versendet. Nach dem Verlassen oder Neuladen der Seite sind alle
-        Eingaben gelöscht. Eine personenbezogene Datenverarbeitung durch den Betreiber
-        findet im Zusammenhang mit dem Check nicht statt.
+        Fördermöglichkeiten angeboten. Die Auswertung der Eingaben (Eignungs- und
+        Förder-Heuristik) erfolgt clientseitig im Browser des Nutzers; das Ergebnis wird
+        unmittelbar dort angezeigt, ohne Anmeldung und ohne Erhebung von Kontaktdaten.
       </p>
       <p>
-        Beim Abschluss einzelner Schritte werden aggregierte, anonyme Ereignisse an den
-        in §8 beschriebenen Analytics-Dienst gesendet (z.B. „Check gestartet",
-        „Check abgeschlossen" mit vergröberten Eigenschaften wie Gebäudetyp-Kategorie).
-        Diese Ereignisse enthalten keine Postleitzahl, keine Namen, keine Kontaktdaten
-        und keine Angaben, die eine Identifizierung einzelner Personen zulassen.
+        <strong class="text-text">Anonyme statistische Speicherung nach Abschluss:</strong>
+        Sobald der Nutzer den Check abschließt und die Auswertung anzeigt, werden die
+        kategorialen Auswahlen (Gebäudetyp, Baujahr-Spanne, Wohnflächen-Spanne, aktuelle
+        Heizungsart, Heizungsalter-Spanne, Wärmeabgabe, Dämmstandard, Eigentumsstatus,
+        Einkommens-Spanne sofern angegeben, Antragsstatus) sowie die abgeleiteten Ergebnisse
+        (Eignungs-Stufe, Förder-Stufe, Förder-Bandbreite in Prozent) in einer beim Hoster
+        Cloudflare betriebenen Datenbank (Cloudflare D1) gespeichert. Zweck ist die
+        statistische Auswertung der Tool-Qualität durch den Betreiber.
+      </p>
+      <p>
+        <strong class="text-text">Was nicht gespeichert wird:</strong>
+        Die im Formular abgefragte Postleitzahl wird ausschließlich clientseitig zur
+        Plausibilitätsprüfung der Eingabe verwendet und <strong class="text-text">nicht an
+        den Server übermittelt</strong>. Es werden keine Namen, keine E-Mail-Adressen,
+        keine Telefonnummern, keine IP-Adressen, keine Geräte-IDs, keine Cookies und keine
+        sonstigen Identifier gespeichert, die eine Identifizierung einzelner Personen
+        zulassen würden. Die gespeicherten Datensätze enthalten ausschließlich gröbere
+        Kategorien und sind im Sinne der DSGVO nicht personenbezogen, sondern anonym.
+      </p>
+      <p>
+        <strong class="text-text">Rechtsgrundlage:</strong>
+        Da es sich um anonyme Daten ohne Personenbezug handelt, fällt deren Speicherung
+        nicht in den Anwendungsbereich der DSGVO. Vorsorglich wird Art. 6 Abs. 1 lit. f
+        DSGVO (berechtigtes Interesse an der statistischen Qualitätssicherung des Tools)
+        als Rechtsgrundlage benannt.
+      </p>
+      <p>
+        <strong class="text-text">Speicherdauer:</strong>
+        Die anonymen Datensätze werden auf unbestimmte Zeit zur Trendauswertung
+        vorgehalten. Eine Verknüpfung mit anderen Datenquellen oder eine Weitergabe an
+        Dritte findet nicht statt.
+      </p>
+      <p>
+        Zusätzlich werden beim Abschluss einzelner Schritte aggregierte, anonyme Ereignisse
+        an den in §8 beschriebenen Analytics-Dienst gesendet (z.B. „Check gestartet",
+        „Check abgeschlossen" mit vergröberten Eigenschaften). Diese Ereignisse enthalten
+        ebenfalls keine Postleitzahl, keine Namen und keine Kontaktdaten.
       </p>
 
       <h2 class="text-xl font-semibold text-text">8. Reichweitenmessung mit Plausible Analytics</h2>
