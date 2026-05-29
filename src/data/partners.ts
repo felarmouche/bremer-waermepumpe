@@ -27,7 +27,7 @@ export const partnerVersions: PartnerVersion[] = [
     partners: [
       {
         id: "fritz-group-bremen",
-        firmierung: "Fritz Group",
+        firmierung: "Fritts Group",
         inhaber: "Göller, Paul Wolfang Johannes ",
         anschrift: {
           strasse: "Osterdeich 59A",
