@@ -1,6 +1,5 @@
 ---
 import Layout from "../layout/Layout.astro";
-import TrustBar from "../components/TrustBar.astro";
 import FAQSection from "../components/FAQSection.astro";
 import Breadcrumb from "../components/Breadcrumb.astro";
 import SectionShell from "../components/SectionShell.astro";
@@ -10,13 +9,6 @@ const title = "Kostenloser Wärmepumpen-Check Bremen | Experteneinschätzung";
 const description =
     "Passt eine Wärmepumpe zu Ihrem Haus in Bremen? In wenigen Minuten Daten eingeben und eine kostenlose, unverbindliche Einschätzung vom Bremer Fachpartner erhalten.";
 const canonical = Astro.url.href;
-
-const trustItems = [
-    { text: "In 3 Minuten ausgefüllt" },
-    { text: "Persönliche Einschätzung statt Algorithmus" },
-    { text: "SMS-bestätigte Anfrage" },
-    { text: "100 % kostenlos & unverbindlich" },
-];
 
 const faqs = [
     {
@@ -57,21 +49,20 @@ const faqs = [
             { label: "Wärmepumpen-Check" },
         ]}
     />
-
-    <TrustBar items={trustItems} />
-
     <SectionShell>
         <div class="max-w-3xl">
-            <h1 class="text-3xl md:text-4xl font-bold tracking-tight text-text mb-4">
+            <h1
+                class="text-3xl md:text-4xl font-bold tracking-tight text-text mb-4"
+            >
                 Kostenloser Wärmepumpen-Check für Bremen
             </h1>
             <p class="text-text-muted leading-relaxed text-base sm:text-lg">
-                Passt eine Wärmepumpe zu Ihrem Haus in Bremen, Bremerhaven oder dem
-                Umland? Der kostenlose Eignungs- und Fördercheck ordnet in wenigen
-                Schritten Gebäude, alte Heizung, Eigentum und Vorhaben ein – und
-                übermittelt Ihre Anfrage erst nach SMS-Bestätigung an den namentlich
-                genannten Bremer Fachpartner. Keine automatische Bewertung, kein
-                anonymer Leadverkauf, keine Kosten.
+                Passt eine Wärmepumpe zu Ihrem Haus in Bremen, Bremerhaven oder
+                dem Umland? Der kostenlose Eignungs- und Fördercheck ordnet in
+                wenigen Schritten Gebäude, alte Heizung, Eigentum und Vorhaben
+                ein – und übermittelt Ihre Anfrage erst nach SMS-Bestätigung an
+                den namentlich genannten Bremer Fachpartner. Keine automatische
+                Bewertung, kein anonymer Leadverkauf, keine Kosten.
             </p>
         </div>
     </SectionShell>
