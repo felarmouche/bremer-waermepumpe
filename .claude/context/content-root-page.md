@@ -2,7 +2,7 @@
 
 Eine **Wärmepumpe in Bremen** ist für viele Hausbesitzer eine zukunftssichere Lösung, um die Heizkosten zu senken und unabhängiger von fossilen Energieträgern zu werden. Gerade in einer Stadt wie Bremen, mit feuchtem Klima, vielen Reihenhäusern, klassischen Altbauten und dicht bebauten Wohngebieten, ist eine gute Planung besonders wichtig. Denn nicht jede Lösung passt zu jedem Gebäude.
 
-Auf diesem unabhängigen Informationsportal erfahren Eigentümer in Bremen und Umgebung, wie sie die passende Wärmepumpe für ihr Haus finden – von der ersten Einschätzung bis zur Vorbereitung auf die Installation. Ob Neubau, sanierter Altbau oder die Frage „**Wärmepumpe nachrüsten Bremen**“: Wir zeigen objektiv, worauf es wirklich ankommt.
+Auf diesem Informationsportal erfahren Eigentümer in Bremen und Umgebung, wie sie die passende Wärmepumpe für ihr Haus finden – von der ersten Einschätzung bis zur Vorbereitung auf die Installation. Ob Neubau, sanierter Altbau oder die Frage „**Wärmepumpe nachrüsten Bremen**“: Wir zeigen objektiv, worauf es wirklich ankommt.
 
 ## Warum sich eine Wärmepumpe in Bremen lohnt
 

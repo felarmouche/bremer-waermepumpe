@@ -3,27 +3,32 @@ import Layout from "../layout/Layout.astro";
 import SectionShell from "../components/SectionShell.astro";
 import Breadcrumb from "../components/Breadcrumb.astro";
 
-const title = "Über diesen Ratgeber – Wärmepumpe Bremen";
+const title = "Über uns & Kontakt – Bremer Wärmepumpe";
 const description =
-    "Informationen zu diesem privaten Informationsportal rund um Wärmepumpen in Bremen. Redaktioneller Ratgeber ohne kommerziellen Hintergrund.";
+    "Bremer Wärmepumpe leitet Wärmepumpen-Anfragen aus Bremen und Umland an einen namentlich genannten SHK-Betrieb zur kostenlosen Erstberatung weiter.";
 const canonical = Astro.url.href;
 ---
 
 <Layout title={title} description={description} canonical={canonical}>
-    <Breadcrumb items={[
-        { label: "Startseite", href: "/" },
-        { label: "Über diesen Ratgeber" }
-    ]} />
+    <Breadcrumb
+        items={[
+            { label: "Startseite", href: "/" },
+            { label: "Über uns & Kontakt" },
+        ]}
+    />
 
     <section class="bg-primary py-16 md:py-20">
         <div class="max-w-3xl mx-auto px-4 sm:px-6 text-center">
             <h1
                 class="text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight tracking-tight"
             >
-                Über diesen Ratgeber
+                Über uns &amp; Kontakt
             </h1>
-            <p class="mt-6 text-white/85 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
-                Ein privates Informationsportal rund um das Thema Wärmepumpe in Bremen und Umgebung.
+            <p
+                class="mt-6 text-white/85 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto"
+            >
+                Private Empfehlungsseite für einen lokalen SHK-Betrieb in Bremen
+                und Umland.
             </p>
         </div>
     </section>
@@ -31,36 +36,78 @@ const canonical = Astro.url.href;
     <SectionShell>
         <article class="max-w-3xl space-y-6 text-text-muted leading-relaxed">
             <p>
-                Dieses Portal ist ein <strong class="text-text">privates, nicht-kommerzielles Informationsangebot</strong>.
-                Ziel ist es, Hausbesitzern in Bremen und Umgebung einen strukturierten Überblick zu den Themen
-                Wärmepumpen-Eignung, Kosten und Förderung zu geben – ohne Verkaufsinteresse und ohne Sales-Druck.
+                Bremer Wärmepumpe leitet Anfragen von Hausbesitzerinnen und
+                Hausbesitzern aus Bremen und Umland (PLZ 28xxx und 27xxx) an
+                <strong class="text-text"
+                    >einen namentlich genannten SHK-Betrieb</strong
+                > weiter, der sich für eine kostenlose und unverbindliche Erstberatung
+                meldet. Den Experten finden Sie unter
+                <a href="/fachpartner/" class="text-primary hover:underline">
+                    /fachpartner/
+                </a>. Die Nutzung ist für Sie kostenfrei.
             </p>
             <p>
-                Die hier veröffentlichten Inhalte werden redaktionell zusammengetragen und auf
-                dem Stand des jeweils genannten Datums wiedergegeben. Förderprogramme, technische
-                Anforderungen und Preisniveaus können sich jederzeit ändern. Für eine individuelle,
-                verbindliche Bewertung Ihres konkreten Hauses wenden Sie sich bitte an einen
-                zugelassenen Fachbetrieb oder eine anerkannte Energieberatung.
+                Diese Seite wird privat betrieben; der Betreiber erhält für die
+                Weiterleitung weder eine Provision noch einen sonstigen
+                geldwerten Vorteil.
+            </p>
+            <p>
+                Die hier veröffentlichten Ratgeber-Inhalte zu Eignung, Kosten
+                und Förderung werden redaktionell zusammengetragen und auf dem
+                Stand des jeweils genannten Datums wiedergegeben.
+                Förderprogramme, technische Anforderungen und Preisniveaus
+                können sich jederzeit ändern. Eine belastbare Einschätzung für
+                Ihr Gebäude erhalten Sie durch eine individuelle Prüfung vor Ort
+                durch den Experten.
             </p>
 
             <div class="notice-success rounded p-5">
                 <p class="font-semibold text-text mb-2">
-                    Dies ist keine Rechts-, Steuer- oder Energieberatung.
+                    Diese Inhalte sind keine Rechts-, Steuer- oder
+                    Energieberatung.
                 </p>
                 <p class="text-sm leading-relaxed">
-                    Alle Angaben zu Kosten, Förderbeträgen und technischen Voraussetzungen sind
-                    unverbindliche Orientierung. Eine belastbare Einschätzung für Ihr Gebäude
-                    erhalten Sie nur durch eine individuelle Prüfung vor Ort durch einen Fachbetrieb.
+                    Alle Angaben zu Kosten, Förderbeträgen und technischen
+                    Voraussetzungen sind unverbindliche Orientierung. Ein
+                    verbindlicher Werk- oder Beratungsvertrag kommt erst nach
+                    eigenständiger Vereinbarung zwischen Ihnen und dem Experten
+                    zustande.
                 </p>
             </div>
 
-            <h2 class="text-2xl font-bold text-text mt-10 mb-4">Kontakt &amp; Verantwortlicher</h2>
+            <h2 class="text-2xl font-bold text-text mt-10 mb-4">Betreiber</h2>
             <p>
-                Für presse- oder datenschutzbezogene Anfragen nutzen Sie bitte die
-                im <a href="/impressum/" class="text-primary hover:underline">Impressum</a>
-                hinterlegte E-Mail-Adresse. Angaben nach DSGVO finden Sie in der
-                <a href="/datenschutz/" class="text-primary hover:underline">Datenschutzerklärung</a>.
+                <strong class="text-text">Ferris El-Armouche</strong><br />
+                Spittaler Straße 1c<br />
+                28359 Bremen<br />
+                Telefon: 0176 34690188<br />
+                E-Mail: bremerwaermepumpen@web.de
             </p>
+            <p>
+                Vollständige Pflichtangaben finden Sie im
+                <a href="/impressum/" class="text-primary hover:underline"
+                    >Impressum</a
+                >. Informationen zur Verarbeitung Ihrer Daten finden Sie in der
+                <a href="/datenschutz/" class="text-primary hover:underline"
+                    >Datenschutzerklärung</a
+                >. Die Bedingungen für die Nutzung regeln unsere
+                <a href="/agb/" class="text-primary hover:underline"
+                    >Nutzungsbedingungen</a
+                >. Eine erteilte Einwilligung können Sie jederzeit über
+                <a href="/widerruf/" class="text-primary hover:underline"
+                    >/widerruf/</a
+                >
+                oder per E-Mail an bremerwaermepumpen@web.de widerrufen.
+            </p>
+
+            <div class="mt-8 flex flex-col sm:flex-row gap-3">
+                <a href="/check/" class="btn-accent text-center">
+                    Eignung &amp; Förderung prüfen
+                </a>
+                <a href="/fachpartner/" class="btn-secondary text-center">
+                    Unseren Experten ansehen
+                </a>
+            </div>
         </article>
     </SectionShell>
 
@@ -70,17 +117,39 @@ const canonical = Astro.url.href;
                 Weiter im Ratgeber
             </h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                <a href="/waermepumpe-altbau-bremen/" class="surface-card p-5 hover:border-border-strong transition-colors block cursor-pointer">
-                    <h3 class="font-semibold text-text mb-1">Wärmepumpe im Altbau</h3>
-                    <p class="text-text-muted text-sm">Eignung, Vorlauftemperatur und Praxisbeispiele aus Bremen.</p>
+                <a
+                    href="/waermepumpe-altbau-bremen/"
+                    class="surface-card p-5 hover:border-border-strong transition-colors block cursor-pointer"
+                >
+                    <h3 class="font-semibold text-text mb-1">
+                        Wärmepumpe im Altbau
+                    </h3>
+                    <p class="text-text-muted text-sm">
+                        Eignung, Vorlauftemperatur und Praxisbeispiele aus
+                        Bremen.
+                    </p>
                 </a>
-                <a href="/waermepumpe-kosten-bremen/" class="surface-card p-5 hover:border-border-strong transition-colors block cursor-pointer">
+                <a
+                    href="/waermepumpe-kosten-bremen/"
+                    class="surface-card p-5 hover:border-border-strong transition-colors block cursor-pointer"
+                >
                     <h3 class="font-semibold text-text mb-1">Kosten Bremen</h3>
-                    <p class="text-text-muted text-sm">Realistische Kosten, Eigenanteil und swb-Stromtarif – Stand 2026.</p>
+                    <p class="text-text-muted text-sm">
+                        Realistische Kosten, Eigenanteil und swb-Stromtarif –
+                        Stand 2026.
+                    </p>
                 </a>
-                <a href="/waermepumpe-foerderung-bremen/" class="surface-card p-5 hover:border-border-strong transition-colors block cursor-pointer">
-                    <h3 class="font-semibold text-text mb-1">Förderung Bremen</h3>
-                    <p class="text-text-muted text-sm">KfW 458, BAFA, BAB – mit Bezug auf Bremer Bestandsimmobilien.</p>
+                <a
+                    href="/waermepumpe-foerderung-bremen/"
+                    class="surface-card p-5 hover:border-border-strong transition-colors block cursor-pointer"
+                >
+                    <h3 class="font-semibold text-text mb-1">
+                        Förderung Bremen
+                    </h3>
+                    <p class="text-text-muted text-sm">
+                        KfW 458, BAFA, BAB – mit Bezug auf Bremer
+                        Bestandsimmobilien.
+                    </p>
                 </a>
             </div>
         </div>

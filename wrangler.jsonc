@@ -1,6 +1,8 @@
 {
 	"compatibility_date": "2026-04-05",
-	"compatibility_flags": ["global_fetch_strictly_public"],
+	"compatibility_flags": [
+		"global_fetch_strictly_public"
+	],
 	"name": "bremer-waermepumpe",
 	"main": "@astrojs/cloudflare/entrypoints/server",
 	"assets": {
@@ -22,5 +24,25 @@
 			"database_name": "anonymous-leads",
 			"database_id": "fe079ef8-77de-441f-b57f-d1535a7de5df"
 		}
-	]
+	],
+	"vars": {
+		"BREVO_SENDER_EMAIL": "kontakt@bremer-waermepumpe.de",
+		"BREVO_SENDER_NAME": "Bremer Wärmepumpe",
+		"BETREIBER_DATENSCHUTZ_EMAIL": "bremerwaermepumpen@web.de",
+		"BETREIBER_TEL": "0176 34690188",
+		"SITE_URL": "https://bremer-waermepumpe.de",
+		"WEBOTP_HOST": "bremer-waermepumpe.de",
+		"ADMIN_NOTIFICATION_EMAILS": "ferris.e@gmx.de,bremerwaermepumpen@web.de",
+		"BREVO_SMS_SENDER": "BremerWP",
+		"SMS_CODE_TTL_SECONDS": "600"
+	}
+	// Secrets (set via `wrangler secret put <NAME>` für Production,
+	// und in lokaler `.dev.vars` für `astro dev` / `wrangler dev`):
+	//   BREVO_API_KEY  – required for E-Mail and SMS via Brevo
+	//   SMS_PEPPER     – 32-byte hex, used in SHA-256 hash of SMS codes
+	//
+	// Vor Livegang (sobald Brevo SMS gebucht):
+	//   1. Brevo-Dashboard: SMS aktivieren + Sender-ID "BremerWP" registrieren
+	//   2. wrangler secret put BREVO_API_KEY
+	//   3. wrangler secret put SMS_PEPPER  (openssl rand -hex 32)
 }

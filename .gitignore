@@ -31,3 +31,11 @@ pnpm-debug.log*
 
 # SEO Recherche-Material (nicht ins Repo)
 SEO_BRIEFING.md
+
+# Sensitive credentials – never commit
+*-api-key.txt
+brevo-api-key.txt
+datenschutzerklärung_von_sönke.txt
+
+# D1 Backups — enthalten personenbezogene Daten, NIE ins Repo!
+backups/

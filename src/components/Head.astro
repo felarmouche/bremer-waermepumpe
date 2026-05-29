@@ -16,7 +16,8 @@ interface Props {
     noindex?: boolean;
     pageSchema?: PageSchema;
 }
-const { title, description, canonical, ogImage, noindex, pageSchema } = Astro.props;
+const { title, description, canonical, ogImage, noindex, pageSchema } =
+    Astro.props;
 const siteUrl = "https://bremer-waermepumpe.de";
 const resolvedOgImage = ogImage
     ? `${siteUrl}${ogImage}`
@@ -32,23 +33,29 @@ const articleJsonLd =
               image: resolvedOgImage,
               author: {
                   "@type": "Organization",
-                  name: "Redaktion bremer-waermepumpe.de",
+                  name: "Bremer Wärmepumpe",
                   url: siteUrl,
               },
               publisher: {
                   "@type": "Organization",
-                  name: "Bremer Wärmepumpe – Ratgeber",
+                  name: "Bremer Wärmepumpe",
                   url: siteUrl,
               },
-              ...(pageSchema.datePublished && { datePublished: pageSchema.datePublished }),
-              ...(pageSchema.dateModified && { dateModified: pageSchema.dateModified }),
+              ...(pageSchema.datePublished && {
+                  datePublished: pageSchema.datePublished,
+              }),
+              ...(pageSchema.dateModified && {
+                  dateModified: pageSchema.dateModified,
+              }),
               ...(canonical && { mainEntityOfPage: canonical }),
               inLanguage: "de-DE",
           }
         : null;
 
 const howToJsonLd =
-    pageSchema?.type === "HowTo" && pageSchema.howToSteps && pageSchema.howToSteps.length > 0
+    pageSchema?.type === "HowTo" &&
+    pageSchema.howToSteps &&
+    pageSchema.howToSteps.length > 0
         ? {
               "@context": "https://schema.org",
               "@type": "HowTo",
@@ -81,7 +88,7 @@ const howToJsonLd =
 <meta property="og:url" content={canonical} />
 <meta property="og:image" content={resolvedOgImage} />
 <meta property="og:locale" content="de_DE" />
-<meta property="og:site_name" content="Bremer Wärmepumpe – Ratgeber" />
+<meta property="og:site_name" content="Bremer Wärmepumpe" />
 
 <script
     is:inline
@@ -89,30 +96,59 @@ const howToJsonLd =
     set:html={JSON.stringify({
         "@context": "https://schema.org",
         "@type": "WebSite",
-        name: "Bremer Wärmepumpe – Ratgeber",
+        name: "Bremer Wärmepumpe",
         url: siteUrl,
         inLanguage: "de-DE",
     })}
 />
 
-{articleJsonLd && (
-    <script is:inline type="application/ld+json" set:html={JSON.stringify(articleJsonLd)} />
-)}
-
-{howToJsonLd && (
-    <script is:inline type="application/ld+json" set:html={JSON.stringify(howToJsonLd)} />
-)}
-
-<!-- Plausible Analytics (cookieless, DSGVO-konform, keine personenbezogenen Daten) -->
 <script
-    defer
     is:inline
-    data-domain="bremer-waermepumpe.de"
-    src="https://plausible.io/js/script.js"></script>
-<script is:inline>
-    window.plausible =
-        window.plausible ||
-        function () {
-            (window.plausible.q = window.plausible.q || []).push(arguments);
-        };
-</script>
+    type="application/ld+json"
+    set:html={JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        name: "Bremer Wärmepumpe",
+        description:
+            "Private Empfehlungsseite für einen lokalen SHK-Betrieb in Bremen und Umland.",
+        url: siteUrl,
+        publisher: {
+            "@type": "Person",
+            name: "Ferris El-Armouche",
+            address: {
+                "@type": "PostalAddress",
+                streetAddress: "Spittaler Straße 1c",
+                postalCode: "28359",
+                addressLocality: "Bremen",
+                addressCountry: "DE",
+            },
+            telephone: "+49 176 34690188",
+            email: "bremerwaermepumpen@web.de",
+        },
+        areaServed: {
+            "@type": "AdministrativeArea",
+            name: "Bremen und Umland",
+        },
+        inLanguage: "de-DE",
+    })}
+/>
+
+{
+    articleJsonLd && (
+        <script
+            is:inline
+            type="application/ld+json"
+            set:html={JSON.stringify(articleJsonLd)}
+        />
+    )
+}
+
+{
+    howToJsonLd && (
+        <script
+            is:inline
+            type="application/ld+json"
+            set:html={JSON.stringify(howToJsonLd)}
+        />
+    )
+}

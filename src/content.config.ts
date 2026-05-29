@@ -21,6 +21,8 @@ const pages = defineCollection({
                 imageSrc: image(),
                 primaryCTA: cta,
                 secondaryCTA: cta.optional(),
+                showQuickstart: z.boolean().optional(),
+                quickstartLabel: z.string().optional(),
             }),
             trustItems: z
                 .array(z.object({ text: z.string() }))

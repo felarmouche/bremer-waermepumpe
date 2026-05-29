@@ -7,35 +7,57 @@ const year = new Date().getFullYear();
 <footer class="border-t border-border bg-surface-alt py-12">
     <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="max-w-md">
-            <p class="text-lg font-bold text-primary uppercase">Bremer Wärmepumpe</p>
+            <p class="text-lg font-bold text-primary uppercase">
+                Bremer Wärmepumpe
+            </p>
             <p class="text-text-muted text-sm mt-2">
-                Unabhängiges privates Informationsportal rund um Wärmepumpen in Bremen und Umgebung.
+                Private Empfehlungsseite für einen lokalen SHK-Betrieb in Bremen
+                und Umland.
+            </p>
+            <p class="text-text-muted text-xs mt-3 leading-relaxed">
+                Ferris El-Armouche &middot; Spittaler Straße 1c &middot; 28359
+                Bremen<br />
+                Telefon: 0176 34690188 &middot; E-Mail: bremerwaermepumpen@web.de
             </p>
         </div>
         <div class="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-            {footerClusters.map((cluster) => (
-                <div>
-                    <p class="font-semibold text-text mb-2">{cluster.label}</p>
-                    <ul class="space-y-1 text-sm text-text-muted">
-                        {cluster.links.map((link) => (
-                            <li>
-                                <a href={link.href} class="hover:text-primary transition-colors">
-                                    {link.label}
-                                </a>
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-            ))}
+            {
+                footerClusters.map((cluster) => (
+                    <div>
+                        <p class="font-semibold text-text mb-2">
+                            {cluster.label}
+                        </p>
+                        <ul class="space-y-1 text-sm text-text-muted">
+                            {cluster.links.map((link) => (
+                                <li>
+                                    <a
+                                        href={link.href}
+                                        class="hover:text-primary transition-colors"
+                                    >
+                                        {link.label}
+                                    </a>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                ))
+            }
         </div>
-        <div class="border-t border-border mt-8 pt-6 text-xs text-text-muted leading-relaxed">
+        <div
+            class="border-t border-border mt-8 pt-6 text-xs text-text-muted leading-relaxed"
+        >
             <p class="mb-4">
-                Dieser Ratgeber ist ein privates, nicht-kommerzielles Informationsangebot.
-                Die Inhalte zu Eignung, Kosten und Förderung sind unverbindliche Orientierung
-                und ersetzen keine individuelle Beratung durch einen zugelassenen Fachbetrieb
-                oder eine anerkannte Energieberatung. Alle Angaben ohne Gewähr, Stand 2026.
+                Die Inhalte zu Eignung, Kosten und Förderung sind unverbindliche
+                Orientierung und ersetzen keine individuelle Beratung. Anfragen
+                werden ausschließlich an den unter
+                <a href="/fachpartner/" class="hover:text-primary underline"
+                    >/fachpartner/</a
+                >
+                namentlich genannten SHK-Betrieb weitergeleitet. Diese Seite wird
+                privat betrieben; der Betreiber erhält für die Weiterleitung keine
+                Provision. Alle Angaben ohne Gewähr.
             </p>
-            <p>&copy; {year} Bremer Wärmepumpe – Ratgeber.</p>
+            <p>&copy; {year} Bremer Wärmepumpe.</p>
         </div>
     </div>
 </footer>

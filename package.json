@@ -11,15 +11,27 @@
     "preview": "npm run build && wrangler dev",
     "astro": "astro",
     "generate-types": "wrangler types",
-    "deploy": "npm run build && wrangler deploy"
+    "deploy": "npm run build && wrangler deploy",
+    "db:peek": "wrangler d1 execute anonymous-leads --remote --command \"SELECT id, vorname, nachname, plz, status, created_at FROM leads ORDER BY created_at DESC LIMIT 20\"",
+    "db:backup": "bash scripts/backup-d1.sh && BREVO_API_KEY=$(cat .dev.vars | grep BREVO_API_KEY | cut -d= -f2) bash scripts/backup-brevo-logs.sh",
+    "logs": "wrangler tail"
   },
   "dependencies": {
+    "@astrojs/check": "^0.9.9",
     "@astrojs/cloudflare": "^13.1.7",
     "@astrojs/mdx": "^5.0.3",
+    "@astrojs/react": "^5.0.5",
     "@astrojs/sitemap": "^3.7.2",
+    "@hookform/resolvers": "^5.4.0",
     "@tailwindcss/vite": "^4.2.2",
     "astro": "^6.1.3",
-    "tailwindcss": "^4.2.2"
+    "lucide-react": "^1.16.0",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6",
+    "react-hook-form": "^7.76.1",
+    "tailwindcss": "^4.2.2",
+    "typescript": "^5.9.3",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "wrangler": "^4.80.0"

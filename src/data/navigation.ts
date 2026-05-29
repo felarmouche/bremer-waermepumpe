@@ -119,7 +119,7 @@ export const navClusters: NavCluster[] = [
     links: [
       {
         href: "/kontakt/",
-        label: "Über diesen Ratgeber",
+        label: "Kontakt",
         description: "Hintergrund, Zielsetzung und Kontakt.",
       },
     ],
@@ -132,6 +132,9 @@ export const navClusters: NavCluster[] = [
     links: [
       { href: "/impressum/", label: "Impressum" },
       { href: "/datenschutz/", label: "Datenschutz" },
+      { href: "/agb/", label: "Nutzungsbedingungen" },
+      { href: "/widerruf/", label: "Widerruf" },
+      { href: "/fachpartner/", label: "Fachpartner" },
     ],
   },
 ];

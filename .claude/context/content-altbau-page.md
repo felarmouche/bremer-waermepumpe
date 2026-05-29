@@ -2,7 +2,7 @@
 
 Viele Eigentümer gehen noch immer davon aus, dass eine Wärmepumpe im Altbau nur im perfekt sanierten Haus funktioniert. Für viele Gebäude in Bremen stimmt das so nicht. Entscheidend ist nicht allein das Baujahr, sondern vor allem, wie viel Vorlauftemperatur das Haus tatsächlich braucht, wie hoch die Heizlast ist und ob Heizflächen sowie Hydraulik sinnvoll aufeinander abgestimmt werden. 
 
-> 💡 **Hinweis der Redaktion:** Auf diesem unabhängigen Informationsportal (Stand 2026) zeigen wir Ihnen objektiv, welche technischen Möglichkeiten für Bremer Bestandsgebäude bestehen. Eine exakte Planung muss immer individuell durch einen Fachbetrieb erfolgen.
+> 💡 **Hinweis der Redaktion:** Auf diesem Informationsportal (Stand 2026) zeigen wir Ihnen objektiv, welche technischen Möglichkeiten für Bremer Bestandsgebäude bestehen. Eine exakte Planung muss immer individuell durch einen Fachbetrieb erfolgen.
 
 Gerade in Bremen ist das Thema besonders relevant: **Altbremer Häuser**, klassische Reihenhäuser, Stadtvillen und teilmodernisierte Bestandsimmobilien prägen viele Stadtteile. Hohe Decken, ältere Fenster, massive Wände und vorhandene Heizkörper stellen zwar Anforderungen an die Planung, schließen eine Wärmepumpe aber nicht automatisch aus. 
 
