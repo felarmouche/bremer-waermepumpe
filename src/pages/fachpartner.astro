@@ -1,0 +1,201 @@
+---
+import Layout from "../layout/Layout.astro";
+import { currentPartnerVersion } from "../data/partners";
+
+const stand = new Date(currentPartnerVersion.validFrom).toLocaleDateString(
+  "de-DE",
+  { year: "numeric", month: "long", day: "numeric" },
+);
+const hasPlaceholders = currentPartnerVersion.partners.some(
+  (p) => p.isPlaceholder,
+);
+---
+
+<Layout
+  title="Unser Heizungsbau-Experte – Bremer Wärmepumpe"
+  description="Der namentlich genannte Heizungsbau-Experte aus Bremen, an den Anfragen über bremer-waermepumpe.de zur kostenlosen Erstberatung weitergeleitet werden."
+>
+  <section class="max-w-3xl mx-auto px-4 py-16 sm:py-20">
+    <h1 class="text-3xl sm:text-4xl font-bold text-text mb-4">
+      Unser Heizungsbau-Experte
+    </h1>
+    <p class="text-text-muted text-lg mb-2">
+      Über bremer-waermepumpe.de eingehende Anfragen werden an
+      <strong class="text-text">genau einen</strong>
+      hier <strong class="text-text">namentlich genannten</strong>
+      SHK-Betrieb weitergeleitet. Eine Weitergabe an hier nicht genannte Dritte findet
+      nicht statt.
+    </p>
+    <p class="text-sm text-text-muted">
+      Stand: {stand} &middot; Version
+      <code>{currentPartnerVersion.version}</code>
+    </p>
+
+    <div class="surface-card mt-8 p-6 border-l-4 border-primary">
+      <p class="font-semibold text-text mb-1">
+        Private Empfehlung – keine Provision
+      </p>
+      <p class="text-sm text-text-muted">
+        Ferris El-Armouche, der Betreiber dieser Seite, empfiehlt den unten
+        genannten SHK-Betrieb aus persönlicher Verbundenheit. Für die
+        Weiterleitung von Anfragen erhält er
+        <strong class="text-text"
+          >keine Provision und keinen sonstigen geldwerten Vorteil</strong
+        >.
+      </p>
+    </div>
+
+    {
+      hasPlaceholders && (
+        <div class="surface-card mt-8 p-6 border-l-4 border-accent">
+          <p class="font-semibold text-text mb-1">Eintrag in Aufbau</p>
+          <p class="text-sm text-text-muted">
+            Telefon- und E-Mail-Daten unseres SHK-Betrieb werden aktuell
+            finalisiert. Die Weiterleitung von Anfragen ist noch nicht aktiv.
+            Sobald die Daten vollständig sind, wird diese Seite unter einer
+            neuen Versionsnummer aktualisiert. Bestehende Einwilligungen
+            beziehen sich ausschließlich auf die zum Zeitpunkt der Einwilligung
+            gültige Partner-Version.
+          </p>
+        </div>
+      )
+    }
+
+    <div class="mt-10 space-y-8">
+      {
+        currentPartnerVersion.partners.map((partner) => (
+          <article class="surface-card p-6 md:p-8">
+            <header class="mb-4">
+              <h2 class="text-xl font-bold text-text">
+                {partner.firmierung}
+                {partner.isPlaceholder && (
+                  <span
+                    class="ml-2 inline-block text-xs uppercase tracking-wide
+                  text-accent border border-accent rounded px-2 py-0.5"
+                  >
+                    Platzhalter
+                  </span>
+                )}
+              </h2>
+              {partner.inhaber && (
+                <p class="text-sm text-text-muted">
+                  Inhaber: {partner.inhaber}
+                </p>
+              )}
+            </header>
+
+            <dl class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
+              <div>
+                <dt class="font-semibold text-text">Anschrift</dt>
+                <dd class="text-text-muted">
+                  {partner.anschrift.strasse}
+                  <br />
+                  {partner.anschrift.plz} {partner.anschrift.ort}
+                </dd>
+              </div>
+              <div>
+                <dt class="font-semibold text-text">Kontakt</dt>
+                <dd class="text-text-muted">
+                  Telefon: {partner.telefon}
+                  <br />
+                  E-Mail: {partner.email}
+                </dd>
+              </div>
+
+              {partner.webseite && (
+                <div>
+                  <dt class="font-semibold text-text">Webseite</dt>
+                  <dd class="text-text-muted">
+                    <a
+                      href={partner.webseite}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="text-primary hover:underline break-words"
+                    >
+                      {partner.webseite}
+                    </a>
+                  </dd>
+                </div>
+              )}
+
+              {partner.handwerkskammer && (
+                <div>
+                  <dt class="font-semibold text-text">Handwerksrolle</dt>
+                  <dd class="text-text-muted">{partner.handwerkskammer}</dd>
+                </div>
+              )}
+
+              {partner.ustId && (
+                <div>
+                  <dt class="font-semibold text-text">USt-IdNr.</dt>
+                  <dd class="text-text-muted">{partner.ustId}</dd>
+                </div>
+              )}
+
+              {partner.handelsregister && (
+                <div>
+                  <dt class="font-semibold text-text">Handelsregister</dt>
+                  <dd class="text-text-muted">
+                    {partner.handelsregister.gericht}, HRB{" "}
+                    {partner.handelsregister.nummer}
+                  </dd>
+                </div>
+              )}
+
+              {partner.spezialgebiete && partner.spezialgebiete.length > 0 && (
+                <div class="sm:col-span-2">
+                  <dt class="font-semibold text-text">Spezialgebiete</dt>
+                  <dd class="text-text-muted">
+                    {partner.spezialgebiete.join(" · ")}
+                  </dd>
+                </div>
+              )}
+
+              {partner.datenschutzUrl && (
+                <div class="sm:col-span-2">
+                  <dt class="font-semibold text-text">
+                    Datenschutz des Partners
+                  </dt>
+                  <dd class="text-text-muted">
+                    <a
+                      href={partner.datenschutzUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="text-primary hover:underline break-words"
+                    >
+                      {partner.datenschutzUrl}
+                    </a>
+                  </dd>
+                </div>
+              )}
+            </dl>
+          </article>
+        ))
+      }
+    </div>
+
+    <div class="prose prose-lg max-w-none mt-12 text-text-muted">
+      <h2 class="text-xl font-semibold text-text">
+        Hinweise zur Datenweitergabe
+      </h2>
+      <p>
+        Welche Daten weitergegeben werden, auf welcher Rechtsgrundlage und wie
+        Sie Ihre Einwilligung jederzeit widerrufen können, finden Sie in unserer
+        <a href="/datenschutz/#leads" class="text-primary hover:underline">
+          Datenschutzerklärung (Ziffer 5 und 6)
+        </a>
+        sowie in unseren
+        <a href="/agb/" class="text-primary hover:underline"
+          >Nutzungsbedingungen</a
+        >.
+      </p>
+      <p>
+        Frühere Stände dieses Eintrags werden archiviert und können auf Anfrage
+        unter
+        <strong class="text-text">bremerwaermepumpen@web.de</strong>
+        zur Verfügung gestellt werden. Bestehende Einwilligungen beziehen sich ausschließlich
+        auf die zum Zeitpunkt der Einwilligung gültige Partner-Version.
+      </p>
+    </div>
+  </section>
+</Layout>

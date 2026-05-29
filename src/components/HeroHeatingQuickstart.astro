@@ -1,0 +1,102 @@
+---
+/**
+ * Inline 1-question pre-roll for the lead funnel.
+ *
+ * Renders four heating-system buttons. A click writes the funnel's
+ * localStorage keys (`bremer_funnel_data` + `bremer_funnel_step`)
+ * and navigates to `/check/`, where <FunnelParent /> picks up at Step 2.
+ *
+ * Two visual variants:
+ *   - "dark"  → for placement on a dark hero background (desktop hero column)
+ *   - "light" → for placement on a light section background (mobile band below hero)
+ */
+interface Props {
+  ctaLabel?: string;
+  layout?: "dark" | "light";
+}
+
+const { ctaLabel = "3-Minuten-Check · kostenlos", layout = "dark" } = Astro.props;
+
+const isDark = layout === "dark";
+
+const containerClass = isDark
+  ? "bg-white rounded-2xl shadow-[0_25px_60px_-15px_rgba(0,0,0,0.55)] ring-1 ring-black/5 p-5 sm:p-6"
+  : "bg-background border border-border rounded-xl shadow-sm p-5 sm:p-6";
+
+const options = [
+  { value: "Gas", label: "Gas", icon: "🔥" },
+  { value: "Öl", label: "Öl", icon: "🛢️" },
+  { value: "Strom", label: "Strom", icon: "⚡" },
+  { value: "Anderes", label: "Anderes", icon: "❓" },
+];
+---
+
+<div class={containerClass} data-hero-quickstart>
+  <div class="flex items-center gap-2 mb-3">
+    <span
+      class="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-primary bg-highlight px-2.5 py-1 rounded-full"
+    >
+      <span
+        class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"
+        aria-hidden="true"
+      ></span>
+      {ctaLabel}
+    </span>
+  </div>
+
+  <h2 class="text-lg sm:text-xl font-bold text-text leading-tight">
+    Wie heizen Sie aktuell?
+  </h2>
+  <p class="text-xs sm:text-sm text-text-muted mt-1 mb-4">
+    Erste Frage zur Eignungsprüfung – ein Klick startet den Check.
+  </p>
+
+  <div class="grid grid-cols-2 gap-2.5">
+    {options.map((opt) => (
+      <button
+        type="button"
+        data-heating={opt.value}
+        class="group flex items-center justify-center gap-2 py-3.5 px-2 rounded-lg border border-border bg-surface text-text font-semibold text-sm hover:border-primary hover:bg-primary/[0.05] hover:shadow-sm active:scale-[0.98] transition-all cursor-pointer"
+      >
+        <span class="text-lg" aria-hidden="true">{opt.icon}</span>
+        <span>{opt.label}</span>
+      </button>
+    ))}
+  </div>
+
+  <p class="text-[11px] text-text-muted mt-3.5 leading-relaxed">
+    SMS-bestätigt · Persönliche Einschätzung statt Algorithmus ·
+    <a href="/fachpartner/" class="underline hover:text-primary">Empfänger ansehen</a>
+  </p>
+</div>
+
+<script is:inline>
+  (function () {
+    var roots = document.querySelectorAll("[data-hero-quickstart]");
+    roots.forEach(function (root) {
+      if (root.dataset.heroBound === "1") return;
+      root.dataset.heroBound = "1";
+      var buttons = root.querySelectorAll("button[data-heating]");
+      buttons.forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          var heating = btn.getAttribute("data-heating") || "";
+          if (!heating) return;
+          try {
+            var raw = localStorage.getItem("bremer_funnel_data");
+            var data = raw ? JSON.parse(raw) : {};
+            data.heatingCurrent = heating;
+            localStorage.setItem("bremer_funnel_data", JSON.stringify(data));
+            var savedStep = parseInt(localStorage.getItem("bremer_funnel_step") || "1", 10);
+            if (!isFinite(savedStep) || savedStep < 2) {
+              localStorage.setItem("bremer_funnel_step", "2");
+            }
+            localStorage.setItem("bremer_funnel_disqualified", "false");
+          } catch (e) {
+            // localStorage blocked → fall back to plain navigation
+          }
+          window.location.href = "/check/";
+        });
+      });
+    });
+  })();
+</script>

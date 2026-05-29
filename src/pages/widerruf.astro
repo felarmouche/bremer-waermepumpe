@@ -1,0 +1,263 @@
+---
+import Layout from "../layout/Layout.astro";
+---
+
+<Layout
+  title="Widerruf – Bremer Wärmepumpe"
+  description="Widerruf der Einwilligung zur Datenweitergabe und Kontaktaufnahme für die private Empfehlungsseite Bremer Wärmepumpe."
+>
+  <section class="max-w-3xl mx-auto px-4 py-16 sm:py-20">
+    <h1 class="text-3xl sm:text-4xl font-bold text-text mb-8">
+      Widerruf
+    </h1>
+
+    <div class="prose prose-lg max-w-none space-y-6 text-text-muted">
+      <p>
+        Auf dieser Seite können Sie die im Rahmen des Wärmepumpen-Checks
+        erteilte Einwilligung zur Weitergabe Ihrer Daten und zur
+        anschließenden telefonischen Kontaktaufnahme jederzeit, formfrei und
+        ohne Angabe von Gründen mit Wirkung für die Zukunft widerrufen
+        (Art. 7 Abs. 3 DSGVO).
+      </p>
+    </div>
+
+    <!-- A) Widerruf per Telefonnummer (SMS-Re-Verify) -->
+    <div class="surface-card mt-12 p-6 md:p-8">
+      <h2 class="text-2xl font-bold text-text mb-2">
+        Widerruf per Telefonnummer (empfohlen)
+      </h2>
+      <p class="text-sm text-text-muted mb-6">
+        Geben Sie die Telefonnummer ein, mit der Sie die Anfrage gestellt
+        haben. Wir senden Ihnen einen 6-stelligen Bestätigungscode per SMS.
+        Erst nach Eingabe dieses Codes wird Ihre Einwilligung widerrufen –
+        damit ist sichergestellt, dass niemand für Sie widerruft.
+      </p>
+
+      <form id="wf-phone-form" class="space-y-4" novalidate>
+        <div id="wf-phone-step1">
+          <label
+            for="wf-phone"
+            class="block font-semibold text-sm text-text mb-1"
+          >
+            Mobilnummer aus der Anfrage <span class="text-accent ml-1">*</span>
+          </label>
+          <input
+            id="wf-phone"
+            type="tel"
+            name="telefon"
+            class="input-base"
+            placeholder="z. B. 0176 12345678"
+            required
+            autocomplete="tel"
+            inputmode="tel"
+          />
+          <button type="button" id="wf-phone-request" class="btn-accent mt-4">
+            Bestätigungscode anfordern
+          </button>
+        </div>
+
+        <div id="wf-phone-step2" class="hidden border-t border-border pt-4 mt-4">
+          <p class="text-sm text-text-muted mb-3">
+            Wir haben einen Code an <span id="wf-phone-masked" class="font-semibold text-text"></span> gesendet.
+          </p>
+          <label
+            for="wf-phone-code"
+            class="block font-semibold text-sm text-text mb-1"
+          >
+            6-stelliger SMS-Code <span class="text-accent ml-1">*</span>
+          </label>
+          <input
+            id="wf-phone-code"
+            type="text"
+            name="code"
+            class="input-base font-mono tracking-widest"
+            placeholder="123456"
+            required
+            autocomplete="one-time-code"
+            inputmode="numeric"
+            pattern="[0-9]{6}"
+            maxlength="6"
+          />
+          <button type="button" id="wf-phone-confirm" class="btn-accent mt-4">
+            Widerruf bestätigen
+          </button>
+        </div>
+
+        <p id="wf-phone-feedback" class="text-sm hidden" role="status"></p>
+      </form>
+    </div>
+
+    <!-- B) Widerruf per Referenznummer -->
+    <div class="surface-card mt-8 p-6 md:p-8">
+      <h2 class="text-2xl font-bold text-text mb-2">
+        Widerruf per Referenznummer
+      </h2>
+      <p class="text-sm text-text-muted mb-6">
+        Falls Sie Ihre Referenznummer aus der Bestätigungs-SMS zur Hand haben,
+        können Sie auch direkt widerrufen.
+      </p>
+      <form id="wf-ref-form" method="POST" action="/api/widerruf" class="space-y-4">
+        <div>
+          <label
+            for="wf-reference"
+            class="block font-semibold text-sm text-text mb-1"
+          >
+            Referenznummer <span class="text-accent ml-1">*</span>
+          </label>
+          <input
+            id="wf-reference"
+            type="text"
+            name="reference"
+            class="input-base font-mono"
+            placeholder="BWP-2026-00042"
+            pattern="BWP-\d{4}-\d{4,6}"
+            required
+          />
+        </div>
+        <button type="submit" class="btn-accent">Widerruf absenden</button>
+        <p id="wf-ref-feedback" class="text-sm hidden" role="status"></p>
+      </form>
+    </div>
+
+    <!-- C) Alternative Wege -->
+    <div class="surface-card mt-8 p-6 md:p-8">
+      <h2 class="text-xl font-bold text-text mb-3">Weitere Wege zum Widerruf</h2>
+      <ul class="list-disc pl-6 space-y-1 text-text-muted text-sm">
+        <li>
+          formlose E-Mail an
+          <strong class="text-text">bremerwaermepumpen@web.de</strong>
+        </li>
+        <li>
+          postalisch an: Ferris El-Armouche, Spittaler Straße 1c,
+          28359 Bremen
+        </li>
+      </ul>
+    </div>
+  </section>
+</Layout>
+
+<script is:inline>
+  (function () {
+    function showMsg(el, text, ok) {
+      if (!el) return;
+      el.textContent = text;
+      el.classList.remove("hidden");
+      el.classList.toggle("notice-success", !!ok);
+      el.classList.toggle("notice-error", !ok);
+    }
+
+    // Phone form
+    var phoneStep1 = document.getElementById("wf-phone-step1");
+    var phoneStep2 = document.getElementById("wf-phone-step2");
+    var phoneInput = document.getElementById("wf-phone");
+    var codeInput = document.getElementById("wf-phone-code");
+    var maskedEl = document.getElementById("wf-phone-masked");
+    var reqBtn = document.getElementById("wf-phone-request");
+    var confirmBtn = document.getElementById("wf-phone-confirm");
+    var phoneFb = document.getElementById("wf-phone-feedback");
+    var phoneToken = null;
+
+    if (reqBtn) {
+      reqBtn.addEventListener("click", async function () {
+        if (!phoneInput || !phoneInput.value.trim()) {
+          showMsg(phoneFb, "Bitte Telefonnummer eingeben.", false);
+          return;
+        }
+        reqBtn.disabled = true;
+        showMsg(phoneFb, "SMS wird gesendet …", true);
+        try {
+          var res = await fetch("/api/widerruf", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ action: "phone_request", telefon: phoneInput.value }),
+          });
+          var json = await res.json().catch(function () { return {}; });
+          if (res.ok && json.ok) {
+            phoneToken = json.token;
+            if (maskedEl) maskedEl.textContent = json.phoneMasked || "";
+            if (phoneStep1) phoneStep1.classList.add("hidden");
+            if (phoneStep2) phoneStep2.classList.remove("hidden");
+            showMsg(phoneFb, json.message || "Code wurde versendet. Bitte eingeben.", true);
+            if (codeInput) codeInput.focus();
+          } else {
+            showMsg(phoneFb, json.error || "Fehler beim SMS-Versand.", false);
+          }
+        } catch (e) {
+          showMsg(phoneFb, "Netzwerkfehler.", false);
+        } finally {
+          reqBtn.disabled = false;
+        }
+      });
+    }
+
+    if (confirmBtn) {
+      confirmBtn.addEventListener("click", async function () {
+        if (!phoneToken) {
+          showMsg(phoneFb, "Bitte erst Code anfordern.", false);
+          return;
+        }
+        if (!codeInput || !/^[0-9]{6}$/.test((codeInput.value || "").trim())) {
+          showMsg(phoneFb, "Bitte 6-stelligen Code eingeben.", false);
+          return;
+        }
+        confirmBtn.disabled = true;
+        showMsg(phoneFb, "Wird verarbeitet …", true);
+        try {
+          var res = await fetch("/api/widerruf", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              action: "phone_confirm",
+              token: phoneToken,
+              code: codeInput.value.trim(),
+            }),
+          });
+          var json = await res.json().catch(function () { return {}; });
+          if (res.ok && json.ok) {
+            var msg = json.revoked
+              ? "Widerruf erfolgreich. Anfrage(n) " + json.revoked + " wurden widerrufen."
+              : (json.message || "Kein aktiver Datensatz gefunden.");
+            showMsg(phoneFb, msg, true);
+            if (phoneStep2) phoneStep2.classList.add("hidden");
+          } else {
+            showMsg(phoneFb, json.error || "Fehler.", false);
+          }
+        } catch (e) {
+          showMsg(phoneFb, "Netzwerkfehler.", false);
+        } finally {
+          confirmBtn.disabled = false;
+        }
+      });
+    }
+
+    // Reference form
+    var refForm = document.getElementById("wf-ref-form");
+    if (refForm) {
+      refForm.addEventListener("submit", async function (ev) {
+        ev.preventDefault();
+        var fb = document.getElementById("wf-ref-feedback");
+        showMsg(fb, "Wird verarbeitet …", true);
+        try {
+          var fd = new FormData(refForm);
+          var res = await fetch("/api/widerruf", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ reference: fd.get("reference") }),
+          });
+          var json = await res.json().catch(function () { return {}; });
+          if (res.ok && json.ok) {
+            var msg = json.revoked
+              ? "Widerruf erfolgreich. Anfrage(n) " + json.revoked + " wurden widerrufen."
+              : (json.message || "Kein aktiver Datensatz gefunden.");
+            showMsg(fb, msg, true);
+            refForm.reset();
+          } else {
+            showMsg(fb, json.error || "Fehler.", false);
+          }
+        } catch (e) {
+          showMsg(fb, "Netzwerkfehler.", false);
+        }
+      });
+    }
+  })();
+</script>
