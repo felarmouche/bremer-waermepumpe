@@ -1,16 +1,14 @@
 ---
 import Layout from "../layout/Layout.astro";
-import HeroSection from "../components/HeroSection.astro";
 import TrustBar from "../components/TrustBar.astro";
-import SectionShell from "../components/SectionShell.astro";
 import FAQSection from "../components/FAQSection.astro";
-import CTASection from "../components/CTASection.astro";
 import Breadcrumb from "../components/Breadcrumb.astro";
+import SectionShell from "../components/SectionShell.astro";
 import FunnelParent from "../components/FunnelParent.tsx";
 
 const title = "Kostenloser Wärmepumpen-Check Bremen | Experteneinschätzung";
 const description =
-    "Passt eine Wärmepumpe zu Ihrem Haus? ➔ In 2 Min. Daten eingeben & kostenlose Einschätzung vom Bremer Experten erhalten. 100% unverbindlich!";
+    "Passt eine Wärmepumpe zu Ihrem Haus in Bremen? In wenigen Minuten Daten eingeben und eine kostenlose, unverbindliche Einschätzung vom Bremer Fachpartner erhalten.";
 const canonical = Astro.url.href;
 
 const trustItems = [
@@ -62,5 +60,23 @@ const faqs = [
 
     <TrustBar items={trustItems} />
 
-    <FunnelParent client:load />
+    <SectionShell>
+        <div class="max-w-3xl">
+            <h1 class="text-3xl md:text-4xl font-bold tracking-tight text-text mb-4">
+                Kostenloser Wärmepumpen-Check für Bremen
+            </h1>
+            <p class="text-text-muted leading-relaxed text-base sm:text-lg">
+                Passt eine Wärmepumpe zu Ihrem Haus in Bremen, Bremerhaven oder dem
+                Umland? Der kostenlose Eignungs- und Fördercheck ordnet in wenigen
+                Schritten Gebäude, alte Heizung, Eigentum und Vorhaben ein – und
+                übermittelt Ihre Anfrage erst nach SMS-Bestätigung an den namentlich
+                genannten Bremer Fachpartner. Keine automatische Bewertung, kein
+                anonymer Leadverkauf, keine Kosten.
+            </p>
+        </div>
+    </SectionShell>
+
+    <FunnelParent client:visible />
+
+    <FAQSection heading="FAQ: Wärmepumpen-Check Bremen" items={faqs} />
 </Layout>

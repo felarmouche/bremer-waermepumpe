@@ -18,15 +18,16 @@ const pathname = Astro.url.pathname;
         src={logo}
         alt="Bremer Wärmepumpe Logo"
         class="w-30 md:w-40 h-auto inline-block mr-2"
-        priority
+        loading="eager"
       />
     </a>
 
     <button
       data-nav-toggle
-      class="md:hidden p-2 text-text hover:text-primary transition-colors"
+      class="md:hidden p-3 -mr-1 text-text hover:text-primary transition-colors"
       aria-label="Menü öffnen"
       aria-expanded="false"
+      aria-controls="mobile-nav"
       type="button"
     >
       <svg
@@ -66,6 +67,7 @@ const pathname = Astro.url.pathname;
   </div>
 
   <nav
+    id="mobile-nav"
     data-nav-mobile
     class="overflow-hidden max-h-0 transition-[max-height] duration-300 ease-in-out border-t border-border bg-surface md:hidden"
   >
@@ -105,9 +107,11 @@ const pathname = Astro.url.pathname;
       if (isOpen) {
         mobileNav.style.maxHeight = "0px";
         button.setAttribute("aria-expanded", "false");
+        button.setAttribute("aria-label", "Menü öffnen");
       } else {
         mobileNav.style.maxHeight = mobileNav.scrollHeight + "px";
         button.setAttribute("aria-expanded", "true");
+        button.setAttribute("aria-label", "Menü schließen");
       }
     });
   });

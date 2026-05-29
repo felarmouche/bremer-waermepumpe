@@ -1,50 +1,133 @@
 ---
-title: "Wärmepumpe Kosten Einfamilienhaus: Preise & Amortisation"
-description: "Kosten für 100, 150 & 200 m² Wohnfläche im Vergleich. ✓ KfW-Förderung für 2026!"
-lastUpdated: "Mai 2026"
-hero:
-  headline: "Wärmepumpe Kosten Einfamilienhaus"
-  subtext: "Realistische Investition für Bremer Einfamilienhäuser nach Wohnfläche und Bauart – mit Eigenanteil und Amortisation."
-  imageSrc: "../../images/heat-pump-bremen-hero.webp"
-  primaryCTA: { label: "Eignung & Förderung prüfen", href: "/check/" }
-  secondaryCTA: { label: "Kosten-Hub Bremen", href: "/waermepumpe-kosten-bremen/" }
-trustItems:
-  - { text: "Nach 100/150/200 m²" }
-  - { text: "Stand Mai 2026" }
-  - { text: "Inkl. Förderung" }
-  - { text: "Mit Amortisationsrechnung" }
-breadcrumb:
-  - { label: "Startseite", href: "/" }
-  - { label: "Kosten Bremen", href: "/waermepumpe-kosten-bremen/" }
-  - { label: "Einfamilienhaus" }
-ctaBlock:
-  headline: "Was passt zu Ihrer Wohnfläche?"
-  text: "Browser-Check zur passenden Bauart und groben Investitionshöhe – ohne Anmeldung, ohne Datenübermittlung."
-  variant: "highlight"
-  primaryCTA: { label: "Eignung & Förderung prüfen", href: "/check/" }
-  secondaryCTA: { label: "Förderung Bremen", href: "/waermepumpe-foerderung-bremen/" }
-faqHeading: "FAQ: Wärmepumpe Kosten Einfamilienhaus"
-faqs:
-  - question: "Was kostet eine Wärmepumpe für ein Einfamilienhaus mit 150 m²?"
-    answer: "Für ein typisches teilsaniertes Bremer Einfamilienhaus mit 150 m² liegen die Komplettkosten einer Luft-Wasser-Wärmepumpe bei 24.000 bis 32.000 Euro brutto. Eine Sole-Wasser-Variante mit Erdsonde liegt bei 32.000 bis 42.000 Euro. Nach maximaler KfW-Förderung von 70 % auf 30.000 Euro förderfähige Kosten reduziert sich der Eigenanteil auf 9.000 bis 17.000 Euro – je nach Boni und Bauart."
-  - question: "Wie viel kostet eine Wärmepumpe nach Abzug der Förderung?"
-    answer: "Bei voller KfW-458-Förderung (70 % auf 30.000 Euro förderfähige Kosten) bleibt ein Eigenanteil von etwa 9.000 Euro plus eventuelle nicht förderfähige Anteile. Realistisch landen die meisten Bremer Einfamilienhaus-Eigentümer bei 11.000 bis 18.000 Euro Eigenanteil – abhängig davon, welche Boni greifen."
-  - question: "Welche Wärmepumpe ist für ein Einfamilienhaus am besten?"
-    answer: "Im sanierten Neubau und gut gedämmten Bestand ist die klassische Luft-Wasser-Wärmepumpe (8–10 kW) Standard. Im Altbau mit höherer Vorlauftemperatur empfiehlt sich eine Hochtemperatur-Variante mit R290 (Propan), die bis 65 °C Vorlauf erreicht. Sole-Wasser ist die effizienteste, aber teuerste Option – sinnvoll bei freistehenden Häusern mit Garten und langfristiger Nutzung."
-  - question: "Wann amortisiert sich eine Wärmepumpe im Einfamilienhaus?"
-    answer: "Realistisch nach 8–14 Jahren gegenüber einer neuen Gasheizung – wenn der Klimabonus mitgenommen wird und der CO₂-Preis weiter ansteigt. Wer Photovoltaik und Wärmepumpe kombiniert und unter der Einkommensgrenze liegt, kommt deutlich schneller in den Bereich, wo die Wärmepumpe finanziell vorne liegt."
-  - question: "Was kostet das im Einfamilienhaus mit 200 m² Wohnfläche?"
-    answer: "Für ein 200-m²-Einfamilienhaus liegt die Investition typischerweise bei 28.000 bis 38.000 Euro für Luft-Wasser-Wärmepumpen mit 12–14 kW Leistung. Wichtig: Die KfW-förderfähigen Kosten sind auf 30.000 Euro für die erste Wohneinheit gedeckelt – wer mehr investiert, kann den Differenzbetrag nicht über die KfW abrechnen."
-schema:
-  type: "Article"
-  datePublished: "2026-05-02"
-  dateModified: "2026-05-02"
+import Layout from "../layout/Layout.astro";
+import Breadcrumb from "../components/Breadcrumb.astro";
+import HeroSection from "../components/HeroSection.astro";
+import TrustBar from "../components/TrustBar.astro";
+import CTASection from "../components/CTASection.astro";
+import FAQSection from "../components/FAQSection.astro";
+import SectionShell from "../components/SectionShell.astro";
+import NoticeSuccess from "../components/content/NoticeSuccess.astro";
+import CheckList from "../components/content/CheckList.astro";
+import InternalLinkCard from "../components/InternalLinkCard.astro";
+import heroImage from "../images/heat-pump-bremen-hero.webp";
+
+import type { PageData } from "../types/page";
+
+const data: PageData = {
+    title: "Wärmepumpe Kosten Einfamilienhaus: Preise & Amortisation",
+    description: "Wärmepumpe Kosten im Einfamilienhaus 2026: Preise nach Wohnfläche (100, 150, 200 m²), KfW-Förderung und Amortisation realistisch gerechnet.",
+    lastUpdated: "Mai 2026",
+    hero: {
+        headline: "Wärmepumpe Kosten Einfamilienhaus",
+        subtext: "Realistische Investition für Bremer Einfamilienhäuser nach Wohnfläche und Bauart – mit Eigenanteil und Amortisation.",
+        primaryCTA: {
+            label: "Eignung & Förderung prüfen",
+            href: "/check/"
+        },
+        secondaryCTA: {
+            label: "Kosten-Hub Bremen",
+            href: "/waermepumpe-kosten-bremen/"
+        }
+    },
+    trustItems: [
+        {
+            text: "Nach 100/150/200 m²"
+        },
+        {
+            text: "Stand Mai 2026"
+        },
+        {
+            text: "Inkl. Förderung"
+        },
+        {
+            text: "Mit Amortisationsrechnung"
+        }
+    ],
+    breadcrumb: [
+        {
+            label: "Startseite",
+            href: "/"
+        },
+        {
+            label: "Kosten Bremen",
+            href: "/waermepumpe-kosten-bremen/"
+        },
+        {
+            label: "Einfamilienhaus"
+        }
+    ],
+    ctaBlock: {
+        headline: "Was passt zu Ihrer Wohnfläche?",
+        text: "Browser-Check zur passenden Bauart und groben Investitionshöhe – ohne Anmeldung, ohne Datenübermittlung.",
+        variant: "highlight",
+        primaryCTA: {
+            label: "Eignung & Förderung prüfen",
+            href: "/check/"
+        },
+        secondaryCTA: {
+            label: "Förderung Bremen",
+            href: "/waermepumpe-foerderung-bremen/"
+        }
+    },
+    faqHeading: "FAQ: Wärmepumpe Kosten Einfamilienhaus",
+    faqs: [
+        {
+            question: "Was kostet eine Wärmepumpe für ein Einfamilienhaus mit 150 m²?",
+            answer: "Für ein typisches teilsaniertes Bremer Einfamilienhaus mit 150 m² liegen die Komplettkosten einer Luft-Wasser-Wärmepumpe bei 24.000 bis 32.000 Euro brutto. Eine Sole-Wasser-Variante mit Erdsonde liegt bei 32.000 bis 42.000 Euro. Nach maximaler KfW-Förderung von 70 % auf 30.000 Euro förderfähige Kosten reduziert sich der Eigenanteil auf 9.000 bis 17.000 Euro – je nach Boni und Bauart."
+        },
+        {
+            question: "Wie viel kostet eine Wärmepumpe nach Abzug der Förderung?",
+            answer: "Bei voller KfW-458-Förderung (70 % auf 30.000 Euro förderfähige Kosten) bleibt ein Eigenanteil von etwa 9.000 Euro plus eventuelle nicht förderfähige Anteile. Realistisch landen die meisten Bremer Einfamilienhaus-Eigentümer bei 11.000 bis 18.000 Euro Eigenanteil – abhängig davon, welche Boni greifen."
+        },
+        {
+            question: "Welche Wärmepumpe ist für ein Einfamilienhaus am besten?",
+            answer: "Im sanierten Neubau und gut gedämmten Bestand ist die klassische Luft-Wasser-Wärmepumpe (8–10 kW) Standard. Im Altbau mit höherer Vorlauftemperatur empfiehlt sich eine Hochtemperatur-Variante mit R290 (Propan), die bis 65 °C Vorlauf erreicht. Sole-Wasser ist die effizienteste, aber teuerste Option – sinnvoll bei freistehenden Häusern mit Garten und langfristiger Nutzung."
+        },
+        {
+            question: "Wann amortisiert sich eine Wärmepumpe im Einfamilienhaus?",
+            answer: "Realistisch nach 8–14 Jahren gegenüber einer neuen Gasheizung – wenn der Klimabonus mitgenommen wird und der CO₂-Preis weiter ansteigt. Wer Photovoltaik und Wärmepumpe kombiniert und unter der Einkommensgrenze liegt, kommt deutlich schneller in den Bereich, wo die Wärmepumpe finanziell vorne liegt."
+        },
+        {
+            question: "Was kostet das im Einfamilienhaus mit 200 m² Wohnfläche?",
+            answer: "Für ein 200-m²-Einfamilienhaus liegt die Investition typischerweise bei 28.000 bis 38.000 Euro für Luft-Wasser-Wärmepumpen mit 12–14 kW Leistung. Wichtig: Die KfW-förderfähigen Kosten sind auf 30.000 Euro für die erste Wohneinheit gedeckelt – wer mehr investiert, kann den Differenzbetrag nicht über die KfW abrechnen."
+        }
+    ],
+    schema: {
+        type: "Article",
+        datePublished: "2026-05-02",
+        dateModified: "2026-05-02"
+    }
+};
+
+const canonical = data.canonical ?? Astro.url.href;
+const hero = { ...data.hero, imageSrc: heroImage };
+const dateLine = data.lastUpdated ? `Stand: ${data.lastUpdated}` : null;
+const pageSchema = data.schema
+    ? {
+          ...data.schema,
+          datePublished: data.schema.datePublished ?? data.schema.dateModified,
+          dateModified: data.schema.dateModified ?? data.schema.datePublished,
+      }
+    : undefined;
 ---
 
-import SectionShell from "../../components/SectionShell.astro";
-import NoticeSuccess from "../../components/mdx/NoticeSuccess.astro";
-import CheckList from "../../components/mdx/CheckList.astro";
-import InternalLinkCard from "../../components/InternalLinkCard.astro";
+<Layout
+    title={data.title}
+    description={data.description}
+    canonical={canonical}
+    noindex={data.noindex}
+    pageSchema={pageSchema}
+>
+    {data.breadcrumb?.length > 0 && <Breadcrumb items={data.breadcrumb} />}
+    <HeroSection {...hero} />
+    {data.trustItems?.length > 0 && <TrustBar items={data.trustItems} />}
+    {dateLine && (
+        <div class="bg-background border-b border-border">
+            <p class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-3 text-xs text-text-muted">
+                {dateLine} · Redaktion bremer-waermepumpe.de · Alle Angaben ohne Gewähr
+            </p>
+        </div>
+    )}
 
 {/* Intro */}
 <SectionShell>
@@ -195,3 +278,10 @@ import InternalLinkCard from "../../components/InternalLinkCard.astro";
     />
   </div>
 </SectionShell>
+
+    {data.ctaBlock && <CTASection {...data.ctaBlock} />}
+    {data.faqs?.length > 0 && (
+        <FAQSection heading={data.faqHeading} items={data.faqs} />
+    )}
+</Layout>
+

@@ -1,0 +1,324 @@
+---
+import Layout from "../layout/Layout.astro";
+import Breadcrumb from "../components/Breadcrumb.astro";
+import HeroSection from "../components/HeroSection.astro";
+import TrustBar from "../components/TrustBar.astro";
+import CTASection from "../components/CTASection.astro";
+import FAQSection from "../components/FAQSection.astro";
+import SectionShell from "../components/SectionShell.astro";
+import NoticeSuccess from "../components/content/NoticeSuccess.astro";
+import CheckList from "../components/content/CheckList.astro";
+import InternalLinkCard from "../components/InternalLinkCard.astro";
+import heroImage from "../images/foerderung-bremen-hero.webp";
+
+import type { PageData } from "../types/page";
+
+const data: PageData = {
+    title: "BAFA Förderung Wärmepumpe 2026: Was BAFA wirklich zahlt",
+    description: "BAFA Förderung Wärmepumpe 2026: keine Anschaffung über BAFA, aber Heizungsoptimierung, Energieberatung und iSFP-Bonus.",
+    lastUpdated: "29. Mai 2026",
+    hero: {
+        headline: "BAFA Förderung Wärmepumpe 2026",
+        subtext: "BAFA zahlt 2026 nicht die Wärmepumpe selbst. Relevant bleiben Heizungsoptimierung, Energieberatung und iSFP – die Wärmepumpe läuft über KfW 458.",
+        primaryCTA: {
+            label: "Förderweg prüfen",
+            href: "/check/"
+        },
+        secondaryCTA: {
+            label: "KfW 458 im Detail",
+            href: "/kfw-458-waermepumpe/"
+        }
+    },
+    trustItems: [
+        {
+            text: "BAFA vs. KfW getrennt"
+        },
+        {
+            text: "Heizungsoptimierung 15 %"
+        },
+        {
+            text: "iSFP-Bonus 5 %"
+        },
+        {
+            text: "Stand 29. Mai 2026"
+        }
+    ],
+    breadcrumb: [
+        {
+            label: "Startseite",
+            href: "/"
+        },
+        {
+            label: "Förderung Bremen",
+            href: "/waermepumpe-foerderung-bremen/"
+        },
+        {
+            label: "BAFA-Förderung"
+        }
+    ],
+    ctaBlock: {
+        headline: "KfW oder BAFA: welcher Förderweg passt?",
+        text: "Der Check ordnet ein, ob es bei Ihrem Vorhaben um Heizungstausch, Optimierung oder vorbereitende Beratung geht.",
+        variant: "highlight",
+        primaryCTA: {
+            label: "Förderweg prüfen",
+            href: "/check/"
+        },
+        secondaryCTA: {
+            label: "Förderung Bremen",
+            href: "/waermepumpe-foerderung-bremen/"
+        }
+    },
+    faqHeading: "FAQ: BAFA Förderung Wärmepumpe 2026",
+    faqs: [
+        {
+            question: "Gibt es 2026 noch BAFA-Förderung für die Wärmepumpe selbst?",
+            answer: "Nein. Die Anschaffung und der Einbau einer Wärmepumpe im Wohngebäude laufen seit der Neuordnung der BEG-Heizungsförderung über die KfW, insbesondere KfW 458. Das BAFA bleibt für ergänzende Effizienzmaßnahmen, Heizungsoptimierung und Energieberatung relevant."
+        },
+        {
+            question: "Was fördert BAFA 2026 rund um die Heizung?",
+            answer: "Relevant sind vor allem Heizungsoptimierung zur Verbesserung der Anlageneffizienz, hydraulischer Abgleich, Pumpentausch, Einstellung der Heizkurve sowie Energieberatung. Der Grundfördersatz für Heizungsoptimierung liegt bei 15 Prozent; mit iSFP kann ein zusätzlicher Bonus von 5 Prozentpunkten möglich sein."
+        },
+        {
+            question: "Was ist der Unterschied zwischen BAFA und KfW?",
+            answer: "KfW 458 ist der zentrale Zuschuss für den eigentlichen Heizungstausch, also auch für neue Wärmepumpen. BAFA ist 2026 vor allem für Optimierung, Energieberatung und bestimmte Einzelmaßnahmen zuständig. Dieselben Kosten dürfen nicht doppelt gefördert werden."
+        },
+        {
+            question: "Ist die BAFA-Liste förderfähiger Wärmepumpen 2026 noch wichtig?",
+            answer: "Für Suchende ist die Liste weiterhin ein Orientierungspunkt für technische Geräteinformationen. Für den eigentlichen Zuschussantrag zum Heizungstausch ist aber die KfW 458 der maßgebliche Förderweg."
+        },
+        {
+            question: "Wann lohnt sich BAFA vor einer Wärmepumpe?",
+            answer: "BAFA kann sinnvoll sein, wenn die alte Heizung zunächst optimiert oder eine Energieberatung vorbereitet werden soll. Wer sehr bald auf Wärmepumpe wechselt, sollte prüfen, ob bestimmte Arbeiten besser direkt als Umfeldmaßnahme im KfW-458-Antrag laufen."
+        }
+    ],
+    schema: {
+        type: "Article",
+        datePublished: "2026-05-02",
+        dateModified: "2026-05-29"
+    }
+};
+
+const canonical = data.canonical ?? Astro.url.href;
+const hero = { ...data.hero, imageSrc: heroImage };
+const dateLine = data.lastUpdated ? `Stand: ${data.lastUpdated}` : null;
+const pageSchema = data.schema
+    ? {
+          ...data.schema,
+          datePublished: data.schema.datePublished ?? data.schema.dateModified,
+          dateModified: data.schema.dateModified ?? data.schema.datePublished,
+      }
+    : undefined;
+---
+
+<Layout
+    title={data.title}
+    description={data.description}
+    canonical={canonical}
+    noindex={data.noindex}
+    pageSchema={pageSchema}
+>
+    {data.breadcrumb?.length > 0 && <Breadcrumb items={data.breadcrumb} />}
+    <HeroSection {...hero} />
+    {data.trustItems?.length > 0 && <TrustBar items={data.trustItems} />}
+    {dateLine && (
+        <div class="bg-background border-b border-border">
+            <p class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-3 text-xs text-text-muted">
+                {dateLine} · Redaktion bremer-waermepumpe.de · Alle Angaben ohne Gewähr
+            </p>
+        </div>
+    )}
+
+<SectionShell>
+  <article class="max-w-3xl space-y-5 text-text-muted leading-relaxed">
+    <div class="bg-highlight border border-border rounded p-5">
+      <p class="font-bold text-text mb-2">
+        Kurzantwort: BAFA fördert 2026 nicht die neue Wärmepumpe selbst
+      </p>
+      <p class="text-sm">
+        Wer eine Wärmepumpe kaufen und einbauen lassen will, landet in der Regel bei
+        <strong class="text-text">KfW 458</strong>. Das BAFA bleibt wichtig, wenn es
+        um Heizungsoptimierung, hydraulischen Abgleich an der Bestandsheizung,
+        Energieberatung oder iSFP geht.
+      </p>
+    </div>
+    <p>
+      Viele Suchergebnisse sprechen noch von „BAFA Förderung Wärmepumpe". Das ist
+      für 2026 missverständlich. Für Bremer Eigentümer ist die saubere Trennung
+      entscheidend, weil sonst falsche Erwartungen an Antrag, Zuschusshöhe und
+      Reihenfolge entstehen.
+    </p>
+    <NoticeSuccess>
+      <p>
+        <strong>Merksatz:</strong> Neue Wärmepumpe einbauen = KfW 458.
+        Bestehende Heizung optimieren oder Energieberatung vorbereiten = BAFA.
+        Unterschiedliche Maßnahmen können zusammenpassen, dieselben Kosten aber nicht
+        doppelt gefördert werden.
+      </p>
+    </NoticeSuccess>
+  </article>
+</SectionShell>
+
+<SectionShell variant="alt">
+  <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
+    BAFA vs. KfW 458: schnelle Einordnung
+  </h2>
+  <div class="surface-card overflow-x-auto">
+    <table class="w-full text-sm">
+      <thead class="bg-surface-alt border-b border-border">
+        <tr>
+          <th class="text-left p-4 font-semibold text-text">Vorhaben</th>
+          <th class="text-left p-4 font-semibold text-text">Förderstelle</th>
+          <th class="text-left p-4 font-semibold text-text">Typische Rolle</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-border">
+        <tr>
+          <td class="p-4 text-text">Neue Wärmepumpe einbauen</td>
+          <td class="p-4 text-text-muted">KfW 458</td>
+          <td class="p-4 text-text-muted">Heizungstausch, bis zu 70 % Zuschuss</td>
+        </tr>
+        <tr>
+          <td class="p-4 text-text">Bestandsheizung optimieren</td>
+          <td class="p-4 text-text-muted">BAFA</td>
+          <td class="p-4 text-text-muted">15 % Grundförderung, ggf. +5 % iSFP-Bonus</td>
+        </tr>
+        <tr>
+          <td class="p-4 text-text">Energieberatung / iSFP</td>
+          <td class="p-4 text-text-muted">BAFA</td>
+          <td class="p-4 text-text-muted">Vorbereitung, Sanierungsfahrplan, Bonus-Auslöser</td>
+        </tr>
+        <tr>
+          <td class="p-4 text-text">Hydraulischer Abgleich beim Heizungstausch</td>
+          <td class="p-4 text-text-muted">meist KfW 458</td>
+          <td class="p-4 text-text-muted">Als Umfeldmaßnahme im Wärmepumpen-Projekt prüfen</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</SectionShell>
+
+<SectionShell>
+  <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
+    Was BAFA 2026 rund um Wärmepumpen-Pläne noch fördert
+  </h2>
+  <p class="text-text-muted max-w-3xl mb-6">
+    BAFA ist nicht „weg", nur die Rolle hat sich verändert. Für Bremer
+    Bestandsgebäude sind vor allem diese Bausteine relevant:
+  </p>
+  <CheckList
+    items={[
+      { lead: "Heizungsoptimierung:", text: "hydraulischer Abgleich, Pumpentausch, Heizkurve, Regelung und Effizienzverbesserungen an der bestehenden Heizung." },
+      { lead: "iSFP-Bonus:", text: "Wenn eine Maßnahme Teil eines geförderten individuellen Sanierungsfahrplans ist, kann ein zusätzlicher Bonus von 5 Prozentpunkten möglich sein." },
+      { lead: "Energieberatung:", text: "Sinnvoll, wenn Gebäudehülle, Heizflächen und Umsetzungsreihenfolge noch unklar sind." },
+      { lead: "Einzelmaßnahmen an der Gebäudehülle:", text: "Dämmung oder Fenster laufen nicht über KfW 458, können aber für die spätere Wärmepumpen-Eignung wichtig sein." },
+    ]}
+  />
+</SectionShell>
+
+<SectionShell variant="alt">
+  <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
+    Reihenfolge: Wann BAFA sinnvoll ist – und wann KfW Vorrang hat
+  </h2>
+  <div class="space-y-5 max-w-3xl">
+    <div class="surface-card p-5">
+      <p class="font-semibold text-text mb-2">Fall 1: Wärmepumpe soll in den nächsten Monaten eingebaut werden</p>
+      <p class="text-text-muted text-sm leading-relaxed">
+        Dann zuerst KfW 458 prüfen. Arbeiten wie hydraulischer Abgleich,
+        einzelne Heizkörperanpassungen oder Schallschutz können im Zusammenhang mit
+        dem Heizungstausch förderfähige Umfeldmaßnahmen sein.
+      </p>
+    </div>
+    <div class="surface-card p-5">
+      <p class="font-semibold text-text mb-2">Fall 2: Heizungstausch erst in 1 bis 3 Jahren</p>
+      <p class="text-text-muted text-sm leading-relaxed">
+        Dann kann BAFA-Heizungsoptimierung sinnvoll sein, um die Bestandsheizung
+        effizienter zu betreiben und reale Vorlauftemperaturen besser einschätzen zu können.
+      </p>
+    </div>
+    <div class="surface-card p-5">
+      <p class="font-semibold text-text mb-2">Fall 3: Gebäudehülle ist unklar</p>
+      <p class="text-text-muted text-sm leading-relaxed">
+        Eine Energieberatung oder ein iSFP kann helfen, ob zuerst Dach, Fenster,
+        Heizflächen oder direkt die Wärmepumpe wirtschaftlich sinnvoll sind.
+      </p>
+    </div>
+  </div>
+</SectionShell>
+
+<SectionShell>
+  <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
+    Bremer Einordnung: nicht im Förderdschungel hängen bleiben
+  </h2>
+  <p class="text-text-muted max-w-3xl mb-6">
+    Auf bremer-waermepumpe.de werden Anfragen aus Bremen und Umland an den
+    namentlich genannten Fachpartner auf <a href="/fachpartner/" class="text-primary underline">/fachpartner/</a>
+    weitergeleitet. Es findet kein Verkauf an Lead-Aggregatoren statt. Für
+    Förderfragen bleibt trotzdem wichtig: KfW, BAFA, Energieeffizienz-Experten
+    und Fachbetrieb müssen sauber zusammenspielen.
+  </p>
+  <div class="bg-highlight border border-border rounded p-5 flex flex-col sm:flex-row gap-4 sm:items-center sm:justify-between max-w-3xl">
+    <div>
+      <p class="font-semibold text-text">KfW oder BAFA für Ihr Vorhaben?</p>
+      <p class="text-sm text-text-muted mt-1">Der Check trennt Heizungstausch, Optimierung und Beratung.</p>
+    </div>
+    <a href="/check/" class="btn-accent shrink-0 text-center">Förderweg prüfen</a>
+  </div>
+</SectionShell>
+
+<SectionShell variant="alt">
+  <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
+    Quellen und redaktioneller Stand
+  </h2>
+  <div class="surface-card p-5 max-w-3xl text-sm text-text-muted leading-relaxed">
+    <p class="font-semibold text-text mb-3">Stand: 29. Mai 2026</p>
+    <ul class="space-y-2">
+      <li>
+        BAFA:
+        <a href="https://www.bafa.de/DE/Energie/Effiziente_Gebaeude/Sanierung_Wohngebaeude/Heizungsoptimierung/heizungsoptimierung_node.html" class="text-primary underline" target="_blank" rel="noopener">
+          Heizungsoptimierung
+        </a>
+      </li>
+      <li>
+        BAFA:
+        <a href="https://www.bafa.de/SharedDocs/Kurzmeldungen/DE/Energie/Effiziente_Gebaeude/20240104_anpassung_beg.html" class="text-primary underline" target="_blank" rel="noopener">
+          Förderprogramm im Überblick
+        </a>
+      </li>
+      <li>
+        KfW:
+        <a href="https://www.kfw.de/inlandsfoerderung/Privatpersonen/Bestehende-Immobilie/F%C3%B6rderprodukte/Heizungsf%C3%B6rderung-f%C3%BCr-Privatpersonen-Wohngeb%C3%A4ude-%28458%29/" class="text-primary underline" target="_blank" rel="noopener">
+          Heizungsförderung für Privatpersonen – Wohngebäude (458)
+        </a>
+      </li>
+    </ul>
+  </div>
+</SectionShell>
+
+<SectionShell>
+  <h2 class="text-2xl md:text-3xl font-bold text-text mb-6">Weiterlesen</h2>
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-5xl">
+    <InternalLinkCard
+      href="/kfw-458-waermepumpe/"
+      title="KfW 458 förderfähige Kosten"
+      description="30.000 / 15.000 / 8.000 Euro nach Wohneinheiten, Boni und Antragsschritte."
+    />
+    <InternalLinkCard
+      href="/waermepumpe-foerderung-bremen/"
+      title="Förderung Bremen"
+      description="KfW, BAFA, BAB-Status und lokale Bremer Förderwege zusammen erklärt."
+    />
+    <InternalLinkCard
+      href="/waermepumpe-kosten-bremen/"
+      title="Kosten nach Förderung"
+      description="Was nach Zuschüssen realistisch als Eigenanteil bleibt."
+    />
+  </div>
+</SectionShell>
+
+    {data.ctaBlock && <CTASection {...data.ctaBlock} />}
+    {data.faqs?.length > 0 && (
+        <FAQSection heading={data.faqHeading} items={data.faqs} />
+    )}
+</Layout>
+

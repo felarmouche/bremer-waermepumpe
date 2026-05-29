@@ -21,7 +21,7 @@ const isDark = layout === "dark";
 
 const containerClass = isDark
   ? "bg-white rounded-2xl shadow-[0_25px_60px_-15px_rgba(0,0,0,0.55)] ring-1 ring-black/5 p-5 sm:p-6"
-  : "bg-background border border-border rounded-xl shadow-sm p-5 sm:p-6";
+  : "bg-background border border-border rounded-xl shadow-sm p-4 sm:p-6";
 
 const options = [
   { value: "Gas", label: "Gas", icon: "🔥" },
@@ -32,7 +32,7 @@ const options = [
 ---
 
 <div class={containerClass} data-hero-quickstart>
-  <div class="flex items-center gap-2 mb-3">
+  <div class="flex items-center gap-2 mb-2 sm:mb-3">
     <span
       class="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-primary bg-highlight px-2.5 py-1 rounded-full"
     >
@@ -44,10 +44,10 @@ const options = [
     </span>
   </div>
 
-  <h2 class="text-lg sm:text-xl font-bold text-text leading-tight">
+  <h2 class="text-base sm:text-xl font-bold text-text leading-tight">
     Wie heizen Sie aktuell?
   </h2>
-  <p class="text-xs sm:text-sm text-text-muted mt-1 mb-4">
+  <p class="text-xs sm:text-sm text-text-muted mt-1 mb-3 sm:mb-4">
     Erste Frage zur Eignungsprüfung – ein Klick startet den Check.
   </p>
 
@@ -56,7 +56,7 @@ const options = [
       <button
         type="button"
         data-heating={opt.value}
-        class="group flex items-center justify-center gap-2 py-3.5 px-2 rounded-lg border border-border bg-surface text-text font-semibold text-sm hover:border-primary hover:bg-primary/[0.05] hover:shadow-sm active:scale-[0.98] transition-all cursor-pointer"
+        class="group flex items-center justify-center gap-2 py-3 sm:py-3.5 px-2 rounded-lg border border-border bg-surface text-text font-semibold text-sm hover:border-primary hover:bg-primary/[0.05] hover:shadow-sm active:scale-[0.98] transition-all cursor-pointer"
       >
         <span class="text-lg" aria-hidden="true">{opt.icon}</span>
         <span>{opt.label}</span>

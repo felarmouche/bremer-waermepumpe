@@ -1,0 +1,255 @@
+---
+import Layout from "../layout/Layout.astro";
+import Breadcrumb from "../components/Breadcrumb.astro";
+import HeroSection from "../components/HeroSection.astro";
+import TrustBar from "../components/TrustBar.astro";
+import CTASection from "../components/CTASection.astro";
+import FAQSection from "../components/FAQSection.astro";
+import SectionShell from "../components/SectionShell.astro";
+import NoticeSuccess from "../components/content/NoticeSuccess.astro";
+import CheckList from "../components/content/CheckList.astro";
+import InternalLinkCard from "../components/InternalLinkCard.astro";
+import heroImage from "../images/heat-pump-bremen-hero.webp";
+
+import type { PageData } from "../types/page";
+
+const data: PageData = {
+    title: "Wärmepumpe Abstand zum Nachbarn in Bremen: Regeln 2026",
+    description: "Wärmepumpe Abstand Nachbar Bremen: BremLBO, 0 m Grenzabstand, TA Lärm, Schallschutz und Planung für Reihenhäuser.",
+    lastUpdated: "29. Mai 2026",
+    hero: {
+        headline: "Wärmepumpe Abstand zum Nachbarn in Bremen",
+        subtext: "Was bei Außengerät, Grundstücksgrenze, TA Lärm und Bremer Reihenhäusern wirklich zählt.",
+        primaryCTA: {
+            label: "Aufstellung prüfen lassen",
+            href: "/check/"
+        },
+        secondaryCTA: {
+            label: "Luft-Wasser-Kosten",
+            href: "/luft-wasser-waermepumpe-kosten/"
+        }
+    },
+    trustItems: [
+        {
+            text: "BremLBO eingeordnet"
+        },
+        {
+            text: "TA Lärm erklärt"
+        },
+        {
+            text: "Reihenhaus-Fokus"
+        },
+        {
+            text: "Stand 29. Mai 2026"
+        }
+    ],
+    breadcrumb: [
+        {
+            label: "Startseite",
+            href: "/"
+        },
+        {
+            label: "Kosten Bremen",
+            href: "/waermepumpe-kosten-bremen/"
+        },
+        {
+            label: "Abstand zum Nachbarn"
+        }
+    ],
+    ctaBlock: {
+        headline: "Ist die Aufstellung bei Ihnen realistisch?",
+        text: "Der Check sammelt Gebäude-, Heizungs- und Standortdaten für die erste Einschätzung.",
+        variant: "highlight",
+        primaryCTA: {
+            label: "Eignung prüfen",
+            href: "/check/"
+        },
+        secondaryCTA: {
+            label: "Förderung Bremen",
+            href: "/waermepumpe-foerderung-bremen/"
+        }
+    },
+    faqHeading: "FAQ: Wärmepumpe Abstand Nachbar Bremen",
+    faqs: [
+        {
+            question: "Wie viel Abstand muss eine Wärmepumpe in Bremen zum Nachbarn haben?",
+            answer: "Nach BremLBO können bestimmte Wärmepumpen-Außengeräte ohne klassischen Grenzabstand zulässig sein. Entscheidend bleibt aber der Schallschutz am Nachbarfenster."
+        },
+        {
+            question: "Reicht 0 Meter Grenzabstand immer aus?",
+            answer: "Nein. Baurechtlicher Abstand und Lärmschutz sind zwei verschiedene Themen. Auch bei 0 m Abstand müssen die Immissionswerte der TA Lärm eingehalten werden."
+        },
+        {
+            question: "Wer prüft den Schallschutz?",
+            answer: "Ein Fachbetrieb oder Akustikplaner kann Gerät, Aufstellort, Abstand, Schallleistungspegel und Nachtbetrieb berechnen."
+        }
+    ],
+    schema: {
+        type: "Article",
+        datePublished: "2026-05-29",
+        dateModified: "2026-05-29"
+    }
+};
+
+const canonical = data.canonical ?? Astro.url.href;
+const hero = { ...data.hero, imageSrc: heroImage };
+const dateLine = data.lastUpdated ? `Stand: ${data.lastUpdated}` : null;
+const pageSchema = data.schema
+    ? {
+          ...data.schema,
+          datePublished: data.schema.datePublished ?? data.schema.dateModified,
+          dateModified: data.schema.dateModified ?? data.schema.datePublished,
+      }
+    : undefined;
+---
+
+<Layout
+    title={data.title}
+    description={data.description}
+    canonical={canonical}
+    noindex={data.noindex}
+    pageSchema={pageSchema}
+>
+    {data.breadcrumb?.length > 0 && <Breadcrumb items={data.breadcrumb} />}
+    <HeroSection {...hero} />
+    {data.trustItems?.length > 0 && <TrustBar items={data.trustItems} />}
+    {dateLine && (
+        <div class="bg-background border-b border-border">
+            <p class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-3 text-xs text-text-muted">
+                {dateLine} · Redaktion bremer-waermepumpe.de · Alle Angaben ohne Gewähr
+            </p>
+        </div>
+    )}
+
+<SectionShell>
+  <article class="max-w-3xl space-y-4 text-text-muted leading-relaxed">
+    <div class="bg-highlight border border-border rounded p-5">
+      <p class="font-bold text-text mb-2">Schnelle Antwort</p>
+      <p class="text-sm leading-relaxed">
+        In Bremen kann eine Wärmepumpe näher an die Grundstücksgrenze rücken als
+        viele Eigentümer erwarten. Das löst aber nur das Baurecht. Entscheidend bleibt,
+        ob die Anlage die <strong class="text-text">TA-Lärm-Werte am Nachbarfenster</strong>
+        einhält. In Reihenhäusern sollte der Aufstellort deshalb vor dem Angebot
+        akustisch geprüft werden.
+      </p>
+    </div>
+    <p>
+      Die häufigste Sorge bei Luft-Wasser-Wärmepumpen in Bremen ist nicht die Technik,
+      sondern der <strong class="text-text">Aufstellort nahe am Nachbarn</strong>.
+      Gerade Reihenhäuser in Findorff, Neustadt, Walle, Schwachhausen oder im Viertel
+      haben wenig Platz. Bremen hat dabei einen Vorteil: Das Landesbaurecht lässt
+      Wärmepumpen an der Grenze unter bestimmten Voraussetzungen zu.
+    </p>
+    <NoticeSuccess>
+      <p>
+        <strong>Wichtig:</strong> Der Grenzabstand ist nur die halbe Prüfung. Die
+        Wärmepumpe muss auch die TA-Lärm-Werte am maßgeblichen Nachbarfenster einhalten.
+      </p>
+    </NoticeSuccess>
+    <div class="bg-highlight border border-border rounded p-5 flex flex-col sm:flex-row gap-4 sm:items-center sm:justify-between">
+      <div>
+        <p class="font-semibold text-text">Aufstellort im Bestand prüfen?</p>
+        <p class="text-sm text-text-muted mt-1">Der Check erfasst Haus- und Heizungsdaten für die erste Einordnung.</p>
+      </div>
+      <a href="/check/" class="btn-accent shrink-0 text-center">Aufstellung prüfen</a>
+    </div>
+  </article>
+</SectionShell>
+
+<SectionShell variant="alt">
+  <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
+    BremLBO: Warum Bremen beim Grenzabstand besonders ist
+  </h2>
+  <p class="text-text-muted max-w-3xl mb-4">
+    In Bremen nennt die Landesbauordnung Wärmepumpen ausdrücklich als Anlagen, die unter
+    Größenbegrenzungen an Grundstücksgrenzen zulässig sein können. Praktisch ist das für
+    kleine Grundstücke und Reihenhauszeilen wichtig.
+  </p>
+  <div class="surface-card p-5 max-w-3xl">
+    <p class="font-semibold text-text mb-2">Praktische Lesart für Eigentümer</p>
+    <p class="text-text-muted text-sm leading-relaxed">
+      Eine Luft-Wasser-Wärmepumpe kann in Bremen näher an die Grenze rücken als in
+      vielen anderen Bundesländern. Das ersetzt aber keine Schallplanung und keine
+      Prüfung der konkreten Geräteabmessungen.
+    </p>
+  </div>
+</SectionShell>
+
+<SectionShell>
+  <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
+    TA Lärm: Entscheidend ist das Nachbarfenster
+  </h2>
+  <p class="text-text-muted max-w-3xl mb-6">
+    Für die Nachbarschaft zählt nicht, wie laut das Gerät direkt am Gehäuse ist, sondern
+    welcher Pegel am maßgeblichen Immissionsort ankommt. Das ist oft das nächstgelegene
+    schutzbedürftige Fenster.
+  </p>
+  <CheckList
+    items={[
+      { lead: "Gerätedaten:", text: "Schallleistungspegel aus dem Datenblatt prüfen, nicht nur Marketing-Angaben." },
+      { lead: "Nachtbetrieb:", text: "Viele Geräte haben einen leisen Nachtmodus. Der muss in der Planung berücksichtigt werden." },
+      { lead: "Aufstellung:", text: "Abstand, Ausblasrichtung, Wandreflexionen und Ecken können den Pegel stark verändern." },
+      { lead: "Schallschutz:", text: "Sockel, Entkopplung, Sichtschutzwand oder Schallschutzhaube können nötig und förderfähig sein." },
+      { lead: "Dokumentation:", text: "Eine einfache Schallberechnung vor Angebot schützt vor Nachbarschaftsstreit." },
+    ]}
+  />
+</SectionShell>
+
+<SectionShell variant="alt">
+  <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
+    Was kostet Schallschutz bei einer Wärmepumpe?
+  </h2>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl">
+    <div class="surface-card p-5">
+      <h3 class="font-semibold text-text">Schallberechnung</h3>
+      <p class="text-2xl font-bold text-primary my-2">400 - 800 €</p>
+      <p class="text-text-muted text-sm">Sinnvoll bei dichter Bebauung und Reihenhäusern.</p>
+    </div>
+    <div class="surface-card p-5">
+      <h3 class="font-semibold text-text">Entkopplung/Sockel</h3>
+      <p class="text-2xl font-bold text-primary my-2">300 - 1.200 €</p>
+      <p class="text-text-muted text-sm">Reduziert Körperschall und Vibrationen.</p>
+    </div>
+    <div class="surface-card p-5">
+      <h3 class="font-semibold text-text">Schallschutzwand</h3>
+      <p class="text-2xl font-bold text-primary my-2">800 - 2.500 €</p>
+      <p class="text-text-muted text-sm">Nur nötig, wenn Gerät und Standort kritisch sind.</p>
+    </div>
+  </div>
+</SectionShell>
+
+<SectionShell>
+  <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
+    Quellen und redaktioneller Stand
+  </h2>
+  <div class="surface-card p-5 max-w-3xl text-sm text-text-muted leading-relaxed">
+    <p class="font-semibold text-text mb-3">Stand: 29. Mai 2026</p>
+    <ul class="space-y-2">
+      <li>
+        Bremen: <a href="https://www.transparenz.bremen.de/metainformationen/bremische-landesbauordnung-vom-29-mai-2024-232736" class="text-primary underline" target="_blank" rel="noopener">Bremische Landesbauordnung</a>
+      </li>
+      <li>
+        BMUKN: <a href="https://www.bundesumweltministerium.de/themen/luft-laerm-mobilitaet/laerm/themenbereiche-laerm/gewerbelaerm" class="text-primary underline" target="_blank" rel="noopener">TA Lärm und Immissionsrichtwerte</a>
+      </li>
+      <li>
+        KfW: <a href="https://www.kfw.de/inlandsfoerderung/Privatpersonen/Bestehende-Immobilie/F%C3%B6rderprodukte/Heizungsf%C3%B6rderung-f%C3%BCr-Privatpersonen-Wohngeb%C3%A4ude-%28458%29/" class="text-primary underline" target="_blank" rel="noopener">förderfähige Umfeldmaßnahmen</a>
+      </li>
+    </ul>
+  </div>
+</SectionShell>
+
+<SectionShell variant="alt">
+  <h2 class="text-2xl md:text-3xl font-bold text-text mb-6">Weiterlesen</h2>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-5xl">
+    <InternalLinkCard href="/luft-wasser-waermepumpe-kosten/" title="Luft-Wasser-Kosten" description="Kosten, Stromverbrauch und Schallschutz der häufigsten Bauart." />
+    <InternalLinkCard href="/waermepumpe-kosten-bremen/" title="Kosten Bremen" description="Eigenanteil nach Förderung und Bremer Kostenfaktoren." />
+    <InternalLinkCard href="/waermepumpe-altbau-bremen/" title="Altbau Bremen" description="Machbarkeit im Bestandsgebäude prüfen." />
+  </div>
+</SectionShell>
+
+    {data.ctaBlock && <CTASection {...data.ctaBlock} />}
+    {data.faqs?.length > 0 && (
+        <FAQSection heading={data.faqHeading} items={data.faqs} />
+    )}
+</Layout>
+

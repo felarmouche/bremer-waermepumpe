@@ -1,53 +1,147 @@
 ---
-title: "Wärmepumpe Kosten Bremen 2026: Preise nach Förderung"
-description: "Was kostet eine Wärmepumpe in Bremen wirklich? ✓ Reale Preise, swb-Heizstrom, BremLBO-Vorteile & KfW-Abzug im ehrlichen Check."
-lastUpdated: "Mai 2026"
-hero:
-  headline: "Wärmepumpe Kosten Bremen"
-  subtext: "Was eine Wärmepumpe in Bremen wirklich kostet – nach Wärmequelle, mit lokalen Stromtarifen und nach Abzug der KfW-Förderung."
-  imageSrc: "../../images/heat-pump-bremen-hero.webp"
-  primaryCTA: { label: "Eignung & Förderung prüfen", href: "/check/" }
-  secondaryCTA: { label: "Welche Förderung gibt es?", href: "/waermepumpe-foerderung-bremen/" }
-trustItems:
-  - { text: "Bremer Stromtarif eingerechnet" }
-  - { text: "Stand Mai 2026" }
-  - { text: "BremLBO + TA Lärm berücksichtigt" }
-  - { text: "Realistischer Eigenanteil" }
-breadcrumb:
-  - { label: "Startseite", href: "/" }
-  - { label: "Kosten Bremen" }
-ctaBlock:
-  headline: "Was kostet die Wärmepumpe für Ihr Haus?"
-  text: "Der Browser-Check liefert eine erste Einschätzung zur passenden Bauart und groben Investition – ohne Datenübermittlung, in wenigen Minuten."
-  variant: "highlight"
-  primaryCTA: { label: "Eignung & Förderung prüfen", href: "/check/" }
-  secondaryCTA: { label: "Welche Förderung gibt es?", href: "/waermepumpe-foerderung-bremen/" }
-faqHeading: "FAQ: Wärmepumpe Kosten Bremen"
-faqs:
-  - question: "Was kostet eine Wärmepumpe in Bremen 2026 realistisch?"
-    answer: "Für ein Bremer Einfamilienhaus liegen Luft-Wasser-Wärmepumpen inklusive Installation typischerweise bei 22.000 bis 35.000 Euro brutto, Sole-Wasser-Wärmepumpen mit Erdsondenbohrung bei 30.000 bis 45.000 Euro. Nach Abzug der maximal möglichen KfW-458-Förderung von 70 % auf förderfähige Kosten bis 30.000 Euro reduziert sich der Eigenanteil auf 9.000 bis rund 24.000 Euro – je nach Boni und tatsächlichen Kosten."
-  - question: "Wie viel Förderung gibt es für eine Wärmepumpe in Bremen?"
-    answer: "Über die KfW-Heizungsförderung 458 sind bis zu 70 % der förderfähigen Kosten möglich (max. 30.000 Euro für die erste Wohneinheit). Konkret: 30 % Basis, plus 20 % Klimabonus beim Tausch alter Öl-/Gas-Heizungen, plus 30 % Einkommensbonus bei Haushalten unter 40.000 Euro Jahreseinkommen, plus 5 % Effizienzbonus für besonders effiziente Systeme. Details auf der Seite Wärmepumpe Förderung Bremen."
-  - question: "Wie hoch sind die Stromkosten einer Wärmepumpe in Bremen?"
-    answer: "Die swb (Stadtwerke Bremen) bietet einen Wärmepumpentarif mit aktuell 24,98 ct/kWh (Stand Mai 2026). Bei einem Bremer Einfamilienhaus mit etwa 4.000 kWh Wärmepumpenstrom pro Jahr ergeben sich rund 1.000 Euro Jahresstromkosten. Im sanierten Bestand ist auch deutlich weniger möglich, im unsanierten Altbau entsprechend mehr."
-  - question: "Lohnt sich eine Wärmepumpe in einem Bremer Altbau?"
-    answer: "In vielen Fällen ja. Entscheidend ist nicht das Baujahr, sondern die Vorlauftemperatur. Wenn das Haus ganzjährig mit unter 55 °C Vorlauf auskommt, sind die Bedingungen gut. Die Detailprüfung steht auf der Seite Wärmepumpe Altbau Bremen."
-  - question: "Was muss ich beim Aufstellort in Bremen beachten?"
-    answer: "Die Bremer Landesbauordnung erlaubt für Wärmepumpen-Außengeräte einen Grenzabstand von 0 Metern (BremLBO §6 Abs. 8 Nr. 4) – ein klarer Bremen-Vorteil gegenüber den meisten anderen Bundesländern, wo 3 Meter gelten. Trotzdem zu beachten: TA Lärm mit nächtlichen Grenzwerten von 35 dB(A) im reinen Wohngebiet und 45 dB(A) im Mischgebiet."
-schema:
-  type: "Article"
-  datePublished: "2026-05-02"
-  dateModified: "2026-05-02"
+import Layout from "../layout/Layout.astro";
+import Breadcrumb from "../components/Breadcrumb.astro";
+import HeroSection from "../components/HeroSection.astro";
+import TrustBar from "../components/TrustBar.astro";
+import CTASection from "../components/CTASection.astro";
+import FAQSection from "../components/FAQSection.astro";
+import SectionShell from "../components/SectionShell.astro";
+import NoticeSuccess from "../components/content/NoticeSuccess.astro";
+import CheckList from "../components/content/CheckList.astro";
+import InternalLinkCard from "../components/InternalLinkCard.astro";
+import heroImage from "../images/heat-pump-bremen-hero.webp";
+
+import type { PageData } from "../types/page";
+
+const data: PageData = {
+    title: "Wärmepumpe Kosten Bremen 2026: Eigenanteil nach Förderung",
+    description: "Wärmepumpe Kosten Bremen 2026: Eigenanteil, KfW-Förderung, swb-Wärmepumpentarif und realistische Preise für Bremer Häuser.",
+    lastUpdated: "Mai 2026",
+    hero: {
+        headline: "Wärmepumpe Kosten Bremen",
+        subtext: "Was eine Wärmepumpe in Bremen wirklich kostet – nach Wärmequelle, mit lokalen Stromtarifen und nach Abzug der KfW-Förderung.",
+        primaryCTA: {
+            label: "Eignung & Förderung prüfen",
+            href: "/check/"
+        },
+        secondaryCTA: {
+            label: "Welche Förderung gibt es?",
+            href: "/waermepumpe-foerderung-bremen/"
+        }
+    },
+    trustItems: [
+        {
+            text: "Bremer Stromtarif eingerechnet"
+        },
+        {
+            text: "Stand Mai 2026"
+        },
+        {
+            text: "BremLBO + TA Lärm berücksichtigt"
+        },
+        {
+            text: "Realistischer Eigenanteil"
+        }
+    ],
+    breadcrumb: [
+        {
+            label: "Startseite",
+            href: "/"
+        },
+        {
+            label: "Kosten Bremen"
+        }
+    ],
+    ctaBlock: {
+        headline: "Was kostet die Wärmepumpe für Ihr Haus?",
+        text: "Der Browser-Check liefert eine erste Einschätzung zur passenden Bauart und groben Investition – ohne Datenübermittlung, in wenigen Minuten.",
+        variant: "highlight",
+        primaryCTA: {
+            label: "Eignung & Förderung prüfen",
+            href: "/check/"
+        },
+        secondaryCTA: {
+            label: "Welche Förderung gibt es?",
+            href: "/waermepumpe-foerderung-bremen/"
+        }
+    },
+    faqHeading: "FAQ: Wärmepumpe Kosten Bremen",
+    faqs: [
+        {
+            question: "Was kostet eine Wärmepumpe in Bremen 2026 realistisch?",
+            answer: "Für ein Bremer Einfamilienhaus liegen Luft-Wasser-Wärmepumpen inklusive Installation typischerweise bei 22.000 bis 35.000 Euro brutto, Sole-Wasser-Wärmepumpen mit Erdsondenbohrung bei 30.000 bis 45.000 Euro. Nach Abzug der maximal möglichen KfW-458-Förderung von 70 % auf förderfähige Kosten bis 30.000 Euro reduziert sich der Eigenanteil auf 9.000 bis rund 24.000 Euro – je nach Boni und tatsächlichen Kosten."
+        },
+        {
+            question: "Wie viel Förderung gibt es für eine Wärmepumpe in Bremen?",
+            answer: "Über die KfW-Heizungsförderung 458 sind bis zu 70 % der förderfähigen Kosten möglich (max. 30.000 Euro für die erste Wohneinheit). Konkret: 30 % Basis, plus 20 % Klimabonus beim Tausch alter Öl-/Gas-Heizungen, plus 30 % Einkommensbonus bei Haushalten unter 40.000 Euro Jahreseinkommen, plus 5 % Effizienzbonus für besonders effiziente Systeme. Details auf der Seite Wärmepumpe Förderung Bremen."
+        },
+        {
+            question: "Wie hoch sind die Stromkosten einer Wärmepumpe in Bremen?",
+            answer: "Die swb (Stadtwerke Bremen) bietet einen Wärmepumpentarif mit aktuell 24,98 ct/kWh (Stand Mai 2026). Bei einem Bremer Einfamilienhaus mit etwa 4.000 kWh Wärmepumpenstrom pro Jahr ergeben sich rund 1.000 Euro Jahresstromkosten. Im sanierten Bestand ist auch deutlich weniger möglich, im unsanierten Altbau entsprechend mehr."
+        },
+        {
+            question: "Lohnt sich eine Wärmepumpe in einem Bremer Altbau?",
+            answer: "In vielen Fällen ja. Entscheidend ist nicht das Baujahr, sondern die Vorlauftemperatur. Wenn das Haus ganzjährig mit unter 55 °C Vorlauf auskommt, sind die Bedingungen gut. Die Detailprüfung steht auf der Seite Wärmepumpe Altbau Bremen."
+        },
+        {
+            question: "Was muss ich beim Aufstellort in Bremen beachten?",
+            answer: "Die Bremer Landesbauordnung erlaubt für Wärmepumpen-Außengeräte einen Grenzabstand von 0 Metern (BremLBO §6 Abs. 8 Nr. 4) – ein klarer Bremen-Vorteil gegenüber den meisten anderen Bundesländern, wo 3 Meter gelten. Trotzdem zu beachten: TA Lärm mit nächtlichen Grenzwerten von 35 dB(A) im reinen Wohngebiet und 45 dB(A) im Mischgebiet."
+        }
+    ],
+    schema: {
+        type: "Article",
+        datePublished: "2026-05-02",
+        dateModified: "2026-05-02"
+    }
+};
+
+const canonical = data.canonical ?? Astro.url.href;
+const hero = { ...data.hero, imageSrc: heroImage };
+const dateLine = data.lastUpdated ? `Stand: ${data.lastUpdated}` : null;
+const pageSchema = data.schema
+    ? {
+          ...data.schema,
+          datePublished: data.schema.datePublished ?? data.schema.dateModified,
+          dateModified: data.schema.dateModified ?? data.schema.datePublished,
+      }
+    : undefined;
 ---
 
-import SectionShell from "../../components/SectionShell.astro";
-import NoticeSuccess from "../../components/mdx/NoticeSuccess.astro";
-import CheckList from "../../components/mdx/CheckList.astro";
-import InternalLinkCard from "../../components/InternalLinkCard.astro";
+<Layout
+    title={data.title}
+    description={data.description}
+    canonical={canonical}
+    noindex={data.noindex}
+    pageSchema={pageSchema}
+>
+    {data.breadcrumb?.length > 0 && <Breadcrumb items={data.breadcrumb} />}
+    <HeroSection {...hero} />
+    {data.trustItems?.length > 0 && <TrustBar items={data.trustItems} />}
+    {dateLine && (
+        <div class="bg-background border-b border-border">
+            <p class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-3 text-xs text-text-muted">
+                {dateLine} · Redaktion bremer-waermepumpe.de · Alle Angaben ohne Gewähr
+            </p>
+        </div>
+    )}
 
 {/* Intro: Bremen-Kontext */}
 <SectionShell>
   <article class="max-w-3xl">
+    <div class="bg-highlight border border-border rounded p-5 mb-8">
+      <p class="font-bold text-text mb-2">
+        Schnelle Antwort: Was kostet eine Wärmepumpe in Bremen?
+      </p>
+      <p class="text-text-muted text-sm leading-relaxed">
+        Für Bremer Einfamilienhäuser liegt eine Luft-Wasser-Wärmepumpe inklusive
+        Einbau typischerweise bei <strong class="text-text">22.000 bis 35.000 €</strong>
+        vor Förderung. Nach KfW 458 bleiben je nach Boni häufig
+        <strong class="text-text"> 9.000 bis 24.000 € Eigenanteil</strong>. Der
+        laufende Strombedarf hängt an der Jahresarbeitszahl; mit dem swb-Tarif
+        <strong class="text-text"> thermo proNatur</strong> lag der Arbeitspreis
+        Anfang 2026 bei <strong class="text-text">24,98 ct/kWh</strong>.
+      </p>
+    </div>
     <p class="text-text-muted leading-relaxed">
       In Bremen liegt der Wärmepumpen-Marktanteil laut KfW-Energiewendebarometer 2025 bei rund <strong class="text-text">2 %</strong> – deutlich unter dem Bundesschnitt von etwa 8 %. Das hat zwei Konsequenzen: Erstens gibt es vor Ort weniger Vergleichswerte, und zweitens findet man im Netz oft generische Deutschland-Preise, die für Bremen nicht stimmen. Diese Seite ordnet die <strong class="text-text">Wärmepumpen-Kosten für Bremen 2026</strong> realistisch ein – inklusive lokaler Faktoren wie swb-Stromtarif, BremLBO und Lärmrahmen.
     </p>
@@ -237,9 +331,35 @@ import InternalLinkCard from "../../components/InternalLinkCard.astro";
     </li>
   </ul>
   <p class="text-text-muted max-w-3xl text-sm mt-4">
-    Eine vollständige Wirtschaftlichkeitsrechnung kann nur eine Energieberatung liefern,
+    Den vollständigen Vergleich von Anschaffung, Förderung, Betriebskosten und GEG-Pflicht
+    finden Sie auf der Detailseite <a href="/waermepumpe-oder-gasheizung-bremen/" class="text-brand underline">Wärmepumpe oder Gasheizung in Bremen</a>.
+    Eine belastbare Wirtschaftlichkeitsrechnung liefert aber nur eine Energieberatung,
     die Ihre tatsächlichen Verbrauchsdaten kennt.
   </p>
+</SectionShell>
+
+{/* Quellen */}
+<SectionShell variant="alt">
+  <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
+    Quellen und redaktioneller Stand
+  </h2>
+  <div class="surface-card p-5 max-w-3xl text-sm text-text-muted leading-relaxed">
+    <p class="font-semibold text-text mb-3">Stand: 29. Mai 2026</p>
+    <ul class="space-y-2">
+      <li>
+        swb: <a href="https://www.swb.de/strom/thermo-pronatur" class="text-primary underline" target="_blank" rel="noopener">Wärmepumpenstrom swb thermo proNatur</a>
+      </li>
+      <li>
+        KfW: <a href="https://www.kfw.de/inlandsfoerderung/Privatpersonen/Bestehende-Immobilie/F%C3%B6rderprodukte/Heizungsf%C3%B6rderung-f%C3%BCr-Privatpersonen-Wohngeb%C3%A4ude-%28458%29/" class="text-primary underline" target="_blank" rel="noopener">Heizungsförderung 458</a>
+      </li>
+      <li>
+        Bremen: <a href="https://www.transparenz.bremen.de/metainformationen/bremische-landesbauordnung-vom-29-mai-2024-232736" class="text-primary underline" target="_blank" rel="noopener">Bremische Landesbauordnung</a>
+      </li>
+      <li>
+        Kostenangaben sind redaktionelle Marktspannen und ersetzen kein verbindliches Fachbetriebsangebot.
+      </li>
+    </ul>
+  </div>
 </SectionShell>
 
 {/* Cluster-Crosslinks */}
@@ -280,3 +400,10 @@ import InternalLinkCard from "../../components/InternalLinkCard.astro";
     />
   </div>
 </SectionShell>
+
+    {data.ctaBlock && <CTASection {...data.ctaBlock} />}
+    {data.faqs?.length > 0 && (
+        <FAQSection heading={data.faqHeading} items={data.faqs} />
+    )}
+</Layout>
+

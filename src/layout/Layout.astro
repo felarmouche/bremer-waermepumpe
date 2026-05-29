@@ -17,16 +17,17 @@ interface Props {
     title: string;
     description: string;
     canonical?: string;
+    ogImage?: string;
     noindex?: boolean;
     pageSchema?: PageSchema;
 }
-const { title, description, canonical, noindex, pageSchema } = Astro.props;
+const { title, description, canonical, ogImage, noindex, pageSchema } = Astro.props;
 ---
 
 <!doctype html>
 <html lang="de">
     <head>
-        <Head title={title} description={description} canonical={canonical} noindex={noindex} pageSchema={pageSchema} />
+        <Head title={title} description={description} canonical={canonical} ogImage={ogImage} noindex={noindex} pageSchema={pageSchema} />
     </head>
     <body class="bg-background text-text min-h-screen flex flex-col">
         <header class="bg-white sticky top-0 z-50 border-b border-border">

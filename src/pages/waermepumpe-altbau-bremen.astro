@@ -1,0 +1,348 @@
+---
+import Layout from "../layout/Layout.astro";
+import Breadcrumb from "../components/Breadcrumb.astro";
+import HeroSection from "../components/HeroSection.astro";
+import TrustBar from "../components/TrustBar.astro";
+import CTASection from "../components/CTASection.astro";
+import FAQSection from "../components/FAQSection.astro";
+import SectionShell from "../components/SectionShell.astro";
+import NoticeSuccess from "../components/content/NoticeSuccess.astro";
+import CheckList from "../components/content/CheckList.astro";
+import NumberedSteps from "../components/content/NumberedSteps.astro";
+import InternalLinkCard from "../components/InternalLinkCard.astro";
+import heroImage from "../images/hero-altbau-bremen.webp";
+
+import type { PageData } from "../types/page";
+
+const data: PageData = {
+    title: "Wärmepumpe Altbau Bremen: Eignung prüfen 2026",
+    description: "Wärmepumpe Altbau Bremen: Vorlauftemperatur, Heizkörper, Schallschutz, Förderung und Kosten vor dem Heizungstausch prüfen.",
+    lastUpdated: "29. Mai 2026",
+    hero: {
+        headline: "Wärmepumpe im Altbau Bremen",
+        subtext: "Viele Bremer Altbauten sind besser für eine Wärmepumpe geeignet, als Eigentümer vermuten.",
+        primaryCTA: {
+            label: "Eignung & Förderung prüfen",
+            href: "/check/"
+        },
+        secondaryCTA: {
+            label: "Altbau-Kosten im Detail",
+            href: "/waermepumpe-altbau-kosten/"
+        }
+    },
+    trustItems: [
+        {
+            text: "Fokus auf Bremer Altbauten"
+        },
+        {
+            text: "Vorlauftemperatur im Blick"
+        },
+        {
+            text: "Stand 2026"
+        }
+    ],
+    breadcrumb: [
+        {
+            label: "Startseite",
+            href: "/"
+        },
+        {
+            label: "Wärmepumpe Altbau Bremen"
+        }
+    ],
+    ctaBlock: {
+        headline: "Einschätzung für Ihr Altbau-Objekt",
+        text: "In wenigen Schritten eine automatische Einordnung zur Eignung und möglichen Förderung erhalten – ganz ohne Anmeldung, Auswertung direkt im Browser.",
+        variant: "highlight",
+        primaryCTA: {
+            label: "Eignung & Förderung prüfen",
+            href: "/check/"
+        },
+        secondaryCTA: {
+            label: "Förderung Bremen ansehen",
+            href: "/waermepumpe-foerderung-bremen/"
+        }
+    },
+    faqHeading: "FAQ: Die 5 wichtigsten Fragen zur Wärmepumpe im Altbau",
+    faqs: [
+        {
+            question: "Funktioniert eine Wärmepumpe wirklich im Altbau?",
+            answer: "Ja, sehr oft. Viele Bestandsgebäude lassen sich mit einer Wärmepumpe effizient betreiben. Als grobe Faustregel gilt: Wenn das Haus mit einer Vorlauftemperatur von ganzjährig unter 55 °C warm wird, sind die Bedingungen gut."
+        },
+        {
+            question: "Brauche ich im Altbau zwingend eine Fußbodenheizung?",
+            answer: "Nein. Fußbodenheizungen sind durch ihre große Fläche sehr vorteilhaft, aber nicht zwingend erforderlich. Auch große Standard-Heizkörper oder alte, voluminöse Rippenheizkörper können absolut ausreichend sein."
+        },
+        {
+            question: "Kann eine Wärmepumpe auch im unsanierten Altbau sinnvoll sein?",
+            answer: "Teilweise ja. Es gibt zahlreiche Bremer Praxisbeispiele, in denen Wärmepumpen auch in teilsanierten oder unsanierten Häusern funktionieren. Ob das wirtschaftlich sinnvoll ist, hängt jedoch stark von der berechneten Heizlast ab und muss individuell geprüft werden."
+        },
+        {
+            question: "Was ist der wichtigste Prüfpunkt vor dem Einbau?",
+            answer: "Am wichtigsten ist die raumweise Heizlastberechnung. Erst danach lässt sich sinnvoll entscheiden, welche Leistung die Wärmepumpe haben muss und ob punktuell einzelne Heizkörper gegen größere Modelle getauscht werden sollten."
+        },
+        {
+            question: "Ist im Altbau manchmal ein hybrides System sinnvoller?",
+            answer: "Ja. Wenn eine Wärmepumpe ein altes Gebäude an extrem kalten Tagen nicht allein wirtschaftlich versorgen kann oder eine Bestandsheizung noch zu neu zum Wegwerfen ist, kann ein hybrides (bivalentes) System eine exzellente Übergangslösung sein."
+        }
+    ]
+};
+
+const canonical = data.canonical ?? Astro.url.href;
+const hero = { ...data.hero, imageSrc: heroImage };
+const dateLine = data.lastUpdated ? `Stand: ${data.lastUpdated}` : null;
+const pageSchema = data.schema
+    ? {
+          ...data.schema,
+          datePublished: data.schema.datePublished ?? data.schema.dateModified,
+          dateModified: data.schema.dateModified ?? data.schema.datePublished,
+      }
+    : undefined;
+---
+
+<Layout
+    title={data.title}
+    description={data.description}
+    canonical={canonical}
+    noindex={data.noindex}
+    pageSchema={pageSchema}
+>
+    {data.breadcrumb?.length > 0 && <Breadcrumb items={data.breadcrumb} />}
+    <HeroSection {...hero} />
+    {data.trustItems?.length > 0 && <TrustBar items={data.trustItems} />}
+    {dateLine && (
+        <div class="bg-background border-b border-border">
+            <p class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-3 text-xs text-text-muted">
+                {dateLine} · Redaktion bremer-waermepumpe.de · Alle Angaben ohne Gewähr
+            </p>
+        </div>
+    )}
+
+{/* Intro */}
+<SectionShell>
+  <article class="max-w-3xl space-y-4 text-text-muted leading-relaxed">
+    <div class="bg-highlight border border-border rounded p-5">
+      <p class="font-bold text-text mb-2">Schnelle Antwort</p>
+      <p class="text-sm leading-relaxed">
+        Eine Wärmepumpe im Bremer Altbau funktioniert oft, wenn das Haus mit
+        möglichst niedriger Vorlauftemperatur warm wird und Heizflächen,
+        Hydraulik sowie Aufstellort sauber geplant werden. Das Baujahr allein ist
+        kein Ausschlusskriterium; entscheidend sind Heizlast, Vorlauf und Schall.
+      </p>
+    </div>
+    <p>
+      Viele Eigentümer gehen noch immer davon aus, dass eine Wärmepumpe im Altbau nur
+      im perfekt sanierten Haus funktioniert. Für viele Gebäude in Bremen stimmt das
+      so nicht. Entscheidend ist nicht allein das Baujahr, sondern vor allem, wie viel
+      <strong class="text-text"> Vorlauftemperatur</strong> das Haus tatsächlich braucht,
+      wie hoch die Heizlast ist und ob Heizflächen sowie Hydraulik sinnvoll aufeinander
+      abgestimmt werden.
+    </p>
+    <NoticeSuccess>
+      <p>
+        <strong>Hinweis der Redaktion:</strong> Auf diesem
+        Informationsportal (Stand 2026) zeigen wir Ihnen objektiv, welche technischen
+        Möglichkeiten für Bremer Bestandsgebäude bestehen. Eine exakte Planung muss
+        immer individuell durch einen Fachbetrieb erfolgen.
+      </p>
+    </NoticeSuccess>
+    <p>
+      Gerade in Bremen ist das Thema besonders relevant: <strong class="text-text">Altbremer Häuser</strong>,
+      klassische Reihenhäuser, Stadtvillen und teilmodernisierte Bestandsimmobilien
+      prägen viele Stadtteile. Hohe Decken, ältere Fenster, massive Wände und
+      vorhandene Heizkörper stellen zwar Anforderungen an die Planung, schließen eine
+      Wärmepumpe aber nicht automatisch aus.
+    </p>
+  </article>
+</SectionShell>
+
+{/* Warum funktioniert */}
+<SectionShell variant="alt">
+  <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
+    Warum eine Wärmepumpe auch im Altbau funktionieren kann
+  </h2>
+  <p class="text-text-muted max-w-3xl mb-6">
+    Eine Wärmepumpe arbeitet umso wirtschaftlicher, je weniger stark sie die
+    Temperatur anheben muss. Als grobe Orientierung gilt: Ein Gebäude ist für eine
+    Wärmepumpe oft gut geeignet, wenn die Heizung möglichst ganzjährig mit einer
+    <strong class="text-text"> Vorlauftemperatur von unter 55 °C</strong> auskommt.
+  </p>
+  <p class="text-text-muted max-w-3xl mb-8">
+    Das bedeutet aber nicht, dass nur Neubauten infrage kommen. In vielen
+    Bestandsgebäuden helfen schon großzügige Heizkörper, ein hydraulischer Abgleich,
+    einzelne Dämmmaßnahmen oder der Austausch weniger zu kleiner Heizflächen, um die
+    Voraussetzungen massiv zu verbessern.
+  </p>
+
+  <p class="text-text-muted max-w-3xl mb-6 font-semibold">
+    Die wichtigsten Vorteile im Überblick:
+  </p>
+  <CheckList
+    class="mb-4"
+    items={[
+      "Weniger Abhängigkeit von Gas und Heizöl",
+      "Zukunftsfähige Heiztechnik für Bestandsgebäude",
+      "Hohe staatliche Fördermöglichkeiten für den Heizungstausch",
+      "Nutzung vorhandener Heizkörper ist oft möglich",
+      "Kombination mit Photovoltaik (Solarstrom) senkt Betriebskosten",
+      "Schrittweise Modernisierung statt Komplettsanierung ist machbar",
+    ]}
+  />
+</SectionShell>
+
+{/* Voraussetzungen */}
+<SectionShell>
+  <h2 class="text-2xl md:text-3xl font-bold text-text mb-6">
+    Welche Voraussetzungen sollte ein Altbau erfüllen?
+  </h2>
+  <p class="text-text-muted max-w-3xl mb-8">
+    Nicht jedes Haus braucht dieselben Maßnahmen. Dennoch gibt es vier Punkte, die
+    bei der Bewertung einer Wärmepumpe im Altbau fast immer eine zentrale Rolle
+    spielen.
+  </p>
+  <NumberedSteps
+    items={[
+      {
+        title: "Die Vorlauftemperatur muss passen",
+        text: "Mit welcher Temperatur muss das Heizwasser durchs Haus laufen, damit alle Räume warm werden? Je niedriger diese Temperatur, desto besser. Ideal sind Temperaturen zwischen 30 und 50 °C.",
+      },
+      {
+        title: "Die Heizlast muss berechnet werden",
+        text: "Eine seriöse Planung beginnt nicht mit dem Gerät, sondern mit dem Gebäude. Eine raumweise Heizlastberechnung zeigt, wie viel Leistung die Wärmepumpe wirklich braucht und ob das Rohrsystem den nötigen Volumenstrom verteilen kann.",
+      },
+      {
+        title: "Heizkörper sind kein Ausschlusskriterium",
+        text: "Viele Altbauten in Bremen haben keine Fußbodenheizung, sondern klassische Rippenheizkörper. Häufig sind gerade ältere Heizkörper früher viel größer dimensioniert worden, als es heute nötig wäre. Diese Flächen bieten Reserven, die sich bei niedrigeren Vorlauftemperaturen exzellent nutzen lassen.",
+      },
+      {
+        title: "Dämmung verbessert die Ausgangslage",
+        text: "Jede sinnvolle Dämmmaßnahme (Dach, Fenster, Kellerdecke) senkt die Heizlast und macht das Gebäude „wärmepumpenfreundlicher\".",
+      },
+    ]}
+  />
+</SectionShell>
+
+{/* Typische Szenarien */}
+<SectionShell variant="alt">
+  <h2 class="text-2xl md:text-3xl font-bold text-text mb-6">
+    Typische Bremen-Szenarien: wann die Eignung gut ist
+  </h2>
+  <p class="text-text-muted max-w-3xl mb-4">
+    Statt einzelner nicht verifizierbarer Referenzen ist für Eigentümer hilfreicher,
+    die wiederkehrenden Muster im Bremer Bestand zu erkennen. Diese Szenarien sind
+    keine Kundencases, sondern Entscheidungslogik für die Erstprüfung.
+  </p>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-5xl">
+    <div class="surface-card p-5">
+      <h3 class="font-semibold text-text mb-2">Gute Ausgangslage</h3>
+      <p class="text-text-muted text-sm leading-relaxed">
+        Teilsanierter Altbau, große Heizkörper, Vorlauf im Winter unter 55 °C,
+        Platz für Außengerät und alter fossiler Kessel. Hier lohnt die
+        Fachbetriebsprüfung meist sofort.
+      </p>
+    </div>
+    <div class="surface-card p-5">
+      <h3 class="font-semibold text-text mb-2">Erst optimieren</h3>
+      <p class="text-text-muted text-sm leading-relaxed">
+        Einzelne Räume werden nur mit hoher Vorlauftemperatur warm. Dann sind
+        Heizkörpertausch, hydraulischer Abgleich oder Dämmung vor der finalen
+        Auslegung zu prüfen.
+      </p>
+    </div>
+    <div class="surface-card p-5">
+      <h3 class="font-semibold text-text mb-2">Kritisch prüfen</h3>
+      <p class="text-text-muted text-sm leading-relaxed">
+        Sehr hohe Heizlast, wenig Platz, enger Innenhof oder sensible Nachbarschaft.
+        Eine Wärmepumpe kann möglich sein, braucht aber Schall- und
+        Leitungsplanung statt Standardangebot.
+      </p>
+    </div>
+  </div>
+</SectionShell>
+
+{/* Hybrid/Bivalent */}
+<SectionShell>
+  <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
+    Wann ist ein hybrides System (Bivalenz) sinnvoll?
+  </h2>
+  <p class="text-text-muted max-w-3xl leading-relaxed">
+    Nicht jeder Altbau muss sofort komplett <em>monovalent</em> (ausschließlich mit
+    Wärmepumpe) betrieben werden. Auch das Umweltbundesamt nennt Hybridlösungen
+    ausdrücklich als interessante Option.
+  </p>
+  <p class="text-text-muted max-w-3xl mt-4 leading-relaxed">
+    Wenn ein Haus an wenigen sehr kalten Tagen extrem hohe Leistungen braucht oder
+    die alte Gasheizung noch intakt ist, kann ein
+    <strong class="text-text"> bivalentes System</strong> sinnvoll sein. Dabei
+    übernimmt die Wärmepumpe rund 80 bis 90 % der Jahresheizarbeit sehr günstig. Nur
+    bei extremen Minusgraden springt der bestehende Gas- oder Ölkessel als
+    Spitzenlastkessel unterstützend ein.
+  </p>
+</SectionShell>
+
+{/* Prüfung */}
+<SectionShell variant="alt">
+  <h2 class="text-2xl md:text-3xl font-bold text-text mb-6">
+    So prüfen Sie, ob Ihr Altbau in Bremen geeignet ist
+  </h2>
+  <p class="text-text-muted max-w-3xl mb-8">
+    Eine belastbare Einschätzung entsteht durch systematische Prüfung:
+  </p>
+
+  <ol class="space-y-4 max-w-3xl list-decimal list-inside">
+    <li class="text-text-muted leading-relaxed">
+      <span class="font-semibold text-text">Vorlauftemperatur testen:</span> Senken
+      Sie an kalten Wintertagen die Vorlauftemperatur Ihrer alten Heizung auf ca.
+      50 °C ab. Werden alle Räume noch warm? Das ist ein hervorragendes Indiz!
+    </li>
+    <li class="text-text-muted leading-relaxed">
+      <span class="font-semibold text-text">Heizlast berechnen lassen:</span> Eine
+      exakte Auslegung verhindert, dass die Wärmepumpe zu groß (ineffizient) oder zu
+      klein geplant wird.
+    </li>
+    <li class="text-text-muted leading-relaxed">
+      <span class="font-semibold text-text">Energieberatung nutzen:</span> Eine
+      fundierte Beratung hilft, technische Machbarkeit und mögliche staatliche
+      Förderungen (z. B. über die KfW) optimal zu kombinieren.
+    </li>
+  </ol>
+  <div class="bg-highlight border border-border rounded p-5 mt-8 flex flex-col sm:flex-row gap-4 sm:items-center sm:justify-between">
+    <div>
+      <p class="font-semibold text-text">Altbau-Eignung vor dem Angebot klären</p>
+      <p class="text-sm text-text-muted mt-1">Der Check sortiert Vorlauf, Heizkörper, alte Heizung, Förderung und Aufstellort.</p>
+    </div>
+    <a href="/check/" class="btn-accent shrink-0 text-center">Eignung prüfen</a>
+  </div>
+</SectionShell>
+
+<SectionShell>
+  <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
+    Quellen und nächste Schritte
+  </h2>
+  <div class="surface-card p-5 max-w-3xl text-sm text-text-muted leading-relaxed mb-6">
+    <p class="font-semibold text-text mb-3">Stand: 29. Mai 2026</p>
+    <ul class="space-y-2">
+      <li>
+        KfW: <a href="https://www.kfw.de/inlandsfoerderung/Privatpersonen/Bestehende-Immobilie/F%C3%B6rderprodukte/Heizungsf%C3%B6rderung-f%C3%BCr-Privatpersonen-Wohngeb%C3%A4ude-%28458%29/" class="text-primary underline" target="_blank" rel="noopener">Heizungsförderung 458</a>
+      </li>
+      <li>
+        BAFA: <a href="https://www.bafa.de/DE/Energie/Effiziente_Gebaeude/Sanierung_Wohngebaeude/Heizungsoptimierung/heizungsoptimierung_node.html" class="text-primary underline" target="_blank" rel="noopener">Heizungsoptimierung</a>
+      </li>
+      <li>
+        Eine verbindliche Aussage zur Machbarkeit erfordert Heizlastberechnung, Aufstellortprüfung und Fachbetriebsangebot.
+      </li>
+    </ul>
+  </div>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-5xl">
+    <InternalLinkCard href="/waermepumpe-altbau-kosten/" title="Altbau-Kosten" description="Was Wärmepumpe, Heizkörper und Schallschutz im Altbau kosten." />
+    <InternalLinkCard href="/waermepumpe-kosten-bremen/" title="Kosten Bremen" description="Eigenanteil nach Förderung und lokale Stromkosten." />
+    <InternalLinkCard href="/waermepumpe-foerderung-bremen/" title="Förderung Bremen" description="KfW 458, BAFA und BAB-Status im Überblick." />
+  </div>
+</SectionShell>
+
+    {data.ctaBlock && <CTASection {...data.ctaBlock} />}
+    {data.faqs?.length > 0 && (
+        <FAQSection heading={data.faqHeading} items={data.faqs} />
+    )}
+</Layout>
+

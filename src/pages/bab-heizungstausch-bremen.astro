@@ -1,0 +1,266 @@
+---
+import Layout from "../layout/Layout.astro";
+import Breadcrumb from "../components/Breadcrumb.astro";
+import HeroSection from "../components/HeroSection.astro";
+import TrustBar from "../components/TrustBar.astro";
+import CTASection from "../components/CTASection.astro";
+import FAQSection from "../components/FAQSection.astro";
+import SectionShell from "../components/SectionShell.astro";
+import NoticeSuccess from "../components/content/NoticeSuccess.astro";
+import CheckList from "../components/content/CheckList.astro";
+import InternalLinkCard from "../components/InternalLinkCard.astro";
+import heroImage from "../images/foerderung-bremen-hero.webp";
+
+import type { PageData } from "../types/page";
+
+const data: PageData = {
+    title: "BAB Heizungstausch Bremen 2026: Status & Alternativen",
+    description: "BAB Heizungstausch Bremen: aktueller Status 2026, KfW 458, BAFA, Modernisierungskredite und Förder-Alternativen für Wärmepumpen.",
+    lastUpdated: "29. Mai 2026",
+    hero: {
+        headline: "BAB Heizungstausch Bremen",
+        subtext: "Was 2026 noch läuft, was nicht mehr offen ist und welche Förderwege Bremer Eigentümer stattdessen prüfen sollten.",
+        primaryCTA: {
+            label: "Förderung prüfen",
+            href: "/check/"
+        },
+        secondaryCTA: {
+            label: "Förderung Bremen",
+            href: "/waermepumpe-foerderung-bremen/"
+        }
+    },
+    trustItems: [
+        {
+            text: "BAB-Status eingeordnet"
+        },
+        {
+            text: "KfW 458 Alternative"
+        },
+        {
+            text: "BAFA sauber getrennt"
+        },
+        {
+            text: "Stand 29. Mai 2026"
+        }
+    ],
+    breadcrumb: [
+        {
+            label: "Startseite",
+            href: "/"
+        },
+        {
+            label: "Förderung Bremen",
+            href: "/waermepumpe-foerderung-bremen/"
+        },
+        {
+            label: "BAB Heizungstausch"
+        }
+    ],
+    ctaBlock: {
+        headline: "Welche Förderung bleibt für Ihr Haus?",
+        text: "Der Check ordnet KfW 458, BAFA-Optimierung und lokale Bremer Bausteine ein.",
+        variant: "highlight",
+        primaryCTA: {
+            label: "Eignung & Förderung prüfen",
+            href: "/check/"
+        },
+        secondaryCTA: {
+            label: "KfW 458 im Detail",
+            href: "/kfw-458-waermepumpe/"
+        }
+    },
+    faqHeading: "FAQ: BAB Heizungstausch Bremen",
+    faqs: [
+        {
+            question: "Ist das BAB-Programm Heizungstausch 2026 offen?",
+            answer: "Stand 29. Mai 2026 ist das frühere BAB-Heizungstauschprogramm nicht als neuer Zuschussweg für Wärmepumpen einzuplanen. Der zentrale Förderweg ist die KfW 458."
+        },
+        {
+            question: "Welche Alternative gibt es zum BAB-Zuschuss?",
+            answer: "Für den eigentlichen Heizungstausch ist die KfW 458 maßgeblich. Ergänzend können BAFA-Optimierung, Energieberatung oder Modernisierungskredite relevant sein."
+        },
+        {
+            question: "Kann BAB mit KfW kombiniert werden?",
+            answer: "Kredit- oder Beratungsbausteine können je nach Programm ergänzend möglich sein. Eine Doppelförderung derselben Kostenposition ist nicht zulässig."
+        }
+    ],
+    schema: {
+        type: "Article",
+        datePublished: "2026-05-29",
+        dateModified: "2026-05-29"
+    }
+};
+
+const canonical = data.canonical ?? Astro.url.href;
+const hero = { ...data.hero, imageSrc: heroImage };
+const dateLine = data.lastUpdated ? `Stand: ${data.lastUpdated}` : null;
+const pageSchema = data.schema
+    ? {
+          ...data.schema,
+          datePublished: data.schema.datePublished ?? data.schema.dateModified,
+          dateModified: data.schema.dateModified ?? data.schema.datePublished,
+      }
+    : undefined;
+---
+
+<Layout
+    title={data.title}
+    description={data.description}
+    canonical={canonical}
+    noindex={data.noindex}
+    pageSchema={pageSchema}
+>
+    {data.breadcrumb?.length > 0 && <Breadcrumb items={data.breadcrumb} />}
+    <HeroSection {...hero} />
+    {data.trustItems?.length > 0 && <TrustBar items={data.trustItems} />}
+    {dateLine && (
+        <div class="bg-background border-b border-border">
+            <p class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-3 text-xs text-text-muted">
+                {dateLine} · Redaktion bremer-waermepumpe.de · Alle Angaben ohne Gewähr
+            </p>
+        </div>
+    )}
+
+<SectionShell>
+  <article class="max-w-3xl space-y-4 text-text-muted leading-relaxed">
+    <div class="bg-highlight border border-border rounded p-5">
+      <p class="font-bold text-text mb-2">Schnelle Antwort</p>
+      <p class="text-sm leading-relaxed">
+        Das frühere Bremer Programm <strong class="text-text">BAB Heizungstausch</strong>
+        ist 2026 nicht der relevante Zuschussweg für neue Wärmepumpen-Anträge. Für
+        den Heizungstausch im Wohngebäude ist die <strong class="text-text">KfW 458</strong>
+        maßgeblich. BAB- oder Bremer Bausteine können allenfalls bei Finanzierung,
+        Beratung oder ergänzender Modernisierung eine Rolle spielen.
+      </p>
+    </div>
+    <p>
+      Viele Bremer suchen noch nach dem <strong class="text-text">BAB Heizungstausch</strong>,
+      weil das Programm in älteren Ratgebern und Suchergebnissen auftaucht. Für eine
+      Wärmepumpe im Jahr 2026 sollte man den Heizungstausch aber nicht mehr primär über
+      einen BAB-Zuschuss planen. Der zentrale Zuschussweg ist die
+      <strong class="text-text"> KfW 458</strong>.
+    </p>
+    <NoticeSuccess>
+      <p>
+        <strong>Stand 29. Mai 2026:</strong> Für neue Wärmepumpen-Vorhaben ist die
+        KfW-Heizungsförderung 458 der entscheidende Fördertopf. Der Bremer
+        Heizungstausch-Zuschuss lief laut Serviceportal für neue Anträge bis
+        31.08.2025. BAB-Bausteine können bei Finanzierung oder Modernisierung relevant
+        sein, ersetzen aber nicht die KfW-Förderung.
+      </p>
+    </NoticeSuccess>
+    <div class="bg-highlight border border-border rounded p-5 flex flex-col sm:flex-row gap-4 sm:items-center sm:justify-between">
+      <div>
+        <p class="font-semibold text-text">Förderweg für Ihr Haus klären</p>
+        <p class="text-sm text-text-muted mt-1">Der Check trennt KfW, BAFA und lokale Bremer Optionen.</p>
+      </div>
+      <a href="/check/" class="btn-accent shrink-0 text-center">Förderung prüfen</a>
+    </div>
+  </article>
+</SectionShell>
+
+<SectionShell variant="alt">
+  <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
+    Was Bremer Eigentümer statt BAB prüfen sollten
+  </h2>
+  <CheckList
+    items={[
+      { lead: "KfW 458:", text: "Zuschuss für den eigentlichen Heizungstausch, bis zu 70 % der förderfähigen Kosten." },
+      { lead: "BAFA-Heizungsoptimierung:", text: "Relevant, wenn die bestehende Heizung vor einem späteren Tausch optimiert wird." },
+      { lead: "Energieberatung:", text: "Sinnvoll zur Vorbereitung von iSFP, Gebäudehülle und Wärmepumpen-Auslegung." },
+      { lead: "Modernisierungskredit:", text: "Kann Eigenanteil oder ergänzende Maßnahmen finanzieren, falls Zuschüsse nicht reichen." },
+      { lead: "Fachbetrieb-Angebot:", text: "Förderfähige Kosten müssen sauber im Angebot getrennt sein." },
+    ]}
+  />
+</SectionShell>
+
+<SectionShell>
+  <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
+    KfW 458 als Hauptförderung: die relevanten Zahlen
+  </h2>
+  <div class="surface-card overflow-hidden max-w-2xl divide-y divide-border">
+    <div class="grid grid-cols-2 px-5 py-4 text-sm">
+      <span class="text-text-muted">Basisförderung</span>
+      <span class="font-semibold text-text text-right">30 %</span>
+    </div>
+    <div class="grid grid-cols-2 px-5 py-4 text-sm">
+      <span class="text-text-muted">Klimageschwindigkeitsbonus</span>
+      <span class="font-semibold text-text text-right">+20 %</span>
+    </div>
+    <div class="grid grid-cols-2 px-5 py-4 text-sm">
+      <span class="text-text-muted">Einkommensbonus</span>
+      <span class="font-semibold text-text text-right">+30 %</span>
+    </div>
+    <div class="grid grid-cols-2 px-5 py-4 text-sm">
+      <span class="text-text-muted">Effizienzbonus</span>
+      <span class="font-semibold text-text text-right">+5 %</span>
+    </div>
+    <div class="grid grid-cols-2 px-5 py-4 text-sm bg-highlight">
+      <span class="font-semibold text-text">Deckelung</span>
+      <span class="font-bold text-primary text-right">max. 70 %</span>
+    </div>
+  </div>
+  <p class="text-text-muted max-w-3xl text-sm mt-6">
+    Bei 30.000 € förderfähigen Kosten in der ersten Wohneinheit sind damit maximal
+    21.000 € Zuschuss möglich.
+  </p>
+</SectionShell>
+
+<SectionShell variant="alt">
+  <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
+    Typische Reihenfolge für Bremen
+  </h2>
+  <ol class="space-y-4 max-w-3xl">
+    {[
+      "Gebäude und alte Heizung prüfen: Eigentum, Heizungsalter, Vorlauf, Aufstellort.",
+      "Fachbetrieb oder Energieeffizienz-Experten einbinden und BzA vorbereiten.",
+      "Angebot mit förderkonformer Bedingung einholen.",
+      "KfW-458-Antrag stellen und Förderzusage abwarten.",
+      "Erst danach Umsetzung starten und BnD für Auszahlung einreichen.",
+    ].map((item, index) => (
+      <li class="surface-card p-5 flex gap-4">
+        <span class="w-8 h-8 rounded-full bg-primary text-white font-bold flex items-center justify-center shrink-0">{index + 1}</span>
+        <span class="text-text-muted leading-relaxed">{item}</span>
+      </li>
+    ))}
+  </ol>
+</SectionShell>
+
+<SectionShell>
+  <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
+    Quellen und redaktioneller Stand
+  </h2>
+  <div class="surface-card p-5 max-w-3xl text-sm text-text-muted leading-relaxed">
+    <p class="font-semibold text-text mb-3">Stand: 29. Mai 2026</p>
+    <ul class="space-y-2">
+      <li>
+        KfW: <a href="https://www.kfw.de/inlandsfoerderung/Privatpersonen/Bestehende-Immobilie/F%C3%B6rderprodukte/Heizungsf%C3%B6rderung-f%C3%BCr-Privatpersonen-Wohngeb%C3%A4ude-%28458%29/" class="text-primary underline" target="_blank" rel="noopener">Heizungsförderung für Privatpersonen – Wohngebäude</a>
+      </li>
+      <li>
+        BAFA: <a href="https://www.bafa.de/DE/Energie/Effiziente_Gebaeude/Sanierung_Wohngebaeude/Heizungsoptimierung/heizungsoptimierung_node.html" class="text-primary underline" target="_blank" rel="noopener">Heizungsoptimierung</a>
+      </li>
+      <li>
+        Bremen Service: <a href="https://www.service.bremen.de/dienstleistungen/foerderung-fuer-den-heizungstausch-beantragen-190934" class="text-primary underline" target="_blank" rel="noopener">Förderung für den Heizungstausch beantragen</a>
+      </li>
+      <li>
+        Diese Seite ersetzt keine verbindliche Auskunft der BAB, KfW, BAFA oder eines Energieeffizienz-Experten.
+      </li>
+    </ul>
+  </div>
+</SectionShell>
+
+<SectionShell variant="alt">
+  <h2 class="text-2xl md:text-3xl font-bold text-text mb-6">Weiterlesen</h2>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-5xl">
+    <InternalLinkCard href="/waermepumpe-foerderung-bremen/" title="Förderung Bremen" description="Gesamtüberblick KfW, BAFA und lokale Bremer Einordnung." />
+    <InternalLinkCard href="/kfw-458-waermepumpe/" title="KfW 458" description="Antrag, BzA, förderfähige Kosten und Boni." />
+    <InternalLinkCard href="/bafa-foerderung-waermepumpe/" title="BAFA vs. KfW" description="Welche Maßnahmen weiterhin über BAFA laufen." />
+  </div>
+</SectionShell>
+
+    {data.ctaBlock && <CTASection {...data.ctaBlock} />}
+    {data.faqs?.length > 0 && (
+        <FAQSection heading={data.faqHeading} items={data.faqs} />
+    )}
+</Layout>
+

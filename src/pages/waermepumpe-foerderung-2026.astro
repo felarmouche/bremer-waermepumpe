@@ -1,50 +1,133 @@
 ---
-title: "Wärmepumpe Förderung 2026: Das ändert sich jetzt!"
-description: "Neue KfW-Boni, GEG-Regeln ab Juli & Lärmgrenzen. Das müssen Sie 2026 zur Wärmepumpen-Förderung wissen. Jetzt schnell informieren ➔"
-lastUpdated: "Mai 2026"
-hero:
-  headline: "Wärmepumpe Förderung 2026"
-  subtext: "Was sich 2026 ändert: GEG §71 ab Juli, verschärfte Lärmgrenzen ab Januar, voller Klimabonus läuft – die wichtigsten Updates auf einen Blick."
-  imageSrc: "../../images/foerderung-bremen-hero.webp"
-  primaryCTA: { label: "Eignung & Förderung prüfen", href: "/check/" }
-  secondaryCTA: { label: "Förderung Bremen", href: "/waermepumpe-foerderung-bremen/" }
-trustItems:
-  - { text: "Stand Mai 2026" }
-  - { text: "GEG §71 ab Juli" }
-  - { text: "Klimabonus voll bis 2028" }
-  - { text: "Bremer Kontext" }
-breadcrumb:
-  - { label: "Startseite", href: "/" }
-  - { label: "Förderung Bremen", href: "/waermepumpe-foerderung-bremen/" }
-  - { label: "Förderung 2026" }
-ctaBlock:
-  headline: "Wann ist der richtige Zeitpunkt für Ihre Wärmepumpe?"
-  text: "Browser-Check zur Einordnung Ihrer Förderfähigkeit unter den 2026er-Bedingungen – ohne Datenübermittlung."
-  variant: "highlight"
-  primaryCTA: { label: "Eignung & Förderung prüfen", href: "/check/" }
-  secondaryCTA: { label: "KfW 458 im Detail", href: "/kfw-458-waermepumpe/" }
-faqHeading: "FAQ: Wärmepumpe Förderung 2026"
-faqs:
-  - question: "Wie hoch ist die Wärmepumpenförderung 2026?"
-    answer: "Über die KfW 458 sind 2026 bis zu 70 % der förderfähigen Kosten möglich (max. 30.000 Euro für die erste Wohneinheit, also bis zu 21.000 Euro Zuschuss). Der Klimageschwindigkeitsbonus von 20 % läuft 2026 in voller Höhe – ab 2029 reduziert er sich um 3 Prozentpunkte pro Jahr."
-  - question: "Bis wann gibt es den Klimageschwindigkeitsbonus von 20 %?"
-    answer: "Der volle 20%-Klimageschwindigkeitsbonus gilt 2026, 2027 und 2028. Ab 2029 reduziert er sich jährlich um 3 Prozentpunkte: 17 % (2029), 14 % (2030), 11 % (2031), bis er ausläuft. Wer den Tausch der alten Öl- oder Gasheizung ohnehin plant, profitiert in den nächsten zwei bis drei Jahren am stärksten."
-  - question: "Welche Voraussetzungen gelten 2026 für die Wärmepumpenförderung?"
-    answer: "Bestandsgebäude (Bauantrag mindestens 5 Jahre alt), förderfähige Wärmepumpe (Mindesteffizienzanforderungen), BzA durch Energieeffizienz-Experten oder zugelassenes Fachunternehmen, Liefer-/Leistungsvertrag mit förderkonformer Bedingung, Antrag bei „Meine KfW\" vor Maßnahmenbeginn, hydraulischer Abgleich Pflicht. Für 2026 unverändert gegenüber 2025."
-  - question: "Welche Lärmgrenzen gelten 2026 für förderfähige Wärmepumpen?"
-    answer: "Ab 1. Januar 2026 gelten verschärfte Schallleistungspegel-Anforderungen für förderfähige Wärmepumpen mit 6–12 kW Leistung: maximal 60 dB(A). Geräte, die diesen Wert überschreiten, sind nicht mehr förderfähig. Praktisch betrifft das ältere Modelle – aktuelle Markt-Wärmepumpen (Vaillant, Viessmann, Wolf, Daikin, Bosch) erfüllen diese Werte in der Regel."
-  - question: "Was ändert sich mit GEG §71 ab dem 1. Juli 2026 in Bremen?"
-    answer: "Ab 01.07.2026 gilt im Land Bremen die 65-%-Erneuerbare-Energien-Pflicht beim Heizungstausch. Wer ab diesem Datum eine Heizung im Bestand erneuert, muss eine Lösung mit mindestens 65 % EE einbauen. Die Wärmepumpe ist die häufigste Erfüllungsoption. Für Wärmepumpen-Pläne ist das ein klarer Pluspunkt – Gas-Neuinstallationen werden komplexer."
-schema:
-  type: "Article"
-  datePublished: "2026-05-02"
-  dateModified: "2026-05-02"
+import Layout from "../layout/Layout.astro";
+import Breadcrumb from "../components/Breadcrumb.astro";
+import HeroSection from "../components/HeroSection.astro";
+import TrustBar from "../components/TrustBar.astro";
+import CTASection from "../components/CTASection.astro";
+import FAQSection from "../components/FAQSection.astro";
+import SectionShell from "../components/SectionShell.astro";
+import NoticeSuccess from "../components/content/NoticeSuccess.astro";
+import CheckList from "../components/content/CheckList.astro";
+import InternalLinkCard from "../components/InternalLinkCard.astro";
+import heroImage from "../images/foerderung-bremen-hero.webp";
+
+import type { PageData } from "../types/page";
+
+const data: PageData = {
+    title: "Wärmepumpe Förderung 2026: Das ändert sich jetzt!",
+    description: "Wärmepumpe Förderung 2026: neue KfW-Boni, GEG-Regeln und Lärmgrenzen – was sich für Eigentümer ändert und wann der Heizungstausch sinnvoll ist.",
+    lastUpdated: "Mai 2026",
+    hero: {
+        headline: "Wärmepumpe Förderung 2026",
+        subtext: "Was sich 2026 ändert: GEG §71 ab Juli, verschärfte Lärmgrenzen ab Januar, voller Klimabonus läuft – die wichtigsten Updates auf einen Blick.",
+        primaryCTA: {
+            label: "Eignung & Förderung prüfen",
+            href: "/check/"
+        },
+        secondaryCTA: {
+            label: "Förderung Bremen",
+            href: "/waermepumpe-foerderung-bremen/"
+        }
+    },
+    trustItems: [
+        {
+            text: "Stand Mai 2026"
+        },
+        {
+            text: "GEG §71 ab Juli"
+        },
+        {
+            text: "Klimabonus voll bis 2028"
+        },
+        {
+            text: "Bremer Kontext"
+        }
+    ],
+    breadcrumb: [
+        {
+            label: "Startseite",
+            href: "/"
+        },
+        {
+            label: "Förderung Bremen",
+            href: "/waermepumpe-foerderung-bremen/"
+        },
+        {
+            label: "Förderung 2026"
+        }
+    ],
+    ctaBlock: {
+        headline: "Wann ist der richtige Zeitpunkt für Ihre Wärmepumpe?",
+        text: "Browser-Check zur Einordnung Ihrer Förderfähigkeit unter den 2026er-Bedingungen – ohne Datenübermittlung.",
+        variant: "highlight",
+        primaryCTA: {
+            label: "Eignung & Förderung prüfen",
+            href: "/check/"
+        },
+        secondaryCTA: {
+            label: "KfW 458 im Detail",
+            href: "/kfw-458-waermepumpe/"
+        }
+    },
+    faqHeading: "FAQ: Wärmepumpe Förderung 2026",
+    faqs: [
+        {
+            question: "Wie hoch ist die Wärmepumpenförderung 2026?",
+            answer: "Über die KfW 458 sind 2026 bis zu 70 % der förderfähigen Kosten möglich (max. 30.000 Euro für die erste Wohneinheit, also bis zu 21.000 Euro Zuschuss). Der Klimageschwindigkeitsbonus von 20 % läuft 2026 in voller Höhe – ab 2029 reduziert er sich um 3 Prozentpunkte pro Jahr."
+        },
+        {
+            question: "Bis wann gibt es den Klimageschwindigkeitsbonus von 20 %?",
+            answer: "Der volle 20%-Klimageschwindigkeitsbonus gilt 2026, 2027 und 2028. Ab 2029 reduziert er sich jährlich um 3 Prozentpunkte: 17 % (2029), 14 % (2030), 11 % (2031), bis er ausläuft. Wer den Tausch der alten Öl- oder Gasheizung ohnehin plant, profitiert in den nächsten zwei bis drei Jahren am stärksten."
+        },
+        {
+            question: "Welche Voraussetzungen gelten 2026 für die Wärmepumpenförderung?",
+            answer: "Bestandsgebäude (Bauantrag mindestens 5 Jahre alt), förderfähige Wärmepumpe (Mindesteffizienzanforderungen), BzA durch Energieeffizienz-Experten oder zugelassenes Fachunternehmen, Liefer-/Leistungsvertrag mit förderkonformer Bedingung, Antrag bei „Meine KfW\" vor Maßnahmenbeginn, hydraulischer Abgleich Pflicht. Für 2026 unverändert gegenüber 2025."
+        },
+        {
+            question: "Welche Lärmgrenzen gelten 2026 für förderfähige Wärmepumpen?",
+            answer: "Ab 1. Januar 2026 gelten verschärfte Schallleistungspegel-Anforderungen für förderfähige Wärmepumpen mit 6–12 kW Leistung: maximal 60 dB(A). Geräte, die diesen Wert überschreiten, sind nicht mehr förderfähig. Praktisch betrifft das ältere Modelle – aktuelle Markt-Wärmepumpen (Vaillant, Viessmann, Wolf, Daikin, Bosch) erfüllen diese Werte in der Regel."
+        },
+        {
+            question: "Was ändert sich mit GEG §71 ab dem 1. Juli 2026 in Bremen?",
+            answer: "Ab 01.07.2026 gilt im Land Bremen die 65-%-Erneuerbare-Energien-Pflicht beim Heizungstausch. Wer ab diesem Datum eine Heizung im Bestand erneuert, muss eine Lösung mit mindestens 65 % EE einbauen. Die Wärmepumpe ist die häufigste Erfüllungsoption. Für Wärmepumpen-Pläne ist das ein klarer Pluspunkt – Gas-Neuinstallationen werden komplexer."
+        }
+    ],
+    schema: {
+        type: "Article",
+        datePublished: "2026-05-02",
+        dateModified: "2026-05-02"
+    }
+};
+
+const canonical = data.canonical ?? Astro.url.href;
+const hero = { ...data.hero, imageSrc: heroImage };
+const dateLine = data.lastUpdated ? `Stand: ${data.lastUpdated}` : null;
+const pageSchema = data.schema
+    ? {
+          ...data.schema,
+          datePublished: data.schema.datePublished ?? data.schema.dateModified,
+          dateModified: data.schema.dateModified ?? data.schema.datePublished,
+      }
+    : undefined;
 ---
 
-import SectionShell from "../../components/SectionShell.astro";
-import NoticeSuccess from "../../components/mdx/NoticeSuccess.astro";
-import CheckList from "../../components/mdx/CheckList.astro";
-import InternalLinkCard from "../../components/InternalLinkCard.astro";
+<Layout
+    title={data.title}
+    description={data.description}
+    canonical={canonical}
+    noindex={data.noindex}
+    pageSchema={pageSchema}
+>
+    {data.breadcrumb?.length > 0 && <Breadcrumb items={data.breadcrumb} />}
+    <HeroSection {...hero} />
+    {data.trustItems?.length > 0 && <TrustBar items={data.trustItems} />}
+    {dateLine && (
+        <div class="bg-background border-b border-border">
+            <p class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-3 text-xs text-text-muted">
+                {dateLine} · Redaktion bremer-waermepumpe.de · Alle Angaben ohne Gewähr
+            </p>
+        </div>
+    )}
 
 {/* Intro */}
 <SectionShell>
@@ -223,3 +306,10 @@ import InternalLinkCard from "../../components/InternalLinkCard.astro";
     />
   </div>
 </SectionShell>
+
+    {data.ctaBlock && <CTASection {...data.ctaBlock} />}
+    {data.faqs?.length > 0 && (
+        <FAQSection heading={data.faqHeading} items={data.faqs} />
+    )}
+</Layout>
+

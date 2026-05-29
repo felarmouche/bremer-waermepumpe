@@ -19,9 +19,25 @@ interface Props {
 const { title, description, canonical, ogImage, noindex, pageSchema } =
     Astro.props;
 const siteUrl = "https://bremer-waermepumpe.de";
+const websiteId = `${siteUrl}/#website`;
+const organizationId = `${siteUrl}/#organization`;
+const personId = `${siteUrl}/#ferris-el-armouche`;
 const resolvedOgImage = ogImage
     ? `${siteUrl}${ogImage}`
     : `${siteUrl}/og-image.jpg`;
+const pageUrl = canonical ?? siteUrl;
+const publisherEntity = {
+    "@type": "Organization",
+    "@id": organizationId,
+    name: "Bremer Wärmepumpe",
+    url: siteUrl,
+};
+const authorEntity = {
+    "@type": "Person",
+    "@id": personId,
+    name: "Ferris El-Armouche",
+    url: `${siteUrl}/kontakt/`,
+};
 
 const articleJsonLd =
     pageSchema?.type === "Article" || pageSchema?.type === "HowTo"
@@ -31,23 +47,15 @@ const articleJsonLd =
               headline: title,
               description,
               image: resolvedOgImage,
-              author: {
-                  "@type": "Organization",
-                  name: "Bremer Wärmepumpe",
-                  url: siteUrl,
-              },
-              publisher: {
-                  "@type": "Organization",
-                  name: "Bremer Wärmepumpe",
-                  url: siteUrl,
-              },
+              author: authorEntity,
+              publisher: publisherEntity,
               ...(pageSchema.datePublished && {
                   datePublished: pageSchema.datePublished,
               }),
               ...(pageSchema.dateModified && {
                   dateModified: pageSchema.dateModified,
               }),
-              ...(canonical && { mainEntityOfPage: canonical }),
+              mainEntityOfPage: pageUrl,
               inLanguage: "de-DE",
           }
         : null;
@@ -80,15 +88,20 @@ const howToJsonLd =
 
 <title>{title}</title>
 <meta name="description" content={description} />
-<link rel="canonical" href={canonical} />
+{canonical && <link rel="canonical" href={canonical} />}
 
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
 <meta property="og:type" content="website" />
-<meta property="og:url" content={canonical} />
+<meta property="og:url" content={pageUrl} />
 <meta property="og:image" content={resolvedOgImage} />
 <meta property="og:locale" content="de_DE" />
 <meta property="og:site_name" content="Bremer Wärmepumpe" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={resolvedOgImage} />
 
 <script
     is:inline
@@ -96,8 +109,12 @@ const howToJsonLd =
     set:html={JSON.stringify({
         "@context": "https://schema.org",
         "@type": "WebSite",
+        "@id": websiteId,
         name: "Bremer Wärmepumpe",
         url: siteUrl,
+        publisher: {
+            "@id": organizationId,
+        },
         inLanguage: "de-DE",
     })}
 />
@@ -107,27 +124,145 @@ const howToJsonLd =
     type="application/ld+json"
     set:html={JSON.stringify({
         "@context": "https://schema.org",
-        "@type": "WebSite",
+        "@type": "Organization",
+        "@id": organizationId,
         name: "Bremer Wärmepumpe",
         description:
             "Private Empfehlungsseite für einen lokalen SHK-Betrieb in Bremen und Umland.",
         url: siteUrl,
-        publisher: {
-            "@type": "Person",
-            name: "Ferris El-Armouche",
-            address: {
-                "@type": "PostalAddress",
-                streetAddress: "Spittaler Straße 1c",
-                postalCode: "28359",
-                addressLocality: "Bremen",
-                addressCountry: "DE",
-            },
+        founder: {
+            "@id": personId,
+        },
+        contactPoint: {
+            "@type": "ContactPoint",
             telephone: "+49 176 34690188",
             email: "bremerwaermepumpen@web.de",
+            contactType: "customer support",
+            areaServed: "DE-HB",
+            availableLanguage: ["de"],
         },
-        areaServed: {
-            "@type": "AdministrativeArea",
-            name: "Bremen und Umland",
+        areaServed: [
+            {
+                "@type": "AdministrativeArea",
+                name: "Bremen",
+            },
+            {
+                "@type": "AdministrativeArea",
+                name: "Bremerhaven und Umland",
+            },
+        ],
+        inLanguage: "de-DE",
+    })}
+/>
+
+<script
+    is:inline
+    type="application/ld+json"
+    set:html={JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "@id": personId,
+        name: "Ferris El-Armouche",
+        url: `${siteUrl}/kontakt/`,
+        address: {
+            "@type": "PostalAddress",
+            streetAddress: "Spittaler Straße 1c",
+            postalCode: "28359",
+            addressLocality: "Bremen",
+            addressCountry: "DE",
+        },
+        telephone: "+49 176 34690188",
+        email: "bremerwaermepumpen@web.de",
+        affiliation: {
+            "@id": organizationId,
+        },
+    })}
+/>
+
+<script
+    is:inline
+    type="application/ld+json"
+    set:html={JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        "@id": `${siteUrl}/#fritts-group`,
+        name: "Fritts Group",
+        url: "https://fritts.solar",
+        address: {
+            "@type": "PostalAddress",
+            streetAddress: "Osterdeich 59A",
+            postalCode: "28203",
+            addressLocality: "Bremen",
+            addressCountry: "DE",
+        },
+        telephone: "+49 421 37703556",
+        email: "moin@fritts.solar",
+        areaServed: [
+            {
+                "@type": "AdministrativeArea",
+                name: "Bremen",
+            },
+            {
+                "@type": "AdministrativeArea",
+                name: "Bremerhaven und Umland",
+            },
+            {
+                "@type": "PostalCodeRangeSpecification",
+                postalCodeBegin: "27000",
+                postalCodeEnd: "28999",
+            },
+        ],
+    })}
+/>
+
+<script
+    is:inline
+    type="application/ld+json"
+    set:html={JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "@id": `${siteUrl}/#waermepumpen-service`,
+        serviceType: "Wärmepumpen-Beratung und Installation",
+        name: "Wärmepumpe Bremen – Eignungscheck, Planung, Förderung",
+        description:
+            "Eignungscheck, Kosteneinordnung und KfW-458-Förderprüfung für Wärmepumpen in Bremen und Umland, mit Vermittlung an einen lokalen SHK-Fachpartner.",
+        provider: {
+            "@id": `${siteUrl}/#fritts-group`,
+        },
+        areaServed: [
+            {
+                "@type": "AdministrativeArea",
+                name: "Bremen",
+            },
+            {
+                "@type": "AdministrativeArea",
+                name: "Bremerhaven und Umland",
+            },
+            {
+                "@type": "PostalCodeRangeSpecification",
+                postalCodeBegin: "27000",
+                postalCodeEnd: "28999",
+            },
+        ],
+        inLanguage: "de-DE",
+    })}
+/>
+
+<script
+    is:inline
+    type="application/ld+json"
+    set:html={JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "@id": `${pageUrl}#webpage`,
+        url: pageUrl,
+        name: title,
+        description,
+        isPartOf: {
+            "@id": websiteId,
+        },
+        publisher: {
+            "@id": organizationId,
         },
         inLanguage: "de-DE",
     })}

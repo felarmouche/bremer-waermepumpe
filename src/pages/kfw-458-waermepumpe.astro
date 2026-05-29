@@ -1,0 +1,368 @@
+---
+import Layout from "../layout/Layout.astro";
+import Breadcrumb from "../components/Breadcrumb.astro";
+import HeroSection from "../components/HeroSection.astro";
+import TrustBar from "../components/TrustBar.astro";
+import CTASection from "../components/CTASection.astro";
+import FAQSection from "../components/FAQSection.astro";
+import SectionShell from "../components/SectionShell.astro";
+import NoticeSuccess from "../components/content/NoticeSuccess.astro";
+import CheckList from "../components/content/CheckList.astro";
+import NumberedSteps from "../components/content/NumberedSteps.astro";
+import InternalLinkCard from "../components/InternalLinkCard.astro";
+import heroImage from "../images/foerderung-bremen-hero.webp";
+
+import type { PageData } from "../types/page";
+
+const data: PageData = {
+    title: "KfW 458 förderfähige Kosten 2026: 30.000 / 15.000 / 8.000 €",
+    description: "KfW 458 förderfähige Kosten 2026: 30.000 € erste Wohneinheit, 15.000 € zweite bis sechste, 8.000 € ab der siebten WE.",
+    lastUpdated: "29. Mai 2026",
+    hero: {
+        headline: "KfW 458 förderfähige Kosten",
+        subtext: "30.000 Euro für die erste Wohneinheit, 15.000 Euro für die zweite bis sechste, 8.000 Euro ab der siebten: so wird die Wärmepumpen-Förderung 2026 berechnet.",
+        primaryCTA: {
+            label: "KfW-Boni für Ihr Haus prüfen",
+            href: "/check/"
+        },
+        secondaryCTA: {
+            label: "Förderung Bremen",
+            href: "/waermepumpe-foerderung-bremen/"
+        }
+    },
+    trustItems: [
+        {
+            text: "KfW 458 Wohneinheiten erklärt"
+        },
+        {
+            text: "30.000 / 15.000 / 8.000 €"
+        },
+        {
+            text: "WEG & Mehrfamilienhaus"
+        },
+        {
+            text: "Stand 29. Mai 2026"
+        }
+    ],
+    breadcrumb: [
+        {
+            label: "Startseite",
+            href: "/"
+        },
+        {
+            label: "Förderung Bremen",
+            href: "/waermepumpe-foerderung-bremen/"
+        },
+        {
+            label: "KfW 458"
+        }
+    ],
+    ctaBlock: {
+        headline: "Welche KfW-458-Boni greifen für Ihr Bremer Haus?",
+        text: "Der Check ordnet Heizungsalter, Eigentum, Wohneinheiten und mögliche Boni ein – als erste Orientierung vor Angebot und Antrag.",
+        variant: "highlight",
+        primaryCTA: {
+            label: "KfW-Boni für Ihr Haus prüfen",
+            href: "/check/"
+        },
+        secondaryCTA: {
+            label: "Was kostet das nach Förderung?",
+            href: "/waermepumpe-kosten-bremen/"
+        }
+    },
+    faqHeading: "FAQ: KfW 458 förderfähige Kosten",
+    faqs: [
+        {
+            question: "Was sind die förderfähigen Kosten bei KfW 458?",
+            answer: "Die KfW berücksichtigt bei der Heizungsförderung 458 bis zu 30.000 Euro für die erste Wohneinheit, jeweils 15.000 Euro für die zweite bis sechste Wohneinheit und jeweils 8.000 Euro ab der siebten Wohneinheit. Auf diese förderfähigen Kosten wird der individuelle Fördersatz angewendet, maximal 70 Prozent."
+        },
+        {
+            question: "Zählt die zweite Wohneinheit mit 30.000 oder 15.000 Euro?",
+            answer: "Die erste Wohneinheit zählt mit 30.000 Euro. Die zweite bis sechste Wohneinheit zählt jeweils mit 15.000 Euro. Ein Zweifamilienhaus kommt deshalb auf 45.000 Euro förderfähige Kosten, ein Dreifamilienhaus auf 60.000 Euro."
+        },
+        {
+            question: "Wie funktioniert KfW 458 bei einer WEG?",
+            answer: "Wohnungseigentümergemeinschaften können KfW 458 nutzen, wenn der Heizungstausch Gemeinschaftseigentum betrifft. Der Förderhöchstbetrag wird nach der Zahl der Wohneinheiten im Gebäude berechnet. Für WEGs sind saubere Beschlüsse, Vollmachten und ein abgestimmter Antrag besonders wichtig."
+        },
+        {
+            question: "Was bringt der Effizienzbonus bei natürlichen Kältemitteln?",
+            answer: "Für Wärmepumpen mit natürlichem Kältemittel oder mit Erdreich, Wasser oder Abwasser als Wärmequelle kann ein Effizienzbonus von 5 Prozentpunkten greifen. Zusammen mit Basisförderung, Klimageschwindigkeitsbonus und Einkommensbonus bleibt die Gesamtförderung trotzdem bei maximal 70 Prozent gedeckelt."
+        },
+        {
+            question: "Muss der KfW-458-Antrag vor dem Auftrag gestellt werden?",
+            answer: "Der Antrag muss vor Beginn der Maßnahme gestellt werden. Dafür braucht man in der Regel schon einen Liefer- oder Leistungsvertrag mit förderkonformer Bedingung sowie die Bestätigung zum Antrag (BzA). Erst nach Förderzusage sollte die Umsetzung starten."
+        }
+    ],
+    schema: {
+        type: "HowTo",
+        datePublished: "2026-05-02",
+        dateModified: "2026-05-29",
+        howToName: "KfW 458 förderfähige Kosten für Wärmepumpe berechnen",
+        howToDescription: "Schritt-für-Schritt-Einordnung der KfW-458-förderfähigen Kosten nach Wohneinheiten und Boni für Wärmepumpen im Bestand.",
+        howToSteps: [
+            {
+                name: "Wohneinheiten zählen",
+                text: "Zuerst wird die Anzahl der Wohneinheiten im Gebäude bestimmt. Die erste Wohneinheit zählt mit 30.000 Euro, die zweite bis sechste jeweils mit 15.000 Euro und jede weitere mit 8.000 Euro förderfähigen Kosten."
+            },
+            {
+                name: "Förderfähige Kosten im Angebot trennen",
+                text: "Gerät, Einbau, hydraulischer Abgleich, Speicher, Fachplanung und technisch notwendige Umfeldmaßnahmen müssen im Angebot nachvollziehbar dem Heizungstausch zugeordnet sein."
+            },
+            {
+                name: "Boni prüfen",
+                text: "Basisförderung, Klimageschwindigkeitsbonus, Einkommensbonus und Effizienzbonus werden geprüft. Die Summe ist auf maximal 70 Prozent begrenzt."
+            },
+            {
+                name: "BzA und Vertrag vorbereiten",
+                text: "Ein Energieeffizienz-Experte oder zugelassenes Fachunternehmen stellt die Bestätigung zum Antrag aus. Der Liefer- oder Leistungsvertrag muss eine förderkonforme Bedingung enthalten."
+            },
+            {
+                name: "Antrag stellen und Zusage abwarten",
+                text: "Der Antrag wird im Portal Meine KfW gestellt. Erst nach Förderzusage sollte die Maßnahme umgesetzt werden."
+            }
+        ]
+    }
+};
+
+const canonical = data.canonical ?? Astro.url.href;
+const hero = { ...data.hero, imageSrc: heroImage };
+const dateLine = data.lastUpdated ? `Stand: ${data.lastUpdated}` : null;
+const pageSchema = data.schema
+    ? {
+          ...data.schema,
+          datePublished: data.schema.datePublished ?? data.schema.dateModified,
+          dateModified: data.schema.dateModified ?? data.schema.datePublished,
+      }
+    : undefined;
+---
+
+<Layout
+    title={data.title}
+    description={data.description}
+    canonical={canonical}
+    noindex={data.noindex}
+    pageSchema={pageSchema}
+>
+    {data.breadcrumb?.length > 0 && <Breadcrumb items={data.breadcrumb} />}
+    <HeroSection {...hero} />
+    {data.trustItems?.length > 0 && <TrustBar items={data.trustItems} />}
+    {dateLine && (
+        <div class="bg-background border-b border-border">
+            <p class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-3 text-xs text-text-muted">
+                {dateLine} · Redaktion bremer-waermepumpe.de · Alle Angaben ohne Gewähr
+            </p>
+        </div>
+    )}
+
+<SectionShell>
+  <article class="max-w-3xl space-y-5 text-text-muted leading-relaxed">
+    <div class="bg-highlight border border-border rounded p-5">
+      <p class="font-bold text-text mb-3">
+        KfW 458: förderfähige Kosten nach Wohneinheiten
+      </p>
+      <div class="surface-card overflow-hidden divide-y divide-border">
+        <div class="grid grid-cols-2 px-4 py-3 text-sm">
+          <span class="text-text-muted">1. Wohneinheit</span>
+          <span class="font-semibold text-text text-right">30.000 €</span>
+        </div>
+        <div class="grid grid-cols-2 px-4 py-3 text-sm">
+          <span class="text-text-muted">2. bis 6. Wohneinheit</span>
+          <span class="font-semibold text-text text-right">je 15.000 €</span>
+        </div>
+        <div class="grid grid-cols-2 px-4 py-3 text-sm">
+          <span class="text-text-muted">ab 7. Wohneinheit</span>
+          <span class="font-semibold text-text text-right">je 8.000 €</span>
+        </div>
+        <div class="grid grid-cols-2 px-4 py-3 text-sm bg-background">
+          <span class="font-semibold text-text">Maximaler Zuschuss</span>
+          <span class="font-bold text-primary text-right">70 %</span>
+        </div>
+      </div>
+    </div>
+    <p>
+      Die Suchanfrage „KfW 458 förderfähige Kosten 30.000 15.000 8.000
+      Wohneinheiten" ist deshalb so häufig, weil die Förderung nicht pauschal nach
+      Angebotssumme berechnet wird. Entscheidend ist zuerst der
+      <strong class="text-text">Förderhöchstbetrag nach Wohneinheiten</strong>.
+      Erst danach wird der persönliche Fördersatz angewendet.
+    </p>
+    <NoticeSuccess>
+      <p>
+        <strong>Bremer Praxis:</strong> Für viele Einfamilienhäuser, Reihenhäuser und
+        Altbremer Häuser ist die erste Wohneinheit der zentrale Fall. Bei
+        Zwei- oder Drei-Parteien-Häusern in Bremen wird die Rechnung aber schnell
+        anders, weil die zweite und dritte Wohneinheit nur noch mit je 15.000 Euro
+        einfließen.
+      </p>
+    </NoticeSuccess>
+  </article>
+</SectionShell>
+
+<SectionShell variant="alt">
+  <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
+    Beispiele: Einfamilienhaus, Zweifamilienhaus, WEG
+  </h2>
+  <p class="text-text-muted max-w-3xl mb-6">
+    Die folgenden Beispiele zeigen, welcher Betrag überhaupt in die KfW-458-Rechnung
+    einfließen kann. Der tatsächliche Zuschuss hängt anschließend von Basisförderung
+    und Boni ab.
+  </p>
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <div class="surface-card p-5">
+      <h3 class="font-semibold text-text">Einfamilienhaus</h3>
+      <p class="text-2xl font-bold text-primary my-2">30.000 €</p>
+      <p class="text-text-muted text-sm">
+        Bei 70 % Förderung sind maximal 21.000 € Zuschuss möglich.
+      </p>
+    </div>
+    <div class="surface-card p-5">
+      <h3 class="font-semibold text-text">Zweifamilienhaus</h3>
+      <p class="text-2xl font-bold text-primary my-2">45.000 €</p>
+      <p class="text-text-muted text-sm">
+        30.000 € für die erste WE plus 15.000 € für die zweite WE.
+      </p>
+    </div>
+    <div class="surface-card p-5">
+      <h3 class="font-semibold text-text">10 Wohneinheiten</h3>
+      <p class="text-2xl font-bold text-primary my-2">137.000 €</p>
+      <p class="text-text-muted text-sm">
+        30.000 € + 5 × 15.000 € + 4 × 8.000 €.
+      </p>
+    </div>
+  </div>
+
+  <div class="bg-highlight border border-border rounded p-5 mt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+    <div>
+      <p class="font-bold text-text">KfW-Boni für Ihr Bremer Haus prüfen</p>
+      <p class="text-text-muted text-sm mt-1">
+        Eigentum, Heizungsalter, Nutzung und Wohneinheiten entscheiden über den Förderhebel.
+      </p>
+    </div>
+    <a href="/check/" class="btn-accent shrink-0 text-center">KfW-Boni prüfen</a>
+  </div>
+</SectionShell>
+
+<SectionShell>
+  <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
+    Welche Boni können auf die förderfähigen Kosten angewendet werden?
+  </h2>
+  <p class="text-text-muted max-w-3xl mb-6">
+    Die KfW 458 besteht aus einer Basisförderung und möglichen Bonusbausteinen.
+    Die Summe kann rechnerisch höher sein, wird aber bei 70 % gedeckelt.
+  </p>
+  <CheckList
+    items={[
+      { lead: "30 % Basisförderung:", text: "Grundlage für förderfähige Wärmepumpen im bestehenden Wohngebäude." },
+      { lead: "+20 % Klimageschwindigkeitsbonus:", text: "Relevant beim Austausch alter Öl-, Kohle-, Gasetagen- oder Nachtspeicherheizungen sowie alter Gas-/Biomasseheizungen nach den KfW-Vorgaben." },
+      { lead: "+30 % Einkommensbonus:", text: "Für selbstnutzende Eigentümer mit zu versteuerndem Haushaltsjahreseinkommen bis 40.000 Euro." },
+      { lead: "+5 % Effizienzbonus:", text: "Für Wärmepumpen mit natürlichem Kältemittel oder Wärmequelle Erdreich, Wasser oder Abwasser." },
+      { lead: "Maximal 70 %:", text: "Auch wenn mehrere Boni zusammenkommen, bleibt die Gesamtförderung auf 70 % begrenzt." },
+    ]}
+  />
+</SectionShell>
+
+<SectionShell variant="alt">
+  <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
+    Was zählt typischerweise zu den förderfähigen Kosten?
+  </h2>
+  <p class="text-text-muted max-w-3xl mb-6">
+    Förderfähig sind nicht nur Gerät und Montage. Entscheidend ist, dass die
+    Kosten technisch mit dem Heizungstausch zusammenhängen und im Angebot sauber
+    nachvollziehbar sind.
+  </p>
+  <CheckList
+    items={[
+      "Wärmepumpe, Innen- und Außeneinheit, Regelung und Inbetriebnahme",
+      "Hydraulischer Abgleich, Speicher, Pumpen und Heizungsverteilung",
+      "Fachplanung, Energieeffizienz-Experte, BzA und BnD",
+      "Akustische Fachplanung und Schallschutzmaßnahmen in Reihenhauslagen",
+      "Fundament, Wanddurchbrüche, Leitungswege und wiederherstellende Arbeiten im direkten Zusammenhang",
+      "Einzelne Heizkörperanpassungen, wenn sie technisch für die Wärmepumpe erforderlich sind",
+    ]}
+  />
+</SectionShell>
+
+<SectionShell>
+  <h2 class="text-2xl md:text-3xl font-bold text-text mb-6">
+    KfW 458 Antrag: Reihenfolge ohne Förderverlust
+  </h2>
+  <NumberedSteps
+    items={[
+      {
+        title: "Wohneinheiten und Eigentümerstatus klären",
+        text: "Bei EFH, ZFH, Mehrfamilienhaus und WEG gelten unterschiedliche organisatorische Anforderungen. Die förderfähigen Kosten werden nach Wohneinheiten ermittelt.",
+      },
+      {
+        title: "Fachbetrieb oder Energieeffizienz-Experten einbinden",
+        text: "Für den Antrag wird eine Bestätigung zum Antrag benötigt. Der Fachbetrieb muss die förderfähigen Kosten nachvollziehbar aufbereiten.",
+      },
+      {
+        title: "Vertrag mit Förderbedingung schließen",
+        text: "Der Liefer- oder Leistungsvertrag muss förderkonform bedingt sein. Ohne diese Bedingung kann der Förderanspruch gefährdet sein.",
+      },
+      {
+        title: "Antrag bei Meine KfW stellen",
+        text: "Mit BzA-ID, Vertragsdaten und Eigentümerdaten wird der Zuschussantrag eingereicht. Die Zusage abwarten.",
+      },
+      {
+        title: "Erst danach umsetzen und Auszahlung vorbereiten",
+        text: "Nach Einbau werden Bestätigung nach Durchführung und Rechnungen hochgeladen. Dann prüft die KfW die Auszahlung.",
+      },
+    ]}
+  />
+</SectionShell>
+
+<SectionShell variant="alt">
+  <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
+    Quellen und redaktioneller Stand
+  </h2>
+  <div class="surface-card p-5 max-w-3xl text-sm text-text-muted leading-relaxed">
+    <p class="font-semibold text-text mb-3">Stand: 29. Mai 2026</p>
+    <ul class="space-y-2">
+      <li>
+        KfW:
+        <a href="https://www.kfw.de/inlandsfoerderung/Privatpersonen/Bestehende-Immobilie/F%C3%B6rderprodukte/Heizungsf%C3%B6rderung-f%C3%BCr-Privatpersonen-Wohngeb%C3%A4ude-%28458%29/" class="text-primary underline" target="_blank" rel="noopener">
+          Heizungsförderung für Privatpersonen – Wohngebäude (458)
+        </a>
+      </li>
+      <li>
+        KfW:
+        <a href="https://www.kfw.de/partner/KfW-Partnerportal/Service/Dokumente-zum-Produkt/458/index.jsp" class="text-primary underline" target="_blank" rel="noopener">
+          Dokumente zum Produkt 458
+        </a>
+      </li>
+      <li>
+        Diese Seite ersetzt keine verbindliche Förderberatung durch KfW, Energieeffizienz-Experten oder Fachunternehmen.
+      </li>
+    </ul>
+  </div>
+</SectionShell>
+
+<SectionShell>
+  <h2 class="text-2xl md:text-3xl font-bold text-text mb-6">Weiterlesen</h2>
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-5xl">
+    <InternalLinkCard
+      href="/waermepumpe-foerderung-bremen/"
+      title="Wärmepumpe Förderung Bremen"
+      description="KfW 458, BAFA, BAB-Status und lokale Förderwege für Bremer Eigentümer."
+    />
+    <InternalLinkCard
+      href="/bafa-foerderung-waermepumpe/"
+      title="BAFA vs. KfW"
+      description="Warum die Wärmepumpe selbst über KfW läuft und BAFA nur ergänzende Maßnahmen fördert."
+    />
+    <InternalLinkCard
+      href="/waermepumpe-kosten-bremen/"
+      title="Kosten nach Förderung"
+      description="Eigenanteil für Bremer Häuser nach Förderung und lokalen Kostenfaktoren."
+    />
+  </div>
+</SectionShell>
+
+    {data.ctaBlock && <CTASection {...data.ctaBlock} />}
+    {data.faqs?.length > 0 && (
+        <FAQSection heading={data.faqHeading} items={data.faqs} />
+    )}
+</Layout>
+

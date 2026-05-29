@@ -94,6 +94,30 @@ export const navClusters: NavCluster[] = [
         label: "Förderung 2026",
         description: "GEG §71, Lärmgrenzen, Klimabonus-Staffelung.",
       },
+      {
+        href: "/bab-heizungstausch-bremen/",
+        label: "BAB Heizungstausch",
+        description: "Status des Bremer Programms und Förder-Alternativen.",
+      },
+    ],
+  },
+  {
+    id: "vergleich-praxis",
+    label: "Vergleich & Praxis",
+    description: "Entscheidungs- und Praxisfragen rund um Wärmepumpen in Bremen.",
+    inHeader: false,
+    inFooter: true,
+    links: [
+      {
+        href: "/waermepumpe-oder-gasheizung-bremen/",
+        label: "Wärmepumpe oder Gasheizung",
+        description: "Kosten, Förderung und GEG-Pflicht im Vergleich.",
+      },
+      {
+        href: "/waermepumpe-abstand-nachbar-bremen/",
+        label: "Abstand zum Nachbarn",
+        description: "BremLBO, Grenzabstand, TA Lärm und Schallschutz.",
+      },
     ],
   },
   {

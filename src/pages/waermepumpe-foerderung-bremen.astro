@@ -1,50 +1,130 @@
 ---
-title: "Wärmepumpen-Förderung Bremen 2026: Bis zu 70% Zuschuss"
-description: "So viel Förderung erhalten Sie in Bremen! ✓ KfW 458, BAB-Mittel & BAFA clever kombinieren. Berechnen Sie Ihren Eigenanteil für 2026."
-lastUpdated: "Mai 2026"
-hero:
-  headline: "Wärmepumpe Förderung Bremen"
-  subtext: "KfW-Heizungsförderung 458, BAFA-Optimierung, BAB-Programme – strukturiert erklärt für Bremer Hauseigentümer. Stand Mai 2026."
-  imageSrc: "../../images/foerderung-bremen-hero.webp"
-  primaryCTA: { label: "Eignung & Förderung prüfen", href: "/check/" }
-  secondaryCTA: { label: "Was kostet die Wärmepumpe?", href: "/waermepumpe-kosten-bremen/" }
-trustItems:
-  - { text: "Bis zu 70 % KfW-Förderung" }
-  - { text: "Stand Mai 2026" }
-  - { text: "Antrag vor Auftragsvergabe" }
-  - { text: "Bremen-spezifischer Kontext" }
-breadcrumb:
-  - { label: "Startseite", href: "/" }
-  - { label: "Förderung Bremen" }
-ctaBlock:
-  headline: "Welche Förderung passt zu Ihrer Bremer Immobilie?"
-  text: "Der automatische Check ordnet Basisförderung, Klimabonus, Einkommensbonus und Effizienzbonus für Ihre Situation ein – in wenigen Minuten und ohne Datenübermittlung."
-  variant: "highlight"
-  primaryCTA: { label: "Eignung & Förderung prüfen", href: "/check/" }
-  secondaryCTA: { label: "Was kostet das nach Förderung?", href: "/waermepumpe-kosten-bremen/" }
-faqHeading: "FAQ: Wärmepumpe Förderung Bremen"
-faqs:
-  - question: "Wie viel Förderung bekomme ich 2026 für eine Wärmepumpe in Bremen?"
-    answer: "Die KfW-Heizungsförderung 458 deckt bis zu 70 % der förderfähigen Kosten ab: 30 % Basisförderung, plus bis zu 20 % Klimageschwindigkeitsbonus beim Tausch alter Öl-, Kohle-, Gasetagen- oder Nachtspeicherheizungen, plus 30 % Einkommensbonus bei selbst genutzten Immobilien mit zu versteuerndem Haushaltsjahreseinkommen bis 40.000 Euro, plus 5 % Effizienzbonus für besonders effiziente Systeme. Die maximale Summe ist auf 70 % gedeckelt."
-  - question: "Gibt es vom Land Bremen oder der BAB eigene Zuschüsse für den Heizungstausch?"
-    answer: "Stand Mai 2026 ist das BAB-Förderprogramm „Heizungstausch\" für neue Anträge nicht offen. Nach wie vor stehen aber BAB-Modernisierungskredite und das REN-Programm zur Verfügung, die mit der KfW-Förderung kombinierbar sein können. Eine Doppelförderung ist nicht zulässig, eine Ergänzung im Rahmen der Höchstgrenzen aber teilweise möglich."
-  - question: "Wer beantragt die KfW 458 – ich oder mein Heizungsbauer?"
-    answer: "Die KfW 458 wird vom Eigentümer selbst über das Portal „Meine KfW\" beantragt. Voraussetzung ist eine Bestätigung zum Antrag (BzA) durch einen Energieeffizienz-Experten oder ein zugelassenes Fachunternehmen. Der Liefer- oder Leistungsvertrag mit dem Heizungsbauer muss eine sogenannte aufschiebende oder auflösende Bedingung enthalten – das heißt: er gilt nur, wenn die Förderzusage erteilt wird."
-  - question: "Funktioniert die Förderung auch im Bremer Altbau?"
-    answer: "Ja. Voraussetzung ist, dass es sich um ein bestehendes Wohngebäude handelt und Bauantrag oder Bauanzeige mindestens fünf Jahre zurückliegen. Damit kommen Altbremer Häuser, Reihenhäuser im Viertel, Neustadt, Schwachhausen oder in Bremerhaven grundsätzlich in Frage – sofern die technischen Anforderungen (förderfähige Wärmepumpe, hydraulischer Abgleich) erfüllt werden."
-  - question: "Welche Reihenfolge ist bei der Antragstellung wichtig?"
-    answer: "Erst die BzA durch Energieeffizienz-Experten oder Fachbetrieb erstellen lassen, dann den Liefervertrag mit förderkonformer Bedingung schließen, dann den Antrag bei „Meine KfW\" stellen, dann die Förderzusage abwarten – und erst danach mit der Umsetzung beginnen. Wer vorher startet, verliert den Förderanspruch."
-schema:
-  type: "Article"
-  datePublished: "2026-05-02"
-  dateModified: "2026-05-02"
+import Layout from "../layout/Layout.astro";
+import Breadcrumb from "../components/Breadcrumb.astro";
+import HeroSection from "../components/HeroSection.astro";
+import TrustBar from "../components/TrustBar.astro";
+import CTASection from "../components/CTASection.astro";
+import FAQSection from "../components/FAQSection.astro";
+import SectionShell from "../components/SectionShell.astro";
+import NoticeSuccess from "../components/content/NoticeSuccess.astro";
+import CheckList from "../components/content/CheckList.astro";
+import NumberedSteps from "../components/content/NumberedSteps.astro";
+import InternalLinkCard from "../components/InternalLinkCard.astro";
+import heroImage from "../images/foerderung-bremen-hero.webp";
+
+import type { PageData } from "../types/page";
+
+const data: PageData = {
+    title: "Wärmepumpe Förderung Bremen 2026: KfW, BAFA, BAB",
+    description: "Wärmepumpe Förderung Bremen 2026: KfW 458, BAFA-Optimierung, BAB-Status und Eigenanteil für Bremer Häuser prüfen.",
+    lastUpdated: "Mai 2026",
+    hero: {
+        headline: "Wärmepumpe Förderung Bremen",
+        subtext: "KfW-Heizungsförderung 458, BAFA-Optimierung, BAB-Programme – strukturiert erklärt für Bremer Hauseigentümer. Stand Mai 2026.",
+        primaryCTA: {
+            label: "Eignung & Förderung prüfen",
+            href: "/check/"
+        },
+        secondaryCTA: {
+            label: "Was kostet die Wärmepumpe?",
+            href: "/waermepumpe-kosten-bremen/"
+        }
+    },
+    trustItems: [
+        {
+            text: "Bis zu 70 % KfW-Förderung"
+        },
+        {
+            text: "Stand Mai 2026"
+        },
+        {
+            text: "Antrag vor Auftragsvergabe"
+        },
+        {
+            text: "Bremer Fachpartner statt Leadverkauf"
+        }
+    ],
+    breadcrumb: [
+        {
+            label: "Startseite",
+            href: "/"
+        },
+        {
+            label: "Förderung Bremen"
+        }
+    ],
+    ctaBlock: {
+        headline: "Welche Förderung passt zu Ihrer Bremer Immobilie?",
+        text: "Der automatische Check ordnet KfW 458, BAFA-Optimierung, BAB-Status und Bremer Fachpartner-Eignung ein – in wenigen Minuten und ohne Datenübermittlung.",
+        variant: "highlight",
+        primaryCTA: {
+            label: "Eignung & Förderung prüfen",
+            href: "/check/"
+        },
+        secondaryCTA: {
+            label: "Was kostet das nach Förderung?",
+            href: "/waermepumpe-kosten-bremen/"
+        }
+    },
+    faqHeading: "FAQ: Wärmepumpe Förderung Bremen",
+    faqs: [
+        {
+            question: "Wie viel Förderung bekomme ich 2026 für eine Wärmepumpe in Bremen?",
+            answer: "Die KfW-Heizungsförderung 458 deckt bis zu 70 % der förderfähigen Kosten ab: 30 % Basisförderung, plus bis zu 20 % Klimageschwindigkeitsbonus beim Tausch alter Öl-, Kohle-, Gasetagen- oder Nachtspeicherheizungen, plus 30 % Einkommensbonus bei selbst genutzten Immobilien mit zu versteuerndem Haushaltsjahreseinkommen bis 40.000 Euro, plus 5 % Effizienzbonus für besonders effiziente Systeme. Die maximale Summe ist auf 70 % gedeckelt."
+        },
+        {
+            question: "Gibt es vom Land Bremen oder der BAB eigene Zuschüsse für den Heizungstausch?",
+            answer: "Stand Mai 2026 ist das BAB-Förderprogramm „Heizungstausch\" für neue Anträge nicht offen. Nach wie vor stehen aber BAB-Modernisierungskredite und das REN-Programm zur Verfügung, die mit der KfW-Förderung kombinierbar sein können. Eine Doppelförderung ist nicht zulässig, eine Ergänzung im Rahmen der Höchstgrenzen aber teilweise möglich."
+        },
+        {
+            question: "Wer beantragt die KfW 458 – ich oder mein Heizungsbauer?",
+            answer: "Die KfW 458 wird vom Eigentümer selbst über das Portal „Meine KfW\" beantragt. Voraussetzung ist eine Bestätigung zum Antrag (BzA) durch einen Energieeffizienz-Experten oder ein zugelassenes Fachunternehmen. Der Liefer- oder Leistungsvertrag mit dem Heizungsbauer muss eine sogenannte aufschiebende oder auflösende Bedingung enthalten – das heißt: er gilt nur, wenn die Förderzusage erteilt wird."
+        },
+        {
+            question: "Funktioniert die Förderung auch im Bremer Altbau?",
+            answer: "Ja. Voraussetzung ist, dass es sich um ein bestehendes Wohngebäude handelt und Bauantrag oder Bauanzeige mindestens fünf Jahre zurückliegen. Damit kommen Altbremer Häuser, Reihenhäuser im Viertel, Neustadt, Schwachhausen oder in Bremerhaven grundsätzlich in Frage – sofern die technischen Anforderungen (förderfähige Wärmepumpe, hydraulischer Abgleich) erfüllt werden."
+        },
+        {
+            question: "Welche Reihenfolge ist bei der Antragstellung wichtig?",
+            answer: "Erst die BzA durch Energieeffizienz-Experten oder Fachbetrieb erstellen lassen, dann den Liefervertrag mit förderkonformer Bedingung schließen, dann den Antrag bei „Meine KfW\" stellen, dann die Förderzusage abwarten – und erst danach mit der Umsetzung beginnen. Wer vorher startet, verliert den Förderanspruch."
+        }
+    ],
+    schema: {
+        type: "Article",
+        datePublished: "2026-05-02",
+        dateModified: "2026-05-02"
+    }
+};
+
+const canonical = data.canonical ?? Astro.url.href;
+const hero = { ...data.hero, imageSrc: heroImage };
+const dateLine = data.lastUpdated ? `Stand: ${data.lastUpdated}` : null;
+const pageSchema = data.schema
+    ? {
+          ...data.schema,
+          datePublished: data.schema.datePublished ?? data.schema.dateModified,
+          dateModified: data.schema.dateModified ?? data.schema.datePublished,
+      }
+    : undefined;
 ---
 
-import SectionShell from "../../components/SectionShell.astro";
-import NoticeSuccess from "../../components/mdx/NoticeSuccess.astro";
-import CheckList from "../../components/mdx/CheckList.astro";
-import NumberedSteps from "../../components/mdx/NumberedSteps.astro";
-import InternalLinkCard from "../../components/InternalLinkCard.astro";
+<Layout
+    title={data.title}
+    description={data.description}
+    canonical={canonical}
+    noindex={data.noindex}
+    pageSchema={pageSchema}
+>
+    {data.breadcrumb?.length > 0 && <Breadcrumb items={data.breadcrumb} />}
+    <HeroSection {...hero} />
+    {data.trustItems?.length > 0 && <TrustBar items={data.trustItems} />}
+    {dateLine && (
+        <div class="bg-background border-b border-border">
+            <p class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-3 text-xs text-text-muted">
+                {dateLine} · Redaktion bremer-waermepumpe.de · Alle Angaben ohne Gewähr
+            </p>
+        </div>
+    )}
 
 {/* Intro: Bremer Kontext + Redaktionshinweis */}
 <SectionShell>
@@ -75,6 +155,18 @@ import InternalLinkCard from "../../components/InternalLinkCard.astro";
         Energieeffizienz-Experten oder ein zugelassenes Fachunternehmen.
       </p>
     </NoticeSuccess>
+    <div class="bg-highlight border border-border rounded p-5 mt-6">
+      <p class="font-semibold text-text mb-2">Lokaler Ablauf für Bremen und Bremerhaven</p>
+      <p class="text-text-muted text-sm leading-relaxed">
+        Der Check auf bremer-waermepumpe.de verkauft Ihre Anfrage nicht an anonyme
+        Leadbörsen. Wenn Ihr Objekt grundsätzlich passt, kann die Anfrage an den
+        namentlich genannten Bremer Fachpartner <strong class="text-text">Fritts Group,
+        Osterdeich 59A, 28203 Bremen</strong> weitergegeben werden. Fokusgebiet sind
+        Eigentümer in den PLZ-Bereichen <strong class="text-text">27xxx und 28xxx</strong> –
+        also Stadtteile wie Neustadt, Findorff, Schwachhausen, Horn-Lehe, Bremen-Nord
+        und Vegesack sowie Bremerhaven und das nähere Umland.
+      </p>
+    </div>
     <p class="text-text-muted leading-relaxed mt-6">
       Die Förderung läuft heute zweigleisig: Die <strong class="text-text">KfW</strong>
       übernimmt den eigentlichen Heizungstausch (Programm 458). Das <strong class="text-text">BAFA</strong>
@@ -213,37 +305,48 @@ import InternalLinkCard from "../../components/InternalLinkCard.astro";
   <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
     Was läuft in Bremen lokal? BAB-Programme und REN
   </h2>
-  <p class="text-text-muted max-w-3xl mb-4">
-    Die Förderkulisse in Bremen ist neben der bundesweiten KfW-/BAFA-Förderung von
-    eigenen Programmen der Bremer Aufbau-Bank (BAB) geprägt. Stand Mai 2026:
+  <p class="text-text-muted max-w-3xl mb-6">
+    Die Suchanfrage <strong class="text-text">Wärmepumpe Förderung Bremen</strong>
+    meint selten nur einen Zuschuss. Eigentümer brauchen eine Reihenfolge: Was zahlt
+    den Heizungstausch, was zahlt Beratung oder Optimierung, was hilft beim
+    Eigenanteil?
   </p>
-  <ul class="space-y-4 max-w-3xl mb-6">
-    <li class="surface-card p-5">
-      <p class="font-semibold text-text mb-1">BAB „Heizungstausch" – aktuell pausiert</p>
-      <p class="text-text-muted text-sm leading-relaxed">
-        Das eigene Bremer Programm zum Heizungstausch nimmt aktuell keine neuen Anträge
-        an. Vorsicht: Einige Wettbewerber-Seiten bewerben dieses Programm noch als
-        offenen Zuschuss – das stimmt 2026 nicht mehr.
-      </p>
-    </li>
-    <li class="surface-card p-5">
-      <p class="font-semibold text-text mb-1">BAB-Modernisierungskredite</p>
-      <p class="text-text-muted text-sm leading-relaxed">
-        Zinsgünstige Kredite zur Vorfinanzierung des Eigenanteils oder für ergänzende
-        Maßnahmen, die nicht über KfW gefördert werden (z. B. Dämmung, neue Fenster).
-      </p>
-    </li>
-    <li class="surface-card p-5">
-      <p class="font-semibold text-text mb-1">REN-Programm (Klimaschutzagentur energiekonsens)</p>
-      <p class="text-text-muted text-sm leading-relaxed">
-        Bietet kostenlose oder geförderte Erstberatung für Bremer Hauseigentümer zur
-        energetischen Sanierung. Sinnvolle Ergänzung vor der KfW-Antragstellung.
-      </p>
-    </li>
-  </ul>
-  <p class="text-text-muted max-w-3xl text-sm">
-    Für eine Vor-Ort-Einordnung lohnt zusätzlich der Blick auf die
-    Verbraucherzentrale Bremen, die für Bremer Haushalte WP-Angebotsanalysen anbietet.
+  <div class="surface-card overflow-hidden max-w-4xl divide-y divide-border">
+    <div class="grid grid-cols-1 md:grid-cols-[1fr_1fr_1.4fr] gap-2 px-5 py-4 text-sm font-semibold text-text bg-highlight">
+      <span>Baustein</span>
+      <span>Status Mai 2026</span>
+      <span>Einordnung für Bremen</span>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-[1fr_1fr_1.4fr] gap-2 px-5 py-4 text-sm">
+      <span class="font-semibold text-text">KfW 458</span>
+      <span class="text-text-muted">zentraler Zuschuss</span>
+      <span class="text-text-muted">Fördert die Wärmepumpe und technisch notwendige Umfeldmaßnahmen im Bestand.</span>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-[1fr_1fr_1.4fr] gap-2 px-5 py-4 text-sm">
+      <span class="font-semibold text-text">BAB Heizungstausch</span>
+      <span class="text-text-muted">keine neue Antragsgrundlage</span>
+      <span class="text-text-muted">Das frühere Bremer Zuschussprogramm lief für neue Anträge bis 31.08.2025. Details auf der <a href="/bab-heizungstausch-bremen/" class="text-brand underline">BAB-Seite</a>.</span>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-[1fr_1fr_1.4fr] gap-2 px-5 py-4 text-sm">
+      <span class="font-semibold text-text">BAFA</span>
+      <span class="text-text-muted">Optimierung und Beratung</span>
+      <span class="text-text-muted">Nicht der neue Wärmepumpen-Einbau selbst, aber Heizungsoptimierung, Energieberatung und iSFP können relevant sein.</span>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-[1fr_1fr_1.4fr] gap-2 px-5 py-4 text-sm">
+      <span class="font-semibold text-text">BAB-Modernisierungskredit</span>
+      <span class="text-text-muted">Finanzierungsbaustein</span>
+      <span class="text-text-muted">Kann für Eigenanteil oder weitere Modernisierung geprüft werden, wenn die Konditionen zum Objekt passen.</span>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-[1fr_1fr_1.4fr] gap-2 px-5 py-4 text-sm">
+      <span class="font-semibold text-text">REN / energiekonsens</span>
+      <span class="text-text-muted">Beratungsbaustein</span>
+      <span class="text-text-muted">Sinnvoll für Sanierungsfahrplan, Gebäudehülle und neutrale Erstberatung vor dem Angebot.</span>
+    </div>
+  </div>
+  <p class="text-text-muted max-w-3xl text-sm mt-6">
+    Für eine unabhängige Vor-Ort-Einordnung lohnt zusätzlich der Blick auf die
+    Verbraucherzentrale Bremen. Für die konkrete Umsetzung muss das Angebot eines
+    zugelassenen Fachbetriebs die förderfähigen Kosten sauber ausweisen.
   </p>
 </SectionShell>
 
@@ -300,6 +403,30 @@ import InternalLinkCard from "../../components/InternalLinkCard.astro";
   />
 </SectionShell>
 
+{/* Quellen */}
+<SectionShell>
+  <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
+    Quellen und redaktioneller Stand
+  </h2>
+  <div class="surface-card p-5 max-w-3xl text-sm text-text-muted leading-relaxed">
+    <p class="font-semibold text-text mb-3">Stand: 29. Mai 2026</p>
+    <ul class="space-y-2">
+      <li>
+        KfW: <a href="https://www.kfw.de/inlandsfoerderung/Privatpersonen/Bestehende-Immobilie/F%C3%B6rderprodukte/Heizungsf%C3%B6rderung-f%C3%BCr-Privatpersonen-Wohngeb%C3%A4ude-%28458%29/" class="text-primary underline" target="_blank" rel="noopener">Heizungsförderung für Privatpersonen – Wohngebäude 458</a>
+      </li>
+      <li>
+        BAFA: <a href="https://www.bafa.de/DE/Energie/Effiziente_Gebaeude/Sanierung_Wohngebaeude/Heizungsoptimierung/heizungsoptimierung_node.html" class="text-primary underline" target="_blank" rel="noopener">Heizungsoptimierung und iSFP-Bonus</a>
+      </li>
+      <li>
+        Bremen Service: <a href="https://www.service.bremen.de/dienstleistungen/foerderung-fuer-den-heizungstausch-beantragen-190934" class="text-primary underline" target="_blank" rel="noopener">Förderung für den Heizungstausch beantragen</a>
+      </li>
+      <li>
+        Diese Seite ersetzt keine verbindliche Förderzusage der KfW, BAFA, BAB oder eines Energieeffizienz-Experten.
+      </li>
+    </ul>
+  </div>
+</SectionShell>
+
 {/* Cluster-Crosslinks */}
 <SectionShell variant="alt">
   <h2 class="text-2xl md:text-3xl font-bold text-text mb-6">
@@ -338,3 +465,10 @@ import InternalLinkCard from "../../components/InternalLinkCard.astro";
     />
   </div>
 </SectionShell>
+
+    {data.ctaBlock && <CTASection {...data.ctaBlock} />}
+    {data.faqs?.length > 0 && (
+        <FAQSection heading={data.faqHeading} items={data.faqs} />
+    )}
+</Layout>
+

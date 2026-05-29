@@ -1,54 +1,147 @@
 ---
-title: "KfW 458 Wärmepumpe: Schritt-für-Schritt-Anleitung 2026"
-description: "So beantragen Sie die KfW 458 Förderung richtig! ✓ BzA, Fristen, Boni & förderfähige Kosten auf einen Blick. Jetzt maximale Zuschüsse sichern ➔"
-lastUpdated: "Mai 2026"
-hero:
-  headline: "Luft-Wasser-Wärmepumpe Kosten"
-  subtext: "Die häufigste Bauart in Bremer Bestandsgebäuden – ehrliche Aufschlüsselung von Anschaffung, Einbau und laufenden Kosten."
-  imageSrc: "../../images/heat-pump-bremen-hero.webp"
-  primaryCTA: { label: "Eignung & Förderung prüfen", href: "/check/" }
-  secondaryCTA: { label: "Kosten-Übersicht Bremen", href: "/waermepumpe-kosten-bremen/" }
-trustItems:
-  - { text: "BremLBO 0 m Grenzabstand" }
-  - { text: "TA-Lärm-Rahmen Bremen" }
-  - { text: "Stand Mai 2026" }
-  - { text: "Inkl. swb-Stromtarif" }
-breadcrumb:
-  - { label: "Startseite", href: "/" }
-  - { label: "Kosten Bremen", href: "/waermepumpe-kosten-bremen/" }
-  - { label: "Luft-Wasser-Wärmepumpe" }
-ctaBlock:
-  headline: "Passt eine Luft-Wasser-Wärmepumpe zu Ihrem Haus?"
-  text: "Kurzer Browser-Check zur Eignung und passenden Größe – ohne Anmeldung und ohne Datenübermittlung."
-  variant: "highlight"
-  primaryCTA: { label: "Eignung & Förderung prüfen", href: "/check/" }
-  secondaryCTA: { label: "Förderung Bremen", href: "/waermepumpe-foerderung-bremen/" }
-faqHeading: "FAQ: Luft-Wasser-Wärmepumpe Kosten"
-faqs:
-  - question: "Was kostet eine Luft-Wasser-Wärmepumpe inklusive Einbau?"
-    answer: "Für ein Bremer Einfamilienhaus liegen die Komplettkosten typischerweise zwischen 22.000 und 35.000 Euro brutto. Davon entfallen etwa 9.000 bis 16.000 Euro auf das Gerät und 7.000 bis 14.500 Euro auf Installation, Hydraulik und Inbetriebnahme. Hochtemperatur-Modelle mit dem natürlichen Kältemittel R290 liegen am oberen Ende, sind aber 5 % förderfähiger über den Effizienzbonus."
-  - question: "Wie viel Strom verbraucht eine Luft-Wasser-Wärmepumpe pro Jahr?"
-    answer: "Ein Bremer Einfamilienhaus mit 140 m² teilsanierter Bausubstanz und 14.000 kWh Heizwärmebedarf benötigt bei einer realistischen Jahresarbeitszahl (JAZ) von 3,5 etwa 4.000 kWh Wärmepumpenstrom pro Jahr. Im swb-Wärmepumpentarif (24,98 ct/kWh, Stand Mai 2026) sind das rund 1.000 Euro Stromkosten pro Jahr."
-  - question: "Lohnt sich eine Luft-Wasser-Wärmepumpe gegenüber einer Gasheizung?"
-    answer: "Auf 20-Jahres-Sicht in den meisten Fällen ja. Eine neue Gasheizung kostet zwar in der Anschaffung nur 12.000–18.000 Euro, hat aber keine nennenswerte Förderung, steigende CO₂-Kosten und ab 01.07.2026 in Bremen Konflikte mit dem GEG §71. Die Wärmepumpe profitiert von bis zu 70 % KfW-Förderung und vom günstigen Wärmepumpenstrom-Tarif."
-  - question: "Wie laut ist eine Luft-Wasser-Wärmepumpe in einer Bremer Reihenhauszeile?"
-    answer: "Moderne Geräte erreichen am Aufstellort 47–55 dB(A) im Volllastbetrieb. Bremen erlaubt nach BremLBO §6 Abs. 8 Nr. 4 einen Grenzabstand von 0 Metern – das vereinfacht die Aufstellung. Die TA-Lärm-Nachtwerte von 35 dB(A) im reinen Wohngebiet bzw. 45 dB(A) im Mischgebiet werden bei sauberer Aufstellung deutlich unterschritten – am Nachbar-Schlafzimmer-Fenster, nicht direkt am Gerät."
-  - question: "Welche Hersteller sind in Bremen häufig?"
-    answer: "Marktführend in Bremen sind Vaillant aroTHERM, Viessmann Vitocal, Wolf CHA, Stiebel Eltron WPL, Daikin Altherma und Bosch Compress. Hochtemperatur-R290-Modelle (für Altbau) bieten u. a. Vaillant aroTHERM plus, Viessmann Vitocal 250-A, Wolf CHA-Monoblock und Bosch Compress 5800i AW. Eine konkrete Empfehlung kann nur ein Heizungsbauer nach Heizlastberechnung geben."
-schema:
-  type: "Article"
-  datePublished: "2026-05-02"
-  dateModified: "2026-05-02"
+import Layout from "../layout/Layout.astro";
+import Breadcrumb from "../components/Breadcrumb.astro";
+import HeroSection from "../components/HeroSection.astro";
+import TrustBar from "../components/TrustBar.astro";
+import CTASection from "../components/CTASection.astro";
+import FAQSection from "../components/FAQSection.astro";
+import SectionShell from "../components/SectionShell.astro";
+import NoticeSuccess from "../components/content/NoticeSuccess.astro";
+import CheckList from "../components/content/CheckList.astro";
+import InternalLinkCard from "../components/InternalLinkCard.astro";
+import heroImage from "../images/heat-pump-bremen-hero.webp";
+
+import type { PageData } from "../types/page";
+
+const data: PageData = {
+    title: "Luft-Wasser-Wärmepumpe Kosten 2026: Bremen & Altbau",
+    description: "Luft-Wasser-Wärmepumpe Kosten 2026: Gerät, Einbau, Stromverbrauch, Schallschutz und Förderung für Bremer Bestandsgebäude.",
+    lastUpdated: "Mai 2026",
+    hero: {
+        headline: "Luft-Wasser-Wärmepumpe Kosten",
+        subtext: "Die häufigste Bauart in Bremer Bestandsgebäuden – ehrliche Aufschlüsselung von Anschaffung, Einbau und laufenden Kosten.",
+        primaryCTA: {
+            label: "Eignung & Förderung prüfen",
+            href: "/check/"
+        },
+        secondaryCTA: {
+            label: "Kosten-Übersicht Bremen",
+            href: "/waermepumpe-kosten-bremen/"
+        }
+    },
+    trustItems: [
+        {
+            text: "BremLBO 0 m Grenzabstand"
+        },
+        {
+            text: "TA-Lärm-Rahmen Bremen"
+        },
+        {
+            text: "Stand Mai 2026"
+        },
+        {
+            text: "Inkl. swb-Stromtarif"
+        }
+    ],
+    breadcrumb: [
+        {
+            label: "Startseite",
+            href: "/"
+        },
+        {
+            label: "Kosten Bremen",
+            href: "/waermepumpe-kosten-bremen/"
+        },
+        {
+            label: "Luft-Wasser-Wärmepumpe"
+        }
+    ],
+    ctaBlock: {
+        headline: "Passt eine Luft-Wasser-Wärmepumpe zu Ihrem Haus?",
+        text: "Kurzer Browser-Check zur Eignung und passenden Größe – ohne Anmeldung und ohne Datenübermittlung.",
+        variant: "highlight",
+        primaryCTA: {
+            label: "Eignung & Förderung prüfen",
+            href: "/check/"
+        },
+        secondaryCTA: {
+            label: "Förderung Bremen",
+            href: "/waermepumpe-foerderung-bremen/"
+        }
+    },
+    faqHeading: "FAQ: Luft-Wasser-Wärmepumpe Kosten",
+    faqs: [
+        {
+            question: "Was kostet eine Luft-Wasser-Wärmepumpe inklusive Einbau?",
+            answer: "Für ein Bremer Einfamilienhaus liegen die Komplettkosten typischerweise zwischen 22.000 und 35.000 Euro brutto. Davon entfallen etwa 9.000 bis 16.000 Euro auf das Gerät und 7.000 bis 14.500 Euro auf Installation, Hydraulik und Inbetriebnahme. Hochtemperatur-Modelle mit dem natürlichen Kältemittel R290 liegen am oberen Ende, sind aber 5 % förderfähiger über den Effizienzbonus."
+        },
+        {
+            question: "Wie viel Strom verbraucht eine Luft-Wasser-Wärmepumpe pro Jahr?",
+            answer: "Ein Bremer Einfamilienhaus mit 140 m² teilsanierter Bausubstanz und 14.000 kWh Heizwärmebedarf benötigt bei einer realistischen Jahresarbeitszahl (JAZ) von 3,5 etwa 4.000 kWh Wärmepumpenstrom pro Jahr. Im swb-Wärmepumpentarif (24,98 ct/kWh, Stand Mai 2026) sind das rund 1.000 Euro Stromkosten pro Jahr."
+        },
+        {
+            question: "Lohnt sich eine Luft-Wasser-Wärmepumpe gegenüber einer Gasheizung?",
+            answer: "Auf 20-Jahres-Sicht in den meisten Fällen ja. Eine neue Gasheizung kostet zwar in der Anschaffung nur 12.000–18.000 Euro, hat aber keine nennenswerte Förderung, steigende CO₂-Kosten und ab 01.07.2026 in Bremen Konflikte mit dem GEG §71. Die Wärmepumpe profitiert von bis zu 70 % KfW-Förderung und vom günstigen Wärmepumpenstrom-Tarif."
+        },
+        {
+            question: "Wie laut ist eine Luft-Wasser-Wärmepumpe in einer Bremer Reihenhauszeile?",
+            answer: "Moderne Geräte erreichen am Aufstellort 47–55 dB(A) im Volllastbetrieb. Bremen erlaubt nach BremLBO §6 Abs. 8 Nr. 4 einen Grenzabstand von 0 Metern – das vereinfacht die Aufstellung. Die TA-Lärm-Nachtwerte von 35 dB(A) im reinen Wohngebiet bzw. 45 dB(A) im Mischgebiet werden bei sauberer Aufstellung deutlich unterschritten – am Nachbar-Schlafzimmer-Fenster, nicht direkt am Gerät."
+        },
+        {
+            question: "Welche Hersteller sind in Bremen häufig?",
+            answer: "Marktführend in Bremen sind Vaillant aroTHERM, Viessmann Vitocal, Wolf CHA, Stiebel Eltron WPL, Daikin Altherma und Bosch Compress. Hochtemperatur-R290-Modelle (für Altbau) bieten u. a. Vaillant aroTHERM plus, Viessmann Vitocal 250-A, Wolf CHA-Monoblock und Bosch Compress 5800i AW. Eine konkrete Empfehlung kann nur ein Heizungsbauer nach Heizlastberechnung geben."
+        }
+    ],
+    schema: {
+        type: "Article",
+        datePublished: "2026-05-02",
+        dateModified: "2026-05-02"
+    }
+};
+
+const canonical = data.canonical ?? Astro.url.href;
+const hero = { ...data.hero, imageSrc: heroImage };
+const dateLine = data.lastUpdated ? `Stand: ${data.lastUpdated}` : null;
+const pageSchema = data.schema
+    ? {
+          ...data.schema,
+          datePublished: data.schema.datePublished ?? data.schema.dateModified,
+          dateModified: data.schema.dateModified ?? data.schema.datePublished,
+      }
+    : undefined;
 ---
 
-import SectionShell from "../../components/SectionShell.astro";
-import NoticeSuccess from "../../components/mdx/NoticeSuccess.astro";
-import CheckList from "../../components/mdx/CheckList.astro";
-import InternalLinkCard from "../../components/InternalLinkCard.astro";
+<Layout
+    title={data.title}
+    description={data.description}
+    canonical={canonical}
+    noindex={data.noindex}
+    pageSchema={pageSchema}
+>
+    {data.breadcrumb?.length > 0 && <Breadcrumb items={data.breadcrumb} />}
+    <HeroSection {...hero} />
+    {data.trustItems?.length > 0 && <TrustBar items={data.trustItems} />}
+    {dateLine && (
+        <div class="bg-background border-b border-border">
+            <p class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-3 text-xs text-text-muted">
+                {dateLine} · Redaktion bremer-waermepumpe.de · Alle Angaben ohne Gewähr
+            </p>
+        </div>
+    )}
 
 {/* Intro */}
 <SectionShell>
   <article class="max-w-3xl space-y-4 text-text-muted leading-relaxed">
+    <div class="bg-highlight border border-border rounded p-5">
+      <p class="font-bold text-text mb-2">Schnelle Antwort</p>
+      <p class="text-sm leading-relaxed">
+        Eine Luft-Wasser-Wärmepumpe kostet in einem Bremer Bestandsgebäude
+        typischerweise <strong class="text-text">22.000 bis 35.000 €</strong>
+        vor Förderung. Bei Altbau, R290-Hochtemperaturgerät, Schallschutz oder
+        Heizkörpertausch kann der obere Bereich realistisch sein. Die KfW 458
+        kann förderfähige Kosten deutlich senken.
+      </p>
+    </div>
     <p>
       Die <strong class="text-text">Luft-Wasser-Wärmepumpe</strong> ist die mit Abstand
       häufigste Bauart in Bremen. Sie braucht keine Bohrung und keine Erdaushub-Genehmigung,
@@ -208,6 +301,30 @@ import InternalLinkCard from "../../components/InternalLinkCard.astro";
   />
 </SectionShell>
 
+{/* Quellen */}
+<SectionShell>
+  <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
+    Quellen und redaktioneller Stand
+  </h2>
+  <div class="surface-card p-5 max-w-3xl text-sm text-text-muted leading-relaxed">
+    <p class="font-semibold text-text mb-3">Stand: 29. Mai 2026</p>
+    <ul class="space-y-2">
+      <li>
+        KfW: <a href="https://www.kfw.de/inlandsfoerderung/Privatpersonen/Bestehende-Immobilie/F%C3%B6rderprodukte/Heizungsf%C3%B6rderung-f%C3%BCr-Privatpersonen-Wohngeb%C3%A4ude-%28458%29/" class="text-primary underline" target="_blank" rel="noopener">Heizungsförderung 458</a>
+      </li>
+      <li>
+        swb: <a href="https://www.swb.de/strom/thermo-pronatur" class="text-primary underline" target="_blank" rel="noopener">Wärmepumpenstrom swb thermo proNatur</a>
+      </li>
+      <li>
+        Bremen: <a href="https://www.transparenz.bremen.de/metainformationen/bremische-landesbauordnung-vom-29-mai-2024-232736" class="text-primary underline" target="_blank" rel="noopener">Bremische Landesbauordnung</a>
+      </li>
+      <li>
+        Preisangaben sind redaktionelle Spannen und ersetzen kein verbindliches Fachbetriebsangebot.
+      </li>
+    </ul>
+  </div>
+</SectionShell>
+
 {/* Cluster-Crosslinks */}
 <SectionShell variant="alt">
   <h2 class="text-2xl md:text-3xl font-bold text-text mb-6">Vertiefen</h2>
@@ -227,5 +344,17 @@ import InternalLinkCard from "../../components/InternalLinkCard.astro";
       title="Förderung Bremen"
       description="KfW 458 mit bis zu 70 % – inkl. 5 % Effizienzbonus für R290."
     />
+    <InternalLinkCard
+      href="/check/"
+      title="Eignungscheck"
+      description="Prüfen, ob Luft-Wasser für Ihr Bremer Haus realistisch ist."
+    />
   </div>
 </SectionShell>
+
+    {data.ctaBlock && <CTASection {...data.ctaBlock} />}
+    {data.faqs?.length > 0 && (
+        <FAQSection heading={data.faqHeading} items={data.faqs} />
+    )}
+</Layout>
+

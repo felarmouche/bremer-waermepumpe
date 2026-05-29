@@ -25,8 +25,8 @@ const {
 
 <section
     class:list={[
-        "relative w-full flex items-center py-16 md:py-24 overflow-hidden bg-gray-900",
-        showQuickstart ? "min-h-[60vh] md:min-h-[70vh]" : "min-h-[75vh]",
+        "relative w-full flex items-center py-10 md:py-20 overflow-hidden bg-gray-900",
+        showQuickstart ? "min-h-[46svh] md:min-h-[64svh]" : "min-h-[52svh] md:min-h-[70svh]",
     ]}
 >
     <!-- Background Image with Directional Gradient -->
@@ -58,13 +58,13 @@ const {
             ]}
         >
             <h1
-                class="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white text-balance leading-[1.15]"
+                class="text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white text-balance leading-[1.12]"
             >
                 {headline}
             </h1>
 
             <p
-                class="mt-6 max-w-xl text-lg sm:text-xl text-gray-300 leading-relaxed text-balance"
+                class="mt-4 md:mt-6 max-w-xl text-base sm:text-xl text-gray-300 leading-relaxed text-balance"
             >
                 {subtext}
             </p>
@@ -73,7 +73,7 @@ const {
                 showQuickstart ? (
                     <>
                         {/* Mobile: keep both CTAs (the quickstart sits BELOW the hero on mobile) */}
-                        <div class="mt-8 flex flex-col sm:flex-row items-start gap-3 md:hidden">
+                        <div class="mt-6 flex flex-col sm:flex-row items-start gap-3 md:hidden">
                             <a
                                 href={primaryCTA.href}
                                 class="inline-flex justify-center items-center px-6 py-3 text-base font-semibold text-gray-900 bg-white rounded-md transition-colors hover:bg-gray-100 w-full sm:w-auto"
@@ -152,7 +152,7 @@ const {
 }
 {
     showQuickstart && (
-        <section class="md:hidden bg-surface-alt py-6">
+        <section class="md:hidden bg-surface-alt py-4">
             <div class="mx-auto max-w-2xl px-4">
                 <HeroHeatingQuickstart
                     ctaLabel={quickstartLabel}

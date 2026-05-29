@@ -1,0 +1,259 @@
+---
+import Layout from "../layout/Layout.astro";
+import Breadcrumb from "../components/Breadcrumb.astro";
+import HeroSection from "../components/HeroSection.astro";
+import TrustBar from "../components/TrustBar.astro";
+import CTASection from "../components/CTASection.astro";
+import FAQSection from "../components/FAQSection.astro";
+import SectionShell from "../components/SectionShell.astro";
+import NoticeSuccess from "../components/content/NoticeSuccess.astro";
+import CheckList from "../components/content/CheckList.astro";
+import InternalLinkCard from "../components/InternalLinkCard.astro";
+import heroImage from "../images/heat-pump-bremen-hero.webp";
+
+import type { PageData } from "../types/page";
+
+const data: PageData = {
+    title: "Wärmepumpe oder Gasheizung in Bremen: Was ist günstiger?",
+    description: "Wärmepumpe oder Gasheizung in Bremen? Kosten, Förderung, GEG 2026, CO2-Preis und Beispielrechnung für Bestandsgebäude.",
+    lastUpdated: "29. Mai 2026",
+    hero: {
+        headline: "Wärmepumpe oder Gasheizung in Bremen?",
+        subtext: "Was für Bremer Eigentümer 2026 günstiger ist – Anschaffung, Förderung, Betriebskosten und GEG-Pflicht im Überblick.",
+        primaryCTA: {
+            label: "Eignung & Förderung prüfen",
+            href: "/check/"
+        },
+        secondaryCTA: {
+            label: "Kosten Bremen ansehen",
+            href: "/waermepumpe-kosten-bremen/"
+        }
+    },
+    trustItems: [
+        {
+            text: "Bestand & Altbau"
+        },
+        {
+            text: "GEG ab 01.07.2026"
+        },
+        {
+            text: "KfW-Förderung eingerechnet"
+        },
+        {
+            text: "Stand 29. Mai 2026"
+        }
+    ],
+    breadcrumb: [
+        {
+            label: "Startseite",
+            href: "/"
+        },
+        {
+            label: "Kosten Bremen",
+            href: "/waermepumpe-kosten-bremen/"
+        },
+        {
+            label: "Wärmepumpe oder Gasheizung"
+        }
+    ],
+    ctaBlock: {
+        headline: "Welche Lösung passt zu Ihrem Bremer Haus?",
+        text: "Der Check ordnet Gebäudetyp, Heizungsalter, Eigentum und Förderchancen ein.",
+        variant: "highlight",
+        primaryCTA: {
+            label: "Eignung & Förderung prüfen",
+            href: "/check/"
+        },
+        secondaryCTA: {
+            label: "Förderung Bremen",
+            href: "/waermepumpe-foerderung-bremen/"
+        }
+    },
+    faqHeading: "FAQ: Wärmepumpe oder Gasheizung Bremen",
+    faqs: [
+        {
+            question: "Ist eine Wärmepumpe in Bremen günstiger als eine neue Gasheizung?",
+            answer: "In der Anschaffung ist die Gasheizung meist günstiger. Nach KfW-Förderung, steigenden CO2-Kosten und der 65-%-EE-Pflicht ab 01.07.2026 ist die Wärmepumpe im Bremer Bestand aber oft die langfristig bessere Lösung."
+        },
+        {
+            question: "Darf ich 2026 in Bremen noch eine reine Gasheizung einbauen?",
+            answer: "Ab dem 1. Juli 2026 greift in Bremen beim Heizungstausch die 65-%-Erneuerbare-Energien-Pflicht. Eine reine Gasheizung ist dann nur noch in engen Übergangs- oder Sonderfällen sinnvoll und rechtlich sauber planbar."
+        },
+        {
+            question: "Wann lohnt sich Gas trotzdem?",
+            answer: "Gas kann als Übergangslösung bei Havarie oder in sehr schwierigen Gebäuden eine Rolle spielen. Für Eigentümer mit planbarem Austausch und förderfähigem Bestand sollte die Wärmepumpe zuerst geprüft werden."
+        }
+    ],
+    schema: {
+        type: "Article",
+        datePublished: "2026-05-29",
+        dateModified: "2026-05-29"
+    }
+};
+
+const canonical = data.canonical ?? Astro.url.href;
+const hero = { ...data.hero, imageSrc: heroImage };
+const dateLine = data.lastUpdated ? `Stand: ${data.lastUpdated}` : null;
+const pageSchema = data.schema
+    ? {
+          ...data.schema,
+          datePublished: data.schema.datePublished ?? data.schema.dateModified,
+          dateModified: data.schema.dateModified ?? data.schema.datePublished,
+      }
+    : undefined;
+---
+
+<Layout
+    title={data.title}
+    description={data.description}
+    canonical={canonical}
+    noindex={data.noindex}
+    pageSchema={pageSchema}
+>
+    {data.breadcrumb?.length > 0 && <Breadcrumb items={data.breadcrumb} />}
+    <HeroSection {...hero} />
+    {data.trustItems?.length > 0 && <TrustBar items={data.trustItems} />}
+    {dateLine && (
+        <div class="bg-background border-b border-border">
+            <p class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-3 text-xs text-text-muted">
+                {dateLine} · Redaktion bremer-waermepumpe.de · Alle Angaben ohne Gewähr
+            </p>
+        </div>
+    )}
+
+<SectionShell>
+  <article class="max-w-3xl space-y-4 text-text-muted leading-relaxed">
+    <div class="bg-highlight border border-border rounded p-5">
+      <p class="font-bold text-text mb-2">Schnelle Antwort</p>
+      <p class="text-sm leading-relaxed">
+        Eine neue Gasheizung ist in Bremen meist günstiger in der Anschaffung.
+        Nach KfW-Förderung, Wärmepumpenstromtarif, CO2-Kosten und GEG-Risiko ist
+        die Wärmepumpe für viele planbare Heizungstausche im Bestand aber die
+        bessere erste Prüfung. Gas bleibt eher ein Sonderfall bei Havarie,
+        schwieriger Gebäudetechnik oder Übergangslösung.
+      </p>
+    </div>
+    <p>
+      Viele Bremer Eigentümer stehen 2026 vor derselben Entscheidung:
+      <strong class="text-text"> noch einmal Gasheizung</strong> oder direkt auf
+      <strong class="text-text"> Wärmepumpe</strong> wechseln? Die reine Anschaffung
+      spricht oft für Gas. Die Gesamtbetrachtung aus Förderung, Betriebskosten,
+      CO2-Preis und GEG spricht im Bestand häufig für die Wärmepumpe.
+    </p>
+    <NoticeSuccess>
+      <p>
+        <strong>Kurzfazit:</strong> Wenn Ihr Haus Eigentum ist, die alte Gas- oder
+        Ölheizung ersetzt wird und die Vorlauftemperatur beherrschbar ist, sollte die
+        Wärmepumpe zuerst geprüft werden. Die KfW-Förderung kann den Preisvorteil der
+        Gasheizung deutlich reduzieren. Wegen laufender politischer GEG-Debatten
+        sollte die Rechtslage vor Vertragsabschluss tagesaktuell geprüft werden.
+      </p>
+    </NoticeSuccess>
+    <div class="bg-highlight border border-border rounded p-5 flex flex-col sm:flex-row gap-4 sm:items-center sm:justify-between">
+      <div>
+        <p class="font-semibold text-text">Gas oder Wärmepumpe vorentscheiden?</p>
+        <p class="text-sm text-text-muted mt-1">Der Check sortiert Gebäude, Heizungsalter und Förderchancen.</p>
+      </div>
+      <a href="/check/" class="btn-accent shrink-0 text-center">Eignung prüfen</a>
+    </div>
+  </article>
+</SectionShell>
+
+<SectionShell variant="alt">
+  <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
+    Kostenvergleich: Anschaffung und Eigenanteil
+  </h2>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-4xl">
+    <div class="surface-card p-5">
+      <h3 class="font-semibold text-text mb-3">Neue Gasheizung</h3>
+      <p class="text-3xl font-bold text-primary mb-2">12.000 - 18.000 €</p>
+      <p class="text-text-muted text-sm leading-relaxed">
+        Typischer Komplettpreis inklusive Montage. Kaum relevante Zuschüsse, spätere
+        Zusatzkosten durch CO2-Preis und GEG-Anforderungen möglich.
+      </p>
+    </div>
+    <div class="surface-card p-5">
+      <h3 class="font-semibold text-text mb-3">Luft-Wasser-Wärmepumpe</h3>
+      <p class="text-3xl font-bold text-primary mb-2">22.000 - 35.000 €</p>
+      <p class="text-text-muted text-sm leading-relaxed">
+        Vor Förderung teurer. Nach KfW 458 bleiben bei 55-70 % Förderung in vielen
+        Bremer Bestandsfällen etwa 9.000 - 16.000 € Eigenanteil.
+      </p>
+    </div>
+  </div>
+  <p class="text-text-muted max-w-3xl text-sm mt-6">
+    Entscheidend ist nicht der Bruttopreis, sondern der Eigenanteil nach Förderung und
+    die laufenden Kosten über 15 bis 20 Jahre.
+  </p>
+</SectionShell>
+
+<SectionShell>
+  <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
+    Warum Bremen 2026 gegen eine reine Gasentscheidung spricht
+  </h2>
+  <CheckList
+    items={[
+      { lead: "GEG ab 01.07.2026:", text: "Beim Heizungstausch greift in Bremen die 65-%-EE-Pflicht. Wärmepumpen erfüllen diese Vorgabe direkt." },
+      { lead: "CO2-Kosten:", text: "Fossiles Gas wird durch CO2-Bepreisung tendenziell teurer. Das Risiko liegt über Jahre beim Eigentümer." },
+      { lead: "Förderhebel:", text: "Für die Wärmepumpe sind bis zu 70 % KfW-Zuschuss möglich, für eine neue reine Gasheizung praktisch nicht." },
+      { lead: "Bremer Reihenhäuser:", text: "Viele ältere Häuser haben große Heizkörper. Das kann den Umstieg auf eine Wärmepumpe erleichtern." },
+      { lead: "Stromtarif:", text: "Mit separatem Wärmepumpenzähler kann ein günstigerer Wärmepumpenstromtarif genutzt werden." },
+    ]}
+  />
+</SectionShell>
+
+<SectionShell variant="alt">
+  <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
+    Wann eine Wärmepumpe im Bremer Bestand realistisch ist
+  </h2>
+  <p class="text-text-muted max-w-3xl mb-4">
+    Die Wärmepumpe muss nicht nur förderfähig sein, sie muss zum Gebäude passen. Gute
+    Signale sind:
+  </p>
+  <ul class="space-y-3 max-w-3xl text-text-muted">
+    <li>Vorlauftemperatur im Winter möglichst unter 55 °C.</li>
+    <li>Große Heizkörper oder bereits modernisierte Heizflächen.</li>
+    <li>Alte Öl- oder Gasheizung, damit Klimabonus möglich ist.</li>
+    <li>Platz für Außengerät, Leitungsweg und Schallschutz.</li>
+    <li>Eigentümerstatus und Umsetzung in den nächsten 12-24 Monaten.</li>
+  </ul>
+</SectionShell>
+
+<SectionShell>
+  <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
+    Quellen und redaktioneller Stand
+  </h2>
+  <div class="surface-card p-5 max-w-3xl text-sm text-text-muted leading-relaxed">
+    <p class="font-semibold text-text mb-3">Stand: 29. Mai 2026</p>
+    <ul class="space-y-2">
+      <li>
+        KfW: <a href="https://www.kfw.de/inlandsfoerderung/Privatpersonen/Bestehende-Immobilie/F%C3%B6rderprodukte/Heizungsf%C3%B6rderung-f%C3%BCr-Privatpersonen-Wohngeb%C3%A4ude-%28458%29/" class="text-primary underline" target="_blank" rel="noopener">Heizungsförderung 458</a>
+      </li>
+      <li>
+        Bremen: <a href="https://umwelt.bremen.de/klima/klima-energie/gebaeudeenergiegesetz-geg/anforderungen-an-bestehende-gebaeude-2387269" class="text-primary underline" target="_blank" rel="noopener">GEG-Anforderungen an bestehende Gebäude</a>
+      </li>
+      <li>
+        swb: <a href="https://www.swb.de/strom/thermo-pronatur" class="text-primary underline" target="_blank" rel="noopener">Wärmepumpenstrom swb thermo proNatur</a>
+      </li>
+      <li>
+        Google Search Console-Signal: vorhandene Impressionen für die Suchanfrage "Wärmepumpe oder Gasheizung, was ist günstiger? Bremen".
+      </li>
+    </ul>
+  </div>
+</SectionShell>
+
+<SectionShell variant="alt">
+  <h2 class="text-2xl md:text-3xl font-bold text-text mb-6">Weiterlesen</h2>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-5xl">
+    <InternalLinkCard href="/waermepumpe-kosten-bremen/" title="Kosten Bremen" description="Investition, Eigenanteil und Stromkosten nach Förderung." />
+    <InternalLinkCard href="/waermepumpe-foerderung-bremen/" title="Förderung Bremen" description="KfW 458, BAFA und BAB-Status für Bremer Eigentümer." />
+    <InternalLinkCard href="/waermepumpe-altbau-bremen/" title="Altbau Bremen" description="Vorlauftemperatur, Heizkörper und Machbarkeit im Bestand." />
+  </div>
+</SectionShell>
+
+    {data.ctaBlock && <CTASection {...data.ctaBlock} />}
+    {data.faqs?.length > 0 && (
+        <FAQSection heading={data.faqHeading} items={data.faqs} />
+    )}
+</Layout>
+
