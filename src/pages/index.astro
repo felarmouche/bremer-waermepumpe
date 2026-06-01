@@ -8,10 +8,14 @@ import FAQSection from "../components/FAQSection.astro";
 import CTASection from "../components/CTASection.astro";
 import heroImage from "../images/heat-pump-bremen-hero.webp";
 
-const title = "Wärmepumpe Bremen: Eignungscheck, Kosten & Förderung";
+const title = "Wärmepumpe Bremen 2026: Kosten, KfW-Förderung & Eignungscheck";
 const description =
-    "Wärmepumpe in Bremen planen: Eignung im Altbau, Kosten, swb-Heizstrom, KfW-Förderung und lokale Fachpartner-Einschätzung prüfen.";
+    "Wärmepumpe in Bremen planen: Eignung im Altbau, Kosten, swb-Heizstrom, KfW-458-Förderung und lokale Fachpartner-Einschätzung prüfen.";
 const canonical = Astro.url.href;
+
+// Bei jeder inhaltlichen Aktualisierung hochsetzen (Frische-Signal für Google):
+const lastUpdatedISO = "2026-06-01";
+const lastUpdatedDisplay = "1. Juni 2026";
 
 const trustItems = [
     { text: "Fokus auf Bremen und Umgebung" },
@@ -35,12 +39,14 @@ const processSteps = [
     {
         number: 3,
         title: "Kostenrahmen verstehen",
-        description: "Bauart, Aufstellort und notwendige Umfeldmaßnahmen bestimmen die Investition.",
+        description:
+            "Bauart, Aufstellort und notwendige Umfeldmaßnahmen bestimmen die Investition.",
     },
     {
         number: 4,
         title: "Förderung prüfen",
-        description: "KfW 458, BAFA-Optimierung und lokale Bremer Bausteine werden sauber getrennt.",
+        description:
+            "KfW 458, BAFA-Optimierung und lokale Bremer Bausteine werden sauber getrennt.",
     },
     {
         number: 5,
@@ -90,13 +96,22 @@ const faqs = [
         answer: "Ja, moderne Wärmepumpen sind grundsätzlich für den ganzjährigen Betrieb ausgelegt. Wichtig ist jedoch eine fachgerechte Planung, die richtige Gerätegröße, ein sinnvoller Aufstellort und eine sauber abgestimmte Installation. Dann arbeitet die Anlage auch unter norddeutschen Wetterbedingungen zuverlässig und effizient.",
     },
     {
-        question: "Gibt es in Bremen einen günstigen Wärmepumpentarif für Strom?",
+        question:
+            "Gibt es in Bremen einen günstigen Wärmepumpentarif für Strom?",
         answer: "Ja, der regionale Versorger swb bietet wie viele Anbieter einen separaten Wärmepumpen- bzw. Heizstromtarif an, der über einen eigenen Zähler abgerechnet wird und in der Regel günstiger ist als der Haushaltsstrom. Ob sich ein separater Zähler lohnt, hängt vom Verbrauch und der Auslegung ab. Anbieter und Tarife sollten Sie vor dem Wechsel aktuell vergleichen.",
     },
 ];
 ---
 
-<Layout title={title} description={description} canonical={canonical}>
+<Layout
+    title={title}
+    description={description}
+    canonical={canonical}
+    ogImage={heroImage.src}
+    pageSchema={{
+        dateModified: lastUpdatedISO,
+    }}
+>
     <HeroSection
         imageSrc={heroImage}
         headline="Wärmepumpe Bremen"
@@ -113,64 +128,71 @@ const faqs = [
 
     <TrustBar items={trustItems} />
 
+    <!-- Schnellantwort (Answer-first für AI-Overviews & Featured Snippets) -->
+    <SectionShell>
+        <div
+            class="surface-card p-6 sm:p-8 max-w-3xl border-l-4 border-primary"
+        >
+            <p
+                class="text-xs font-semibold text-primary uppercase tracking-wide mb-3"
+            >
+                Kurz & Knapp
+            </p>
+            <p class="text-text leading-relaxed text-base sm:text-lg">
+                <strong>Lohnt sich eine Wärmepumpe in Bremen?</strong> Für die meisten
+                Bestandsgebäude ja. Eine Luft-Wasser-Wärmepumpe kostet in Bremen vor
+                Förderung typischerweise rund <strong>22.000 – 35.000 €</strong
+                >; über die <strong>KfW-Heizungsförderung 458</strong> sind bis zu
+                <strong>70 % Zuschuss</strong> möglich, sodass der Eigenanteil oft
+                bei etwa <strong>10.000 – 14.000 €</strong> liegt. Auch im Altbau
+                funktioniert sie, wenn Vorlauftemperatur, Heizflächen und Aufstellort
+                passen – eine Fußbodenheizung ist nicht zwingend nötig. Entscheidend
+                ist ein ehrlicher <a
+                    href="/check/"
+                    class="text-primary underline">Eignungscheck</a
+                >
+                statt eines pauschalen Gerätevergleichs.
+            </p>
+            <p class="text-xs text-text-muted mt-4">
+                Zuletzt aktualisiert: {lastUpdatedDisplay} · Inhalte in Zusammenarbeit
+                mit regionalen SHK-Fachbetrieben aus Bremen.
+            </p>
+        </div>
+    </SectionShell>
+
     <!-- Intro -->
     <SectionShell>
         <article class="max-w-3xl">
             <p class="text-text leading-relaxed text-base sm:text-lg">
                 Eine <strong>Wärmepumpe in Bremen</strong> ist für viele Eigentümer
                 realistisch, aber nicht jede Immobilie braucht dieselbe Lösung. Der
-                wichtigste erste Schritt ist deshalb kein Gerätevergleich, sondern ein
-                ehrlicher Eignungscheck: Vorlauftemperatur, Heizkörper, alte Heizung,
+                wichtigste erste Schritt ist deshalb kein Gerätevergleich, sondern
+                ein ehrlicher Eignungscheck: Vorlauftemperatur, Heizkörper, alte Heizung,
                 Aufstellort, Schallschutz, Kostenrahmen und mögliche KfW-Förderung.
             </p>
             <p class="text-text-muted leading-relaxed mt-5">
                 bremer-waermepumpe.de richtet sich an Eigentümer in Bremen,
-                Bremerhaven und dem Umland, die einen Heizungstausch konkret prüfen.
-                Der <a href="/check/" class="text-primary underline"
-                    >Eignungs- und Fördercheck</a
-                > ordnet Ihr Haus direkt im Browser ein. Danach können Sie die Details zu
-                <a href="/waermepumpe-kosten-bremen/" class="text-primary underline"
-                    >Kosten in Bremen</a
-                >,
-                <a href="/waermepumpe-foerderung-bremen/" class="text-primary underline"
-                    >Förderung</a
-                > und
-                <a href="/waermepumpe-altbau-bremen/" class="text-primary underline"
-                    >Altbau-Eignung</a
-                > vertiefen.
+                Bremerhaven und dem Umland, die einen Heizungstausch konkret
+                prüfen. Unser kostenloser <a
+                    href="/check/"
+                    class="text-primary underline">Eignungs- und Fördercheck</a
+                >
+                ordnet Ihr Haus direkt im Browser ein; passt die Ausgangslage, kann
+                ein Bremer Fachpartner die nächsten Schritte prüfen. Vertiefen können
+                Sie anschließend die
+                <a
+                    href="/waermepumpe-kosten-bremen/"
+                    class="text-primary underline">Kosten in Bremen</a
+                >, die <a
+                    href="/waermepumpe-foerderung-bremen/"
+                    class="text-primary underline">Förderung</a
+                >
+                und die <a
+                    href="/waermepumpe-altbau-bremen/"
+                    class="text-primary underline">Altbau-Eignung</a
+                >.
             </p>
         </article>
-    </SectionShell>
-
-    <!-- Lokale Einordnung -->
-    <SectionShell>
-        <h2
-            class="text-2xl md:text-3xl font-bold tracking-tight text-text mb-6"
-        >
-            Lokale Erstberatung statt anonymer Leadverkauf
-        </h2>
-        <p class="text-text-muted leading-relaxed mb-6 max-w-3xl">
-            Der Check ist bewusst auf Bremen und Umgebung zugeschnitten. Bei passender
-            Ausgangslage kann Ihre Anfrage an den namentlich genannten Bremer
-            Fachpartner <strong class="text-text">Fritts Group, Osterdeich 59A,
-            28203 Bremen</strong> weitergegeben werden. Fokusgebiet sind die
-            PLZ-Bereiche <strong class="text-text">27xxx und 28xxx</strong> – von der
-            Neustadt, Findorff und Schwachhausen über die Vahr bis nach Bremen-Nord,
-            Vegesack und ins Bremerhavener Umland.
-        </p>
-        <ul class="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-3xl">
-            {[
-                "Keine Weitergabe an anonyme Leadbörsen",
-                "Bremen-Fokus: Reihenhäuser, Altbremer Häuser, Bremerhaven und Umland",
-                "Erste Einordnung zu KfW 458, BAFA und BAB-Status",
-                "Direkter Blick auf Aufstellort, Schall und Heizflächen",
-            ].map((item) => (
-                <li class="flex items-start gap-3 text-text-muted text-sm leading-relaxed">
-                    <span class="text-primary font-bold mt-0.5 shrink-0">✓</span>
-                    {item}
-                </li>
-            ))}
-        </ul>
     </SectionShell>
 
     <!-- Warum sich eine WP lohnt -->
@@ -182,9 +204,10 @@ const faqs = [
         </h2>
         <p class="text-text-muted leading-relaxed max-w-2xl mb-8">
             Moderne Systeme nutzen Umweltenergie aus Luft, Erdreich oder Wasser.
-            Für Bremer Eigentümer wird die Entscheidung vor allem durch drei Punkte
-            interessant: KfW-Förderung, planbare Stromkosten über Wärmepumpentarife
-            und die Frage, ob das Haus mit niedriger Vorlauftemperatur warm wird.
+            Für Bremer Eigentümer wird die Entscheidung vor allem durch drei
+            Punkte interessant: KfW-Förderung, planbare Stromkosten über
+            Wärmepumpentarife und die Frage, ob das Haus mit niedriger
+            Vorlauftemperatur warm wird.
         </p>
         <p class="font-semibold text-text mb-4">Ihre Vorteile im Überblick:</p>
         <ul class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8 max-w-3xl">
@@ -212,9 +235,10 @@ const faqs = [
             Häuser sind älter, teilweise modernisiert und haben individuelle
             Voraussetzungen. Genau deshalb ist eine pauschale Empfehlung selten
             sinnvoll. Entscheidend ist immer, wie gut Haus, Heizflächen,
-            Wärmebedarf und Aufstellort zusammenpassen. Für Reihenhäuser ist auch
-            der <a href="/waermepumpe-abstand-nachbar-bremen/" class="text-primary underline"
-                >Abstand zum Nachbarn</a
+            Wärmebedarf und Aufstellort zusammenpassen. Für Reihenhäuser ist
+            auch der <a
+                href="/waermepumpe-abstand-nachbar-bremen/"
+                class="text-primary underline">Abstand zum Nachbarn</a
             > relevant.
         </p>
     </SectionShell>
@@ -364,7 +388,12 @@ const faqs = [
             Wichtig: Eine Wärmepumpe ist kein Standardprodukt von der Stange.
             Wer im Bestand modernisiert, sollte mit einem erfahrenen
             Heizungsbauer in Bremen zusammenarbeiten, der sowohl Technik als
-            auch Gebäudesituation realistisch beurteilt.
+            auch Gebäudesituation realistisch beurteilt. Mehr dazu auf der Seite
+            <a
+                href="/waermepumpe-altbau-bremen/"
+                class="text-primary underline not-italic"
+                >Wärmepumpe Altbau Bremen</a
+            >.
         </p>
     </SectionShell>
 
@@ -557,11 +586,77 @@ const faqs = [
                 </div>
             </div>
         </div>
+
+        <!-- Vergleichstabelle (AI-/Snippet-extrahierbar) -->
+        <div class="surface-card overflow-x-auto mt-10 max-w-3xl">
+            <table class="w-full text-sm text-left border-collapse">
+                <caption class="sr-only">
+                    Vergleich der Wärmepumpen-Typen für Bremen: Effizienz,
+                    Investition, Platzbedarf und Eignung
+                </caption>
+                <thead>
+                    <tr class="border-b border-border text-text">
+                        <th scope="col" class="px-4 py-3 font-semibold">Typ</th>
+                        <th scope="col" class="px-4 py-3 font-semibold"
+                            >Effizienz</th
+                        >
+                        <th scope="col" class="px-4 py-3 font-semibold"
+                            >Investition</th
+                        >
+                        <th scope="col" class="px-4 py-3 font-semibold"
+                            >Platzbedarf</th
+                        >
+                        <th scope="col" class="px-4 py-3 font-semibold"
+                            >Typische Eignung</th
+                        >
+                    </tr>
+                </thead>
+                <tbody class="text-text-muted">
+                    <tr class="border-b border-border">
+                        <th scope="row" class="px-4 py-3 font-medium text-text"
+                            >Luft-Wasser</th
+                        >
+                        <td class="px-4 py-3">gut</td>
+                        <td class="px-4 py-3">niedrig – mittel</td>
+                        <td class="px-4 py-3">gering (Außengerät)</td>
+                        <td class="px-4 py-3"
+                            >Reihenhäuser, Bestand, kleine Grundstücke</td
+                        >
+                    </tr>
+                    <tr class="border-b border-border">
+                        <th scope="row" class="px-4 py-3 font-medium text-text"
+                            >Sole-Wasser (Erdreich)</th
+                        >
+                        <td class="px-4 py-3">sehr gut</td>
+                        <td class="px-4 py-3">höher</td>
+                        <td class="px-4 py-3">Bohrung/Kollektor nötig</td>
+                        <td class="px-4 py-3">Grundstücke mit Fläche, Neubau</td
+                        >
+                    </tr>
+                    <tr>
+                        <th scope="row" class="px-4 py-3 font-medium text-text"
+                            >Grundwasser</th
+                        >
+                        <td class="px-4 py-3">sehr gut</td>
+                        <td class="px-4 py-3">höher, genehmigungspflichtig</td>
+                        <td class="px-4 py-3">Förder-/Schluckbrunnen</td>
+                        <td class="px-4 py-3"
+                            >nur bei passender Geologie & Genehmigung</td
+                        >
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
         <p class="mt-8 text-text-muted leading-relaxed text-sm max-w-2xl">
             Gerade im feuchten Bremer Klima ist eine saubere Planung
             entscheidend. Moderne Geräte sind für den ganzjährigen Betrieb
             ausgelegt, doch Qualität und Installation machen im Alltag einen
-            spürbaren Unterschied.
+            spürbaren Unterschied. Detaillierte Preise zeigt die Seite
+            <a
+                href="/luft-wasser-waermepumpe-kosten/"
+                class="text-primary underline">Luft-Wasser-Wärmepumpe Kosten</a
+            >.
         </p>
     </SectionShell>
 
@@ -573,10 +668,15 @@ const faqs = [
             Was kostet eine Wärmepumpe in Bremen?
         </h2>
         <p class="text-text-muted leading-relaxed mb-8 max-w-2xl">
-            In Bremen liegt die typische Investition für eine Luft-Wasser-Wärmepumpe
-            im Einfamilienhaus vor Förderung meist bei etwa 22.000 bis 35.000 Euro.
-            Der echte Eigenanteil hängt danach von KfW-Boni, förderfähigen
-            Umfeldmaßnahmen, swb-Wärmepumpenstrom, Heizkörpern und Schallschutz ab.
+            In Bremen liegt die typische Investition für eine
+            Luft-Wasser-Wärmepumpe im Einfamilienhaus vor Förderung meist bei
+            etwa 22.000 bis 35.000 Euro. Der echte Eigenanteil hängt danach von
+            KfW-Boni, förderfähigen Umfeldmaßnahmen, swb-Wärmepumpenstrom,
+            Heizkörpern und Schallschutz ab. Diese Seite gibt den Überblick –
+            die ausführliche Kostenaufstellung für Bremen finden Sie auf der
+            <a href="/waermepumpe-kosten-bremen/" class="text-primary underline"
+                >Detailseite zu den Kosten</a
+            >.
         </p>
         <div class="surface-card overflow-hidden max-w-xl">
             <div class="px-6 pt-5 pb-4 border-b border-border">
@@ -624,10 +724,10 @@ const faqs = [
             </p>
         </div>
         <p class="mt-8 text-text-muted leading-relaxed max-w-2xl text-sm">
-            Gerade bei Bestandsimmobilien zählt nicht der Bruttoangebotspreis allein.
-            Wichtiger ist der Eigenanteil nach Förderung und ob die Anlage später
-            effizient läuft. Die Detailseite zeigt die Kosten nach Bauart,
-            Förderquote und Bremer Stromtarif.
+            Gerade bei Bestandsimmobilien zählt nicht der Bruttoangebotspreis
+            allein. Wichtiger ist der Eigenanteil nach Förderung und ob die
+            Anlage später effizient läuft. Die Detailseite zeigt die Kosten nach
+            Bauart, Förderquote und Bremer Stromtarif.
         </p>
         <div class="flex flex-wrap gap-3 my-4">
             <a
@@ -650,26 +750,102 @@ const faqs = [
         <h2
             class="text-2xl md:text-3xl font-bold tracking-tight text-text mb-6"
         >
-            Wärmepumpe Förderung Bremen: was 2026 wirklich zählt
+            Wärmepumpe Förderung Bremen: Was 2026 wirklich zählt
         </h2>
         <p class="text-text-muted leading-relaxed mb-6 max-w-2xl">
             Für den neuen Wärmepumpen-Einbau ist 2026 vor allem die
-            <a href="/kfw-458-waermepumpe/" class="text-primary underline">KfW 458</a>
+            <a href="/kfw-458-waermepumpe/" class="text-primary underline"
+                >KfW 458</a
+            >
             relevant. Das BAFA ist nicht mehr der Zuschusstopf für die Wärmepumpe
-            selbst, kann aber bei Heizungsoptimierung, Energieberatung und iSFP
-            wichtig bleiben. Der frühere BAB-Heizungstausch in Bremen ist für neue
-            Anträge nicht mehr der Hauptweg.
+            selbst, kann aber bei Heizungsoptimierung, Energieberatung und iSFP wichtig
+            bleiben. Der frühere BAB-Heizungstausch in Bremen ist für neue Anträge
+            nicht mehr der Hauptweg.
         </p>
+
+        <!-- Fördermatrix (Überblick – Tiefe auf der Förderseite) -->
+        <div class="surface-card overflow-x-auto max-w-2xl mb-6">
+            <table class="w-full text-sm text-left border-collapse">
+                <caption class="sr-only">
+                    KfW-458-Fördermatrix 2026: Bausteine, Höhe und
+                    Voraussetzungen
+                </caption>
+                <thead>
+                    <tr class="border-b border-border text-text">
+                        <th scope="col" class="px-4 py-3 font-semibold"
+                            >Förderbaustein</th
+                        >
+                        <th scope="col" class="px-4 py-3 font-semibold">Höhe</th
+                        >
+                        <th scope="col" class="px-4 py-3 font-semibold"
+                            >Voraussetzung (kurz)</th
+                        >
+                    </tr>
+                </thead>
+                <tbody class="text-text-muted">
+                    <tr class="border-b border-border">
+                        <th scope="row" class="px-4 py-3 font-medium text-text"
+                            >Grundförderung</th
+                        >
+                        <td class="px-4 py-3 tabular-nums">30 %</td>
+                        <td class="px-4 py-3"
+                            >für alle förderfähigen Heizungen</td
+                        >
+                    </tr>
+                    <tr class="border-b border-border">
+                        <th scope="row" class="px-4 py-3 font-medium text-text"
+                            >Effizienzbonus</th
+                        >
+                        <td class="px-4 py-3 tabular-nums">+5 %</td>
+                        <td class="px-4 py-3"
+                            >natürliches Kältemittel oder Quelle
+                            Erde/Wasser/Abwasser</td
+                        >
+                    </tr>
+                    <tr class="border-b border-border">
+                        <th scope="row" class="px-4 py-3 font-medium text-text"
+                            >Klimageschwindigkeitsbonus</th
+                        >
+                        <td class="px-4 py-3 tabular-nums">+20 %</td>
+                        <td class="px-4 py-3"
+                            >Selbstnutzer, Austausch alter fossiler Heizung
+                            (voll bis Ende 2028)</td
+                        >
+                    </tr>
+                    <tr class="border-b border-border">
+                        <th scope="row" class="px-4 py-3 font-medium text-text"
+                            >Einkommensbonus</th
+                        >
+                        <td class="px-4 py-3 tabular-nums">+30 %</td>
+                        <td class="px-4 py-3"
+                            >selbstnutzend, zu versteuerndes Haushaltseinkommen
+                            ≤ 40.000 €</td
+                        >
+                    </tr>
+                    <tr class="bg-highlight font-bold text-text">
+                        <th scope="row" class="px-4 py-3">Maximaler Zuschuss</th
+                        >
+                        <td class="px-4 py-3 tabular-nums">bis 70 %</td>
+                        <td class="px-4 py-3"
+                            >gedeckelt auf 30.000 € Kosten (EFH) → bis 21.000 €</td
+                        >
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
         <div class="notice-success max-w-2xl mb-6">
             <p class="font-semibold text-sm mb-3">Wichtig bei der Förderung:</p>
             <ul class="space-y-2 text-sm">
                 <li class="flex items-start gap-2">
                     <span class="shrink-0 mt-0.5">•</span>
-                    KfW-Antrag und Förderzusage müssen vor der Umsetzung sauber geplant sein
+                    KfW-Antrag und Förderzusage müssen vor der Umsetzung sauber geplant
+                    sein
                 </li>
                 <li class="flex items-start gap-2">
                     <span class="shrink-0 mt-0.5">•</span>
-                    BzA, förderfähige Kosten und Vertragsbedingung gehören vor Auftragserteilung auf den Tisch
+                    BzA, förderfähige Kosten und Vertragsbedingung gehören vor Auftragserteilung
+                    auf den Tisch
                 </li>
                 <li class="flex items-start gap-2">
                     <span class="shrink-0 mt-0.5">•</span>
@@ -677,15 +853,37 @@ const faqs = [
                 </li>
                 <li class="flex items-start gap-2">
                     <span class="shrink-0 mt-0.5">•</span>
-                    Der Eigenanteil kann über Modernisierungskredit oder weitere Sanierungsschritte geplant werden
+                    Der Eigenanteil kann über Modernisierungskredit oder weitere Sanierungsschritte
+                    geplant werden
                 </li>
             </ul>
         </div>
-        <p class="text-text-muted leading-relaxed max-w-2xl text-sm">
-            Auf der Seite <a href="/waermepumpe-foerderung-bremen/" class="text-primary underline"
-                >Wärmepumpe Förderung Bremen</a
+        <p class="text-text-muted leading-relaxed max-w-2xl text-sm mb-4">
+            Auf der Seite <a
+                href="/waermepumpe-foerderung-bremen/"
+                class="text-primary underline">Wärmepumpe Förderung Bremen</a
             > finden Sie die Fördermatrix mit KfW 458, BAFA, BAB-Status und lokalen
             Hinweisen.
+        </p>
+        <p class="text-xs text-text-muted leading-relaxed max-w-2xl">
+            Quellen & verbindliche Auskünfte:
+            <a
+                href="https://www.kfw.de"
+                rel="noopener"
+                class="text-primary underline">KfW (Programm 458)</a
+            >,
+            <a
+                href="https://www.bafa.de"
+                rel="noopener"
+                class="text-primary underline"
+                >BAFA (Gebäudehülle & Optimierung)</a
+            >,
+            <a
+                href="https://www.swb.de"
+                rel="noopener"
+                class="text-primary underline">swb (Wärmepumpen-/Heizstrom)</a
+            >. Fördersätze Stand {lastUpdatedDisplay}; maßgeblich sind stets die
+            aktuellen Richtlinien der KfW.
         </p>
     </SectionShell>
 
@@ -743,12 +941,17 @@ const faqs = [
         </h2>
         <p class="text-text-muted leading-relaxed max-w-2xl">
             Wenn Sie eine Wärmepumpe in Bremen planen, ist die Wahl des
-            richtigen Partners entscheidend. Ein guter Fachbetrieb verkauft nicht
-            einfach irgendein Gerät, sondern betrachtet Heizlast, vorhandene
-            Heizflächen, Schall, Leitungswege, Förderung und spätere Einstellung
-            zusammen. Für passende Anfragen arbeitet dieses Portal mit dem Bremer
-            Fachpartner Fritts Group zusammen; die erste Einschätzung startet über
-            den <a href="/check/" class="text-primary underline">Check</a>.
+            richtigen Partners entscheidend. Ein guter Fachbetrieb verkauft
+            nicht einfach irgendein Gerät, sondern betrachtet Heizlast,
+            vorhandene Heizflächen, Schall, Leitungswege, Förderung und spätere
+            Einstellung zusammen. Für passende Anfragen vermittelt dieses Portal
+            an
+            <a href="/fachpartner/" class="text-primary underline"
+                >geprüfte Bremer Fachbetriebe</a
+            >; die erste Einschätzung startet über den <a
+                href="/check/"
+                class="text-primary underline">Check</a
+            >.
         </p>
     </SectionShell>
 
