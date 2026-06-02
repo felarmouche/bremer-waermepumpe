@@ -1,4 +1,5 @@
 ---
+import { getImage } from "astro:assets";
 import Layout from "../layout/Layout.astro";
 import Breadcrumb from "../components/Breadcrumb.astro";
 import HeroSection from "../components/HeroSection.astro";
@@ -14,12 +15,14 @@ import heroImage from "../images/foerderung-bremen-hero.webp";
 import type { PageData } from "../types/page";
 
 const data: PageData = {
-    title: "Wärmepumpe Förderung 2026: Das ändert sich jetzt!",
-    description: "Wärmepumpe Förderung 2026: neue KfW-Boni, GEG-Regeln und Lärmgrenzen – was sich für Eigentümer ändert und wann der Heizungstausch sinnvoll ist.",
-    lastUpdated: "Mai 2026",
+    title: "Wärmepumpe Förderung 2026: Was sich ändert (KfW, GEG, Lärm)",
+    description:
+        "Wärmepumpe Förderung 2026: KfW 458 bis 70 % läuft weiter und ist bis 2029 gesichert. Neue Lärmgrenzen seit Januar, GEG-Reform zum Gebäudemodernisierungsgesetz. Geprüft am 2. Juni 2026.",
+    lastUpdated: "2. Juni 2026",
     hero: {
         headline: "Wärmepumpe Förderung 2026",
-        subtext: "Was sich 2026 ändert: GEG §71 ab Juli, verschärfte Lärmgrenzen ab Januar, voller Klimabonus läuft – die wichtigsten Updates auf einen Blick.",
+        subtext:
+            "Was sich 2026 ändert: KfW 458 bis 70 % läuft weiter und ist bis 2029 gesichert, neue Lärmgrenzen seit Januar – und das GEG wird durch das Gebäudemodernisierungsgesetz abgelöst. Die wichtigsten Updates auf einen Blick.",
         primaryCTA: {
             label: "Eignung & Förderung prüfen",
             href: "/check/"
@@ -31,16 +34,16 @@ const data: PageData = {
     },
     trustItems: [
         {
-            text: "Stand Mai 2026"
+            text: "Geprüft am 2. Juni 2026"
         },
         {
-            text: "GEG §71 ab Juli"
+            text: "KfW 458: bis zu 70 %"
+        },
+        {
+            text: "Förderung bis 2029 gesichert"
         },
         {
             text: "Klimabonus voll bis 2028"
-        },
-        {
-            text: "Bremer Kontext"
         }
     ],
     breadcrumb: [
@@ -57,8 +60,8 @@ const data: PageData = {
         }
     ],
     ctaBlock: {
-        headline: "Wann ist der richtige Zeitpunkt für Ihre Wärmepumpe?",
-        text: "Browser-Check zur Einordnung Ihrer Förderfähigkeit unter den 2026er-Bedingungen – ohne Datenübermittlung.",
+        headline: "Lohnt sich Ihr Heizungstausch unter den 2026er-Bedingungen?",
+        text: "Der Browser-Check ordnet Ihre Förderfähigkeit unter den aktuellen 2026er-Regeln ein – ohne Datenübermittlung. Kontaktdaten werden erst nach ausdrücklicher Einwilligung an den unter /fachpartner/ genannten Bremer Betrieb weitergegeben.",
         variant: "highlight",
         primaryCTA: {
             label: "Eignung & Förderung prüfen",
@@ -73,34 +76,45 @@ const data: PageData = {
     faqs: [
         {
             question: "Wie hoch ist die Wärmepumpenförderung 2026?",
-            answer: "Über die KfW 458 sind 2026 bis zu 70 % der förderfähigen Kosten möglich (max. 30.000 Euro für die erste Wohneinheit, also bis zu 21.000 Euro Zuschuss). Der Klimageschwindigkeitsbonus von 20 % läuft 2026 in voller Höhe – ab 2029 reduziert er sich um 3 Prozentpunkte pro Jahr."
+            answer: "Der Kauf und Einbau einer Wärmepumpe wird 2026 über die KfW-Heizungsförderung 458 bezuschusst – mit bis zu 70 % der förderfähigen Kosten. Bei der ersten Wohneinheit eines Einfamilienhauses berücksichtigt die KfW höchstens 30.000 Euro, daraus ergeben sich maximal 21.000 Euro Zuschuss. Die Förderung ist nach aktuellem Stand bis 2029 gesichert."
+        },
+        {
+            question: "Wird die Wärmepumpenförderung 2026 gekürzt oder läuft sie aus?",
+            answer: "Für 2026 wird die Förderhöhe nicht gekürzt: KfW 458 bleibt bei bis zu 70 %, und die Bundesförderung für den Heizungstausch ist nach aktuellem Stand bis 2029 abgesichert. Der Klimageschwindigkeitsbonus von 20 % gilt voll bis Ende 2028 und sinkt erst ab 2029 schrittweise. Auch der Entwurf für das neue Gebäudemodernisierungsgesetz hält an der Heizungsförderung fest. Wer früh tauscht, sichert sich aber die höchsten Boni."
         },
         {
             question: "Bis wann gibt es den Klimageschwindigkeitsbonus von 20 %?",
-            answer: "Der volle 20%-Klimageschwindigkeitsbonus gilt 2026, 2027 und 2028. Ab 2029 reduziert er sich jährlich um 3 Prozentpunkte: 17 % (2029), 14 % (2030), 11 % (2031), bis er ausläuft. Wer den Tausch der alten Öl- oder Gasheizung ohnehin plant, profitiert in den nächsten zwei bis drei Jahren am stärksten."
+            answer: "Der volle 20-%-Klimageschwindigkeitsbonus gilt für Anträge bis zum 31. Dezember 2028. Ab 2029 sinkt er alle zwei Jahre um 3 Prozentpunkte: 17 % ab 2029, 14 % ab 2031, 11 % ab 2033, danach weiter fallend bis zum Auslaufen um 2037. Maßgeblich ist das Datum der Antragstellung, nicht der Inbetriebnahme. Wer den Tausch der alten Öl- oder Gasheizung ohnehin plant, profitiert bis Ende 2028 am stärksten."
         },
         {
-            question: "Welche Voraussetzungen gelten 2026 für die Wärmepumpenförderung?",
-            answer: "Bestandsgebäude (Bauantrag mindestens 5 Jahre alt), förderfähige Wärmepumpe (Mindesteffizienzanforderungen), BzA durch Energieeffizienz-Experten oder zugelassenes Fachunternehmen, Liefer-/Leistungsvertrag mit förderkonformer Bedingung, Antrag bei „Meine KfW\" vor Maßnahmenbeginn, hydraulischer Abgleich Pflicht. Für 2026 unverändert gegenüber 2025."
+            question: "Welche Wärmepumpen sind 2026 noch förderfähig?",
+            answer: "Förderfähig sind 2026 Wärmepumpen, die die technischen Effizienzkriterien erfüllen und die seit dem 1. Januar 2026 verschärften Schallanforderungen einhalten: geförderte Luft/Wasser-Wärmepumpen müssen mindestens 10 dB unter den EU-Ökodesign-Grenzwerten liegen (vorher 5 dB). Praktisch bedeutet das maximal 60 dB(A) Schallleistungspegel bei 6–12 kW und 55 dB(A) bei kleineren Geräten. Welche Modelle die Kriterien erfüllen, steht in der BAFA-Liste der förderfähigen Wärmepumpen; der Zuschuss selbst läuft über KfW 458."
         },
         {
-            question: "Welche Lärmgrenzen gelten 2026 für förderfähige Wärmepumpen?",
-            answer: "Ab 1. Januar 2026 gelten verschärfte Schallleistungspegel-Anforderungen für förderfähige Wärmepumpen mit 6–12 kW Leistung: maximal 60 dB(A). Geräte, die diesen Wert überschreiten, sind nicht mehr förderfähig. Praktisch betrifft das ältere Modelle – aktuelle Markt-Wärmepumpen (Vaillant, Viessmann, Wolf, Daikin, Bosch) erfüllen diese Werte in der Regel."
+            question: "Was wird 2026 aus dem Heizungsgesetz (GEG)?",
+            answer: "Das Bundeskabinett hat am 13. Mai 2026 den Entwurf für ein neues Gebäudemodernisierungsgesetz (GModG) beschlossen, das das Gebäudeenergiegesetz (GEG 2024) ablösen soll. Die starre 65-%-Erneuerbare-Pflicht beim Heizungstausch entfällt zugunsten einer technologieoffeneren Regelung mit einer Grüngas-/Grünöl-Stufe ab 2029. Der ursprüngliche Stichtag 1. Juli 2026 wurde verschoben; das Gesetz soll später im Jahr 2026 in Kraft treten. Bundestag und Bundesrat müssen noch zustimmen – bis dahin gilt formal das GEG 2024. Die Wärmepumpe bleibt in jedem Fall die wirtschaftlichste Lösung mit den höchsten Boni."
         },
         {
-            question: "Was ändert sich mit GEG §71 ab dem 1. Juli 2026 in Bremen?",
-            answer: "Ab 01.07.2026 gilt im Land Bremen die 65-%-Erneuerbare-Energien-Pflicht beim Heizungstausch. Wer ab diesem Datum eine Heizung im Bestand erneuert, muss eine Lösung mit mindestens 65 % EE einbauen. Die Wärmepumpe ist die häufigste Erfüllungsoption. Für Wärmepumpen-Pläne ist das ein klarer Pluspunkt – Gas-Neuinstallationen werden komplexer."
+            question: "Welche Voraussetzungen gelten 2026 für die KfW-458-Förderung?",
+            answer: "Bestandsgebäude (Bauantrag mindestens 5 Jahre alt), eine förderfähige Wärmepumpe (Effizienz- und seit 2026 verschärfte Schallanforderungen), eine Bestätigung zum Antrag (BzA) durch einen Energieeffizienz-Experten oder ein zugelassenes Fachunternehmen, ein Liefer-/Leistungsvertrag mit aufschiebender oder auflösender Förderbedingung, der Antrag bei „Meine KfW\" vor Maßnahmenbeginn sowie der hydraulische Abgleich. Diese Voraussetzungen sind 2026 gegenüber 2025 unverändert."
         }
     ],
     schema: {
         type: "Article",
         datePublished: "2026-05-02",
-        dateModified: "2026-05-02"
+        dateModified: "2026-06-02"
     }
 };
 
 const canonical = data.canonical ?? Astro.url.href;
 const hero = { ...data.hero, imageSrc: heroImage };
+const ogImage = await getImage({
+    src: heroImage,
+    width: 1200,
+    height: 630,
+    fit: "cover",
+    format: "jpg",
+});
 const dateLine = data.lastUpdated ? `Stand: ${data.lastUpdated}` : null;
 const pageSchema = data.schema
     ? {
@@ -115,6 +129,7 @@ const pageSchema = data.schema
     title={data.title}
     description={data.description}
     canonical={canonical}
+    ogImage={ogImage.src}
     noindex={data.noindex}
     pageSchema={pageSchema}
 >
@@ -129,39 +144,86 @@ const pageSchema = data.schema
         </div>
     )}
 
-{/* Intro */}
+{/* Answer-first: Kurzantwort */}
 <SectionShell>
-  <article class="max-w-3xl space-y-4 text-text-muted leading-relaxed">
-    <p>
-      2026 ist ein Übergangsjahr für die Wärmepumpenförderung in Bremen. Die KfW-458-Boni laufen weitgehend unverändert auf hohem Niveau, aber zwei Stichtage verändern die Rahmenbedingungen: Die <strong class="text-text">verschärften Lärmgrenzen ab dem 1. Januar 2026</strong> und das <strong class="text-text">Inkrafttreten von GEG §71 im Land Bremen am 1. Juli 2026</strong>.
+  <article class="max-w-3xl">
+    <div class="surface-card p-6 sm:p-8 border-l-4 border-primary">
+      <p class="text-xs font-semibold text-primary uppercase tracking-wide mb-3">
+        Kurzantwort
+      </p>
+      <p class="text-text leading-relaxed text-base sm:text-lg">
+        Die Wärmepumpen-Förderung läuft 2026 auf hohem Niveau weiter:
+        <strong>KfW 458 bezuschusst bis zu 70 %</strong> der Kosten (max.
+        <strong>21.000 Euro</strong> beim Einfamilienhaus) und ist nach aktuellem
+        Stand <strong>bis 2029 gesichert</strong>. Geändert haben sich vor allem
+        zwei Dinge: <strong>verschärfte Lärmgrenzen seit dem 1. Januar 2026</strong>
+        für förderfähige Geräte und die <strong>Ablösung des GEG durch das neue
+        Gebäudemodernisierungsgesetz</strong>, mit der die starre 65-%-Pflicht
+        entfällt. Der volle Klimabonus von 20 % gilt noch bis Ende 2028.
+      </p>
+    </div>
+    <p class="text-text-muted leading-relaxed mt-6">
+      Diese Seite fasst alle 2026er-Änderungen für Eigentümer in Deutschland
+      kompakt zusammen – mit dem Bremer Kontext, den die generischen
+      Deutschland-Ratgeber meist überspringen. Berechnungsdetails und Sonderfälle
+      bleiben bewusst auf den verlinkten Fachseiten, damit sich die Inhalte nicht
+      gegenseitig Konkurrenz machen.
     </p>
-    <p>
-      Diese Seite fasst alle 2026er-Änderungen kompakt zusammen – mit dem Bremer Kontext,
-      den die generischen Deutschland-Ratgeber meist überspringen.
-    </p>
-    <NoticeSuccess>
+    <NoticeSuccess class="mt-6">
       <p>
-        <strong>Stand Mai 2026:</strong> Diese Seite wird zum Jahreswechsel auf 2027
-        aktualisiert. Wer den Spoke später sucht, findet die jeweils gültigen Werte
-        immer auf dieser URL.
+        <strong>Verfasser:</strong>
+        <a href="/kontakt/" class="text-primary underline">Ferris El-Armouche</a>.
+        Quellenstand: 2. Juni 2026. Diese private Informationsseite ersetzt keine
+        verbindliche Förderberatung oder Förderzusage. Maßgeblich sind die
+        Bedingungen von KfW, BAFA und den jeweils gültigen Gesetzen zum Zeitpunkt
+        Ihrer Antragstellung.
       </p>
     </NoticeSuccess>
   </article>
 </SectionShell>
 
-{/* Klimabonus-Staffelung */}
+{/* GEG → GModG Reform */}
 <SectionShell variant="alt">
+  <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
+    Heizungsgesetz 2026: GEG wird zum Gebäudemodernisierungsgesetz
+  </h2>
+  <p class="text-text-muted max-w-3xl mb-4">
+    Die größte Änderung 2026 ist politischer Natur: Das Bundeskabinett hat am
+    <strong class="text-text">13. Mai 2026</strong> den Entwurf für ein neues
+    <strong class="text-text">Gebäudemodernisierungsgesetz (GModG)</strong>
+    beschlossen, das das Gebäudeenergiegesetz (GEG 2024) ablösen soll. Was das
+    für Wärmepumpen-Pläne bedeutet:
+  </p>
+  <CheckList
+    items={[
+      { lead: "65-%-Pflicht entfällt:", text: "Die starre Vorgabe, dass neue Heizungen zu 65 % erneuerbar betrieben werden müssen, wird durch eine technologieoffenere Regelung ersetzt." },
+      { lead: "Grüngas-/Grünöl-Stufe ab 2029:", text: "Statt der Pflicht steigt der Anteil erneuerbarer Brennstoffe für Gas- und Ölheizungen ab 2029 schrittweise an („Bio-Treppe\")." },
+      { lead: "Stichtag verschoben:", text: "Der ursprüngliche Termin 1. Juli 2026 ist hinfällig; das neue Gesetz soll später im Jahr 2026 in Kraft treten." },
+      { lead: "Noch nicht final:", text: "Es handelt sich um einen Kabinettsentwurf. Bundestag und Bundesrat müssen noch zustimmen – bis dahin gilt formal das GEG 2024." },
+      { lead: "Wärmepumpe bleibt erste Wahl:", text: "Unabhängig von der konkreten Pflicht ist die Wärmepumpe weiterhin die wirtschaftlichste Lösung – und nur sie sichert die vollen KfW-Boni." },
+    ]}
+  />
+  <p class="text-text-muted max-w-3xl text-sm mt-6">
+    Wichtig: Die Förderung ist von der Gesetzesreform getrennt. Wer 2026 eine
+    Wärmepumpe einbaut, erhält die KfW-Förderung unabhängig davon, wann das GModG
+    final in Kraft tritt.
+  </p>
+</SectionShell>
+
+{/* Klimabonus-Staffelung */}
+<SectionShell>
   <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
     Klimageschwindigkeitsbonus 2026: voll, dann ab 2029 fallend
   </h2>
   <p class="text-text-muted max-w-3xl mb-6">
-    Der Klimabonus belohnt den frühen Tausch alter fossiler Heizungen. Stand Mai 2026
-    gilt:
+    Der Klimabonus belohnt den frühen Tausch alter fossiler Heizungen. Stand
+    2. Juni 2026 gilt – die Reduzierung erfolgt <strong class="text-text">alle
+    zwei Jahre um 3 Prozentpunkte</strong>:
   </p>
 
   <div class="surface-card overflow-hidden max-w-2xl divide-y divide-border">
     <div class="grid grid-cols-2 px-5 py-4 text-sm bg-highlight">
-      <span class="font-semibold text-text">Jahr</span>
+      <span class="font-semibold text-text">Antrag im Jahr</span>
       <span class="font-semibold text-text text-right">Klimabonus</span>
     </div>
     <div class="grid grid-cols-2 px-5 py-4 text-sm">
@@ -169,113 +231,118 @@ const pageSchema = data.schema
       <span class="font-bold text-primary text-right">20 % (voll)</span>
     </div>
     <div class="grid grid-cols-2 px-5 py-4 text-sm">
-      <span class="text-text-muted">2029</span>
+      <span class="text-text-muted">ab 2029</span>
       <span class="font-semibold text-text text-right">17 %</span>
     </div>
     <div class="grid grid-cols-2 px-5 py-4 text-sm">
-      <span class="text-text-muted">2030</span>
+      <span class="text-text-muted">ab 2031</span>
       <span class="font-semibold text-text text-right">14 %</span>
     </div>
     <div class="grid grid-cols-2 px-5 py-4 text-sm">
-      <span class="text-text-muted">2031</span>
+      <span class="text-text-muted">ab 2033</span>
       <span class="font-semibold text-text text-right">11 %</span>
     </div>
     <div class="grid grid-cols-2 px-5 py-4 text-sm">
-      <span class="text-text-muted">2032 ff.</span>
-      <span class="font-semibold text-text text-right">stufenweise auslaufend</span>
+      <span class="text-text-muted">ab 2035</span>
+      <span class="font-semibold text-text text-right">weiter fallend, Auslauf ~2037</span>
     </div>
   </div>
 
   <p class="text-text-muted max-w-3xl text-sm mt-6">
-    Wer den Heizungstausch ohnehin plant, sollte ihn idealerweise bis Ende 2028 abschließen
-    – dann sind die vollen 20 % gesichert. Maßgeblich ist das Datum der KfW-Förderzusage,
-    nicht der Inbetriebnahme. Antragstellung kann also auch Ende 2028 erfolgen, Einbau
-    Anfang 2029.
-  </p>
-</SectionShell>
-
-{/* GEG §71 ab 01.07.2026 */}
-<SectionShell>
-  <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
-    GEG §71 in Bremen: Ab 1. Juli 2026 gilt die 65-%-EE-Pflicht
-  </h2>
-  <p class="text-text-muted max-w-3xl mb-4">
-    Mit Inkrafttreten von <strong class="text-text">§71 GEG</strong> im Land Bremen ab
-    dem <strong class="text-text">1. Juli 2026</strong> müssen neue Heizungen im
-    Bestandsgebäude mindestens 65 % erneuerbare Energie nutzen. Praktische Konsequenzen:
-  </p>
-  <CheckList
-    items={[
-      { lead: "Wärmepumpe:", text: "Gilt automatisch als 65-%-EE-Lösung – uneingeschränkt zulässig." },
-      { lead: "Hybrid (Wärmepumpe + Gas-Spitzenlast):", text: "Zulässig, wenn die Wärmepumpe den Großteil der Jahresheizarbeit übernimmt." },
-      { lead: "Reine neue Gasheizung:", text: "Nur in eng definierten Übergangsfällen zulässig (z. B. Heizungs-Havarie). Erfordert Beratungsgespräch und Übergangsfrist." },
-      { lead: "Ölheizung neu installieren:", text: "In Bestandsgebäuden faktisch nicht mehr zulässig." },
-      { lead: "Pellets/Holz/Solarthermie:", text: "Erfüllen die EE-Pflicht ebenfalls, aber im Bremer städtischen Raum oft nicht praktikabel (Lager, Liefer-Logistik)." },
-    ]}
-  />
-  <p class="text-text-muted max-w-3xl text-sm mt-6">
-    Für Bremen gilt zusätzlich die <strong class="text-text">kommunale Wärmeplanung</strong>:
-    Bremen ist eine Großstadt, daher endet die Übergangsfrist für die kommunale Wärmeplanung
-    am 30. Juni 2026 – exakt parallel zum GEG §71-Stichtag. Die kommunale Wärmeplanung
-    legt fest, welche Stadtteile künftig auf Fernwärme oder Wasserstoffnetze gesetzt werden.
+    Wer den Heizungstausch ohnehin plant, sollte den Antrag idealerweise bis Ende
+    2028 stellen – dann sind die vollen 20 % gesichert. Maßgeblich ist das Datum
+    der Antragstellung bzw. Förderzusage, nicht der Inbetriebnahme. Antrag also
+    z. B. Ende 2028, Einbau Anfang 2029.
   </p>
 </SectionShell>
 
 {/* Verschärfte Lärmgrenzen */}
 <SectionShell variant="alt">
   <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
-    Verschärfte Lärmgrenzen ab 1. Januar 2026
+    Verschärfte Lärmgrenzen seit 1. Januar 2026
   </h2>
   <p class="text-text-muted max-w-3xl mb-4">
-    Seit dem Jahresbeginn 2026 gelten neue Anforderungen an den Schallleistungspegel
-    förderfähiger Wärmepumpen:
+    Seit Jahresbeginn 2026 müssen geförderte Luft/Wasser-Wärmepumpen
+    <strong class="text-text">mindestens 10 dB unter den Grenzwerten der
+    EU-Ökodesign-Verordnung</strong> liegen – vorher reichten 5 dB. Daraus
+    ergeben sich diese praktischen Förder-Obergrenzen für den Schallleistungspegel:
   </p>
 
   <div class="surface-card p-5 max-w-2xl my-6">
     <ul class="text-sm space-y-2">
       <li class="flex justify-between">
         <span class="text-text-muted">Wärmepumpen 6–12 kW Heizleistung</span>
-        <span class="font-semibold text-text">max. 60 dB(A) Schallleistungspegel</span>
+        <span class="font-semibold text-text">max. 60 dB(A)</span>
       </li>
       <li class="flex justify-between border-t border-border pt-2 mt-2">
         <span class="text-text-muted">Wärmepumpen unter 6 kW</span>
-        <span class="font-semibold text-text">strengere Werte je nach Klasse</span>
+        <span class="font-semibold text-text">max. 55 dB(A)</span>
       </li>
       <li class="flex justify-between border-t border-border pt-2 mt-2">
-        <span class="text-text-muted">Wärmepumpen über 12 kW</span>
-        <span class="font-semibold text-text">individuelle Prüfung</span>
+        <span class="text-text-muted">größere Anlagen</span>
+        <span class="font-semibold text-text">nach Geräteklasse / Ökodesign</span>
       </li>
     </ul>
   </div>
 
   <p class="text-text-muted max-w-3xl text-sm">
-    Praktisch heißt das: Geräte, die diese Grenzen reißen, sind seit dem 1. Januar 2026
-    nicht mehr KfW-458-förderfähig. Der Markt hat reagiert – aktuelle Modelle (2025/26)
-    erfüllen die neuen Werte in der Regel. Wer ein älteres Restposten-Gerät einbaut,
-    sollte den Schallleistungspegel im Datenblatt prüfen, sonst entfällt die Förderung.
+    Praktisch heißt das: Geräte, die diese Grenzen reißen, sind seit dem 1. Januar
+    2026 nicht mehr KfW-458-förderfähig – obwohl sie baurechtlich weiterhin zulässig
+    sein können. Es gibt keine Übergangsfrist. Der Markt hat reagiert: aktuelle
+    Modelle (2025/26) erfüllen die neuen Werte in der Regel. Wer ein älteres
+    Restposten-Gerät einbaut, sollte den Schallleistungspegel im Datenblatt prüfen,
+    sonst entfällt die Förderung.
+  </p>
+</SectionShell>
+
+{/* Förderfähige Wärmepumpen 2026 / BAFA-Liste */}
+<SectionShell>
+  <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
+    Welche Wärmepumpen sind 2026 förderfähig?
+  </h2>
+  <p class="text-text-muted max-w-3xl mb-4">
+    Ob eine Wärmepumpe 2026 gefördert wird, hängt an zwei Bedingungen: Sie muss
+    die technischen <strong class="text-text">Effizienzkriterien</strong> erfüllen
+    und die seit Januar 2026 verschärften <strong class="text-text">Schallanforderungen</strong>
+    einhalten. Welche konkreten Modelle das erfüllen, ist amtlich gelistet:
+  </p>
+  <CheckList
+    items={[
+      { lead: "BAFA-Liste der förderfähigen Wärmepumpen:", text: "Das BAFA pflegt im Wärmeerzeuger-Portal die offizielle Liste der förderfähigen Geräte (Luft/Wasser, Sole/Wasser, Wasser/Wasser, Luft/Luft). Steht ein Modell dort, ist die technische Voraussetzung erfüllt." },
+      { lead: "Zuschuss läuft über die KfW:", text: "Seit 2024 fördert die KfW (Programm 458) den Kauf und Einbau – nicht das BAFA. Das BAFA ist für die Liste sowie für Heizungsoptimierung und Energieberatung zuständig." },
+      { lead: "Natürliches Kältemittel zahlt sich aus:", text: "Geräte mit natürlichem Kältemittel (z. B. R290/Propan) bringen 5 % Effizienzbonus zusätzlich." },
+      { lead: "Aktuelle Geräte erfüllen die Werte:", text: "Marktübliche Modelle (Vaillant, Viessmann, Wolf, Daikin, Bosch u. a.) in der Baureihe 2025/26 sind in der Regel förderfähig – bei Restposten lohnt der Blick ins Datenblatt." },
+    ]}
+  />
+  <p class="text-text-muted max-w-3xl text-sm mt-6">
+    Den vollständigen Antragsweg, die Boni-Matrix und die förderfähigen Kosten je
+    Wohneinheit erklärt die Detailseite
+    <a href="/kfw-458-waermepumpe/" class="text-brand underline">KfW 458 im Detail</a>.
+    Was das BAFA rund um Wärmepumpen noch fördert, steht auf der
+    <a href="/bafa-foerderung-waermepumpe/" class="text-brand underline">BAFA-Seite</a>.
   </p>
 </SectionShell>
 
 {/* Übersicht Boni-Summen 2026 */}
-<SectionShell>
+<SectionShell variant="alt">
   <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
     Übersicht: Maximale Förderquote 2026
   </h2>
   <p class="text-text-muted max-w-3xl mb-6">
-    Wie viel Förderung 2026 für Bremer Hauseigentümer realistisch ist, hängt von
-    den eigenen Boni-Voraussetzungen ab:
+    Wie viel Förderung 2026 realistisch ist, hängt von den eigenen
+    Boni-Voraussetzungen ab:
   </p>
 
   <div class="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl">
     <div class="surface-card p-5 text-center">
       <p class="text-3xl font-bold text-primary">35 %</p>
       <p class="font-semibold text-text mt-2">Standardfall</p>
-      <p class="text-text-muted text-sm mt-2">30 % Basis + 5 % Effizienzbonus (R290) – wenn keine alte fossile Heizung getauscht wird.</p>
+      <p class="text-text-muted text-sm mt-2">30 % Basis + 5 % Effizienzbonus (z. B. R290) – wenn keine alte fossile Heizung getauscht wird.</p>
     </div>
     <div class="surface-card p-5 text-center">
       <p class="text-3xl font-bold text-primary">55 %</p>
       <p class="font-semibold text-text mt-2">Tausch alter Öl/Gas</p>
-      <p class="text-text-muted text-sm mt-2">+ 20 % Klimabonus – der häufigste Bremer Fall im Bestand.</p>
+      <p class="text-text-muted text-sm mt-2">+ 20 % Klimabonus – der häufigste Fall im Bestand.</p>
     </div>
     <div class="surface-card p-5 text-center">
       <p class="text-3xl font-bold text-primary">70 %</p>
@@ -283,10 +350,87 @@ const pageSchema = data.schema
       <p class="text-text-muted text-sm mt-2">+ 30 % Einkommensbonus (Haushaltseinkommen ≤ 40.000 €). Deckelung bei 70 %.</p>
     </div>
   </div>
+  <p class="text-text-muted max-w-3xl text-sm mt-6">
+    Die maximal förderfähigen Kosten je Wohneinheit (30.000 / 15.000 / 8.000 Euro)
+    und die Berechnung bei mehreren Wohneinheiten stehen auf der
+    <a href="/kfw-458-waermepumpe/" class="text-brand underline">KfW-458-Detailseite</a>.
+  </p>
+</SectionShell>
+
+{/* Bremen-Kontext */}
+<SectionShell>
+  <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
+    Was bedeutet das 2026 für Bremen?
+  </h2>
+  <p class="text-text-muted max-w-3xl mb-4">
+    Die Förderhöhen und die neuen Bundesregeln gelten in Bremen wie überall. Lokal
+    kommt hinzu: Das frühere Bremer Zuschussprogramm
+    <strong class="text-text">BAB Heizungstausch</strong> ist für neue Anträge
+    geschlossen, und ein neues BAB-Kreditprogramm für die Wärmewende ist für
+    Herbst 2026 angekündigt. Auch die kommunale Wärmeplanung schreitet in Bremen
+    als Großstadt voran und dient als Orientierung, welche Stadtteile auf Fernwärme
+    setzen.
+  </p>
+  <p class="text-text-muted max-w-3xl text-sm">
+    Den vollständigen Überblick über die lokalen Förderwege gibt der Hub
+    <a href="/waermepumpe-foerderung-bremen/" class="text-brand underline">Wärmepumpe Förderung Bremen</a>.
+  </p>
+</SectionShell>
+
+{/* Quellen */}
+<SectionShell variant="alt">
+  <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
+    Quellen und redaktioneller Stand
+  </h2>
+  <div class="surface-card p-5 max-w-3xl text-sm text-text-muted leading-relaxed">
+    <p class="font-semibold text-text mb-3">Quellenstand: 2. Juni 2026</p>
+    <ul class="space-y-2">
+      <li>
+        KfW: <a
+          href="https://www.kfw.de/inlandsfoerderung/Privatpersonen/Bestehende-Immobilie/F%C3%B6rderprodukte/Heizungsf%C3%B6rderung-f%C3%BCr-Privatpersonen-Wohngeb%C3%A4ude-%28458%29/"
+          class="text-primary underline"
+          target="_blank"
+          rel="noopener">Heizungsförderung für Privatpersonen – Wohngebäude 458</a>
+      </li>
+      <li>
+        BAFA: <a
+          href="https://www.bafa.de/DE/Energie/Effiziente_Gebaeude/Waermeerzeuger_Portal/waermeerzeuger_portal.html"
+          class="text-primary underline"
+          target="_blank"
+          rel="noopener">Wärmeerzeuger-Portal – Liste förderfähiger Wärmepumpen</a>
+      </li>
+      <li>
+        BWP: <a
+          href="https://www.waermepumpe.de/presse/news/details/beg-foerderung-2026-neue-schallanforderungen-fuer-waermepumpen/"
+          class="text-primary underline"
+          target="_blank"
+          rel="noopener">BEG-Förderung 2026 – neue Schallanforderungen für Wärmepumpen</a>
+      </li>
+      <li>
+        Bundesregierung: <a
+          href="https://www.bundesregierung.de/breg-de/aktuelles/neues-gebaeudemodernisierungsgesetz-2430284"
+          class="text-primary underline"
+          target="_blank"
+          rel="noopener">Kabinett beschließt Gebäudemodernisierungsgesetz (GModG)</a>
+      </li>
+      <li>
+        BMWSB: <a
+          href="https://www.bmwsb.bund.de/SharedDocs/pressemitteilungen/DE/2026/05/pm-gmodg.html"
+          class="text-primary underline"
+          target="_blank"
+          rel="noopener">Pressemitteilung zum Gebäudemodernisierungsgesetz</a>
+      </li>
+      <li>
+        Diese Seite ersetzt keine verbindliche Förderzusage der KfW, BAFA oder eines
+        Energieeffizienz-Experten. Gesetzentwürfe können sich im parlamentarischen
+        Verfahren noch ändern.
+      </li>
+    </ul>
+  </div>
 </SectionShell>
 
 {/* Cluster-Crosslinks */}
-<SectionShell variant="alt">
+<SectionShell>
   <h2 class="text-2xl md:text-3xl font-bold text-text mb-6">Vertiefen</h2>
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-5xl">
     <InternalLinkCard
@@ -297,12 +441,22 @@ const pageSchema = data.schema
     <InternalLinkCard
       href="/kfw-458-waermepumpe/"
       title="KfW 458 im Detail"
-      description="Antragsweg, Boni-Matrix, Fallstricke aus der Praxis."
+      description="Antragsweg, Boni-Matrix, förderfähige Kosten je Wohneinheit, Fallstricke aus der Praxis."
     />
     <InternalLinkCard
       href="/bafa-foerderung-waermepumpe/"
       title="BAFA-Förderung"
       description="Was BAFA seit 2024 noch fördert: Heizungsoptimierung, iSFP, Energieberatung."
+    />
+    <InternalLinkCard
+      href="/waermepumpe-kosten-bremen/"
+      title="Was kostet das nach Förderung?"
+      description="Eigenanteil und realistische Investition – nach Abzug aller Boni."
+    />
+    <InternalLinkCard
+      href="/check/"
+      title="Eignungs- und Fördercheck"
+      description="Erste Einordnung im Browser; Kontaktdaten nur mit Einwilligung an den genannten Bremer Betrieb."
     />
   </div>
 </SectionShell>
@@ -312,4 +466,3 @@ const pageSchema = data.schema
         <FAQSection heading={data.faqHeading} items={data.faqs} />
     )}
 </Layout>
-
