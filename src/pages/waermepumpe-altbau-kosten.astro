@@ -1,4 +1,5 @@
 ---
+import { getImage } from "astro:assets";
 import Layout from "../layout/Layout.astro";
 import Breadcrumb from "../components/Breadcrumb.astro";
 import HeroSection from "../components/HeroSection.astro";
@@ -14,12 +15,12 @@ import heroImage from "../images/hero-altbau-bremen.webp";
 import type { PageData } from "../types/page";
 
 const data: PageData = {
-    title: "Wärmepumpe Altbau Kosten 2026: Bremen & Förderung",
-    description: "Wärmepumpe Altbau Kosten 2026: realistische Spannen, Heizkörpertausch, Schallschutz, KfW-Förderung und Eigenanteil in Bremen.",
-    lastUpdated: "Mai 2026",
+    title: "Wärmepumpe Altbau Kosten 2026: Preise, Einbau & Förderung",
+    description: "Was kostet eine Wärmepumpe im Altbau? Preise 2026 inklusive Einbau, Heizkörper und Stromkosten, dazu KfW-Förderung und der realistische Eigenanteil.",
+    lastUpdated: "2. Juni 2026",
     hero: {
         headline: "Wärmepumpe Altbau Kosten",
-        subtext: "Vom Reihenhaus im Viertel bis zum Gründerzeitler in Schwachhausen – was Wärmepumpen im Altbau wirklich kosten und welche Posten oft vergessen werden.",
+        subtext: "Was eine Wärmepumpe im Altbau wirklich kostet – von Anschaffung und Einbau über Heizkörper bis zu den Stromkosten, samt den Posten, die im Angebot oft fehlen.",
         primaryCTA: {
             label: "Eignung & Förderung prüfen",
             href: "/check/"
@@ -31,13 +32,13 @@ const data: PageData = {
     },
     trustItems: [
         {
-            text: "Bremer Altbau-Praxis"
+            text: "Preise inkl. Einbau"
         },
         {
             text: "Inkl. Heizkörper-Posten"
         },
         {
-            text: "Stand Mai 2026"
+            text: "Stand 2. Juni 2026"
         },
         {
             text: "Förderfähige Umfeldmaßnahmen"
@@ -81,26 +82,37 @@ const data: PageData = {
         },
         {
             question: "Wie hoch sind die Stromkosten einer Wärmepumpe im Altbau?",
-            answer: "Im teilsanierten Bremer Altbau (140 m², 14.000 kWh Heizwärmebedarf) liegen die Stromkosten beim swb-Wärmepumpentarif von 24,98 ct/kWh bei rund 1.000 Euro pro Jahr. Im unsanierten Altbau mit höherer Vorlauftemperatur kann das auf 1.300–1.600 Euro steigen – immer noch deutlich unter Öl- oder Gaskosten der Vorjahre."
+            answer: "Im teilsanierten Altbau (140 m², 14.000 kWh Heizwärmebedarf) liegen die Stromkosten bei einem Wärmepumpentarif um 25 ct/kWh bei rund 1.000 Euro pro Jahr. Im unsanierten Altbau mit höherer Vorlauftemperatur kann das auf 1.300–1.600 Euro steigen – immer noch deutlich unter Öl- oder Gaskosten der Vorjahre."
         },
         {
-            question: "Was kostet eine Luft-Wärmepumpe im Altbau inklusive Einbau?",
-            answer: "Für ein Bremer Altbau-Reihenhaus rechnen Sie mit 24.000 bis 32.000 Euro brutto für eine Hochtemperatur-Luft-Wasser-Wärmepumpe inklusive Einbau, hydraulischem Abgleich und Inbetriebnahme. Wenn 1–2 Heizkörper getauscht werden müssen, kommen 1.500–3.000 Euro dazu (förderfähig als Umfeldmaßnahme)."
+            question: "Was kostet der Einbau einer Wärmepumpe im Altbau?",
+            answer: "Für ein Altbau-Reihenhaus rechnen Sie mit 24.000 bis 32.000 Euro brutto für eine Hochtemperatur-Luft-Wasser-Wärmepumpe inklusive Einbau, hydraulischem Abgleich und Inbetriebnahme. Wenn 1–2 Heizkörper getauscht werden müssen, kommen 1.500–3.000 Euro dazu (förderfähig als Umfeldmaßnahme)."
+        },
+        {
+            question: "Lohnt sich eine Wärmepumpe im unsanierten Altbau ohne Dämmung?",
+            answer: "Ja, häufig – aber die Vorlauftemperatur und damit der Stromverbrauch liegen höher. Entscheidend ist die Heizlast: Reichen die vorhandenen Heizkörper bei etwa 55–65 °C aus, arbeitet eine Hochtemperatur-Wärmepumpe wirtschaftlich. Einzelne große Heizkörper oder ein hydraulischer Abgleich sind oft günstiger als eine komplette Dämmung und als Umfeldmaßnahme förderfähig. Im unsanierten Altbau steigen vor allem die laufenden Stromkosten, nicht zwingend die Anschaffung."
         },
         {
             question: "Welche Posten sind im Altbau oft förderfähig, aber werden vergessen?",
-            answer: "Häufig: hydraulischer Abgleich (1.000–1.500 €), einzelne größere Heizkörper (300–800 € pro Stück), Pufferspeicher, akustische Fachplanung in dichten Bremer Stadtteilen, Wanddurchbrüche und Putz-/Malerarbeiten, die direkt mit dem Heizungstausch zusammenhängen. Alles fließt in die KfW-458-förderfähigen Kosten ein, sofern technisch erforderlich."
+            answer: "Häufig: hydraulischer Abgleich (1.000–1.500 €), einzelne größere Heizkörper (300–800 € pro Stück), Pufferspeicher, akustische Fachplanung bei enger Nachbarschaft, Wanddurchbrüche und Putz-/Malerarbeiten, die direkt mit dem Heizungstausch zusammenhängen. Alles fließt in die KfW-458-förderfähigen Kosten ein, sofern technisch erforderlich."
         }
     ],
     schema: {
         type: "Article",
         datePublished: "2026-05-02",
-        dateModified: "2026-05-02"
+        dateModified: "2026-06-02"
     }
 };
 
 const canonical = data.canonical ?? Astro.url.href;
 const hero = { ...data.hero, imageSrc: heroImage };
+const ogImage = await getImage({
+    src: heroImage,
+    width: 1200,
+    height: 630,
+    fit: "cover",
+    format: "jpg",
+});
 const dateLine = data.lastUpdated ? `Stand: ${data.lastUpdated}` : null;
 const pageSchema = data.schema
     ? {
@@ -115,6 +127,7 @@ const pageSchema = data.schema
     title={data.title}
     description={data.description}
     canonical={canonical}
+    ogImage={ogImage.src}
     noindex={data.noindex}
     pageSchema={pageSchema}
 >
@@ -133,11 +146,13 @@ const pageSchema = data.schema
 <SectionShell>
   <article class="max-w-3xl space-y-4 text-text-muted leading-relaxed">
     <div class="bg-highlight border border-border rounded p-5">
-      <p class="font-bold text-text mb-2">Schnelle Antwort: Altbau-Kosten</p>
+      <p class="font-bold text-text mb-2">Schnelle Antwort: Was kostet eine Wärmepumpe im Altbau?</p>
       <p class="text-sm leading-relaxed">
-        Für einen Bremer Altbau liegt eine Wärmepumpe inklusive Einbau häufig bei
-        <strong class="text-text">23.000 bis 37.000 €</strong> vor Förderung. Der
-        Eigenanteil hängt stark davon ab, ob alte Öl- oder Gasheizung,
+        Eine Wärmepumpe im Altbau liegt inklusive Einbau häufig bei
+        <strong class="text-text">23.000 bis 37.000 €</strong> vor Förderung. Mit
+        KfW 458 sinkt der Eigenanteil je nach Boni oft auf
+        <strong class="text-text">unter 15.000 €</strong>. Wie hoch er genau ausfällt,
+        hängt davon ab, ob eine alte Öl- oder Gasheizung getauscht wird und ob
         Effizienzbonus, Einkommensbonus und förderfähige Umfeldmaßnahmen sauber
         genutzt werden.
       </p>
@@ -146,15 +161,16 @@ const pageSchema = data.schema
       „Eine Wärmepumpe im Altbau ist viel teurer als im Neubau" – das stimmt nur halb. Was
       stimmt: Im Altbau gibt es mehr Posten, die in das Gesamtangebot einfließen können.
       Was nicht stimmt: Das macht die Wärmepumpe automatisch unwirtschaftlich. Im
-      Gegenteil – im Bremer Altbau profitieren Eigentümer am häufigsten vom
+      Gegenteil – im Altbau profitieren Eigentümer am häufigsten vom
       <strong class="text-text"> Klimageschwindigkeitsbonus</strong> (Tausch alter Öl-
       oder Gas-Heizungen) und holen damit bis zu 50 % der Investition über die KfW zurück.
     </p>
     <p>
       Diese Seite behandelt bewusst die <strong class="text-text">Kostenfrage</strong>:
-      Welche Posten im Altbau-Angebot stehen sollten, welche davon förderfähig sind
-      und mit welchem Eigenanteil Bremer Hauseigentümer 2026 realistisch rechnen
-      können. Die technische Machbarkeit steht separat auf der Eignungsseite.
+      Welche Posten im Altbau-Angebot stehen sollten, was den Preis nach oben treibt,
+      welche Posten förderfähig sind und mit welchem Eigenanteil Eigentümer 2026
+      realistisch rechnen können. Die technische Machbarkeit steht separat auf der
+      Eignungsseite.
     </p>
     <NoticeSuccess>
       <p>
@@ -167,11 +183,11 @@ const pageSchema = data.schema
 {/* Kostenrahmen Altbau */}
 <SectionShell variant="alt">
   <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
-    Was kostet eine Wärmepumpe im Altbau? Realistische Spanne
+    Was kostet eine Wärmepumpe im Altbau? Preise inkl. Einbau
   </h2>
   <p class="text-text-muted max-w-3xl mb-6">
-    Eine grobe Einordnung für Bremer Altbau-Objekte (Bestandsimmobilien älter als 30
-    Jahre, teilsaniert oder unsaniert):
+    Eine grobe Einordnung der Preise für Altbau-Objekte (Bestandsimmobilien älter als 30
+    Jahre, teilsaniert oder unsaniert) – inklusive Einbau:
   </p>
 
   <div class="surface-card overflow-hidden max-w-2xl divide-y divide-border">
@@ -206,10 +222,44 @@ const pageSchema = data.schema
   </p>
 </SectionShell>
 
-{/* Rechen-Szenario Bremer Altbau */}
+{/* Kostentreiber im Altbau */}
 <SectionShell>
   <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
-    Rechen-Szenario: Altbremer Reihenhaus mit alter Gasheizung
+    Was treibt die Kosten im Altbau? Sanierungsgrad, Heizkörper, Wärmequelle
+  </h2>
+  <p class="text-text-muted max-w-3xl mb-6">
+    Warum der gleiche Heizungstausch im Altbau einmal 24.000 € und einmal 37.000 € kostet,
+    liegt vor allem an drei Faktoren – nicht am Gerät allein:
+  </p>
+  <div class="surface-card overflow-hidden max-w-3xl divide-y divide-border">
+    <div class="grid grid-cols-1 md:grid-cols-[1fr_1.6fr] gap-1 px-5 py-4 text-sm">
+      <span class="font-semibold text-text">Sanierungsgrad</span>
+      <span class="text-text-muted">Saniert oder teilsaniert hält die Vorlauftemperatur niedrig – die Wärmepumpe wird kleiner und günstiger. Im unsanierten Altbau ohne Dämmung steigt vor allem der laufende Stromverbrauch, nicht zwingend die Anschaffung.</span>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-[1fr_1.6fr] gap-1 px-5 py-4 text-sm">
+      <span class="font-semibold text-text">Heizkörper &amp; Vorlauftemperatur</span>
+      <span class="text-text-muted">Reichen die vorhandenen Heizkörper bei niedriger Vorlauftemperatur, entfällt ein großer Posten. Müssen einzelne Heizkörper getauscht werden, kostet das 300–800 € pro Stück – als Umfeldmaßnahme meist förderfähig.</span>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-[1fr_1.6fr] gap-1 px-5 py-4 text-sm">
+      <span class="font-semibold text-text">Wärmequelle &amp; Bauart</span>
+      <span class="text-text-muted">Die Luft-Wasser-Wärmepumpe ist im Altbau am günstigsten. Eine Erdwärmepumpe ist effizienter, aber durch Bohrung oder Kollektor deutlich teurer und im dicht bebauten Bestand oft nicht umsetzbar.</span>
+    </div>
+  </div>
+  <p class="text-text-muted max-w-3xl text-sm leading-relaxed mt-6">
+    Ob eine <strong class="text-text">monovalente</strong> Wärmepumpe (allein heizend) ausreicht
+    oder ein <strong class="text-text">bivalenter</strong> Betrieb mit Spitzenlast-Unterstützung
+    sinnvoller ist, entscheidet die Heizlastberechnung – sie beeinflusst die Auslegung und damit
+    den Preis. Die technische Eignung prüfen wir auf der Seite
+    <a href="/waermepumpe-altbau-bremen/" class="text-brand underline">Wärmepumpe im Altbau</a>;
+    die Bauart-Kosten im Detail stehen unter
+    <a href="/luft-wasser-waermepumpe-kosten/" class="text-brand underline">Luft-Wasser-Wärmepumpe Kosten</a>.
+  </p>
+</SectionShell>
+
+{/* Rechen-Szenario Altbau */}
+<SectionShell variant="alt">
+  <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
+    Rechen-Szenario: Altbau-Reihenhaus mit alter Gasheizung
   </h2>
   <p class="text-text-muted max-w-3xl mb-6">
     Das folgende Szenario ist keine behauptete Kundenreferenz, sondern eine
@@ -255,7 +305,7 @@ const pageSchema = data.schema
 </SectionShell>
 
 {/* Welche Posten sind förderfähig? */}
-<SectionShell variant="alt">
+<SectionShell>
   <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
     Welche Altbau-spezifischen Posten sind förderfähig?
   </h2>
@@ -284,9 +334,9 @@ const pageSchema = data.schema
 </SectionShell>
 
 {/* Häufige Mythen */}
-<SectionShell>
+<SectionShell variant="alt">
   <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
-    Drei Mythen, die im Bremer Altbau-Kontext nicht stimmen
+    Drei Mythen rund um Wärmepumpe und Altbau-Kosten
   </h2>
   <div class="space-y-5 max-w-3xl">
     <div class="surface-card p-5">
@@ -310,9 +360,10 @@ const pageSchema = data.schema
       <p class="font-semibold text-text mb-2">„Im Reihenhaus geht das nicht wegen der Lärmgrenzen."</p>
       <p class="text-text-muted text-sm">
         TA Lärm gilt, ist aber lösbar. Moderne R290-Wärmepumpen unterschreiten die
-        Bremer Nachtgrenzen (35 dB(A) WA, 45 dB(A) MI) bei sauberer Aufstellung. Die
-        BremLBO erlaubt sogar 0 m Grenzabstand – Bremen-Vorteil. Akustische Fachplanung
-        ist förderfähig.
+        nächtlichen Richtwerte bei sauberer Aufstellung, und die akustische Fachplanung
+        ist als Umfeldmaßnahme förderfähig. Die konkreten Abstands- und Lärmregeln für
+        Bremen stehen unter
+        <a href="/waermepumpe-abstand-nachbar-bremen/" class="text-brand underline">Abstand zum Nachbarn</a>.
       </p>
     </div>
   </div>
@@ -324,7 +375,7 @@ const pageSchema = data.schema
     Quellen und redaktioneller Stand
   </h2>
   <div class="surface-card p-5 max-w-3xl text-sm text-text-muted leading-relaxed">
-    <p class="font-semibold text-text mb-3">Stand: 29. Mai 2026</p>
+    <p class="font-semibold text-text mb-3">Stand: 2. Juni 2026</p>
     <ul class="space-y-2">
       <li>
         KfW: <a href="https://www.kfw.de/inlandsfoerderung/Privatpersonen/Bestehende-Immobilie/F%C3%B6rderprodukte/Heizungsf%C3%B6rderung-f%C3%BCr-Privatpersonen-Wohngeb%C3%A4ude-%28458%29/" class="text-primary underline" target="_blank" rel="noopener">Heizungsförderung 458</a>
@@ -355,12 +406,17 @@ const pageSchema = data.schema
     />
     <InternalLinkCard
       href="/waermepumpe-altbau-bremen/"
-      title="Altbau Bremen – Eignung"
+      title="Altbau – Eignung prüfen"
       description="Vorlauftemperatur, Heizlast, Heizkörper – die technische Voraussetzung."
     />
     <InternalLinkCard
+      href="/luft-wasser-waermepumpe-kosten/"
+      title="Luft-Wasser-Wärmepumpe Kosten"
+      description="Kosten der häufigsten Bauart im Detail: Gerät, Einbau und Stromverbrauch."
+    />
+    <InternalLinkCard
       href="/waermepumpe-foerderung-bremen/"
-      title="Förderung Bremen"
+      title="Förderung & KfW 458"
       description="KfW 458 mit bis zu 70 % Zuschuss – inklusive Klimabonus."
     />
     <InternalLinkCard
