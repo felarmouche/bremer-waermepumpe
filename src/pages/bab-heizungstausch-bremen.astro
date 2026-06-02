@@ -4,43 +4,41 @@ import Breadcrumb from "../components/Breadcrumb.astro";
 import HeroSection from "../components/HeroSection.astro";
 import TrustBar from "../components/TrustBar.astro";
 import CTASection from "../components/CTASection.astro";
-import FAQSection from "../components/FAQSection.astro";
 import SectionShell from "../components/SectionShell.astro";
 import NoticeSuccess from "../components/content/NoticeSuccess.astro";
-import CheckList from "../components/content/CheckList.astro";
 import InternalLinkCard from "../components/InternalLinkCard.astro";
 import heroImage from "../images/foerderung-bremen-hero.webp";
 
 import type { PageData } from "../types/page";
 
 const data: PageData = {
-    title: "BAB Heizungstausch Bremen 2026: Status & Alternativen",
-    description: "BAB Heizungstausch Bremen: aktueller Status 2026, KfW 458, BAFA, Modernisierungskredite und Förder-Alternativen für Wärmepumpen.",
-    lastUpdated: "29. Mai 2026",
+    title: "BAB Heizungstausch Bremen: Frist abgelaufen | 2026",
+    description: "BAB Heizungstausch Bremen: Neue Anträge sind seit 31.08.2025 nicht mehr möglich. Fristen für Altanträge und KfW-458-Alternative für Wärmepumpen 2026.",
+    lastUpdated: "2. Juni 2026",
     hero: {
-        headline: "BAB Heizungstausch Bremen",
-        subtext: "Was 2026 noch läuft, was nicht mehr offen ist und welche Förderwege Bremer Eigentümer stattdessen prüfen sollten.",
+        headline: "BAB Heizungstausch Bremen: Frist abgelaufen",
+        subtext: "Neue BAB-Anträge sind seit dem 31. August 2025 nicht mehr möglich. Was für Altanträge gilt und welche KfW-458-Förderung Bremer Eigentümer jetzt prüfen.",
         primaryCTA: {
-            label: "Förderung prüfen",
+            label: "KfW-Alternative prüfen",
             href: "/check/"
         },
         secondaryCTA: {
-            label: "Förderung Bremen",
+            label: "Förderung Bremen im Überblick",
             href: "/waermepumpe-foerderung-bremen/"
         }
     },
     trustItems: [
         {
-            text: "BAB-Status eingeordnet"
+            text: "Antragsfrist: 31.08.2025"
         },
         {
-            text: "KfW 458 Alternative"
+            text: "Altanträge mit Restfristen"
         },
         {
-            text: "BAFA sauber getrennt"
+            text: "KfW 458 als Alternative"
         },
         {
-            text: "Stand 29. Mai 2026"
+            text: "Geprüft am 2. Juni 2026"
         }
     ],
     breadcrumb: [
@@ -57,11 +55,11 @@ const data: PageData = {
         }
     ],
     ctaBlock: {
-        headline: "Welche Förderung bleibt für Ihr Haus?",
-        text: "Der Check ordnet KfW 458, BAFA-Optimierung und lokale Bremer Bausteine ein.",
+        headline: "Neue Wärmepumpe geplant?",
+        text: "Ein neuer BAB-Heizungstausch-Antrag ist nicht mehr möglich. Der Check ordnet KfW 458, Gebäude, Heizungsalter und mögliche Boni für Ihr Haus ein.",
         variant: "highlight",
         primaryCTA: {
-            label: "Eignung & Förderung prüfen",
+            label: "KfW-Alternative prüfen",
             href: "/check/"
         },
         secondaryCTA: {
@@ -73,21 +71,29 @@ const data: PageData = {
     faqs: [
         {
             question: "Ist das BAB-Programm Heizungstausch 2026 offen?",
-            answer: "Stand 29. Mai 2026 ist das frühere BAB-Heizungstauschprogramm nicht als neuer Zuschussweg für Wärmepumpen einzuplanen. Der zentrale Förderweg ist die KfW 458."
+            answer: "Nein. Laut Serviceportal Bremen war eine Antragstellung nur bis zum 31. August 2025 möglich. Nach diesem Datum eingereichte Anträge müssen abgelehnt werden."
         },
         {
-            question: "Welche Alternative gibt es zum BAB-Zuschuss?",
-            answer: "Für den eigentlichen Heizungstausch ist die KfW 458 maßgeblich. Ergänzend können BAFA-Optimierung, Energieberatung oder Modernisierungskredite relevant sein."
+            question: "Was gilt für rechtzeitig gestellte BAB-Heizungstausch-Anträge?",
+            answer: "Die Heizungstauschmaßnahme muss laut Serviceportal Bremen innerhalb von 13 Monaten nach Erhalt des Zuwendungsbescheids abgeschlossen sein. Der Verwendungsnachweis muss spätestens 6 Monate nach Fertigstellung beim Projektträger vorliegen. Für den konkreten Einzelfall ist die BAB zuständig."
         },
         {
-            question: "Kann BAB mit KfW kombiniert werden?",
-            answer: "Kredit- oder Beratungsbausteine können je nach Programm ergänzend möglich sein. Eine Doppelförderung derselben Kostenposition ist nicht zulässig."
+            question: "Welche Alternative gibt es 2026 zum BAB-Zuschuss?",
+            answer: "Für neue Wärmepumpen-Vorhaben in bestehenden Wohngebäuden ist die KfW-Heizungsförderung 458 der zentrale Zuschussweg. Sie umfasst 30 Prozent Grundförderung und mögliche Boni, insgesamt maximal 70 Prozent der förderfähigen Kosten."
+        },
+        {
+            question: "War BAB Heizungstausch mit der Bundesförderung kombinierbar?",
+            answer: "Für rechtzeitig gestellte BAB-Anträge verlangte das Serviceportal Bremen eine bewilligte Bundesförderung nach BEG EM für dieselbe Maßnahme. Dabei musste zuerst der BAB-Antrag samt Antrag auf vorzeitigen Vorhabenbeginn gestellt werden. Für neue BAB-Anträge ist diese Kombination seit dem 1. September 2025 nicht mehr möglich."
+        },
+        {
+            question: "Wo frage ich zum Bearbeitungsstand meines BAB-Antrags nach?",
+            answer: "Zuständig ist die BAB Bremer Aufbau-Bank GmbH. Das Serviceportal Bremen nennt die E-Mail-Adresse heizungstausch@bab-bremen.de und die Telefonnummer 0421 9600-40."
         }
     ],
     schema: {
         type: "Article",
         datePublished: "2026-05-29",
-        dateModified: "2026-05-29"
+        dateModified: "2026-06-02"
     }
 };
 
@@ -122,101 +128,158 @@ const pageSchema = data.schema
     )}
 
 <SectionShell>
-  <article class="max-w-3xl space-y-4 text-text-muted leading-relaxed">
+  <article class="max-w-3xl space-y-5 text-text-muted leading-relaxed">
     <div class="bg-highlight border border-border rounded p-5">
-      <p class="font-bold text-text mb-2">Schnelle Antwort</p>
+      <p class="font-bold text-text mb-2">Kurzantwort: Keine neuen BAB-Anträge mehr</p>
       <p class="text-sm leading-relaxed">
-        Das frühere Bremer Programm <strong class="text-text">BAB Heizungstausch</strong>
-        ist 2026 nicht der relevante Zuschussweg für neue Wärmepumpen-Anträge. Für
-        den Heizungstausch im Wohngebäude ist die <strong class="text-text">KfW 458</strong>
-        maßgeblich. BAB- oder Bremer Bausteine können allenfalls bei Finanzierung,
-        Beratung oder ergänzender Modernisierung eine Rolle spielen.
+        Die Antragsfrist für das Bremer Förderprogramm
+        <strong class="text-text">BAB Heizungstausch</strong> endete am
+        <strong class="text-text">31. August 2025</strong>. Laut Serviceportal Bremen
+        müssen später eingereichte Anträge abgelehnt werden. Wer 2026 eine neue
+        Wärmepumpe plant, sollte stattdessen die
+        <strong class="text-text">KfW-Heizungsförderung 458</strong> prüfen.
       </p>
     </div>
     <p>
       Viele Bremer suchen noch nach dem <strong class="text-text">BAB Heizungstausch</strong>,
       weil das Programm in älteren Ratgebern und Suchergebnissen auftaucht. Für eine
-      Wärmepumpe im Jahr 2026 sollte man den Heizungstausch aber nicht mehr primär über
-      einen BAB-Zuschuss planen. Der zentrale Zuschussweg ist die
-      <strong class="text-text"> KfW 458</strong>.
+      neue Wärmepumpe im Jahr 2026 ist ein BAB-Heizungstausch-Antrag aber nicht mehr
+      möglich. Diese Seite trennt deshalb zwei Fälle: bereits fristgerecht gestellte
+      BAB-Anträge und neue Vorhaben, für die KfW 458 relevant ist.
     </p>
     <NoticeSuccess>
       <p>
-        <strong>Stand 29. Mai 2026:</strong> Für neue Wärmepumpen-Vorhaben ist die
-        KfW-Heizungsförderung 458 der entscheidende Fördertopf. Der Bremer
-        Heizungstausch-Zuschuss lief laut Serviceportal für neue Anträge bis
-        31.08.2025. BAB-Bausteine können bei Finanzierung oder Modernisierung relevant
-        sein, ersetzen aber nicht die KfW-Förderung.
+        <strong>Redaktionell geprüft am 2. Juni 2026:</strong> Maßgeblich ist das
+        offizielle Serviceportal Bremen. Diese private Informationsseite ist nicht die
+        BAB und ersetzt keine Auskunft der Förderbank.
       </p>
     </NoticeSuccess>
     <div class="bg-highlight border border-border rounded p-5 flex flex-col sm:flex-row gap-4 sm:items-center sm:justify-between">
       <div>
-        <p class="font-semibold text-text">Förderweg für Ihr Haus klären</p>
-        <p class="text-sm text-text-muted mt-1">Der Check trennt KfW, BAFA und lokale Bremer Optionen.</p>
+        <p class="font-semibold text-text">Neue Wärmepumpe statt BAB-Antrag planen</p>
+        <p class="text-sm text-text-muted mt-1">Der Check ordnet KfW 458 und die möglichen Boni für Ihr Haus ein.</p>
       </div>
-      <a href="/check/" class="btn-accent shrink-0 text-center">Förderung prüfen</a>
+      <a href="/check/" class="btn-accent shrink-0 text-center">KfW-Alternative prüfen</a>
     </div>
   </article>
 </SectionShell>
 
 <SectionShell variant="alt">
   <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
-    Was Bremer Eigentümer statt BAB prüfen sollten
+    BAB Heizungstausch Bremen: Fristen im Überblick
   </h2>
-  <CheckList
-    items={[
-      { lead: "KfW 458:", text: "Zuschuss für den eigentlichen Heizungstausch, bis zu 70 % der förderfähigen Kosten." },
-      { lead: "BAFA-Heizungsoptimierung:", text: "Relevant, wenn die bestehende Heizung vor einem späteren Tausch optimiert wird." },
-      { lead: "Energieberatung:", text: "Sinnvoll zur Vorbereitung von iSFP, Gebäudehülle und Wärmepumpen-Auslegung." },
-      { lead: "Modernisierungskredit:", text: "Kann Eigenanteil oder ergänzende Maßnahmen finanzieren, falls Zuschüsse nicht reichen." },
-      { lead: "Fachbetrieb-Angebot:", text: "Förderfähige Kosten müssen sauber im Angebot getrennt sein." },
-    ]}
-  />
+  <p class="text-text-muted max-w-3xl mb-6">
+    Für neue Anträge ist das Programm geschlossen. Wenn Sie fristgerecht beantragt
+    haben, bleiben die Restfristen aus dem Zuwendungsbescheid relevant.
+  </p>
+  <div class="surface-card overflow-x-auto max-w-3xl">
+    <table class="w-full text-sm text-left border-collapse">
+      <caption class="sr-only">
+        Fristen des Bremer Förderprogramms BAB Heizungstausch
+      </caption>
+      <thead>
+        <tr class="border-b border-border text-text bg-highlight">
+          <th scope="col" class="px-4 py-3 font-semibold">Schritt</th>
+          <th scope="col" class="px-4 py-3 font-semibold">Frist</th>
+          <th scope="col" class="px-4 py-3 font-semibold">Bedeutung</th>
+        </tr>
+      </thead>
+      <tbody class="text-text-muted">
+        <tr class="border-b border-border">
+          <th scope="row" class="px-4 py-3 font-medium text-text">Neuen BAB-Antrag stellen</th>
+          <td class="px-4 py-3">bis 31.08.2025</td>
+          <td class="px-4 py-3">Seit 01.09.2025 nicht mehr möglich.</td>
+        </tr>
+        <tr class="border-b border-border">
+          <th scope="row" class="px-4 py-3 font-medium text-text">Maßnahme abschließen</th>
+          <td class="px-4 py-3">innerhalb von 13 Monaten</td>
+          <td class="px-4 py-3">Die Frist läuft ab Erhalt des Zuwendungsbescheids.</td>
+        </tr>
+        <tr>
+          <th scope="row" class="px-4 py-3 font-medium text-text">Verwendungsnachweis einreichen</th>
+          <td class="px-4 py-3">spätestens 6 Monate nach Fertigstellung</td>
+          <td class="px-4 py-3">Der Nachweis geht an den Projektträger.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="text-text-muted max-w-3xl text-sm mt-6">
+    Quelle:
+    <a href="https://www.service.bremen.de/dienstleistungen/foerderung-fuer-den-heizungstausch-beantragen-190934" class="text-primary underline" target="_blank" rel="noopener">
+      Serviceportal Bremen: Förderung für den Heizungstausch beantragen
+    </a>.
+  </p>
 </SectionShell>
 
 <SectionShell>
   <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
-    KfW 458 als Hauptförderung: die relevanten Zahlen
+    Welcher Fall trifft auf Sie zu?
   </h2>
-  <div class="surface-card overflow-hidden max-w-2xl divide-y divide-border">
-    <div class="grid grid-cols-2 px-5 py-4 text-sm">
-      <span class="text-text-muted">Basisförderung</span>
-      <span class="font-semibold text-text text-right">30 %</span>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <div class="surface-card p-5">
+      <h3 class="font-semibold text-text mb-2">BAB-Antrag vor dem 31.08.2025 gestellt</h3>
+      <p class="text-text-muted text-sm leading-relaxed">
+        Prüfen Sie Zuwendungsbescheid, Umsetzungsfrist und Verwendungsnachweis. Bei
+        Rückfragen ist die BAB direkt zuständig.
+      </p>
     </div>
-    <div class="grid grid-cols-2 px-5 py-4 text-sm">
-      <span class="text-text-muted">Klimageschwindigkeitsbonus</span>
-      <span class="font-semibold text-text text-right">+20 %</span>
+    <div class="surface-card p-5">
+      <h3 class="font-semibold text-text mb-2">Neue Wärmepumpe 2026 geplant</h3>
+      <p class="text-text-muted text-sm leading-relaxed">
+        Ein neuer BAB-Antrag ist nicht mehr möglich. Prüfen Sie KfW 458, Fachbetrieb,
+        BzA und einen Vertrag mit Förderbedingung.
+      </p>
     </div>
-    <div class="grid grid-cols-2 px-5 py-4 text-sm">
-      <span class="text-text-muted">Einkommensbonus</span>
-      <span class="font-semibold text-text text-right">+30 %</span>
-    </div>
-    <div class="grid grid-cols-2 px-5 py-4 text-sm">
-      <span class="text-text-muted">Effizienzbonus</span>
-      <span class="font-semibold text-text text-right">+5 %</span>
-    </div>
-    <div class="grid grid-cols-2 px-5 py-4 text-sm bg-highlight">
-      <span class="font-semibold text-text">Deckelung</span>
-      <span class="font-bold text-primary text-right">max. 70 %</span>
+    <div class="surface-card p-5">
+      <h3 class="font-semibold text-text mb-2">Tausch erst später vorgesehen</h3>
+      <p class="text-text-muted text-sm leading-relaxed">
+        Prüfen Sie Energieberatung und BAFA-Heizungsoptimierung, wenn die bestehende
+        Heizung zunächst effizienter laufen soll.
+      </p>
     </div>
   </div>
-  <p class="text-text-muted max-w-3xl text-sm mt-6">
-    Bei 30.000 € förderfähigen Kosten in der ersten Wohneinheit sind damit maximal
-    21.000 € Zuschuss möglich.
-  </p>
 </SectionShell>
 
 <SectionShell variant="alt">
   <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
-    Typische Reihenfolge für Bremen
+    Neue Wärmepumpe geplant: KfW 458 statt neuem BAB-Antrag
+  </h2>
+  <p class="text-text-muted max-w-3xl mb-6">
+    Für neue Wärmepumpen-Projekte in bestehenden Wohngebäuden ist die
+    <strong class="text-text">KfW-Heizungsförderung 458</strong> der zentrale
+    Zuschussweg. Die Detailrechnung gehört auf die
+    <a href="/kfw-458-waermepumpe/" class="text-primary underline">KfW-458-Seite</a>;
+    für die erste Einordnung reichen diese Eckdaten:
+  </p>
+  <div class="surface-card overflow-hidden max-w-2xl divide-y divide-border">
+    <div class="grid grid-cols-2 px-5 py-4 text-sm">
+      <span class="text-text-muted">Grundförderung</span>
+      <span class="font-semibold text-text text-right">30 %</span>
+    </div>
+    <div class="grid grid-cols-2 px-5 py-4 text-sm bg-highlight">
+      <span class="font-semibold text-text">Mit möglichen Boni</span>
+      <span class="font-bold text-primary text-right">insgesamt max. 70 %</span>
+    </div>
+  </div>
+  <p class="text-text-muted max-w-3xl text-sm mt-6">
+    Welche Boni greifen, hängt unter anderem von Eigentum, Selbstnutzung,
+    Heizungsart, Heizungsalter und Wärmepumpe ab. Den vollständigen lokalen Überblick
+    mit KfW, BAFA und Bremer Einordnung finden Sie auf
+    <a href="/waermepumpe-foerderung-bremen/" class="text-primary underline">Wärmepumpe Förderung Bremen</a>.
+  </p>
+</SectionShell>
+
+<SectionShell>
+  <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
+    Neue Vorhaben: Reihenfolge für KfW 458
   </h2>
   <ol class="space-y-4 max-w-3xl">
     {[
-      "Gebäude und alte Heizung prüfen: Eigentum, Heizungsalter, Vorlauf, Aufstellort.",
-      "Fachbetrieb oder Energieeffizienz-Experten einbinden und BzA vorbereiten.",
-      "Angebot mit förderkonformer Bedingung einholen.",
-      "KfW-458-Antrag stellen und Förderzusage abwarten.",
-      "Erst danach Umsetzung starten und BnD für Auszahlung einreichen.",
+      "Fachbetrieb oder Energieeffizienz-Experten einbinden und Bestätigung zum Antrag (BzA) erstellen lassen.",
+      "Liefer- oder Leistungsvertrag mit aufschiebender oder auflösender Förderbedingung abschließen.",
+      "KfW-458-Zuschuss im Portal „Meine KfW“ beantragen.",
+      "Förderzusage abwarten und danach die Wärmepumpe umsetzen.",
+      "Bestätigung nach Durchführung (BnD) und Rechnungen für die Auszahlung einreichen.",
     ].map((item, index) => (
       <li class="surface-card p-5 flex gap-4">
         <span class="w-8 h-8 rounded-full bg-primary text-white font-bold flex items-center justify-center shrink-0">{index + 1}</span>
@@ -226,24 +289,43 @@ const pageSchema = data.schema
   </ol>
 </SectionShell>
 
+<SectionShell variant="alt">
+  <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
+    Kontakt für bestehende BAB-Anträge
+  </h2>
+  <div class="surface-card p-5 max-w-3xl text-sm text-text-muted leading-relaxed">
+    <p>
+      Wenn Ihr BAB-Heizungstausch-Antrag rechtzeitig eingegangen ist und Sie eine
+      Auskunft zum Bearbeitungsstand, Bescheid oder Verwendungsnachweis brauchen,
+      wenden Sie sich direkt an die zuständige Förderbank:
+    </p>
+    <address class="not-italic mt-4">
+      <strong class="text-text">BAB - Die Bremer Aufbau-Bank GmbH</strong><br />
+      Domshof 14/15, 28195 Bremen<br />
+      Telefon: <a href="tel:+49421960040" class="text-primary underline">0421 9600-40</a><br />
+      E-Mail: <a href="mailto:heizungstausch@bab-bremen.de" class="text-primary underline">heizungstausch@bab-bremen.de</a>
+    </address>
+  </div>
+</SectionShell>
+
 <SectionShell>
   <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
     Quellen und redaktioneller Stand
   </h2>
   <div class="surface-card p-5 max-w-3xl text-sm text-text-muted leading-relaxed">
-    <p class="font-semibold text-text mb-3">Stand: 29. Mai 2026</p>
+    <p class="font-semibold text-text mb-3">Redaktionell geprüft: 2. Juni 2026</p>
     <ul class="space-y-2">
       <li>
-        KfW: <a href="https://www.kfw.de/inlandsfoerderung/Privatpersonen/Bestehende-Immobilie/F%C3%B6rderprodukte/Heizungsf%C3%B6rderung-f%C3%BCr-Privatpersonen-Wohngeb%C3%A4ude-%28458%29/" class="text-primary underline" target="_blank" rel="noopener">Heizungsförderung für Privatpersonen – Wohngebäude</a>
+        Bremen Service: <a href="https://www.service.bremen.de/dienstleistungen/foerderung-fuer-den-heizungstausch-beantragen-190934" class="text-primary underline" target="_blank" rel="noopener">Förderung für den Heizungstausch beantragen</a>
+      </li>
+      <li>
+        KfW: <a href="https://www.kfw.de/inlandsfoerderung/Privatpersonen/Bestehende-Immobilie/F%C3%B6rderprodukte/Heizungsf%C3%B6rderung-f%C3%BCr-Privatpersonen-Wohngeb%C3%A4ude-%28458%29/" class="text-primary underline" target="_blank" rel="noopener">Heizungsförderung für Privatpersonen - Wohngebäude (458)</a>
       </li>
       <li>
         BAFA: <a href="https://www.bafa.de/DE/Energie/Effiziente_Gebaeude/Sanierung_Wohngebaeude/Heizungsoptimierung/heizungsoptimierung_node.html" class="text-primary underline" target="_blank" rel="noopener">Heizungsoptimierung</a>
       </li>
       <li>
-        Bremen Service: <a href="https://www.service.bremen.de/dienstleistungen/foerderung-fuer-den-heizungstausch-beantragen-190934" class="text-primary underline" target="_blank" rel="noopener">Förderung für den Heizungstausch beantragen</a>
-      </li>
-      <li>
-        Diese Seite ersetzt keine verbindliche Auskunft der BAB, KfW, BAFA oder eines Energieeffizienz-Experten.
+        Verbindlich sind die Angaben der zuständigen Förderstellen und Ihr individueller Bescheid.
       </li>
     </ul>
   </div>
@@ -252,15 +334,35 @@ const pageSchema = data.schema
 <SectionShell variant="alt">
   <h2 class="text-2xl md:text-3xl font-bold text-text mb-6">Weiterlesen</h2>
   <div class="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-5xl">
-    <InternalLinkCard href="/waermepumpe-foerderung-bremen/" title="Förderung Bremen" description="Gesamtüberblick KfW, BAFA und lokale Bremer Einordnung." />
-    <InternalLinkCard href="/kfw-458-waermepumpe/" title="KfW 458" description="Antrag, BzA, förderfähige Kosten und Boni." />
-    <InternalLinkCard href="/bafa-foerderung-waermepumpe/" title="BAFA vs. KfW" description="Welche Maßnahmen weiterhin über BAFA laufen." />
+    <InternalLinkCard href="/waermepumpe-foerderung-bremen/" title="Wärmepumpe Förderung Bremen" description="Gesamtüberblick zu KfW, BAFA und lokalen Bremer Förderwegen." />
+    <InternalLinkCard href="/kfw-458-waermepumpe/" title="KfW 458 im Detail" description="Antrag, BzA, förderfähige Kosten und Boni für neue Vorhaben." />
+    <InternalLinkCard href="/bafa-foerderung-waermepumpe/" title="BAFA vs. KfW" description="Welche Maßnahmen weiterhin über BAFA laufen und wann KfW Vorrang hat." />
   </div>
 </SectionShell>
 
     {data.ctaBlock && <CTASection {...data.ctaBlock} />}
     {data.faqs?.length > 0 && (
-        <FAQSection heading={data.faqHeading} items={data.faqs} />
+        <section class="bg-background py-12 md:py-20 lg:py-24">
+            <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-2xl md:text-3xl font-bold tracking-tight text-text mb-8 lg:mb-10">
+                    {data.faqHeading}
+                </h2>
+                <div class="divide-y divide-border">
+                    {data.faqs.map((item) => (
+                        <details class="group py-5">
+                            <summary class="cursor-pointer font-semibold text-text text-base sm:text-lg flex items-center justify-between">
+                                {item.question}
+                                <span class="text-text-muted text-sm ml-4 group-open:rotate-180 transition-transform">
+                                    &#9660;
+                                </span>
+                            </summary>
+                            <div class="mt-4 text-text-muted leading-relaxed text-sm sm:text-base">
+                                {item.answer}
+                            </div>
+                        </details>
+                    ))}
+                </div>
+            </div>
+        </section>
     )}
 </Layout>
-
