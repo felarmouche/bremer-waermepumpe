@@ -16,14 +16,14 @@ import heroImage from "../images/foerderung-bremen-hero.webp";
 import type { PageData } from "../types/page";
 
 const data: PageData = {
-  title: "KfW 458 förderfähige Kosten: Tabelle je Wohneinheit + Beispiele",
+  title: "KfW 458 förderfähige Kosten ab 21.07.2026: Tabelle + Beispiele",
   description:
-    "30.000 / 15.000 / 8.000 € je Wohneinheit: Tabelle, Rechenbeispiele für EFH, Zweifamilienhaus & WEG, Boni-Check – und was sich zum 21.07.2026 ändert.",
+    "Förderfähige Kosten neu ab 21.07.2026: 28.000 statt 30.000 € für die 1. Wohneinheit, Klimabonus 16 %, Einkommensbonus bis 40 % – Tabelle alt vs. neu + Beispiele.",
   lastUpdated: "14. Juli 2026",
   hero: {
     headline: "KfW 458 förderfähige Kosten",
     subtext:
-      "So werden die förderfähigen Kosten je Wohneinheit berechnet – mit Tabelle, Rechenbeispielen und Boni-Überblick. Wichtig: Die KfW passt die Förderbedingungen zum 21.07.2026 an.",
+      "Neue Konditionen ab 21. Juli 2026: 28.000 € förderfähige Kosten für die erste Wohneinheit, gestaffelter Einkommensbonus, Frist für Alt-Anträge am 20. Juli – mit Tabelle alt vs. neu und Rechenbeispielen.",
     primaryCTA: {
       label: "KfW-Boni für Ihr Haus prüfen",
       href: "/check/",
@@ -35,16 +35,16 @@ const data: PageData = {
   },
   trustItems: [
     {
-      text: "KfW 458 Wohneinheiten erklärt",
+      text: "Neue Sätze ab 21.07.2026",
     },
     {
-      text: "30.000 / 15.000 / 8.000 €",
+      text: "28.000 / 15.000 / 8.000 €",
+    },
+    {
+      text: "Frist 20.07.2026, 20 Uhr",
     },
     {
       text: "WEG & Mehrfamilienhaus",
-    },
-    {
-      text: "Antrag bei Meine KfW",
     },
     {
       text: "Stand 14. Juli 2026",
@@ -79,29 +79,39 @@ const data: PageData = {
   faqHeading: "FAQ: KfW 458 förderfähige Kosten",
   faqs: [
     {
-      question: "Was ist die KfW-Förderung 458?",
-      answer:
-        'KfW 458 ist die „Heizungsförderung für Privatpersonen – Wohngebäude". Über das KfW-Programm 458 wird der Austausch einer alten Heizung gegen eine klimafreundliche Anlage wie eine Wärmepumpe bezuschusst. Der Zuschuss wird im Portal Meine KfW beantragt und beträgt bis zu 70 Prozent der förderfähigen Kosten.',
-    },
-    {
       question: "Was sind die förderfähigen Kosten bei KfW 458?",
       answer:
-        "Die KfW berücksichtigt bei der Heizungsförderung 458 bis zu 30.000 Euro für die erste Wohneinheit, jeweils 15.000 Euro für die zweite bis sechste Wohneinheit und jeweils 8.000 Euro ab der siebten Wohneinheit. Auf diese förderfähigen Kosten wird der individuelle Fördersatz angewendet, maximal 70 Prozent.",
+        "Ab dem 21.07.2026 berücksichtigt die KfW bei der Heizungsförderung 458 bis zu 28.000 Euro für die erste Wohneinheit (zuvor 30.000 Euro), jeweils 15.000 Euro für die zweite bis sechste Wohneinheit und jeweils 8.000 Euro ab der siebten Wohneinheit. Auf diese förderfähigen Kosten wird der individuelle Fördersatz angewendet.",
     },
     {
       question: "Zählt die zweite Wohneinheit mit 30.000 oder 15.000 Euro?",
       answer:
-        "Die erste Wohneinheit zählt mit 30.000 Euro. Die zweite bis sechste Wohneinheit zählt jeweils mit 15.000 Euro. Ein Zweifamilienhaus kommt deshalb auf 45.000 Euro förderfähige Kosten, ein Dreifamilienhaus auf 60.000 Euro.",
+        "Die zweite bis sechste Wohneinheit zählt jeweils mit 15.000 Euro. Die erste Wohneinheit zählt ab dem 21.07.2026 mit 28.000 Euro (bis 20.07.2026: 30.000 Euro). Ein Zweifamilienhaus kommt damit auf 43.000 Euro förderfähige Kosten, ein Dreifamilienhaus auf 58.000 Euro.",
+    },
+    {
+      question: "Kann ich noch zu den alten Konditionen beantragen?",
+      answer:
+        "Nur mit einer bereits vorliegenden Bestätigung zum Antrag (BzA): Dann kann der Zuschussantrag bis zum 20. Juli 2026, 20 Uhr, im Portal Meine KfW zu den bisherigen Konditionen gestellt werden. Neue BzA werden in der Umstellungsphase seit dem 09.07.2026 nicht erstellt. Bereits erteilte Förderzusagen bleiben unverändert gültig.",
+    },
+    {
+      question: "Wie funktioniert der neue Einkommensbonus ab 21.07.2026?",
+      answer:
+        "Der Einkommensbonus für selbstnutzende Eigentümer ist ab dem 21.07.2026 gestaffelt: 40 Prozent bei einem Haushaltsjahreseinkommen bis 30.000 Euro, 30 Prozent bis 40.000 Euro und 10 Prozent bis 50.000 Euro. Mit mindestens einem minderjährigen Kind im Haushalt erhöhen sich diese Einkommensgrenzen einmalig um 10.000 Euro (Familienzuschlag).",
+    },
+    {
+      question: "Gibt es den Effizienzbonus für natürliche Kältemittel noch?",
+      answer:
+        "Nein. Der Effizienzbonus von 5 Prozentpunkten für Wärmepumpen mit natürlichem Kältemittel oder Wärmequelle Erdreich, Wasser oder Abwasser entfällt zum 21.07.2026, ebenso der Emissionsminderungszuschlag für Biomasseheizungen. Bereits zugesagte Anträge behalten ihre Konditionen.",
+    },
+    {
+      question: "Wie hoch ist die maximale Förderung ab dem 21.07.2026?",
+      answer:
+        "Die Gesamtförderung bleibt bei maximal 70 Prozent der förderfähigen Kosten gedeckelt. Für selbstnutzende Haushalte mit Anspruch auf den höchsten Einkommensbonus steigt der Deckel auf 80 Prozent – bei 28.000 Euro förderfähigen Kosten sind das bis zu 22.400 Euro Zuschuss für die erste Wohneinheit.",
     },
     {
       question: "Wie funktioniert KfW 458 bei einer WEG?",
       answer:
         "Wohnungseigentümergemeinschaften können KfW 458 nutzen, wenn der Heizungstausch Gemeinschaftseigentum betrifft. Der Förderhöchstbetrag wird nach der Zahl der Wohneinheiten im Gebäude berechnet. Für WEGs sind saubere Beschlüsse, Vollmachten und ein abgestimmter Antrag besonders wichtig.",
-    },
-    {
-      question: "Was bringt der Effizienzbonus bei natürlichen Kältemitteln?",
-      answer:
-        "Für Wärmepumpen mit natürlichem Kältemittel oder mit Erdreich, Wasser oder Abwasser als Wärmequelle kann ein Effizienzbonus von 5 Prozentpunkten greifen. Zusammen mit Basisförderung, Klimageschwindigkeitsbonus und Einkommensbonus bleibt die Gesamtförderung trotzdem bei maximal 70 Prozent gedeckelt.",
     },
     {
       question: "Muss der KfW-458-Antrag vor dem Auftrag gestellt werden?",
@@ -124,7 +134,7 @@ const data: PageData = {
     howToSteps: [
       {
         name: "Wohneinheiten zählen",
-        text: "Zuerst wird die Anzahl der Wohneinheiten im Gebäude bestimmt. Die erste Wohneinheit zählt mit 30.000 Euro, die zweite bis sechste jeweils mit 15.000 Euro und jede weitere mit 8.000 Euro förderfähigen Kosten.",
+        text: "Zuerst wird die Anzahl der Wohneinheiten im Gebäude bestimmt. Ab dem 21.07.2026 zählt die erste Wohneinheit mit 28.000 Euro, die zweite bis sechste jeweils mit 15.000 Euro und jede weitere mit 8.000 Euro förderfähigen Kosten.",
       },
       {
         name: "Förderfähige Kosten im Angebot trennen",
@@ -132,7 +142,7 @@ const data: PageData = {
       },
       {
         name: "Boni prüfen",
-        text: "Basisförderung, Klimageschwindigkeitsbonus, Einkommensbonus und Effizienzbonus werden geprüft. Die Summe ist auf maximal 70 Prozent begrenzt.",
+        text: "Basisförderung, Klimageschwindigkeitsbonus und gestaffelter Einkommensbonus werden geprüft. Die Summe ist auf maximal 70 Prozent begrenzt, bei den niedrigsten Haushaltseinkommen auf 80 Prozent.",
       },
       {
         name: "BzA und Vertrag vorbereiten",
@@ -198,51 +208,95 @@ const pageSchema = data.schema
         <p class="text-text leading-relaxed text-base sm:text-lg">
           Die <strong>KfW-Heizungsförderung 458</strong> (offiziell „Heizungsförderung
           für Privatpersonen – Wohngebäude") bezuschusst den Tausch einer alten Heizung
-          gegen eine Wärmepumpe. Die förderfähigen Kosten sind nach Wohneinheiten
-          gestaffelt:
-          <strong>30.000 €</strong> für die erste, <strong>je 15.000 €</strong> für
-          die zweite bis sechste und <strong>je 8.000 €</strong> ab der siebten Wohneinheit.
-          Auf diesen Betrag wird der individuelle Fördersatz von bis zu
-          <strong>70 %</strong> angewendet.
+          gegen eine Wärmepumpe. <strong>Ab dem 21. Juli 2026</strong> gelten neue
+          Konditionen: förderfähige Kosten von <strong>28.000 €</strong> für die erste
+          Wohneinheit (zuvor 30.000 €), weiterhin <strong>je 15.000 €</strong> für die
+          zweite bis sechste und <strong>je 8.000 €</strong> ab der siebten. Die
+          Grundförderung bleibt bei 30 %, der Klimageschwindigkeitsbonus sinkt auf
+          16 %, der Effizienzbonus entfällt, der Einkommensbonus wird auf
+          40/30/10 % gestaffelt. Gedeckelt wird bei <strong>70 %</strong>, für die
+          niedrigsten Einkommen bei <strong>80 %</strong>.
         </p>
         <p class="text-sm text-text-muted leading-relaxed mt-4">
-          <strong class="text-text">Hinweis:</strong> Zum
-          <strong class="text-text">21. Juli 2026</strong> passt die KfW die
-          Förderbedingungen an – laut Ankündigung sollen u.&nbsp;a.
-          technologiespezifische Boni entfallen, der Einkommensbonus neu
-          gestaffelt und ein Familienzuschlag eingeführt werden. Bis dahin
-          gelten die hier gezeigten Konditionen.
+          <strong class="text-text">Frist:</strong> Wer bereits eine Bestätigung zum
+          Antrag (BzA) hat, kann noch bis <strong class="text-text">20. Juli 2026,
+          20 Uhr</strong>, zu den alten Konditionen beantragen. Neue BzA werden seit
+          dem 09.07.2026 erst wieder ab dem 21.07.2026 erstellt. Bereits erteilte
+          Zusagen bleiben unverändert gültig.
         </p>
       </div>
       <div class="bg-highlight border border-border rounded p-5">
         <p class="font-bold text-text mb-3">
-          KfW 458: förderfähige Kosten nach Wohneinheiten
+          KfW 458 alt vs. neu: alle Änderungen zum 21.07.2026
         </p>
         <div class="surface-card overflow-hidden divide-y divide-border">
-          <div class="grid grid-cols-2 px-4 py-3 text-sm">
-            <span class="text-text-muted">1. Wohneinheit</span>
-            <span class="font-semibold text-text text-right">30.000 €</span>
+          <div class="grid grid-cols-3 px-4 py-3 text-sm bg-background">
+            <span class="font-semibold text-text">Baustein</span>
+            <span class="font-semibold text-text text-right">bis 20.07.2026</span>
+            <span class="font-semibold text-primary text-right">ab 21.07.2026</span>
           </div>
-          <div class="grid grid-cols-2 px-4 py-3 text-sm">
-            <span class="text-text-muted">2. bis 6. Wohneinheit</span>
+          <div class="grid grid-cols-3 px-4 py-3 text-sm">
+            <span class="text-text-muted">1. Wohneinheit</span>
+            <span class="text-text-muted text-right">30.000 €</span>
+            <span class="font-semibold text-text text-right">28.000 €</span>
+          </div>
+          <div class="grid grid-cols-3 px-4 py-3 text-sm">
+            <span class="text-text-muted">2.–6. Wohneinheit</span>
+            <span class="text-text-muted text-right">je 15.000 €</span>
             <span class="font-semibold text-text text-right">je 15.000 €</span>
           </div>
-          <div class="grid grid-cols-2 px-4 py-3 text-sm">
+          <div class="grid grid-cols-3 px-4 py-3 text-sm">
             <span class="text-text-muted">ab 7. Wohneinheit</span>
+            <span class="text-text-muted text-right">je 8.000 €</span>
             <span class="font-semibold text-text text-right">je 8.000 €</span>
           </div>
-          <div class="grid grid-cols-2 px-4 py-3 text-sm bg-background">
+          <div class="grid grid-cols-3 px-4 py-3 text-sm">
+            <span class="text-text-muted">Grundförderung</span>
+            <span class="text-text-muted text-right">30 %</span>
+            <span class="font-semibold text-text text-right">30 %</span>
+          </div>
+          <div class="grid grid-cols-3 px-4 py-3 text-sm">
+            <span class="text-text-muted">Klimageschwindigkeitsbonus</span>
+            <span class="text-text-muted text-right">20 %</span>
+            <span class="font-semibold text-text text-right">16 %</span>
+          </div>
+          <div class="grid grid-cols-3 px-4 py-3 text-sm">
+            <span class="text-text-muted">Effizienzbonus</span>
+            <span class="text-text-muted text-right">5 %</span>
+            <span class="font-semibold text-text text-right">entfällt</span>
+          </div>
+          <div class="grid grid-cols-3 px-4 py-3 text-sm">
+            <span class="text-text-muted">Emissionsminderungszuschlag</span>
+            <span class="text-text-muted text-right">2.500 €</span>
+            <span class="font-semibold text-text text-right">entfällt</span>
+          </div>
+          <div class="grid grid-cols-3 px-4 py-3 text-sm">
+            <span class="text-text-muted">Einkommensbonus</span>
+            <span class="text-text-muted text-right">30 % (bis 40.000 €)</span>
+            <span class="font-semibold text-text text-right">40/30/10 % gestaffelt</span>
+          </div>
+          <div class="grid grid-cols-3 px-4 py-3 text-sm">
+            <span class="text-text-muted">Familienzuschlag</span>
+            <span class="text-text-muted text-right">–</span>
+            <span class="font-semibold text-text text-right">+10.000 € auf die Einkommensgrenze</span>
+          </div>
+          <div class="grid grid-cols-3 px-4 py-3 text-sm bg-background">
             <span class="font-semibold text-text">Maximaler Zuschuss</span>
-            <span class="font-bold text-primary text-right">70 %</span>
+            <span class="text-text-muted text-right">70 %</span>
+            <span class="font-bold text-primary text-right">70 %, bis 80 %*</span>
           </div>
         </div>
+        <p class="text-xs text-text-muted mt-3">
+          *80 % für selbstnutzende Haushalte mit Anspruch auf den höchsten
+          Einkommensbonus. Quelle: KfW, Anpassungen der BEG zum 21.07.2026.
+        </p>
       </div>
       <p>
-        Die Suchanfrage „KfW 458 förderfähige Kosten 30.000 15.000 8.000
-        Wohneinheiten" ist deshalb so häufig, weil die Förderung nicht pauschal
-        nach Angebotssumme berechnet wird. Entscheidend ist zuerst der
+        An der Rechenlogik ändert sich nichts: Entscheidend ist zuerst der
         <strong class="text-text">Förderhöchstbetrag nach Wohneinheiten</strong
-        >. Erst danach wird der persönliche Fördersatz angewendet.
+        >, erst danach wird der persönliche Fördersatz angewendet. Wer noch mit
+        der alten Staffel „30.000 / 15.000 / 8.000" rechnet, setzt ab dem
+        21. Juli 2026 für die erste Wohneinheit 28.000 € an.
       </p>
       <NoticeSuccess>
         <p>
@@ -264,10 +318,10 @@ const pageSchema = data.schema
 
   <SectionShell variant="alt">
     <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
-      Beispiele: Einfamilienhaus, Zweifamilienhaus, WEG
+      Beispiele nach neuen Konditionen: EFH, Zweifamilienhaus, 10 Wohneinheiten
     </h2>
     <p class="text-text-muted max-w-3xl mb-6">
-      Die folgenden Beispiele zeigen, welcher Betrag überhaupt in die
+      Die folgenden Beispiele zeigen, welcher Betrag ab dem 21.07.2026 in die
       KfW-458-Rechnung einfließen kann. Der tatsächliche Zuschuss hängt
       anschließend von Basisförderung und Boni ab.
     </p>
@@ -275,23 +329,24 @@ const pageSchema = data.schema
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
       <div class="surface-card p-5">
         <h3 class="font-semibold text-text">Einfamilienhaus</h3>
-        <p class="text-2xl font-bold text-primary my-2">30.000 €</p>
+        <p class="text-2xl font-bold text-primary my-2">28.000 €</p>
         <p class="text-text-muted text-sm">
-          Bei 70 % Förderung sind maximal 21.000 € Zuschuss möglich.
+          Selbstnutzer mit Klimageschwindigkeitsbonus (46 %): 12.880 € Zuschuss.
+          Mit höchstem Einkommensbonus (80 %): bis 22.400 €.
         </p>
       </div>
       <div class="surface-card p-5">
         <h3 class="font-semibold text-text">Zweifamilienhaus</h3>
-        <p class="text-2xl font-bold text-primary my-2">45.000 €</p>
+        <p class="text-2xl font-bold text-primary my-2">43.000 €</p>
         <p class="text-text-muted text-sm">
-          30.000 € für die erste WE plus 15.000 € für die zweite WE.
+          28.000 € für die erste WE plus 15.000 € für die zweite WE.
         </p>
       </div>
       <div class="surface-card p-5">
         <h3 class="font-semibold text-text">10 Wohneinheiten</h3>
-        <p class="text-2xl font-bold text-primary my-2">137.000 €</p>
+        <p class="text-2xl font-bold text-primary my-2">135.000 €</p>
         <p class="text-text-muted text-sm">
-          30.000 € + 5 × 15.000 € + 4 × 8.000 €.
+          28.000 € + 5 × 15.000 € + 4 × 8.000 €.
         </p>
       </div>
     </div>
@@ -314,34 +369,38 @@ const pageSchema = data.schema
 
   <SectionShell>
     <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
-      Welche Boni können auf die förderfähigen Kosten angewendet werden?
+      Welche Boni gelten ab dem 21.07.2026?
     </h2>
     <p class="text-text-muted max-w-3xl mb-6">
-      Die KfW 458 besteht aus einer Basisförderung und möglichen
-      Bonusbausteinen. Die Summe kann rechnerisch höher sein, wird aber bei 70 %
+      Die KfW 458 besteht weiterhin aus einer Basisförderung und möglichen
+      Bonusbausteinen. Die Summe kann rechnerisch höher sein, wird aber
       gedeckelt.
     </p>
     <CheckList
       items={[
         {
           lead: "30 % Basisförderung:",
-          text: "Grundlage für förderfähige Wärmepumpen im bestehenden Wohngebäude.",
+          text: "Unverändert die Grundlage für förderfähige Wärmepumpen im bestehenden Wohngebäude.",
         },
         {
-          lead: "+20 % Klimageschwindigkeitsbonus:",
-          text: "Für selbstnutzende Eigentümer beim Austausch funktionsfähiger Öl-, Kohle-, Gasetagen- oder Nachtspeicherheizungen sowie mindestens 20 Jahre alter Gas-/Biomasseheizungen.",
+          lead: "+16 % Klimageschwindigkeitsbonus (zuvor 20 %):",
+          text: "Für selbstnutzende Eigentümer beim Austausch funktionsfähiger Öl-, Kohle-, Gasetagen- oder Nachtspeicherheizungen sowie mindestens 20 Jahre alter Gas-/Biomasseheizungen. Sinkt ab dem 01.02.2027 halbjährlich weiter.",
         },
         {
-          lead: "+30 % Einkommensbonus:",
-          text: "Für selbstnutzende Eigentümer mit zu versteuerndem Haushaltsjahreseinkommen bis 40.000 Euro.",
+          lead: "+40/30/10 % Einkommensbonus:",
+          text: "Für selbstnutzende Eigentümer, gestaffelt nach Haushaltsjahreseinkommen: 40 % bis 30.000 €, 30 % bis 40.000 €, 10 % bis 50.000 €.",
         },
         {
-          lead: "+5 % Effizienzbonus:",
-          text: "Für Wärmepumpen mit natürlichem Kältemittel oder Wärmequelle Erdreich, Wasser oder Abwasser.",
+          lead: "Familienzuschlag:",
+          text: "Mit mindestens einem minderjährigen Kind im Haushalt erhöhen sich die Einkommensgrenzen einmalig um 10.000 €.",
         },
         {
-          lead: "Maximal 70 %:",
-          text: "Auch wenn mehrere Boni zusammenkommen, bleibt die Gesamtförderung auf 70 % begrenzt.",
+          lead: "Entfallen:",
+          text: "Der Effizienzbonus (5 %) für natürliche Kältemittel bzw. Erdreich/Wasser/Abwasser und der Emissionsminderungszuschlag für Biomasse werden zum 21.07.2026 gestrichen.",
+        },
+        {
+          lead: "Deckel 70 bzw. 80 %:",
+          text: "Die Gesamtförderung bleibt auf 70 % begrenzt; für Haushalte mit dem höchsten Einkommensbonus gilt ein Deckel von 80 %.",
         },
       ]}
     />
@@ -349,39 +408,58 @@ const pageSchema = data.schema
 
   <SectionShell variant="alt">
     <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
-      Effizienzbonus 5 %: natürliches Kältemittel und Wärmequelle
+      Einkommensbonus neu: 40/30/10 % und Familienzuschlag
     </h2>
     <p class="text-text-muted max-w-3xl mb-6">
-      Der Effizienzbonus erhöht den Fördersatz um <strong class="text-text"
-        >5 Prozentpunkte</strong
-      >. Er greift bei Wärmepumpen, die ein <strong class="text-text"
-        >natürliches Kältemittel</strong
-      >
-      nutzen (zum Beispiel Propan, R290), oder die als Wärmequelle
-      <strong class="text-text">Erdreich, Wasser oder Abwasser</strong> erschließen.
-      Bei einer typischen Luft-Wasser-Wärmepumpe ist deshalb vor allem das natürliche
-      Kältemittel entscheidend.
+      Der Einkommensbonus für selbstnutzende Eigentümer wird zum 21.07.2026
+      gestaffelt und reicht künftig bis zu einem Haushaltsjahreseinkommen von
+      <strong class="text-text">50.000 €</strong>. Familien mit mindestens
+      einem minderjährigen Kind profitieren zusätzlich vom
+      <strong class="text-text">Familienzuschlag</strong>: Er hebt die
+      jeweilige Einkommensgrenze einmalig um 10.000 € an.
     </p>
-    <CheckList
-      items={[
-        {
-          lead: "Natürliches Kältemittel:",
-          text: "Viele aktuelle Luft-Wasser-Wärmepumpen mit Propan (R290) erfüllen die Voraussetzung – im Angebot und Datenblatt nachprüfbar.",
-        },
-        {
-          lead: "Wärmequelle Erdreich, Wasser oder Abwasser:",
-          text: "Sole-Wasser- und Wasser-Wasser-Wärmepumpen erfüllen den Bonus über die Wärmequelle.",
-        },
-        {
-          lead: "5 Prozentpunkte auf den Fördersatz:",
-          text: "Der Effizienzbonus kommt zur Basisförderung und zu den übrigen Boni hinzu – die Gesamtförderung bleibt bei 70 % gedeckelt.",
-        },
-      ]}
-    />
-    <p class="text-text-muted max-w-3xl text-sm leading-relaxed mt-6">
-      Ob das gewählte Gerät den Effizienzbonus auslöst, bestätigt der
-      Energieeffizienz-Experte oder das Fachunternehmen mit der Bestätigung zum
-      Antrag (BzA).
+    <div class="surface-card overflow-hidden divide-y divide-border max-w-3xl mb-6">
+      <div class="grid grid-cols-3 px-4 py-3 text-sm bg-background">
+        <span class="font-semibold text-text">Haushaltsjahreseinkommen</span>
+        <span class="font-semibold text-text text-right">Einkommensbonus</span>
+        <span class="font-semibold text-text text-right">mit Familienzuschlag</span>
+      </div>
+      <div class="grid grid-cols-3 px-4 py-3 text-sm">
+        <span class="text-text-muted">bis 30.000 €</span>
+        <span class="font-semibold text-text text-right">40 %</span>
+        <span class="text-text-muted text-right">bis 40.000 €</span>
+      </div>
+      <div class="grid grid-cols-3 px-4 py-3 text-sm">
+        <span class="text-text-muted">bis 40.000 €</span>
+        <span class="font-semibold text-text text-right">30 %</span>
+        <span class="text-text-muted text-right">bis 50.000 €</span>
+      </div>
+      <div class="grid grid-cols-3 px-4 py-3 text-sm">
+        <span class="text-text-muted">bis 50.000 €</span>
+        <span class="font-semibold text-text text-right">10 %</span>
+        <span class="text-text-muted text-right">bis 60.000 €</span>
+      </div>
+    </div>
+    <NoticeSuccess>
+      <p>
+        <strong>Entfallen zum 21.07.2026:</strong> Der Effizienzbonus von 5 %
+        für Wärmepumpen mit natürlichem Kältemittel (z.&nbsp;B. Propan/R290)
+        oder Wärmequelle Erdreich, Wasser, Abwasser wird gestrichen – ebenso
+        der Emissionsminderungszuschlag für Biomasseheizungen. Bereits
+        zugesagte Anträge behalten ihre Konditionen.
+      </p>
+    </NoticeSuccess>
+    <h3 class="text-xl font-bold text-text mt-8 mb-3">
+      Ausblick: Degression ab Februar 2027
+    </h3>
+    <p class="text-text-muted max-w-3xl text-sm leading-relaxed">
+      Ab dem 01.02.2027 sinkt der Förderhöchstbetrag für die erste Wohneinheit
+      halbjährlich (jeweils zum 01.02. und 01.08.) um
+      <strong class="text-text">750 €</strong>; der
+      Klimageschwindigkeitsbonus sinkt im gleichen Rhythmus um
+      <strong class="text-text">4 Prozentpunkte</strong>. Wer den
+      Heizungstausch ohnehin plant, stellt den Antrag deshalb tendenziell
+      besser früher als später.
     </p>
   </SectionShell>
 
@@ -392,7 +470,8 @@ const pageSchema = data.schema
     <p class="text-text-muted max-w-3xl mb-6">
       Förderfähig sind nicht nur Gerät und Montage. Entscheidend ist, dass die
       Kosten technisch mit dem Heizungstausch zusammenhängen und im Angebot
-      sauber nachvollziehbar sind.
+      sauber nachvollziehbar sind. Laut KfW bleiben alle bislang geförderten
+      Heizungssysteme auch nach dem 21.07.2026 förderfähig.
     </p>
     <CheckList
       items={[
@@ -452,10 +531,32 @@ const pageSchema = data.schema
       class="surface-card p-5 max-w-3xl text-sm text-text-muted leading-relaxed"
     >
       <p class="font-semibold text-text mb-3">
-        Stand: 14. Juli 2026 · geprüft an der KfW-Quelle · KfW-Anpassung zum
-        21.07.2026 angekündigt
+        Stand: 14. Juli 2026 · geprüft an den KfW-Quellen · neue Konditionen ab
+        21.07.2026
       </p>
       <ul class="space-y-2">
+        <li>
+          KfW:
+          <a
+            href="https://www.kfw.de/inlandsfoerderung/Bundesf%C3%B6rderung-f%C3%BCr-effiziente-Geb%C3%A4ude/Anpassungen-2026/"
+            class="text-primary underline"
+            target="_blank"
+            rel="noopener"
+          >
+            Anpassungen der BEG-Förderung zum 21.07.2026
+          </a>
+        </li>
+        <li>
+          KfW:
+          <a
+            href="https://www.kfw.de/inlandsfoerderung/Heizungsf%C3%B6rderung/"
+            class="text-primary underline"
+            target="_blank"
+            rel="noopener"
+          >
+            Aktuelle Informationen zur Heizungsförderung (Umstellungsphase und Fristen)
+          </a>
+        </li>
         <li>
           KfW:
           <a
@@ -465,17 +566,6 @@ const pageSchema = data.schema
             rel="noopener"
           >
             Heizungsförderung für Privatpersonen – Wohngebäude (458)
-          </a>
-        </li>
-        <li>
-          KfW:
-          <a
-            href="https://www.kfw.de/partner/KfW-Partnerportal/Service/Dokumente-zum-Produkt/458/index.jsp"
-            class="text-primary underline"
-            target="_blank"
-            rel="noopener"
-          >
-            Dokumente zum Produkt 458
           </a>
         </li>
         <li>
