@@ -16,14 +16,14 @@ import heroImage from "../images/foerderung-bremen-hero.webp";
 import type { PageData } from "../types/page";
 
 const data: PageData = {
-  title: "KfW 458 förderfähige Kosten ab 21.07.2026: Tabelle + Beispiele",
+  title: "KfW 458 förderfähige Kosten: Zuschuss sinkt ab 2027 (Tabelle)",
   description:
-    "Förderfähige Kosten neu ab 21.07.2026: 28.000 statt 30.000 € für die 1. Wohneinheit, Klimabonus 16 %, Einkommensbonus bis 40 % – Tabelle alt vs. neu + Beispiele.",
-  lastUpdated: "14. Juli 2026",
+    "KfW 458 neu: 28.000 € förderfähige Kosten, Klimabonus 16 %, Einkommensbonus bis 40 %. Ab 02/2027 sinkt der Zuschuss halbjährlich – Tabelle zeigt, was Warten kostet.",
+  lastUpdated: "15. Juli 2026",
   hero: {
     headline: "KfW 458 förderfähige Kosten",
     subtext:
-      "Neue Konditionen ab 21. Juli 2026: 28.000 € förderfähige Kosten für die erste Wohneinheit, gestaffelter Einkommensbonus, Frist für Alt-Anträge am 20. Juli – mit Tabelle alt vs. neu und Rechenbeispielen.",
+      "Neue Konditionen ab 21. Juli 2026: 28.000 € förderfähige Kosten für die erste Wohneinheit, Klimabonus 16 %, gestaffelter Einkommensbonus – und ab Februar 2027 sinkt die Förderung planmäßig jedes halbe Jahr. Mit Tabelle alt vs. neu, Kürzungsfahrplan und Rechenbeispielen.",
     primaryCTA: {
       label: "KfW-Boni für Ihr Haus prüfen",
       href: "/check/",
@@ -41,13 +41,13 @@ const data: PageData = {
       text: "28.000 / 15.000 / 8.000 €",
     },
     {
-      text: "Frist 20.07.2026, 20 Uhr",
+      text: "Ab 02/2027: −750 € & −4 %-Punkte je Halbjahr",
     },
     {
       text: "WEG & Mehrfamilienhaus",
     },
     {
-      text: "Stand 14. Juli 2026",
+      text: "Stand 15. Juli 2026",
     },
   ],
   breadcrumb: [
@@ -64,8 +64,8 @@ const data: PageData = {
     },
   ],
   ctaBlock: {
-    headline: "Welche KfW-458-Boni greifen für Ihr Bremer Haus?",
-    text: "Der Check ordnet Heizungsalter, Eigentum, Wohneinheiten und mögliche Boni ein – als erste Orientierung vor Angebot und Antrag.",
+    headline: "Welcher KfW-458-Fördersatz gilt noch für Ihr Bremer Haus?",
+    text: "Bis zur ersten Kürzung am 1. Februar 2027 gelten die aktuellen Sätze. Der Check ordnet Heizungsalter, Eigentum, Wohneinheiten und mögliche Boni ein – als erste Orientierung vor Angebot und Antrag.",
     variant: "highlight",
     primaryCTA: {
       label: "KfW-Boni für Ihr Haus prüfen",
@@ -91,7 +91,22 @@ const data: PageData = {
     {
       question: "Kann ich noch zu den alten Konditionen beantragen?",
       answer:
-        "Nur mit einer bereits vorliegenden Bestätigung zum Antrag (BzA): Dann kann der Zuschussantrag bis zum 20. Juli 2026, 20 Uhr, im Portal Meine KfW zu den bisherigen Konditionen gestellt werden. Neue BzA werden in der Umstellungsphase seit dem 09.07.2026 nicht erstellt. Bereits erteilte Förderzusagen bleiben unverändert gültig.",
+        "Nein, das Zeitfenster ist geschlossen: Nur wer bereits eine Bestätigung zum Antrag (BzA) hatte, konnte den Zuschussantrag bis zum 20. Juli 2026, 20 Uhr, im Portal Meine KfW zu den bisherigen Konditionen stellen. Seit dem 21.07.2026 gelten für alle neuen Anträge ausschließlich die neuen Konditionen. Bereits erteilte Förderzusagen bleiben unverändert gültig.",
+    },
+    {
+      question: "Wird die Wärmepumpen-Förderung 2027 weiter gekürzt?",
+      answer:
+        "Ja, planmäßig: Ab dem 1. Februar 2027 sinkt der Förderhöchstbetrag für die erste Wohneinheit halbjährlich (jeweils zum 01.02. und 01.08.) um 750 Euro, und der Klimageschwindigkeitsbonus sinkt im gleichen Rhythmus um 4 Prozentpunkte. Nach diesem Fahrplan läuft der Klimabonus zum 1. August 2028 aus. Maßgeblich sind die Konditionen zum Zeitpunkt der Antragstellung.",
+    },
+    {
+      question: "Wie lange gibt es die KfW-Förderung 458 noch?",
+      answer:
+        "Ein Enddatum für das Programm ist nicht beschlossen – die Heizungsförderung läuft weiter. Beschlossen ist aber, dass die Konditionen ab Februar 2027 halbjährlich abgeschmolzen werden: weniger anrechenbare Kosten und ein sinkender Klimabonus. Je später der Antrag, desto niedriger fällt der Zuschuss aus.",
+    },
+    {
+      question: "Was ist der Wertschöpfungsbonus (Made in Europe)?",
+      answer:
+        "Für das erste Quartal 2027 ist ein neuer Wertschöpfungsbonus von 15 Prozent für nachweislich in der EU gefertigte Wärmepumpen angekündigt. Im Gegenzug soll die Grundförderung von 30 auf 15 Prozent sinken. EU-gefertigte Geräte kämen damit weiter auf 30 Prozent, Geräte aus Nicht-EU-Fertigung nur noch auf 15 Prozent Grundförderung. Die Details sind noch nicht final beschlossen.",
     },
     {
       question: "Wie funktioniert der neue Einkommensbonus ab 21.07.2026?",
@@ -125,34 +140,9 @@ const data: PageData = {
     },
   ],
   schema: {
-    type: "HowTo",
+    type: "Article",
     datePublished: "2026-05-02",
-    dateModified: "2026-07-14",
-    howToName: "KfW 458 förderfähige Kosten für Wärmepumpe berechnen",
-    howToDescription:
-      "Schritt-für-Schritt-Einordnung der KfW-458-förderfähigen Kosten nach Wohneinheiten und Boni für Wärmepumpen im Bestand.",
-    howToSteps: [
-      {
-        name: "Wohneinheiten zählen",
-        text: "Zuerst wird die Anzahl der Wohneinheiten im Gebäude bestimmt. Ab dem 21.07.2026 zählt die erste Wohneinheit mit 28.000 Euro, die zweite bis sechste jeweils mit 15.000 Euro und jede weitere mit 8.000 Euro förderfähigen Kosten.",
-      },
-      {
-        name: "Förderfähige Kosten im Angebot trennen",
-        text: "Gerät, Einbau, hydraulischer Abgleich, Speicher, Fachplanung und technisch notwendige Umfeldmaßnahmen müssen im Angebot nachvollziehbar dem Heizungstausch zugeordnet sein.",
-      },
-      {
-        name: "Boni prüfen",
-        text: "Basisförderung, Klimageschwindigkeitsbonus und gestaffelter Einkommensbonus werden geprüft. Die Summe ist auf maximal 70 Prozent begrenzt, bei den niedrigsten Haushaltseinkommen auf 80 Prozent.",
-      },
-      {
-        name: "BzA und Vertrag vorbereiten",
-        text: "Ein Energieeffizienz-Experte oder zugelassenes Fachunternehmen stellt die Bestätigung zum Antrag aus. Der Liefer- oder Leistungsvertrag muss eine förderkonforme Bedingung enthalten.",
-      },
-      {
-        name: "Antrag bei Meine KfW stellen und Zusage abwarten",
-        text: "Mit der BzA-ID wird der Zuschussantrag im Portal Meine KfW gestellt. Erst nach Förderzusage sollte die Maßnahme umgesetzt werden; danach bleiben in der Regel 36 Monate Zeit bis zum Nachweis.",
-      },
-    ],
+    dateModified: "2026-07-15",
   },
 };
 
@@ -218,11 +208,13 @@ const pageSchema = data.schema
           niedrigsten Einkommen bei <strong>80 %</strong>.
         </p>
         <p class="text-sm text-text-muted leading-relaxed mt-4">
-          <strong class="text-text">Frist:</strong> Wer bereits eine Bestätigung zum
-          Antrag (BzA) hat, kann noch bis <strong class="text-text">20. Juli 2026,
-          20 Uhr</strong>, zu den alten Konditionen beantragen. Neue BzA werden seit
-          dem 09.07.2026 erst wieder ab dem 21.07.2026 erstellt. Bereits erteilte
-          Zusagen bleiben unverändert gültig.
+          <strong class="text-text">Wichtig für die Planung:</strong> Ab dem
+          <strong class="text-text">1. Februar 2027</strong> wird die Förderung
+          planmäßig abgeschmolzen – der Höchstbetrag sinkt halbjährlich um 750 €,
+          der Klimabonus um 4 Prozentpunkte. Der
+          <a href="#foerder-fahrplan" class="text-primary underline">Kürzungsfahrplan
+          mit Beträgen</a> zeigt, was Warten konkret kostet. Bereits erteilte
+          Förderzusagen bleiben unverändert gültig.
         </p>
       </div>
       <div class="bg-highlight border border-border rounded p-5">
@@ -309,7 +301,7 @@ const pageSchema = data.schema
       <p class="text-sm">
         <strong class="text-text">Verfasser:</strong>
         <a href="/kontakt/" class="text-primary underline">Ferris El-Armouche</a
-        >. Stand 14. Juli 2026, geprüft an der KfW-Quelle. Diese private
+        >. Stand 15. Juli 2026, geprüft an der KfW-Quelle. Diese private
         Informationsseite ersetzt keine verbindliche Förderberatung oder
         Förderzusage durch KfW, Energieeffizienz-Experten oder Fachunternehmen.
       </p>
@@ -351,23 +343,113 @@ const pageSchema = data.schema
       </div>
     </div>
 
+  </SectionShell>
+
+  <SectionShell id="foerder-fahrplan">
+    <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
+      Förder-Fahrplan: So sinkt der KfW-458-Zuschuss ab 2027
+    </h2>
+    <p class="text-text-muted max-w-3xl mb-6">
+      Mit dem Beschluss des Haushaltsausschusses vom 8. Juli 2026 ist die
+      Abschmelzung verbindlich terminiert: Ab dem
+      <strong class="text-text">1. Februar 2027</strong> sinkt der
+      Förderhöchstbetrag für die erste Wohneinheit halbjährlich (jeweils zum
+      01.02. und 01.08.) um <strong class="text-text">750 €</strong>, der
+      Klimageschwindigkeitsbonus im gleichen Rhythmus um
+      <strong class="text-text">4 Prozentpunkte</strong> – bis er nach aktuellem
+      Fahrplan zum 1. August 2028 ausläuft. Für ein Einfamilienhaus
+      (Selbstnutzer, Tausch einer alten Öl- oder Gasheizung, ohne
+      Einkommensbonus) bedeutet das konkret:
+    </p>
+
+    <div class="surface-card overflow-hidden divide-y divide-border max-w-3xl">
+      <div class="grid grid-cols-4 px-4 py-3 text-sm bg-background">
+        <span class="font-semibold text-text">Antrag gestellt</span>
+        <span class="font-semibold text-text text-right">Höchstbetrag</span>
+        <span class="font-semibold text-text text-right">Fördersatz</span>
+        <span class="font-semibold text-text text-right">Zuschuss</span>
+      </div>
+      <div class="grid grid-cols-4 px-4 py-3 text-sm bg-highlight">
+        <span class="font-semibold text-text">bis 31.01.2027</span>
+        <span class="text-text-muted text-right">28.000 €</span>
+        <span class="text-text-muted text-right">46 %</span>
+        <span class="font-bold text-primary text-right">12.880 €</span>
+      </div>
+      <div class="grid grid-cols-4 px-4 py-3 text-sm">
+        <span class="text-text-muted">ab 01.02.2027</span>
+        <span class="text-text-muted text-right">27.250 €</span>
+        <span class="text-text-muted text-right">42 %</span>
+        <span class="font-semibold text-text text-right">11.445 €</span>
+      </div>
+      <div class="grid grid-cols-4 px-4 py-3 text-sm">
+        <span class="text-text-muted">ab 01.08.2027</span>
+        <span class="text-text-muted text-right">26.500 €</span>
+        <span class="text-text-muted text-right">38 %</span>
+        <span class="font-semibold text-text text-right">10.070 €</span>
+      </div>
+      <div class="grid grid-cols-4 px-4 py-3 text-sm">
+        <span class="text-text-muted">ab 01.02.2028</span>
+        <span class="text-text-muted text-right">25.750 €</span>
+        <span class="text-text-muted text-right">34 %</span>
+        <span class="font-semibold text-text text-right">8.755 €</span>
+      </div>
+      <div class="grid grid-cols-4 px-4 py-3 text-sm">
+        <span class="text-text-muted">ab 01.08.2028</span>
+        <span class="text-text-muted text-right">25.000 €</span>
+        <span class="text-text-muted text-right">30 %</span>
+        <span class="font-semibold text-text text-right">7.500 €</span>
+      </div>
+    </div>
+    <p class="text-xs text-text-muted mt-3 max-w-3xl">
+      Rechenbeispiel erste Wohneinheit: 30 % Grundförderung +
+      Klimageschwindigkeitsbonus (16/12/8/4/0 %), ohne Einkommensbonus.
+      Mit Einkommensbonus liegt der Zuschuss höher, das Abschmelz-Prinzip ist
+      dasselbe. Quelle: KfW-Pressemitteilung zu den BEG-Anpassungen.
+    </p>
+
+    <p class="text-text-muted max-w-3xl mt-6">
+      <strong class="text-text">Jedes Halbjahr Wartezeit kostet in diesem
+      Beispiel rund 1.300 bis 1.400 € Zuschuss</strong> – wer den Antrag statt
+      im Januar 2027 erst im August 2028 stellt, verliert insgesamt 5.380 €.
+      Maßgeblich sind immer die Konditionen am Tag der Antragstellung; eine
+      einmal erteilte Zusage bleibt gültig.
+    </p>
+
+    <h3 class="text-xl font-bold text-text mt-8 mb-3">
+      Angekündigt für Anfang 2027: Wertschöpfungsbonus „Made in Europe"
+    </h3>
+    <p class="text-text-muted max-w-3xl text-sm leading-relaxed">
+      Für das erste Quartal 2027 hat das Bundeswirtschaftsministerium einen
+      <strong class="text-text">Wertschöpfungsbonus von 15 %</strong> für
+      nachweislich in der EU gefertigte Wärmepumpen angekündigt. Im Gegenzug
+      soll die Grundförderung von 30 auf
+      <strong class="text-text">15 %</strong> sinken: EU-gefertigte Geräte
+      kämen damit weiter auf 30 %, Modelle aus Nicht-EU-Fertigung nur noch auf
+      15 % Grundförderung. Dieser Baustein ist
+      <strong class="text-text">angekündigt, aber noch nicht final
+      beschlossen</strong> – wer ein Gerät außerhalb der EU-Fertigung plant,
+      hat einen zusätzlichen Grund, den Antrag vor 2027 zu stellen.
+    </p>
+
     <div
-      class="bg-highlight border border-border rounded p-5 mt-6 flex flex-col sm:flex-row items-center justify-between gap-4"
+      class="bg-highlight border border-border rounded p-5 mt-8 flex flex-col sm:flex-row items-center justify-between gap-4"
     >
       <div>
-        <p class="font-bold text-text">KfW-Boni für Ihr Bremer Haus prüfen</p>
+        <p class="font-bold text-text">
+          Welcher Fördersatz gilt noch für Ihr Haus?
+        </p>
         <p class="text-text-muted text-sm mt-1">
-          Eigentum, Heizungsalter, Nutzung und Wohneinheiten entscheiden über
-          den Förderhebel.
+          Der kostenlose Check ordnet Heizungsalter, Eigentum, Wohneinheiten
+          und Boni ein – die Einordnung passiert zunächst im Browser.
         </p>
       </div>
       <a href="/check/" class="btn-accent shrink-0 text-center"
-        >KfW-Boni prüfen</a
+        >Jetzt Fördersatz prüfen</a
       >
     </div>
   </SectionShell>
 
-  <SectionShell>
+  <SectionShell variant="alt">
     <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
       Welche Boni gelten ab dem 21.07.2026?
     </h2>
@@ -406,7 +488,7 @@ const pageSchema = data.schema
     />
   </SectionShell>
 
-  <SectionShell variant="alt">
+  <SectionShell>
     <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
       Einkommensbonus neu: 40/30/10 % und Familienzuschlag
     </h2>
@@ -449,21 +531,9 @@ const pageSchema = data.schema
         zugesagte Anträge behalten ihre Konditionen.
       </p>
     </NoticeSuccess>
-    <h3 class="text-xl font-bold text-text mt-8 mb-3">
-      Ausblick: Degression ab Februar 2027
-    </h3>
-    <p class="text-text-muted max-w-3xl text-sm leading-relaxed">
-      Ab dem 01.02.2027 sinkt der Förderhöchstbetrag für die erste Wohneinheit
-      halbjährlich (jeweils zum 01.02. und 01.08.) um
-      <strong class="text-text">750 €</strong>; der
-      Klimageschwindigkeitsbonus sinkt im gleichen Rhythmus um
-      <strong class="text-text">4 Prozentpunkte</strong>. Wer den
-      Heizungstausch ohnehin plant, stellt den Antrag deshalb tendenziell
-      besser früher als später.
-    </p>
   </SectionShell>
 
-  <SectionShell>
+  <SectionShell variant="alt">
     <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
       Was zählt typischerweise zu den förderfähigen Kosten?
     </h2>
@@ -485,7 +555,7 @@ const pageSchema = data.schema
     />
   </SectionShell>
 
-  <SectionShell variant="alt">
+  <SectionShell>
     <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
       KfW 458 Antrag: Reihenfolge ohne Förderverlust
     </h2>
@@ -523,7 +593,7 @@ const pageSchema = data.schema
     />
   </SectionShell>
 
-  <SectionShell>
+  <SectionShell variant="alt">
     <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
       Quellen und redaktioneller Stand
     </h2>
@@ -531,10 +601,24 @@ const pageSchema = data.schema
       class="surface-card p-5 max-w-3xl text-sm text-text-muted leading-relaxed"
     >
       <p class="font-semibold text-text mb-3">
-        Stand: 14. Juli 2026 · geprüft an den KfW-Quellen · neue Konditionen ab
-        21.07.2026
+        Stand: 15. Juli 2026 · geprüft an den KfW-Quellen · neue Konditionen ab
+        21.07.2026, beschlossen vom Haushaltsausschuss des Bundestages am
+        08.07.2026
       </p>
       <ul class="space-y-2">
+        <li>
+          KfW:
+          <a
+            href="https://www.kfw.de/%C3%9Cber-die-KfW/Newsroom/Aktuelles/Pressemitteilungen-Details_900928.html"
+            class="text-primary underline"
+            target="_blank"
+            rel="noopener"
+          >
+            Pressemitteilung: Anpassungen in den KfW-Produkten der
+            Bundesförderung für effiziente Gebäude (inkl. Degression ab
+            01.02.2027)
+          </a>
+        </li>
         <li>
           KfW:
           <a
@@ -576,7 +660,7 @@ const pageSchema = data.schema
     </div>
   </SectionShell>
 
-  <SectionShell variant="alt">
+  <SectionShell>
     <h2 class="text-2xl md:text-3xl font-bold text-text mb-6">Weiterlesen</h2>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-5xl">
       <InternalLinkCard
