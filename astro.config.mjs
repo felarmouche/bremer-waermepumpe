@@ -10,6 +10,7 @@ import react from '@astrojs/react';
 function precompileReactServer() {
   return {
     name: 'precompile-react-server',
+    /** @param {string} environment */
     configEnvironment(environment) {
       if (environment !== 'client') {
         return {
