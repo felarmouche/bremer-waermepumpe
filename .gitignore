@@ -36,6 +36,13 @@ SEO_BRIEFING.md
 *-api-key.txt
 brevo-api-key.txt
 datenschutzerklärung_von_sönke.txt
+.secrets/
+.env.local
+client_secret_*.json
+*service-account*.json
+
+# SEO-Rohdaten (GSC / DataForSEO Exporte)
+seo-data/
 
 # D1 Backups — enthalten personenbezogene Daten, NIE ins Repo!
 backups/
