@@ -27,7 +27,7 @@ export default function Step2Age({ data, onNext, onBack }: Step2Props) {
           Wie viele Jahre ist Ihre alte Heizung schon in Betrieb?
         </h2>
         <p className="text-sm text-text-muted mt-2">
-          Ältere Heizungen erhalten oft höhere staatliche Förderungen beim Umstieg auf Wärmepumpen.
+          Art und Alter der bestehenden Heizung sind für die individuelle Förderprüfung relevant.
         </p>
       </div>
 

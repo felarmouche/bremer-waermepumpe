@@ -14,7 +14,12 @@
     "deploy": "npm run build && wrangler deploy",
     "db:peek": "wrangler d1 execute anonymous-leads --remote --command \"SELECT id, vorname, nachname, plz, status, created_at FROM leads ORDER BY created_at DESC LIMIT 20\"",
     "db:backup": "bash scripts/backup-d1.sh && BREVO_API_KEY=$(cat .dev.vars | grep BREVO_API_KEY | cut -d= -f2) bash scripts/backup-brevo-logs.sh",
-    "logs": "wrangler tail"
+    "logs": "wrangler tail",
+    "seo:gsc": "node scripts/seo/fetch-gsc.mjs",
+    "seo:inspect": "node scripts/seo/fetch-gsc.mjs --inspect",
+    "seo:dfs": "node --env-file-if-exists=.env.local scripts/seo/fetch-dataforseo.mjs",
+    "seo:report": "node scripts/seo/build-report.mjs",
+    "seo:sync": "npm run seo:gsc && npm run seo:report"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.9",

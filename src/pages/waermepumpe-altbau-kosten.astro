@@ -16,7 +16,7 @@ import type { PageData } from "../types/page";
 
 const data: PageData = {
     title: "Wärmepumpe Altbau Kosten 2026: Preise, Einbau & Förderung",
-    description: "Was kostet eine Wärmepumpe im Altbau? Preise 2026 inklusive Einbau, Heizkörper und Stromkosten, dazu KfW-Förderung und der realistische Eigenanteil.",
+    description: "Was kostet eine Wärmepumpe im Altbau? Preise 2026 inklusive Einbau, Heizkörper, Zusatzposten und Stromkosten realistisch eingeordnet.",
     lastUpdated: "2. Juni 2026",
     hero: {
         headline: "Wärmepumpe Altbau Kosten",
@@ -41,7 +41,7 @@ const data: PageData = {
             text: "Stand 2. Juni 2026"
         },
         {
-            text: "Förderfähige Umfeldmaßnahmen"
+            text: "Typische Zusatzposten im Altbau"
         }
     ],
     breadcrumb: [
@@ -74,7 +74,7 @@ const data: PageData = {
     faqs: [
         {
             question: "Lohnt sich eine Wärmepumpe im Altbau wirklich?",
-            answer: "In sehr vielen Bremer Altbauten ja – sofern die Vorlauftemperatur ganzjährig unter etwa 55 °C bleibt. Wer den Klimabonus mitnimmt (alte Öl-/Gasheizung) und unter der Einkommensgrenze von 40.000 Euro liegt, kann mit 70 % Förderung den Eigenanteil unter 12.000 Euro drücken. Wirtschaftlich ist die Wärmepumpe damit oft schon nach 8–12 Jahren günstiger als eine neue Gasheizung."
+            answer: "In vielen Altbauten ja – sofern Heizlast, Heizflächen und Vorlauftemperatur zusammenpassen. Für die Wirtschaftlichkeit zählen die Investition, der reale Stromverbrauch und die zum Antragstermin geltende Förderung. Eine pauschale Amortisationszeit oder ein fester Eigenanteil wäre ohne Gebäudedaten nicht seriös."
         },
         {
             question: "Welche Wärmepumpe ist die beste für einen Altbau ohne Fußbodenheizung?",
@@ -86,21 +86,21 @@ const data: PageData = {
         },
         {
             question: "Was kostet der Einbau einer Wärmepumpe im Altbau?",
-            answer: "Für ein Altbau-Reihenhaus rechnen Sie mit 24.000 bis 32.000 Euro brutto für eine Hochtemperatur-Luft-Wasser-Wärmepumpe inklusive Einbau, hydraulischem Abgleich und Inbetriebnahme. Wenn 1–2 Heizkörper getauscht werden müssen, kommen 1.500–3.000 Euro dazu (förderfähig als Umfeldmaßnahme)."
+            answer: "Für ein Altbau-Reihenhaus rechnen Sie mit 24.000 bis 32.000 Euro brutto für eine Hochtemperatur-Luft-Wasser-Wärmepumpe inklusive Einbau, hydraulischem Abgleich und Inbetriebnahme. Wenn ein bis zwei Heizkörper getauscht werden müssen, kommen typischerweise 1.500 bis 3.000 Euro dazu."
         },
         {
             question: "Lohnt sich eine Wärmepumpe im unsanierten Altbau ohne Dämmung?",
-            answer: "Ja, häufig – aber die Vorlauftemperatur und damit der Stromverbrauch liegen höher. Entscheidend ist die Heizlast: Reichen die vorhandenen Heizkörper bei etwa 55–65 °C aus, arbeitet eine Hochtemperatur-Wärmepumpe wirtschaftlich. Einzelne große Heizkörper oder ein hydraulischer Abgleich sind oft günstiger als eine komplette Dämmung und als Umfeldmaßnahme förderfähig. Im unsanierten Altbau steigen vor allem die laufenden Stromkosten, nicht zwingend die Anschaffung."
+            answer: "Ja, häufig – aber die Vorlauftemperatur und damit der Stromverbrauch liegen höher. Entscheidend ist die Heizlast: Reichen die vorhandenen Heizkörper bei etwa 55–65 °C aus, kann eine Hochtemperatur-Wärmepumpe sinnvoll sein. Einzelne große Heizkörper oder ein hydraulischer Abgleich sind oft günstiger als eine komplette Dämmung."
         },
         {
-            question: "Welche Posten sind im Altbau oft förderfähig, aber werden vergessen?",
-            answer: "Häufig: hydraulischer Abgleich (1.000–1.500 €), einzelne größere Heizkörper (300–800 € pro Stück), Pufferspeicher, akustische Fachplanung bei enger Nachbarschaft, Wanddurchbrüche und Putz-/Malerarbeiten, die direkt mit dem Heizungstausch zusammenhängen. Alles fließt in die KfW-458-förderfähigen Kosten ein, sofern technisch erforderlich."
+            question: "Welche Zusatzposten werden im Altbau-Angebot oft vergessen?",
+            answer: "Häufig fehlen hydraulischer Abgleich, einzelne größere Heizkörper, Pufferspeicher, akustische Fachplanung bei enger Nachbarschaft, Wanddurchbrüche und direkt nötige Putz- oder Malerarbeiten. Diese Positionen sollten vor dem Förderantrag vollständig erfasst und anschließend nach den aktuellen KfW-Regeln geprüft werden."
         }
     ],
     schema: {
         type: "Article",
         datePublished: "2026-05-02",
-        dateModified: "2026-06-02"
+        dateModified: "2026-07-15"
     }
 };
 
@@ -149,28 +149,24 @@ const pageSchema = data.schema
       <p class="font-bold text-text mb-2">Schnelle Antwort: Was kostet eine Wärmepumpe im Altbau?</p>
       <p class="text-sm leading-relaxed">
         Eine Wärmepumpe im Altbau liegt inklusive Einbau häufig bei
-        <strong class="text-text">23.000 bis 37.000 €</strong> vor Förderung. Mit
-        KfW 458 sinkt der Eigenanteil je nach Boni oft auf
-        <strong class="text-text">unter 15.000 €</strong>. Wie hoch er genau ausfällt,
-        hängt davon ab, ob eine alte Öl- oder Gasheizung getauscht wird und ob
-        Effizienzbonus, Einkommensbonus und förderfähige Umfeldmaßnahmen sauber
-        genutzt werden.
+        <strong class="text-text">23.000 bis 37.000 €</strong> vor Förderung. Der
+        spätere Eigenanteil hängt vom vollständigen Angebot und den zum Antragstermin
+        geltenden Konditionen ab. Die <a href="/kfw-458-waermepumpe/" class="text-brand underline">KfW-458-Detailseite</a>
+        hält diese veränderlichen Angaben zentral aktuell.
       </p>
     </div>
     <p>
       „Eine Wärmepumpe im Altbau ist viel teurer als im Neubau" – das stimmt nur halb. Was
       stimmt: Im Altbau gibt es mehr Posten, die in das Gesamtangebot einfließen können.
-      Was nicht stimmt: Das macht die Wärmepumpe automatisch unwirtschaftlich. Im
-      Gegenteil – im Altbau profitieren Eigentümer am häufigsten vom
-      <strong class="text-text"> Klimageschwindigkeitsbonus</strong> (Tausch alter Öl-
-      oder Gas-Heizungen) und holen damit bis zu 50 % der Investition über die KfW zurück.
+      Was nicht stimmt: Das macht die Wärmepumpe automatisch unwirtschaftlich. Entscheidend
+      sind Heizlast, notwendige Anpassungen, Stromverbrauch und das vollständige Angebot.
     </p>
     <p>
       Diese Seite behandelt bewusst die <strong class="text-text">Kostenfrage</strong>:
       Welche Posten im Altbau-Angebot stehen sollten, was den Preis nach oben treibt,
-      welche Posten förderfähig sind und mit welchem Eigenanteil Eigentümer 2026
-      realistisch rechnen können. Die technische Machbarkeit steht separat auf der
-      Eignungsseite.
+      welche Zusatzposten häufig fehlen und wie sich ein belastbares Budget aufbauen
+      lässt. Förderkonditionen und technische Machbarkeit stehen bewusst auf den jeweils
+      zuständigen Detailseiten.
     </p>
     <NoticeSuccess>
       <p>
@@ -218,7 +214,9 @@ const pageSchema = data.schema
   </div>
 
   <p class="text-text-muted max-w-3xl text-sm leading-relaxed mt-6">
-    Wichtig: Die meisten dieser Posten sind <strong class="text-text">förderfähig als Umfeldmaßnahmen</strong>, sofern sie technisch im Zusammenhang mit dem Heizungstausch erforderlich sind. Der hydraulische Abgleich ist sogar verpflichtende Voraussetzung für die KfW-Förderung.
+    Wichtig: Lassen Sie alle technisch notwendigen Posten einzeln im Angebot ausweisen.
+    Welche davon nach den aktuellen Regeln berücksichtigt werden können, erklärt die
+    <a href="/kfw-458-waermepumpe/" class="text-brand underline">KfW-458-Seite</a>.
   </p>
 </SectionShell>
 
@@ -238,7 +236,7 @@ const pageSchema = data.schema
     </div>
     <div class="grid grid-cols-1 md:grid-cols-[1fr_1.6fr] gap-1 px-5 py-4 text-sm">
       <span class="font-semibold text-text">Heizkörper &amp; Vorlauftemperatur</span>
-      <span class="text-text-muted">Reichen die vorhandenen Heizkörper bei niedriger Vorlauftemperatur, entfällt ein großer Posten. Müssen einzelne Heizkörper getauscht werden, kostet das 300–800 € pro Stück – als Umfeldmaßnahme meist förderfähig.</span>
+      <span class="text-text-muted">Reichen die vorhandenen Heizkörper bei niedriger Vorlauftemperatur, entfällt ein großer Posten. Müssen einzelne Heizkörper getauscht werden, kostet das typischerweise 300–800 € pro Stück.</span>
     </div>
     <div class="grid grid-cols-1 md:grid-cols-[1fr_1.6fr] gap-1 px-5 py-4 text-sm">
       <span class="font-semibold text-text">Wärmequelle &amp; Bauart</span>
@@ -259,13 +257,12 @@ const pageSchema = data.schema
 {/* Rechen-Szenario Altbau */}
 <SectionShell variant="alt">
   <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
-    Rechen-Szenario: Altbau-Reihenhaus mit alter Gasheizung
+    Angebots-Szenario: Altbau-Reihenhaus mit alter Gasheizung
   </h2>
   <p class="text-text-muted max-w-3xl mb-6">
     Das folgende Szenario ist keine behauptete Kundenreferenz, sondern eine
     transparente Modellrechnung für ein typisches Altbau-Objekt in Bremen. Es zeigt,
-    welche Positionen ein Angebot enthalten sollte und wie die Förderung den
-    Eigenanteil verändert.
+    welche Positionen ein vollständiges Angebot enthalten sollte.
   </p>
 
   <div class="surface-card overflow-hidden max-w-2xl divide-y divide-border">
@@ -289,47 +286,38 @@ const pageSchema = data.schema
       <span class="font-semibold text-text">Modellhafte Investition</span>
       <span class="font-bold text-primary text-right">28.800 €</span>
     </div>
-    <div class="grid grid-cols-2 px-5 py-4 text-sm">
-      <span class="text-text-muted">KfW 458: 30 % Basis + 20 % Klimabonus + 5 % Effizienzbonus</span>
-      <span class="font-semibold text-text text-right">55 %</span>
-    </div>
-    <div class="grid grid-cols-2 px-5 py-4 text-sm bg-highlight">
-      <span class="font-semibold text-text">Eigenanteil nach Zuschuss</span>
-      <span class="font-bold text-primary text-right">ca. 12.960 €</span>
-    </div>
   </div>
   <p class="text-text-muted max-w-3xl text-sm leading-relaxed mt-6">
-    Liegt zusätzlich der Einkommensbonus vor, kann die Förderquote bis zur 70-%-Grenze
-    steigen. Entscheidend ist aber immer die konkrete BzA und das förderfähige Angebot.
+    Diese Modellrechnung endet bewusst bei der Investition. Den Eigenanteil berechnen
+    Sie erst danach mit den <a href="/kfw-458-waermepumpe/" class="text-brand underline">aktuell geltenden KfW-Konditionen</a>.
   </p>
 </SectionShell>
 
 {/* Welche Posten sind förderfähig? */}
 <SectionShell>
   <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
-    Welche Altbau-spezifischen Posten sind förderfähig?
+    Welche Altbau-Posten gehören vollständig ins Angebot?
   </h2>
   <p class="text-text-muted max-w-3xl mb-6">
-    Im Altbau lohnt es sich besonders, alle förderfähigen Umfeldmaßnahmen sauber im
-    KfW-Antrag aufzulisten. Häufig vergessen, aber förderfähig:
+    Im Altbau lohnt es sich besonders, technisch notwendige Zusatzarbeiten vor dem
+    Fördercheck sauber zu erfassen. Häufig vergessen werden:
   </p>
   <CheckList
     items={[
-      "Hydraulischer Abgleich (KfW-Pflicht für Förderung)",
+      "Hydraulischer Abgleich und Einregulierung",
       "Einzelne größere Heizkörper, falls für niedrige Vorlauftemperatur erforderlich",
       "Pufferspeicher und Warmwasserspeicher",
       "Akustische Fachplanung (TA-Lärm-konforme Aufstellung)",
       "Wanddurchbrüche, Leitungswege, Putz- und Malerarbeiten im direkten Zusammenhang",
       "Statisch erforderliche Fundamentplatten oder Schallschutzsockel",
       "Smarte Regelung und Heizungssteuerung",
-      "Energieeffizienz-Experten-Honorar (BzA + BnD)",
+      "Erforderliche Fachplanung und Nachweise",
     ]}
   />
   <p class="text-text-muted max-w-3xl text-sm mt-6">
-    Was <strong class="text-text">nicht förderfähig</strong> ist: reine Schönheitsreparaturen
-    ohne technischen Zusammenhang, neue Möbel/Einbauten, Eigenleistung. Auch eine reine
-    Dämmungs- oder Fenstermaßnahme läuft nicht über KfW 458, sondern über separate
-    BAFA-/KfW-Programme.
+    Die Liste ist eine Angebots-Checkliste, keine Förderzusage. Prüfen Sie anschließend
+    auf der <a href="/kfw-458-waermepumpe/" class="text-brand underline">KfW-458-Detailseite</a>,
+    welche Positionen aktuell anerkannt werden können.
   </p>
 </SectionShell>
 
@@ -350,10 +338,9 @@ const pageSchema = data.schema
     <div class="surface-card p-5">
       <p class="font-semibold text-text mb-2">„Im unsanierten Haus rechnet sich das nie."</p>
       <p class="text-text-muted text-sm">
-        Differenzierter sehen. Bei alter Öl- oder Gasheizung greifen Klimabonus +
-        Effizienzbonus + ggf. Einkommensbonus. Wer 60–70 % Förderung mitnimmt, kommt
-        oft mit Eigenanteilen unter 12.000 € raus – das amortisiert sich gegen weiter
-        steigende CO₂-Preise.
+        Differenzierter sehen. Heizlast, Heizflächen, Stromverbrauch und notwendige
+        Zusatzarbeiten entscheiden über die Wirtschaftlichkeit. Eine mögliche Förderung
+        gehört in die individuelle Rechnung, nicht in eine pauschale Altbau-Prognose.
       </p>
     </div>
     <div class="surface-card p-5">
@@ -361,7 +348,7 @@ const pageSchema = data.schema
       <p class="text-text-muted text-sm">
         TA Lärm gilt, ist aber lösbar. Moderne R290-Wärmepumpen unterschreiten die
         nächtlichen Richtwerte bei sauberer Aufstellung, und die akustische Fachplanung
-        ist als Umfeldmaßnahme förderfähig. Die konkreten Abstands- und Lärmregeln für
+        sollte als eigener Angebotsposten eingeplant werden. Die konkreten Abstands- und Lärmregeln für
         Bremen stehen unter
         <a href="/waermepumpe-abstand-nachbar-bremen/" class="text-brand underline">Abstand zum Nachbarn</a>.
       </p>
@@ -377,9 +364,6 @@ const pageSchema = data.schema
   <div class="surface-card p-5 max-w-3xl text-sm text-text-muted leading-relaxed">
     <p class="font-semibold text-text mb-3">Stand: 2. Juni 2026</p>
     <ul class="space-y-2">
-      <li>
-        KfW: <a href="https://www.kfw.de/inlandsfoerderung/Privatpersonen/Bestehende-Immobilie/F%C3%B6rderprodukte/Heizungsf%C3%B6rderung-f%C3%BCr-Privatpersonen-Wohngeb%C3%A4ude-%28458%29/" class="text-primary underline" target="_blank" rel="noopener">Heizungsförderung 458</a>
-      </li>
       <li>
         BAFA: <a href="https://www.bafa.de/DE/Energie/Effiziente_Gebaeude/Sanierung_Wohngebaeude/Heizungsoptimierung/heizungsoptimierung_node.html" class="text-primary underline" target="_blank" rel="noopener">Heizungsoptimierung</a>
       </li>
@@ -417,7 +401,7 @@ const pageSchema = data.schema
     <InternalLinkCard
       href="/waermepumpe-foerderung-bremen/"
       title="Förderung & KfW 458"
-      description="KfW 458 mit bis zu 70 % Zuschuss – inklusive Klimabonus."
+      description="Aktuelle KfW-458-Konditionen und förderfähige Projektkosten."
     />
     <InternalLinkCard
       href="/check/"
@@ -432,4 +416,3 @@ const pageSchema = data.schema
         <FAQSection heading={data.faqHeading} items={data.faqs} />
     )}
 </Layout>
-

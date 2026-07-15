@@ -73,7 +73,7 @@ const data: PageData = {
     faqs: [
         {
             question: "Was kostet eine Luft-Wasser-Wärmepumpe inklusive Einbau?",
-            answer: "Für ein Bremer Einfamilienhaus liegen die Komplettkosten typischerweise zwischen 22.000 und 35.000 Euro brutto. Davon entfallen etwa 9.000 bis 16.000 Euro auf das Gerät und 7.000 bis 14.500 Euro auf Installation, Hydraulik und Inbetriebnahme. Hochtemperatur-Modelle mit dem natürlichen Kältemittel R290 liegen am oberen Ende, sind aber 5 % förderfähiger über den Effizienzbonus."
+            answer: "Für ein Bremer Einfamilienhaus liegen die Komplettkosten typischerweise zwischen 22.000 und 35.000 Euro brutto. Davon entfallen etwa 9.000 bis 16.000 Euro auf das Gerät und 7.000 bis 14.500 Euro auf Installation, Hydraulik und Inbetriebnahme. Hochtemperatur-Modelle mit dem natürlichen Kältemittel R290 liegen häufig am oberen Ende der Spanne."
         },
         {
             question: "Wie viel Strom verbraucht eine Luft-Wasser-Wärmepumpe pro Jahr?",
@@ -81,7 +81,7 @@ const data: PageData = {
         },
         {
             question: "Lohnt sich eine Luft-Wasser-Wärmepumpe gegenüber einer Gasheizung?",
-            answer: "Auf 20-Jahres-Sicht in den meisten Fällen ja. Eine neue Gasheizung kostet zwar in der Anschaffung nur 12.000–18.000 Euro, hat aber keine nennenswerte Förderung, steigende CO₂-Kosten und ab 01.07.2026 in Bremen Konflikte mit dem GEG §71. Die Wärmepumpe profitiert von bis zu 70 % KfW-Förderung und vom günstigen Wärmepumpenstrom-Tarif."
+            answer: "Auf 20-Jahres-Sicht kann sie sich lohnen. Eine neue Gasheizung ist in der Anschaffung meist günstiger, verursacht aber fossile Brennstoff- und CO₂-Kosten. Bei der Wärmepumpe zählen neben der Investition der Stromtarif, die Effizienz und eine mögliche Förderung, deren aktuelle Konditionen separat geprüft werden müssen."
         },
         {
             question: "Wie laut ist eine Luft-Wasser-Wärmepumpe in einer Bremer Reihenhauszeile?",
@@ -95,7 +95,7 @@ const data: PageData = {
     schema: {
         type: "Article",
         datePublished: "2026-05-02",
-        dateModified: "2026-05-02"
+        dateModified: "2026-07-15"
     }
 };
 
@@ -138,8 +138,9 @@ const pageSchema = data.schema
         Eine Luft-Wasser-Wärmepumpe kostet in einem Bremer Bestandsgebäude
         typischerweise <strong class="text-text">22.000 bis 35.000 €</strong>
         vor Förderung. Bei Altbau, R290-Hochtemperaturgerät, Schallschutz oder
-        Heizkörpertausch kann der obere Bereich realistisch sein. Die KfW 458
-        kann förderfähige Kosten deutlich senken.
+        Heizkörpertausch kann der obere Bereich realistisch sein. Eine mögliche
+        Förderung wird nicht in diese Kostenspanne eingerechnet; aktuelle Details
+        stehen auf der <a href="/kfw-458-waermepumpe/" class="text-primary underline">KfW-458-Seite</a>.
       </p>
     </div>
     <p>
@@ -202,9 +203,10 @@ const pageSchema = data.schema
 
   <NoticeSuccess class="mt-6" variant="bordered">
     <p>
-      <strong>Effizienzbonus für R290:</strong> Hochtemperatur-Modelle mit dem natürlichen
-      Kältemittel Propan (R290) qualifizieren sich für den 5%-Effizienzbonus der KfW 458.
-      Der höhere Anschaffungspreis wird über die Förderung teilweise ausgeglichen.
+      <strong>R290 richtig einordnen:</strong> Das natürliche Kältemittel kann technisch
+      sinnvoll sein, ist aber kein Ersatz für Heizlastberechnung und Kostenvergleich.
+      Ob Geräte- oder Projektmerkmale aktuell die Förderung beeinflussen, steht auf der
+      <a href="/kfw-458-waermepumpe/" class="text-primary underline">KfW-458-Detailseite</a>.
     </p>
   </NoticeSuccess>
 </SectionShell>
@@ -241,7 +243,7 @@ const pageSchema = data.schema
   <p class="text-text-muted max-w-3xl text-sm mt-6">
     Praktisch: Ein modernes Außengerät bei 50 dB(A) am Gerät verliert über 3 Meter
     Distanz und einfache Aufstellungsmaßnahmen rasch 15–20 dB(A). Eine
-    <strong class="text-text"> akustische Fachplanung</strong> (förderfähig!) gibt
+    <strong class="text-text"> akustische Fachplanung</strong> gibt
     Sicherheit – sie kostet 400–800 Euro, vermeidet aber Streit mit Nachbarn und
     Bauaufsicht.
   </p>
@@ -291,9 +293,9 @@ const pageSchema = data.schema
   </h2>
   <CheckList
     items={[
-      { lead: "Akustische Fachplanung:", text: "förderfähig, oft erforderlich in Reihenhauszeilen." },
+      { lead: "Akustische Fachplanung:", text: "in engen Reihenhauszeilen oft sinnvoll und im Angebot separat auszuweisen." },
       { lead: "Separater Stromzähler:", text: "Voraussetzung für den swb-Wärmepumpentarif – Tausch durch Netzbetreiber bzw. Konzession." },
-      { lead: "Hydraulischer Abgleich:", text: "verbindliche KfW-Voraussetzung, ohne den keine Förderung." },
+      { lead: "Hydraulischer Abgleich:", text: "technisch wichtig für einen effizienten Betrieb und sauber im Angebot zu dokumentieren." },
       { lead: "Pufferspeicher und Trinkwarmwasserspeicher:", text: "müssen passend dimensioniert sein, sonst leidet die Effizienz." },
       { lead: "Fundament oder Wandkonsole:", text: "Aufstellungsart entscheidet über Schwingungsentkopplung." },
       { lead: "Rohrleitungs-Dämmung:", text: "wichtig für die JAZ – Standardposten, sollte aber im Angebot stehen." },
@@ -309,9 +311,6 @@ const pageSchema = data.schema
   <div class="surface-card p-5 max-w-3xl text-sm text-text-muted leading-relaxed">
     <p class="font-semibold text-text mb-3">Stand: 29. Mai 2026</p>
     <ul class="space-y-2">
-      <li>
-        KfW: <a href="https://www.kfw.de/inlandsfoerderung/Privatpersonen/Bestehende-Immobilie/F%C3%B6rderprodukte/Heizungsf%C3%B6rderung-f%C3%BCr-Privatpersonen-Wohngeb%C3%A4ude-%28458%29/" class="text-primary underline" target="_blank" rel="noopener">Heizungsförderung 458</a>
-      </li>
       <li>
         swb: <a href="https://www.swb.de/strom/thermo-pronatur" class="text-primary underline" target="_blank" rel="noopener">Wärmepumpenstrom swb thermo proNatur</a>
       </li>
@@ -342,7 +341,7 @@ const pageSchema = data.schema
     <InternalLinkCard
       href="/waermepumpe-foerderung-bremen/"
       title="Förderung Bremen"
-      description="KfW 458 mit bis zu 70 % – inkl. 5 % Effizienzbonus für R290."
+      description="Aktuelle KfW-Konditionen und die Einordnung technischer Projektmerkmale."
     />
     <InternalLinkCard
       href="/check/"
@@ -357,4 +356,3 @@ const pageSchema = data.schema
         <FAQSection heading={data.faqHeading} items={data.faqs} />
     )}
 </Layout>
-

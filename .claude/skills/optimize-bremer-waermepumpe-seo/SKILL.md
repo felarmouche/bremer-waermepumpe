@@ -1,6 +1,6 @@
 ---
 name: optimize-bremer-waermepumpe-seo
-description: Optimize exactly one existing Astro content page of bremer-waermepumpe.de for sustainable Google search visibility while preserving architecture and preventing keyword cannibalization. Use when improving, auditing, rewriting, or maximizing SEO for one page of this project.
+description: Optimize exactly one existing Astro content page of bremer-waermepumpe.de for sustainable Google search visibility, driven by the local GSC/DataForSEO snapshots in seo-data/, while preserving architecture and preventing keyword cannibalization. Use when improving, auditing, rewriting, or maximizing SEO for one page of this project.
 ---
 
 # Bremer Waermepumpe SEO

@@ -14,12 +14,12 @@ import heroImage from "../images/heat-pump-bremen-hero.webp";
 import type { PageData } from "../types/page";
 
 const data: PageData = {
-    title: "Wärmepumpe Kosten Bremen 2026: Eigenanteil nach Förderung",
-    description: "Wärmepumpe Kosten Bremen 2026: Eigenanteil, KfW-Förderung, swb-Wärmepumpentarif und realistische Preise für Bremer Häuser.",
+    title: "Wärmepumpe Kosten Bremen 2026: Preise & Stromkosten",
+    description: "Wärmepumpe Kosten Bremen 2026: realistische Preise nach Bauart, Bremer Kostentreiber und swb-Wärmepumpentarif verständlich eingeordnet.",
     lastUpdated: "Mai 2026",
     hero: {
         headline: "Wärmepumpe Kosten Bremen",
-        subtext: "Was eine Wärmepumpe in Bremen wirklich kostet – nach Wärmequelle, mit lokalen Stromtarifen und nach Abzug der KfW-Förderung.",
+        subtext: "Was eine Wärmepumpe in Bremen wirklich kostet – nach Wärmequelle, mit lokalen Kostentreibern und laufenden Stromkosten.",
         primaryCTA: {
             label: "Eignung & Förderung prüfen",
             href: "/check/"
@@ -69,11 +69,11 @@ const data: PageData = {
     faqs: [
         {
             question: "Was kostet eine Wärmepumpe in Bremen 2026 realistisch?",
-            answer: "Für ein Bremer Einfamilienhaus liegen Luft-Wasser-Wärmepumpen inklusive Installation typischerweise bei 22.000 bis 35.000 Euro brutto, Sole-Wasser-Wärmepumpen mit Erdsondenbohrung bei 30.000 bis 45.000 Euro. Nach Abzug der maximal möglichen KfW-458-Förderung von 70 % auf förderfähige Kosten bis 30.000 Euro reduziert sich der Eigenanteil auf 9.000 bis rund 24.000 Euro – je nach Boni und tatsächlichen Kosten."
+            answer: "Für ein Bremer Einfamilienhaus liegen Luft-Wasser-Wärmepumpen inklusive Installation typischerweise bei 22.000 bis 35.000 Euro brutto, Sole-Wasser-Wärmepumpen mit Erdsondenbohrung bei 30.000 bis 45.000 Euro. Der tatsächliche Eigenanteil lässt sich erst nach einem Angebot und einer Prüfung der dann geltenden Förderkonditionen seriös bestimmen."
         },
         {
             question: "Wie viel Förderung gibt es für eine Wärmepumpe in Bremen?",
-            answer: "Über die KfW-Heizungsförderung 458 sind bis zu 70 % der förderfähigen Kosten möglich (max. 30.000 Euro für die erste Wohneinheit). Konkret: 30 % Basis, plus 20 % Klimabonus beim Tausch alter Öl-/Gas-Heizungen, plus 30 % Einkommensbonus bei Haushalten unter 40.000 Euro Jahreseinkommen, plus 5 % Effizienzbonus für besonders effiziente Systeme. Details auf der Seite Wärmepumpe Förderung Bremen."
+            answer: "Für den Heizungstausch ist in der Regel die KfW-Heizungsförderung 458 relevant. Die Höhe hängt unter anderem von Antragstermin, Gebäude, Eigentums- und Nutzungssituation ab. Aktuelle Konditionen und Bremer Förderwege stehen zentral auf der Seite Wärmepumpe Förderung Bremen."
         },
         {
             question: "Wie hoch sind die Stromkosten einer Wärmepumpe in Bremen?",
@@ -91,7 +91,7 @@ const data: PageData = {
     schema: {
         type: "Article",
         datePublished: "2026-05-02",
-        dateModified: "2026-05-02"
+        dateModified: "2026-07-15"
     }
 };
 
@@ -135,9 +135,9 @@ const pageSchema = data.schema
       <p class="text-text-muted text-sm leading-relaxed">
         Für Bremer Einfamilienhäuser liegt eine Luft-Wasser-Wärmepumpe inklusive
         Einbau typischerweise bei <strong class="text-text">22.000 bis 35.000 €</strong>
-        vor Förderung. Nach KfW 458 bleiben je nach Boni häufig
-        <strong class="text-text"> 9.000 bis 24.000 € Eigenanteil</strong>. Der
-        laufende Strombedarf hängt an der Jahresarbeitszahl; mit dem swb-Tarif
+        vor Förderung. Der Eigenanteil hängt vom konkreten Angebot und den zum
+        Antragstermin geltenden <a href="/waermepumpe-foerderung-bremen/" class="text-brand underline">Förderkonditionen</a>
+        ab und wird deshalb hier nicht pauschal beziffert. Der laufende Strombedarf hängt an der Jahresarbeitszahl; mit dem swb-Tarif
         <strong class="text-text"> thermo proNatur</strong> lag der Arbeitspreis
         Anfang 2026 bei <strong class="text-text">24,98 ct/kWh</strong>.
       </p>
@@ -197,7 +197,10 @@ const pageSchema = data.schema
   </div>
 
   <p class="text-text-muted max-w-3xl text-sm mt-6">
-    Diese Spannen umfassen das Komplettpaket: Gerät, Montage, Hydraulik, Inbetriebnahme. Nicht enthalten sind tiefere Sanierungsmaßnahmen wie Heizkörpertausch oder Wanddurchbrüche – die zählen aber als <strong class="text-text">förderfähige Umfeldmaßnahmen</strong>, sofern sie technisch erforderlich sind.
+    Diese Spannen umfassen das Komplettpaket: Gerät, Montage, Hydraulik und Inbetriebnahme.
+    Zusätzliche Arbeiten wie Heizkörpertausch oder Wanddurchbrüche müssen im Angebot
+    separat erfasst werden. Ob sie in die Förderung einbezogen werden können, erklärt
+    die <a href="/kfw-458-waermepumpe/" class="text-brand underline">aktuelle KfW-458-Detailseite</a>.
   </p>
 </SectionShell>
 
@@ -214,8 +217,8 @@ const pageSchema = data.schema
     items={[
       { lead: "Heizflächen:", text: "Klassische Bremer Reihenhäuser haben oft alte, großzügige Rippenheizkörper. Diese können bei niedriger Vorlauftemperatur weiter genutzt werden – das spart vier- bis fünfstellige Beträge gegenüber einem kompletten Heizkörpertausch." },
       { lead: "Aufstellort:", text: "Die BremLBO erlaubt 0 m Grenzabstand für Außengeräte (§6 Abs. 8 Nr. 4) – in den meisten anderen Bundesländern sind 3 m Pflicht. In dichten Reihenhauszeilen (Viertel, Neustadt, Findorff) ist das ein echter Bremen-Vorteil." },
-      { lead: "Schallschutz:", text: "TA Lärm gilt trotzdem: 35 dB(A) nachts im reinen Wohngebiet, 45 dB(A) im Mischgebiet. Eine akustische Fachplanung (förderfähig!) sichert die Einhaltung – manchmal wird ein einfacher Schallschutzsockel oder eine durchdachte Aufstellung gegenüber der Reihenhausgrenze nötig." },
-      { lead: "Sanierungsstand:", text: "Bei Altbauten in Schwachhausen, Findorff oder dem Viertel kann ein hydraulischer Abgleich, ein punktueller Heizkörpertausch oder eine zusätzliche Dämmung erforderlich sein. Diese Posten landen im KfW-Antrag unter Umfeldmaßnahmen." },
+      { lead: "Schallschutz:", text: "TA Lärm gilt trotzdem: 35 dB(A) nachts im reinen Wohngebiet, 45 dB(A) im Mischgebiet. Eine akustische Fachplanung sichert die Einhaltung – manchmal wird ein Schallschutzsockel oder eine durchdachte Aufstellung gegenüber der Reihenhausgrenze nötig." },
+      { lead: "Sanierungsstand:", text: "Bei Altbauten in Schwachhausen, Findorff oder dem Viertel kann ein hydraulischer Abgleich, ein punktueller Heizkörpertausch oder eine zusätzliche Dämmung erforderlich sein. Diese Posten gehören transparent ins Angebot." },
       { lead: "Elektrik:", text: "Häufig muss der Hausanschluss leicht verstärkt oder ein separater Stromzähler für den Wärmepumpentarif gesetzt werden. Im Komplettangebot meist mit drin, separat aufgelistet." },
     ]}
   />
@@ -261,48 +264,26 @@ const pageSchema = data.schema
   </p>
 </SectionShell>
 
-{/* Eigenanteil-Beispielrechnung */}
+{/* Förderung bewusst delegiert */}
 <SectionShell>
   <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
-    Was bleibt nach Förderung? Eigenanteil-Szenarien
+    Vom Angebot zum realistischen Eigenanteil
   </h2>
   <p class="text-text-muted max-w-3xl mb-6">
-    Drei realistische Szenarien für Bremer Hauseigentümer 2026 – stark vereinfacht, aber
-    als Orientierung belastbar.
+    Der Eigenanteil lässt sich nicht dauerhaft mit einer pauschalen Förderquote
+    berechnen. Dafür ändern sich Konditionen zu häufig und die förderfähigen Kosten
+    hängen zu stark vom Einzelfall ab. Für eine belastbare Planung brauchen Sie:
   </p>
-
-  <div class="space-y-4 max-w-3xl">
-    <div class="surface-card p-5">
-      <p class="font-semibold text-text mb-2">Szenario 1: Reihenhaus Findorff, Öl-Heizung tauschen, mittleres Einkommen</p>
-      <ul class="text-sm text-text-muted space-y-1">
-        <li>Investition (Luft-Wasser, inkl. hydraulischem Abgleich): 28.000 €</li>
-        <li>Förderfähig: 28.000 €</li>
-        <li>Förderquote: 30 % Basis + 20 % Klimabonus + 5 % Effizienz = 55 %</li>
-        <li class="font-semibold text-text">Zuschuss: 15.400 € → Eigenanteil: 12.600 €</li>
-      </ul>
-    </div>
-    <div class="surface-card p-5">
-      <p class="font-semibold text-text mb-2">Szenario 2: Altbremer Haus Viertel, Gasheizung 22 Jahre alt, Haushaltseinkommen unter 40.000 €</p>
-      <ul class="text-sm text-text-muted space-y-1">
-        <li>Investition (Luft-Wasser mit zwei Heizkörpertauschen): 32.000 €</li>
-        <li>Förderfähig (gedeckelt): 30.000 €</li>
-        <li>Förderquote: 30 % + 20 % Klima + 30 % Einkommen = 70 % (Maximum)</li>
-        <li class="font-semibold text-text">Zuschuss: 21.000 € → Eigenanteil: 11.000 €</li>
-      </ul>
-    </div>
-    <div class="surface-card p-5">
-      <p class="font-semibold text-text mb-2">Szenario 3: Einfamilienhaus Oberneuland, Sole-Wasser mit Erdsonde, höheres Einkommen</p>
-      <ul class="text-sm text-text-muted space-y-1">
-        <li>Investition (Sole-Wasser inkl. Bohrung): 42.000 €</li>
-        <li>Förderfähig (gedeckelt): 30.000 €</li>
-        <li>Förderquote: 30 % Basis + 5 % Effizienz = 35 % (kein Klimabonus, kein Einkommensbonus)</li>
-        <li class="font-semibold text-text">Zuschuss: 10.500 € → Eigenanteil: 31.500 €</li>
-      </ul>
-    </div>
-  </div>
-
+  <CheckList
+    items={[
+      { lead: "Vollständiges Angebot:", text: "Gerät, Montage, Hydraulik, Elektroarbeiten, Heizflächen und Schallschutz getrennt ausweisen lassen." },
+      { lead: "Technische Prüfung:", text: "Nur notwendige und sauber dokumentierte Projektbestandteile können für die Förderprüfung berücksichtigt werden." },
+      { lead: "Aktuelle Konditionen:", text: "Förderregeln erst zum geplanten Antragstermin aus der zentral gepflegten Förderübersicht übernehmen." },
+    ]}
+  />
   <p class="text-text-muted max-w-3xl text-sm mt-6">
-    Diese Beispiele zeigen: Wer den Klimabonus mitnimmt (alte fossile Heizung) und unter der Einkommensgrenze liegt, kommt deutlich günstiger weg. Wer die volle Förderkulisse ausreizt, kann den Eigenanteil unter 12.000 Euro drücken. Detailseite zur Förderung: <a href="/waermepumpe-foerderung-bremen/" class="text-brand underline">Wärmepumpe Förderung Bremen</a>.
+    Prüfen Sie dafür die <a href="/waermepumpe-foerderung-bremen/" class="text-brand underline">aktuellen Förderwege in Bremen</a>
+    und anschließend die <a href="/kfw-458-waermepumpe/" class="text-brand underline">KfW-458-Konditionen im Detail</a>.
   </p>
 </SectionShell>
 
@@ -348,9 +329,6 @@ const pageSchema = data.schema
     <ul class="space-y-2">
       <li>
         swb: <a href="https://www.swb.de/strom/thermo-pronatur" class="text-primary underline" target="_blank" rel="noopener">Wärmepumpenstrom swb thermo proNatur</a>
-      </li>
-      <li>
-        KfW: <a href="https://www.kfw.de/inlandsfoerderung/Privatpersonen/Bestehende-Immobilie/F%C3%B6rderprodukte/Heizungsf%C3%B6rderung-f%C3%BCr-Privatpersonen-Wohngeb%C3%A4ude-%28458%29/" class="text-primary underline" target="_blank" rel="noopener">Heizungsförderung 458</a>
       </li>
       <li>
         Bremen: <a href="https://www.transparenz.bremen.de/metainformationen/bremische-landesbauordnung-vom-29-mai-2024-232736" class="text-primary underline" target="_blank" rel="noopener">Bremische Landesbauordnung</a>
@@ -406,4 +384,3 @@ const pageSchema = data.schema
         <FAQSection heading={data.faqHeading} items={data.faqs} />
     )}
 </Layout>
-

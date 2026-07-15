@@ -79,7 +79,7 @@ const data: PageData = {
         },
         {
             question: "Welche Alternative gibt es 2026 zum BAB-Zuschuss?",
-            answer: "Für neue Wärmepumpen-Vorhaben in bestehenden Wohngebäuden ist die KfW-Heizungsförderung 458 der zentrale Zuschussweg. Sie umfasst 30 Prozent Grundförderung und mögliche Boni, insgesamt maximal 70 Prozent der förderfähigen Kosten."
+            answer: "Für neue Wärmepumpen-Vorhaben in bestehenden Wohngebäuden ist die KfW-Heizungsförderung 458 der zentrale Zuschussweg. Die aktuellen Konditionen, förderfähigen Kosten und möglichen Boni werden auf der KfW-458-Detailseite gepflegt."
         },
         {
             question: "War BAB Heizungstausch mit der Bundesförderung kombinierbar?",
@@ -93,7 +93,7 @@ const data: PageData = {
     schema: {
         type: "Article",
         datePublished: "2026-05-29",
-        dateModified: "2026-06-02"
+        dateModified: "2026-07-15"
     }
 };
 
@@ -226,8 +226,8 @@ const pageSchema = data.schema
     <div class="surface-card p-5">
       <h3 class="font-semibold text-text mb-2">Neue Wärmepumpe 2026 geplant</h3>
       <p class="text-text-muted text-sm leading-relaxed">
-        Ein neuer BAB-Antrag ist nicht mehr möglich. Prüfen Sie KfW 458, Fachbetrieb,
-        BzA und einen Vertrag mit Förderbedingung.
+        Ein neuer BAB-Antrag ist nicht mehr möglich. Prüfen Sie stattdessen den
+        aktuellen KfW-Förderweg auf der verlinkten Detailseite.
       </p>
     </div>
     <div class="surface-card p-5">
@@ -247,46 +247,17 @@ const pageSchema = data.schema
   <p class="text-text-muted max-w-3xl mb-6">
     Für neue Wärmepumpen-Projekte in bestehenden Wohngebäuden ist die
     <strong class="text-text">KfW-Heizungsförderung 458</strong> der zentrale
-    Zuschussweg. Die Detailrechnung gehört auf die
-    <a href="/kfw-458-waermepumpe/" class="text-primary underline">KfW-458-Seite</a>;
-    für die erste Einordnung reichen diese Eckdaten:
+    Zuschussweg. Da sich Konditionen und Boni ändern können, wird die vollständige
+    Einordnung zentral auf der
+    <a href="/kfw-458-waermepumpe/" class="text-primary underline">KfW-458-Seite</a>
+    gepflegt.
   </p>
-  <div class="surface-card overflow-hidden max-w-2xl divide-y divide-border">
-    <div class="grid grid-cols-2 px-5 py-4 text-sm">
-      <span class="text-text-muted">Grundförderung</span>
-      <span class="font-semibold text-text text-right">30 %</span>
-    </div>
-    <div class="grid grid-cols-2 px-5 py-4 text-sm bg-highlight">
-      <span class="font-semibold text-text">Mit möglichen Boni</span>
-      <span class="font-bold text-primary text-right">insgesamt max. 70 %</span>
-    </div>
-  </div>
-  <p class="text-text-muted max-w-3xl text-sm mt-6">
-    Welche Boni greifen, hängt unter anderem von Eigentum, Selbstnutzung,
-    Heizungsart, Heizungsalter und Wärmepumpe ab. Den vollständigen lokalen Überblick
-    mit KfW, BAFA und Bremer Einordnung finden Sie auf
+  <p class="text-text-muted max-w-3xl text-sm">
+    Für diese BAB-Seite ist entscheidend: Ein neuer BAB-Antrag ist nicht mehr möglich;
+    neue Wärmepumpen-Vorhaben brauchen deshalb einen eigenen Fördercheck. Den lokalen
+    Überblick mit KfW, BAFA und Bremer Einordnung finden Sie auf
     <a href="/waermepumpe-foerderung-bremen/" class="text-primary underline">Wärmepumpe Förderung Bremen</a>.
   </p>
-</SectionShell>
-
-<SectionShell>
-  <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
-    Neue Vorhaben: Reihenfolge für KfW 458
-  </h2>
-  <ol class="space-y-4 max-w-3xl">
-    {[
-      "Fachbetrieb oder Energieeffizienz-Experten einbinden und Bestätigung zum Antrag (BzA) erstellen lassen.",
-      "Liefer- oder Leistungsvertrag mit aufschiebender oder auflösender Förderbedingung abschließen.",
-      "KfW-458-Zuschuss im Portal „Meine KfW“ beantragen.",
-      "Förderzusage abwarten und danach die Wärmepumpe umsetzen.",
-      "Bestätigung nach Durchführung (BnD) und Rechnungen für die Auszahlung einreichen.",
-    ].map((item, index) => (
-      <li class="surface-card p-5 flex gap-4">
-        <span class="w-8 h-8 rounded-full bg-primary text-white font-bold flex items-center justify-center shrink-0">{index + 1}</span>
-        <span class="text-text-muted leading-relaxed">{item}</span>
-      </li>
-    ))}
-  </ol>
 </SectionShell>
 
 <SectionShell variant="alt">
@@ -319,9 +290,6 @@ const pageSchema = data.schema
         Bremen Service: <a href="https://www.service.bremen.de/dienstleistungen/foerderung-fuer-den-heizungstausch-beantragen-190934" class="text-primary underline" target="_blank" rel="noopener">Förderung für den Heizungstausch beantragen</a>
       </li>
       <li>
-        KfW: <a href="https://www.kfw.de/inlandsfoerderung/Privatpersonen/Bestehende-Immobilie/F%C3%B6rderprodukte/Heizungsf%C3%B6rderung-f%C3%BCr-Privatpersonen-Wohngeb%C3%A4ude-%28458%29/" class="text-primary underline" target="_blank" rel="noopener">Heizungsförderung für Privatpersonen - Wohngebäude (458)</a>
-      </li>
-      <li>
         BAFA: <a href="https://www.bafa.de/DE/Energie/Effiziente_Gebaeude/Sanierung_Wohngebaeude/Heizungsoptimierung/heizungsoptimierung_node.html" class="text-primary underline" target="_blank" rel="noopener">Heizungsoptimierung</a>
       </li>
       <li>
@@ -335,7 +303,7 @@ const pageSchema = data.schema
   <h2 class="text-2xl md:text-3xl font-bold text-text mb-6">Weiterlesen</h2>
   <div class="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-5xl">
     <InternalLinkCard href="/waermepumpe-foerderung-bremen/" title="Wärmepumpe Förderung Bremen" description="Gesamtüberblick zu KfW, BAFA und lokalen Bremer Förderwegen." />
-    <InternalLinkCard href="/kfw-458-waermepumpe/" title="KfW 458 im Detail" description="Antrag, BzA, förderfähige Kosten und Boni für neue Vorhaben." />
+    <InternalLinkCard href="/kfw-458-waermepumpe/" title="KfW 458 im Detail" description="Aktuelle Konditionen, förderfähige Kosten, Antrag und Boni für neue Vorhaben." />
     <InternalLinkCard href="/bafa-foerderung-waermepumpe/" title="BAFA vs. KfW" description="Welche Maßnahmen weiterhin über BAFA laufen und wann KfW Vorrang hat." />
   </div>
 </SectionShell>

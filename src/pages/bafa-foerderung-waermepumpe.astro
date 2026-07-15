@@ -95,7 +95,7 @@ const data: PageData = {
     schema: {
         type: "Article",
         datePublished: "2026-05-02",
-        dateModified: "2026-05-29"
+        dateModified: "2026-07-15"
     }
 };
 
@@ -176,7 +176,7 @@ const pageSchema = data.schema
         <tr>
           <td class="p-4 text-text">Neue Wärmepumpe einbauen</td>
           <td class="p-4 text-text-muted">KfW 458</td>
-          <td class="p-4 text-text-muted">Heizungstausch, bis zu 70 % Zuschuss</td>
+          <td class="p-4 text-text-muted"><a href="/kfw-458-waermepumpe/" class="text-primary underline">Aktuelle Konditionen und Antrag</a></td>
         </tr>
         <tr>
           <td class="p-4 text-text">Bestandsheizung optimieren</td>
@@ -301,7 +301,7 @@ const pageSchema = data.schema
     <InternalLinkCard
       href="/kfw-458-waermepumpe/"
       title="KfW 458 förderfähige Kosten"
-      description="30.000 / 15.000 / 8.000 Euro nach Wohneinheiten, Boni und Antragsschritte."
+      description="Aktuelle Konditionen nach Wohneinheiten, mögliche Boni und Antragsschritte."
     />
     <InternalLinkCard
       href="/waermepumpe-foerderung-bremen/"
@@ -321,4 +321,3 @@ const pageSchema = data.schema
         <FAQSection heading={data.faqHeading} items={data.faqs} />
     )}
 </Layout>
-

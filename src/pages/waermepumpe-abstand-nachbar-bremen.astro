@@ -87,7 +87,7 @@ const data: PageData = {
     schema: {
         type: "Article",
         datePublished: "2026-05-29",
-        dateModified: "2026-05-29"
+        dateModified: "2026-07-15"
     }
 };
 
@@ -189,7 +189,7 @@ const pageSchema = data.schema
       { lead: "Gerätedaten:", text: "Schallleistungspegel aus dem Datenblatt prüfen, nicht nur Marketing-Angaben." },
       { lead: "Nachtbetrieb:", text: "Viele Geräte haben einen leisen Nachtmodus. Der muss in der Planung berücksichtigt werden." },
       { lead: "Aufstellung:", text: "Abstand, Ausblasrichtung, Wandreflexionen und Ecken können den Pegel stark verändern." },
-      { lead: "Schallschutz:", text: "Sockel, Entkopplung, Sichtschutzwand oder Schallschutzhaube können nötig und förderfähig sein." },
+      { lead: "Schallschutz:", text: "Sockel, Entkopplung, Sichtschutzwand oder Schallschutzhaube können nötig sein und gehören dann ins Angebot." },
       { lead: "Dokumentation:", text: "Eine einfache Schallberechnung vor Angebot schützt vor Nachbarschaftsstreit." },
     ]}
   />
@@ -231,9 +231,6 @@ const pageSchema = data.schema
       <li>
         BMUKN: <a href="https://www.bundesumweltministerium.de/themen/luft-laerm-mobilitaet/laerm/themenbereiche-laerm/gewerbelaerm" class="text-primary underline" target="_blank" rel="noopener">TA Lärm und Immissionsrichtwerte</a>
       </li>
-      <li>
-        KfW: <a href="https://www.kfw.de/inlandsfoerderung/Privatpersonen/Bestehende-Immobilie/F%C3%B6rderprodukte/Heizungsf%C3%B6rderung-f%C3%BCr-Privatpersonen-Wohngeb%C3%A4ude-%28458%29/" class="text-primary underline" target="_blank" rel="noopener">förderfähige Umfeldmaßnahmen</a>
-      </li>
     </ul>
   </div>
 </SectionShell>
@@ -242,7 +239,7 @@ const pageSchema = data.schema
   <h2 class="text-2xl md:text-3xl font-bold text-text mb-6">Weiterlesen</h2>
   <div class="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-5xl">
     <InternalLinkCard href="/luft-wasser-waermepumpe-kosten/" title="Luft-Wasser-Kosten" description="Kosten, Stromverbrauch und Schallschutz der häufigsten Bauart." />
-    <InternalLinkCard href="/waermepumpe-kosten-bremen/" title="Kosten Bremen" description="Eigenanteil nach Förderung und Bremer Kostenfaktoren." />
+    <InternalLinkCard href="/waermepumpe-kosten-bremen/" title="Kosten Bremen" description="Investition, Schallschutzkosten und weitere Bremer Kostenfaktoren." />
     <InternalLinkCard href="/waermepumpe-altbau-bremen/" title="Altbau Bremen" description="Machbarkeit im Bestandsgebäude prüfen." />
   </div>
 </SectionShell>
@@ -252,4 +249,3 @@ const pageSchema = data.schema
         <FAQSection heading={data.faqHeading} items={data.faqs} />
     )}
 </Layout>
-

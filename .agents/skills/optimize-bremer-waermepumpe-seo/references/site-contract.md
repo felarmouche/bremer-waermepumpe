@@ -8,6 +8,7 @@ Read this file before optimizing a content page. Confirm the current repository 
 - Preserve the current site architecture unless the user explicitly changes scope.
 - Do not add pages, navigation entries, redirects, or shared-component refactors as incidental SEO work.
 - Use hubs for concise orientation and spokes for depth.
+- Keep the generic cost spokes de-localized: `/waermepumpe-kosten-einfamilienhaus/`, `/luft-wasser-waermepumpe-kosten/`, and `/waermepumpe-altbau-kosten/` deliberately carry no Bremen references, so they can rank nationally without competing with the local pages. Do not add local modifiers to them.
 - Keep `/check/`, `/kontakt/`, and `/fachpartner/` flows transparent.
 - Preserve truthful editorial and business attribution.
 
@@ -30,6 +31,8 @@ Read this file before optimizing a content page. Confirm the current repository 
 | `/waermepumpe-abstand-nachbar-bremen/` | Local distance, neighbor, and placement questions |
 
 If a target page overlaps with this map, retain its owned intent and delegate neighboring details with descriptive internal links.
+
+Legacy URLs: `/waermepumpe-kosten-foerderung/` no longer exists and 301-redirects to `/waermepumpe-foerderung-bremen/`. It can still appear in GSC data (including cannibalization tables) until Google consolidates the redirect — treat such rows as redirect artifacts, not content problems.
 
 ## Shared Astro Contracts
 

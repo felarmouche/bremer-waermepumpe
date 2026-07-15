@@ -303,7 +303,8 @@ const pageSchema = data.schema
     <li class="text-text-muted leading-relaxed">
       <span class="font-semibold text-text">Energieberatung nutzen:</span> Eine
       fundierte Beratung hilft, technische Machbarkeit und mögliche staatliche
-      Förderungen (z. B. über die KfW) optimal zu kombinieren.
+      technisch notwendige Arbeiten vollständig zu planen. Welche Positionen aktuell
+      berücksichtigt werden können, zeigt die <a href="/kfw-458-waermepumpe/" class="text-primary underline">KfW-458-Detailseite</a>.
     </li>
   </ol>
   <div class="bg-highlight border border-border rounded p-5 mt-8 flex flex-col sm:flex-row gap-4 sm:items-center sm:justify-between">
@@ -323,9 +324,6 @@ const pageSchema = data.schema
     <p class="font-semibold text-text mb-3">Stand: 29. Mai 2026</p>
     <ul class="space-y-2">
       <li>
-        KfW: <a href="https://www.kfw.de/inlandsfoerderung/Privatpersonen/Bestehende-Immobilie/F%C3%B6rderprodukte/Heizungsf%C3%B6rderung-f%C3%BCr-Privatpersonen-Wohngeb%C3%A4ude-%28458%29/" class="text-primary underline" target="_blank" rel="noopener">Heizungsförderung 458</a>
-      </li>
-      <li>
         BAFA: <a href="https://www.bafa.de/DE/Energie/Effiziente_Gebaeude/Sanierung_Wohngebaeude/Heizungsoptimierung/heizungsoptimierung_node.html" class="text-primary underline" target="_blank" rel="noopener">Heizungsoptimierung</a>
       </li>
       <li>
@@ -335,7 +333,7 @@ const pageSchema = data.schema
   </div>
   <div class="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-5xl">
     <InternalLinkCard href="/waermepumpe-altbau-kosten/" title="Altbau-Kosten" description="Was Wärmepumpe, Heizkörper und Schallschutz im Altbau kosten." />
-    <InternalLinkCard href="/waermepumpe-kosten-bremen/" title="Kosten Bremen" description="Eigenanteil nach Förderung und lokale Stromkosten." />
+    <InternalLinkCard href="/waermepumpe-kosten-bremen/" title="Kosten Bremen" description="Investition, typische Zusatzposten und lokale Stromkosten." />
     <InternalLinkCard href="/waermepumpe-foerderung-bremen/" title="Förderung Bremen" description="KfW 458, BAFA und BAB-Status im Überblick." />
   </div>
 </SectionShell>
@@ -345,4 +343,3 @@ const pageSchema = data.schema
         <FAQSection heading={data.faqHeading} items={data.faqs} />
     )}
 </Layout>
-

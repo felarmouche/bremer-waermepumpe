@@ -14,7 +14,7 @@ const description =
 const canonical = Astro.url.href;
 
 // Bei jeder inhaltlichen Aktualisierung hochsetzen (Frische-Signal für Google):
-const lastUpdatedISO = "2026-06-01";
+const lastUpdatedISO = "2026-07-15";
 const lastUpdatedDisplay = "1. Juni 2026";
 
 const trustItems = [
@@ -75,7 +75,7 @@ const faqs = [
     },
     {
         question: "Welche Förderung gibt es aktuell?",
-        answer: "Für den eigentlichen Heizungstausch ist die KfW-Heizungsförderung 458 zentral. Bis zu 70 % der förderfähigen Kosten sind möglich. BAFA bleibt eher für Optimierung, Energieberatung und iSFP relevant. Verbindliche Auskünfte erteilen KfW, BAFA und zertifizierte Energieberater.",
+        answer: "Für den eigentlichen Heizungstausch ist die KfW-Heizungsförderung 458 zentral. Welche Konditionen und Boni aktuell gelten, hängt vom Antragstermin und vom Einzelfall ab. BAFA bleibt eher für Optimierung, Energieberatung und iSFP relevant. Den aktuellen Überblick bietet unsere Förderseite; verbindlich sind die Angaben der Förderstellen.",
     },
     {
         question: "Wie läuft der Prozess typischerweise ab?",
@@ -142,9 +142,11 @@ const faqs = [
                 <strong>Lohnt sich eine Wärmepumpe in Bremen?</strong> Für die meisten
                 Bestandsgebäude ja. Eine Luft-Wasser-Wärmepumpe kostet in Bremen vor
                 Förderung typischerweise rund <strong>22.000 – 35.000 €</strong
-                >; über die <strong>KfW-Heizungsförderung 458</strong> sind bis zu
-                <strong>70 % Zuschuss</strong> möglich, sodass der Eigenanteil oft
-                bei etwa <strong>10.000 – 14.000 €</strong> liegt. Auch im Altbau
+                >. Eine mögliche <a
+                    href="/waermepumpe-foerderung-bremen/"
+                    class="text-primary underline">KfW-Förderung für Bremer Eigentümer</a
+                > kann den Eigenanteil senken; ihre Höhe muss aber mit den aktuellen
+                Konditionen und dem konkreten Vorhaben berechnet werden. Auch im Altbau
                 funktioniert sie, wenn Vorlauftemperatur, Heizflächen und Aufstellort
                 passen – eine Fußbodenheizung ist nicht zwingend nötig. Entscheidend
                 ist ein ehrlicher <a
@@ -670,9 +672,9 @@ const faqs = [
         <p class="text-text-muted leading-relaxed mb-8 max-w-2xl">
             In Bremen liegt die typische Investition für eine
             Luft-Wasser-Wärmepumpe im Einfamilienhaus vor Förderung meist bei
-            etwa 22.000 bis 35.000 Euro. Der echte Eigenanteil hängt danach von
-            KfW-Boni, förderfähigen Umfeldmaßnahmen, swb-Wärmepumpenstrom,
-            Heizkörpern und Schallschutz ab. Diese Seite gibt den Überblick –
+            etwa 22.000 bis 35.000 Euro. Für die Budgetplanung zählen außerdem
+            Heizkörper, Schallschutz, Stromtarif und eine mögliche Förderung. Diese
+            Seite gibt den Überblick –
             die ausführliche Kostenaufstellung für Bremen finden Sie auf der
             <a href="/waermepumpe-kosten-bremen/" class="text-primary underline"
                 >Detailseite zu den Kosten</a
@@ -697,37 +699,29 @@ const faqs = [
                     >
                 </div>
                 <div
-                    class="flex justify-between items-start gap-4 px-6 py-4 text-text-muted"
-                >
-                    <span
-                        >Abzüglich staatlicher Förderung (z.B. 50 – 70 % über
-                        KfW)</span
-                    >
-                    <span class="shrink-0 font-medium tabular-nums"
-                        >− 15.000 – 22.400 €</span
-                    >
-                </div>
-                <div
                     class="flex justify-between items-start gap-4 px-6 py-4 bg-highlight font-bold text-text"
                 >
-                    <span>Echter Eigenanteil</span>
+                    <span>Investitionsrahmen vor Förderung</span>
                     <span class="shrink-0 tabular-nums"
-                        >ca. 10.000 – 14.000 €</span
+                        >ca. 25.000 – 32.000 €</span
                     >
                 </div>
             </div>
             <p
                 class="px-6 py-4 text-xs text-text-muted italic leading-relaxed border-t border-border"
             >
-                Hinweis: Dies ist eine grobe Schätzung. Die genauen Kosten
-                müssen durch einen Fachbetrieb individuell berechnet werden.
+                Hinweis: Dies ist eine grobe Schätzung. Ein Fachbetrieb ermittelt die
+                Projektkosten; die aktuelle Förderung wird separat geprüft.
             </p>
         </div>
         <p class="mt-8 text-text-muted leading-relaxed max-w-2xl text-sm">
             Gerade bei Bestandsimmobilien zählt nicht der Bruttoangebotspreis
-            allein. Wichtiger ist der Eigenanteil nach Förderung und ob die
-            Anlage später effizient läuft. Die Detailseite zeigt die Kosten nach
-            Bauart, Förderquote und Bremer Stromtarif.
+            allein. Ebenso wichtig sind die laufenden Kosten und ob die Anlage später
+            effizient arbeitet. Die Detailseite zeigt die Kosten nach Bauart und den
+            Einfluss Bremer Faktoren; die <a
+                href="/waermepumpe-foerderung-bremen/"
+                class="text-primary underline">aktuellen Förderwege in Bremen</a
+            > werden bewusst separat gepflegt.
         </p>
         <div class="flex flex-wrap gap-3 my-4">
             <a
@@ -763,89 +757,16 @@ const faqs = [
             nicht mehr der Hauptweg.
         </p>
 
-        <!-- Fördermatrix (Überblick – Tiefe auf der Förderseite) -->
-        <div class="surface-card overflow-x-auto max-w-2xl mb-6">
-            <table class="w-full text-sm text-left border-collapse">
-                <caption class="sr-only">
-                    KfW-458-Fördermatrix 2026: Bausteine, Höhe und
-                    Voraussetzungen
-                </caption>
-                <thead>
-                    <tr class="border-b border-border text-text">
-                        <th scope="col" class="px-4 py-3 font-semibold"
-                            >Förderbaustein</th
-                        >
-                        <th scope="col" class="px-4 py-3 font-semibold">Höhe</th
-                        >
-                        <th scope="col" class="px-4 py-3 font-semibold"
-                            >Voraussetzung (kurz)</th
-                        >
-                    </tr>
-                </thead>
-                <tbody class="text-text-muted">
-                    <tr class="border-b border-border">
-                        <th scope="row" class="px-4 py-3 font-medium text-text"
-                            >Grundförderung</th
-                        >
-                        <td class="px-4 py-3 tabular-nums">30 %</td>
-                        <td class="px-4 py-3"
-                            >für alle förderfähigen Heizungen</td
-                        >
-                    </tr>
-                    <tr class="border-b border-border">
-                        <th scope="row" class="px-4 py-3 font-medium text-text"
-                            >Effizienzbonus</th
-                        >
-                        <td class="px-4 py-3 tabular-nums">+5 %</td>
-                        <td class="px-4 py-3"
-                            >natürliches Kältemittel oder Quelle
-                            Erde/Wasser/Abwasser</td
-                        >
-                    </tr>
-                    <tr class="border-b border-border">
-                        <th scope="row" class="px-4 py-3 font-medium text-text"
-                            >Klimageschwindigkeitsbonus</th
-                        >
-                        <td class="px-4 py-3 tabular-nums">+20 %</td>
-                        <td class="px-4 py-3"
-                            >Selbstnutzer, Austausch alter fossiler Heizung
-                            (voll bis Ende 2028)</td
-                        >
-                    </tr>
-                    <tr class="border-b border-border">
-                        <th scope="row" class="px-4 py-3 font-medium text-text"
-                            >Einkommensbonus</th
-                        >
-                        <td class="px-4 py-3 tabular-nums">+30 %</td>
-                        <td class="px-4 py-3"
-                            >selbstnutzend, zu versteuerndes Haushaltseinkommen
-                            ≤ 40.000 €</td
-                        >
-                    </tr>
-                    <tr class="bg-highlight font-bold text-text">
-                        <th scope="row" class="px-4 py-3">Maximaler Zuschuss</th
-                        >
-                        <td class="px-4 py-3 tabular-nums">bis 70 %</td>
-                        <td class="px-4 py-3"
-                            >gedeckelt auf 30.000 € Kosten (EFH) → bis 21.000 €</td
-                        >
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
         <div class="notice-success max-w-2xl mb-6">
-            <p class="font-semibold text-sm mb-3">Wichtig bei der Förderung:</p>
+            <p class="font-semibold text-sm mb-3">Was Sie hier wissen müssen:</p>
             <ul class="space-y-2 text-sm">
                 <li class="flex items-start gap-2">
                     <span class="shrink-0 mt-0.5">•</span>
-                    KfW-Antrag und Förderzusage müssen vor der Umsetzung sauber geplant
-                    sein
+                    Förderfähigkeit und Antragsreihenfolge vor dem Projektstart prüfen
                 </li>
                 <li class="flex items-start gap-2">
                     <span class="shrink-0 mt-0.5">•</span>
-                    BzA, förderfähige Kosten und Vertragsbedingung gehören vor Auftragserteilung
-                    auf den Tisch
+                    Angebot und technisch notwendige Umfeldmaßnahmen vollständig erfassen
                 </li>
                 <li class="flex items-start gap-2">
                     <span class="shrink-0 mt-0.5">•</span>
@@ -853,8 +774,7 @@ const faqs = [
                 </li>
                 <li class="flex items-start gap-2">
                     <span class="shrink-0 mt-0.5">•</span>
-                    Der Eigenanteil kann über Modernisierungskredit oder weitere Sanierungsschritte
-                    geplant werden
+                    Förderkonditionen nicht als festen Bestandteil einer Kostenschätzung behandeln
                 </li>
             </ul>
         </div>
@@ -862,16 +782,14 @@ const faqs = [
             Auf der Seite <a
                 href="/waermepumpe-foerderung-bremen/"
                 class="text-primary underline">Wärmepumpe Förderung Bremen</a
-            > finden Sie die Fördermatrix mit KfW 458, BAFA, BAB-Status und lokalen
-            Hinweisen.
+            > finden Sie die aktuell gepflegte Einordnung von KfW 458, BAFA,
+            BAB-Status und lokalen Hinweisen. Die <a
+                href="/kfw-458-waermepumpe/"
+                class="text-primary underline">KfW-458-Detailseite</a
+            > erklärt Konditionen, Antragsschritte und förderfähige Kosten.
         </p>
         <p class="text-xs text-text-muted leading-relaxed max-w-2xl">
-            Quellen & verbindliche Auskünfte:
-            <a
-                href="https://www.kfw.de"
-                rel="noopener"
-                class="text-primary underline">KfW (Programm 458)</a
-            >,
+            Weitere Quellen & verbindliche Auskünfte:
             <a
                 href="https://www.bafa.de"
                 rel="noopener"
@@ -882,8 +800,8 @@ const faqs = [
                 href="https://www.swb.de"
                 rel="noopener"
                 class="text-primary underline">swb (Wärmepumpen-/Heizstrom)</a
-            >. Fördersätze Stand {lastUpdatedDisplay}; maßgeblich sind stets die
-            aktuellen Richtlinien der KfW.
+            >. Für Förderkonditionen sind stets die aktuellen Angaben der zuständigen
+            Förderstelle maßgeblich.
         </p>
     </SectionShell>
 

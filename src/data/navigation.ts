@@ -92,7 +92,7 @@ export const navClusters: NavCluster[] = [
       {
         href: "/waermepumpe-foerderung-2026/",
         label: "Förderung 2026",
-        description: "GEG §71, Lärmgrenzen, Klimabonus-Staffelung.",
+        description: "KfW-Änderungen, GEG und Lärmgrenzen im Jahresüberblick.",
       },
       {
         href: "/bab-heizungstausch-bremen/",

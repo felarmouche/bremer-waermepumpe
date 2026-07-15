@@ -37,7 +37,7 @@ const data: PageData = {
             text: "GEG ab 01.07.2026"
         },
         {
-            text: "KfW-Förderung eingerechnet"
+            text: "Förderung separat geprüft"
         },
         {
             text: "Stand 29. Mai 2026"
@@ -73,7 +73,7 @@ const data: PageData = {
     faqs: [
         {
             question: "Ist eine Wärmepumpe in Bremen günstiger als eine neue Gasheizung?",
-            answer: "In der Anschaffung ist die Gasheizung meist günstiger. Nach KfW-Förderung, steigenden CO2-Kosten und der 65-%-EE-Pflicht ab 01.07.2026 ist die Wärmepumpe im Bremer Bestand aber oft die langfristig bessere Lösung."
+            answer: "In der Anschaffung ist die Gasheizung meist günstiger. Für den langfristigen Vergleich zählen aber auch eine mögliche KfW-Förderung, laufende Energie- und CO₂-Kosten sowie die rechtlichen Anforderungen. Die Förderung muss mit den aktuellen Konditionen separat berechnet werden."
         },
         {
             question: "Darf ich 2026 in Bremen noch eine reine Gasheizung einbauen?",
@@ -81,13 +81,13 @@ const data: PageData = {
         },
         {
             question: "Wann lohnt sich Gas trotzdem?",
-            answer: "Gas kann als Übergangslösung bei Havarie oder in sehr schwierigen Gebäuden eine Rolle spielen. Für Eigentümer mit planbarem Austausch und förderfähigem Bestand sollte die Wärmepumpe zuerst geprüft werden."
+            answer: "Gas kann als Übergangslösung bei Havarie oder in sehr schwierigen Gebäuden eine Rolle spielen. Bei einem planbaren Austausch sollte die Wärmepumpe technisch und wirtschaftlich zuerst geprüft werden."
         }
     ],
     schema: {
         type: "Article",
         datePublished: "2026-05-29",
-        dateModified: "2026-05-29"
+        dateModified: "2026-07-15"
     }
 };
 
@@ -176,8 +176,8 @@ const pageSchema = data.schema
       <h3 class="font-semibold text-text mb-3">Luft-Wasser-Wärmepumpe</h3>
       <p class="text-3xl font-bold text-primary mb-2">22.000 - 35.000 €</p>
       <p class="text-text-muted text-sm leading-relaxed">
-        Vor Förderung teurer. Nach KfW 458 bleiben bei 55-70 % Förderung in vielen
-        Bremer Bestandsfällen etwa 9.000 - 16.000 € Eigenanteil.
+        Vor Förderung teurer. Der tatsächliche Eigenanteil hängt vom Angebot und den
+        zum Antragstermin geltenden <a href="/kfw-458-waermepumpe/" class="text-primary underline">KfW-458-Konditionen</a> ab.
       </p>
     </div>
   </div>
@@ -195,7 +195,7 @@ const pageSchema = data.schema
     items={[
       { lead: "GEG ab 01.07.2026:", text: "Beim Heizungstausch greift in Bremen die 65-%-EE-Pflicht. Wärmepumpen erfüllen diese Vorgabe direkt." },
       { lead: "CO2-Kosten:", text: "Fossiles Gas wird durch CO2-Bepreisung tendenziell teurer. Das Risiko liegt über Jahre beim Eigentümer." },
-      { lead: "Förderhebel:", text: "Für die Wärmepumpe sind bis zu 70 % KfW-Zuschuss möglich, für eine neue reine Gasheizung praktisch nicht." },
+      { lead: "Förderhebel:", text: "Eine mögliche KfW-Förderung kann den Investitionsvergleich verändern; aktuelle Konditionen müssen separat geprüft werden." },
       { lead: "Bremer Reihenhäuser:", text: "Viele ältere Häuser haben große Heizkörper. Das kann den Umstieg auf eine Wärmepumpe erleichtern." },
       { lead: "Stromtarif:", text: "Mit separatem Wärmepumpenzähler kann ein günstigerer Wärmepumpenstromtarif genutzt werden." },
     ]}
@@ -207,13 +207,13 @@ const pageSchema = data.schema
     Wann eine Wärmepumpe im Bremer Bestand realistisch ist
   </h2>
   <p class="text-text-muted max-w-3xl mb-4">
-    Die Wärmepumpe muss nicht nur förderfähig sein, sie muss zum Gebäude passen. Gute
+    Die Wärmepumpe muss vor allem zum Gebäude passen. Gute
     Signale sind:
   </p>
   <ul class="space-y-3 max-w-3xl text-text-muted">
     <li>Vorlauftemperatur im Winter möglichst unter 55 °C.</li>
     <li>Große Heizkörper oder bereits modernisierte Heizflächen.</li>
-    <li>Alte Öl- oder Gasheizung, damit Klimabonus möglich ist.</li>
+    <li>Art und Alter der bestehenden Heizung für die Förderprüfung dokumentiert.</li>
     <li>Platz für Außengerät, Leitungsweg und Schallschutz.</li>
     <li>Eigentümerstatus und Umsetzung in den nächsten 12-24 Monaten.</li>
   </ul>
@@ -226,9 +226,6 @@ const pageSchema = data.schema
   <div class="surface-card p-5 max-w-3xl text-sm text-text-muted leading-relaxed">
     <p class="font-semibold text-text mb-3">Stand: 29. Mai 2026</p>
     <ul class="space-y-2">
-      <li>
-        KfW: <a href="https://www.kfw.de/inlandsfoerderung/Privatpersonen/Bestehende-Immobilie/F%C3%B6rderprodukte/Heizungsf%C3%B6rderung-f%C3%BCr-Privatpersonen-Wohngeb%C3%A4ude-%28458%29/" class="text-primary underline" target="_blank" rel="noopener">Heizungsförderung 458</a>
-      </li>
       <li>
         Bremen: <a href="https://umwelt.bremen.de/klima/klima-energie/gebaeudeenergiegesetz-geg/anforderungen-an-bestehende-gebaeude-2387269" class="text-primary underline" target="_blank" rel="noopener">GEG-Anforderungen an bestehende Gebäude</a>
       </li>
@@ -245,8 +242,8 @@ const pageSchema = data.schema
 <SectionShell variant="alt">
   <h2 class="text-2xl md:text-3xl font-bold text-text mb-6">Weiterlesen</h2>
   <div class="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-5xl">
-    <InternalLinkCard href="/waermepumpe-kosten-bremen/" title="Kosten Bremen" description="Investition, Eigenanteil und Stromkosten nach Förderung." />
-    <InternalLinkCard href="/waermepumpe-foerderung-bremen/" title="Förderung Bremen" description="KfW 458, BAFA und BAB-Status für Bremer Eigentümer." />
+    <InternalLinkCard href="/waermepumpe-kosten-bremen/" title="Kosten Bremen" description="Investition, lokale Kostentreiber und laufende Stromkosten." />
+    <InternalLinkCard href="/waermepumpe-foerderung-bremen/" title="Förderung Bremen" description="Aktuelle KfW-, BAFA- und Bremer Förderwege für Eigentümer." />
     <InternalLinkCard href="/waermepumpe-altbau-bremen/" title="Altbau Bremen" description="Vorlauftemperatur, Heizkörper und Machbarkeit im Bestand." />
   </div>
 </SectionShell>
@@ -256,4 +253,3 @@ const pageSchema = data.schema
         <FAQSection heading={data.faqHeading} items={data.faqs} />
     )}
 </Layout>
-

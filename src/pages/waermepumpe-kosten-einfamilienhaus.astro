@@ -15,7 +15,7 @@ import type { PageData } from "../types/page";
 
 const data: PageData = {
     title: "Wärmepumpe Kosten Einfamilienhaus: Preise & Amortisation",
-    description: "Wärmepumpe Kosten im Einfamilienhaus 2026: Preise nach Wohnfläche (100, 150, 200 m²), KfW-Förderung und Amortisation realistisch gerechnet.",
+    description: "Wärmepumpe Kosten im Einfamilienhaus 2026: Preise nach Wohnfläche (100, 150, 200 m²), Bauart, Zusatzposten und Betriebskosten.",
     lastUpdated: "Mai 2026",
     hero: {
         headline: "Wärmepumpe Kosten Einfamilienhaus",
@@ -73,11 +73,11 @@ const data: PageData = {
     faqs: [
         {
             question: "Was kostet eine Wärmepumpe für ein Einfamilienhaus mit 150 m²?",
-            answer: "Für ein typisches teilsaniertes Bremer Einfamilienhaus mit 150 m² liegen die Komplettkosten einer Luft-Wasser-Wärmepumpe bei 24.000 bis 32.000 Euro brutto. Eine Sole-Wasser-Variante mit Erdsonde liegt bei 32.000 bis 42.000 Euro. Nach maximaler KfW-Förderung von 70 % auf 30.000 Euro förderfähige Kosten reduziert sich der Eigenanteil auf 9.000 bis 17.000 Euro – je nach Boni und Bauart."
+            answer: "Für ein typisches teilsaniertes Einfamilienhaus mit 150 m² liegen die Komplettkosten einer Luft-Wasser-Wärmepumpe bei 24.000 bis 32.000 Euro brutto. Eine Sole-Wasser-Variante mit Erdsonde liegt bei 32.000 bis 42.000 Euro. Eine mögliche Förderung wird erst nach dem vollständigen Angebot und mit den dann geltenden Konditionen berechnet."
         },
         {
             question: "Wie viel kostet eine Wärmepumpe nach Abzug der Förderung?",
-            answer: "Bei voller KfW-458-Förderung (70 % auf 30.000 Euro förderfähige Kosten) bleibt ein Eigenanteil von etwa 9.000 Euro plus eventuelle nicht förderfähige Anteile. Realistisch landen die meisten Bremer Einfamilienhaus-Eigentümer bei 11.000 bis 18.000 Euro Eigenanteil – abhängig davon, welche Boni greifen."
+            answer: "Der Eigenanteil ergibt sich aus den vollständigen Projektkosten abzüglich einer individuell geprüften Förderung. Eine feste Zahl wäre unseriös, weil Antragstermin, Wohneinheiten, Nutzung und anerkannte Kosten das Ergebnis verändern. Die aktuellen KfW-Konditionen stehen auf der KfW-458-Detailseite."
         },
         {
             question: "Welche Wärmepumpe ist für ein Einfamilienhaus am besten?",
@@ -85,17 +85,17 @@ const data: PageData = {
         },
         {
             question: "Wann amortisiert sich eine Wärmepumpe im Einfamilienhaus?",
-            answer: "Realistisch nach 8–14 Jahren gegenüber einer neuen Gasheizung – wenn der Klimabonus mitgenommen wird und der CO₂-Preis weiter ansteigt. Wer Photovoltaik und Wärmepumpe kombiniert und unter der Einkommensgrenze liegt, kommt deutlich schneller in den Bereich, wo die Wärmepumpe finanziell vorne liegt."
+            answer: "Das hängt von Investition, Förderung, Gebäude-Effizienz, Strom- und Gaspreisen sowie dem CO₂-Preis ab. Statt einer pauschalen Jahreszahl sollte die Amortisation mit dem konkreten Angebot und mehreren Energiepreis-Szenarien berechnet werden."
         },
         {
             question: "Was kostet das im Einfamilienhaus mit 200 m² Wohnfläche?",
-            answer: "Für ein 200-m²-Einfamilienhaus liegt die Investition typischerweise bei 28.000 bis 38.000 Euro für Luft-Wasser-Wärmepumpen mit 12–14 kW Leistung. Wichtig: Die KfW-förderfähigen Kosten sind auf 30.000 Euro für die erste Wohneinheit gedeckelt – wer mehr investiert, kann den Differenzbetrag nicht über die KfW abrechnen."
+            answer: "Für ein 200-m²-Einfamilienhaus liegt die Investition typischerweise bei 28.000 bis 38.000 Euro für Luft-Wasser-Wärmepumpen mit 12–14 kW Leistung. Ob und bis zu welcher Höhe diese Kosten berücksichtigt werden können, richtet sich nach den KfW-Konditionen zum Antragstermin."
         }
     ],
     schema: {
         type: "Article",
         datePublished: "2026-05-02",
-        dateModified: "2026-05-02"
+        dateModified: "2026-07-15"
     }
 };
 
@@ -192,8 +192,9 @@ const pageSchema = data.schema
 
   <p class="text-text-muted max-w-3xl text-sm mt-6">
     Alle Preise inkl. MwSt., Lieferung, Installation, hydraulischem Abgleich und
-    Inbetriebnahme. Förderfähig sind Kosten bis 30.000 Euro für die erste Wohneinheit –
-    Beträge darüber gehen in den Eigenanteil.
+    Inbetriebnahme. Die Tabelle zeigt bewusst Bruttokosten vor Förderung. Welche
+    Kosten aktuell berücksichtigt werden können, steht auf der
+    <a href="/kfw-458-waermepumpe/" class="text-primary underline">KfW-458-Detailseite</a>.
   </p>
 </SectionShell>
 
@@ -225,8 +226,8 @@ const pageSchema = data.schema
       <h3 class="font-semibold text-text mb-3">Variante B: Luft-Wasser-Wärmepumpe</h3>
       <ul class="text-sm text-text-muted space-y-1">
         <li>Investition: 28.000 €</li>
-        <li>KfW 458 (55 %): −15.400 €</li>
-        <li>Eigenanteil: 12.600 €</li>
+        <li>Förderung: individuell zu prüfen</li>
+        <li>Eigenanteil: abhängig von den aktuellen KfW-Konditionen</li>
         <li class="pt-2 border-t border-border mt-2">Strom-Kosten/Jahr: ca. 1.000 €</li>
         <li>Stabil planbar, swb-WP-Tarif</li>
         <li>GEG-konform</li>
@@ -236,7 +237,10 @@ const pageSchema = data.schema
 
   <NoticeSuccess class="mt-6">
     <p>
-      <strong>Ergebnis:</strong> Die Wärmepumpe hat im Beispiel einen <strong>geringeren Eigenanteil</strong> als die Gasheizung – und spart zusätzlich 800 Euro Energiekosten pro Jahr. Mit Klimabonus (alte fossile Heizung tauschen) und ggf. Einkommensbonus verschiebt sich die Bilanz noch deutlicher zugunsten der Wärmepumpe.
+      <strong>Einordnung:</strong> Im Beispiel liegen die laufenden Energiekosten der
+      Wärmepumpe niedriger. Für einen fairen Investitionsvergleich muss die zum
+      Antragstermin geltende Förderung separat ergänzt werden. Die aktuellen Werte
+      finden Sie unter <a href="/kfw-458-waermepumpe/" class="text-primary underline">KfW 458</a>.
     </p>
   </NoticeSuccess>
 </SectionShell>
@@ -249,7 +253,7 @@ const pageSchema = data.schema
   <CheckList
     items={[
       { lead: "PV-Kombination:", text: "Wer PV-Strom selbst nutzt, drückt die Stromkosten der Wärmepumpe um 20–40 %." },
-      { lead: "Smart-Home-Steuerung:", text: "Optimiert das Zusammenspiel von PV, Speicher, Wärmepumpe und Warmwasser – fließt teilweise in die Förderfähigkeit ein." },
+      { lead: "Smart-Home-Steuerung:", text: "Optimiert das Zusammenspiel von PV, Speicher, Wärmepumpe und Warmwasser und sollte als eigener Angebotsposten ausgewiesen werden." },
       { lead: "Warmwasser-Anpassung:", text: "Bei dezentraler Warmwasserversorgung (Durchlauferhitzer im OG) wird oft auf zentrale Versorgung umgestellt – Mehraufwand 1.500–3.000 €." },
       { lead: "Statik und Fundament:", text: "Außengerät braucht ein tragfähiges Fundament oder Wandkonsole – im Einfamilienhaus meist trivial, in dichten Reihenhäusern manchmal aufwändiger." },
       { lead: "Pufferspeicher 200–500 l:", text: "Standard im Komplettangebot – vermeidet Takten und steigert die JAZ." },
@@ -274,7 +278,7 @@ const pageSchema = data.schema
     <InternalLinkCard
       href="/kfw-458-waermepumpe/"
       title="KfW 458 Antrag"
-      description="Förderfähige Kosten 30.000 / 15.000 / 8.000 € pro Wohneinheit."
+      description="Aktuelle Konditionen, förderfähige Kosten und Antragsschritte."
     />
   </div>
 </SectionShell>
@@ -284,4 +288,3 @@ const pageSchema = data.schema
         <FAQSection heading={data.faqHeading} items={data.faqs} />
     )}
 </Layout>
-

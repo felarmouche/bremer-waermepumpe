@@ -25,9 +25,9 @@ export default function DisqualifiedScreen({ onBack }: DisqualifiedProps) {
           Warum können wir für Mieter keine direkte Anfrage bearbeiten?
         </p>
         <p>
-          Die Installation einer Wärmepumpe sowie die Anträge auf staatliche Fördermittel (wie den Klimabonus der KfW) 
-          greifen tief in die Bausubstanz ein. Sie dürfen in Deutschland rechtlich ausschließlich vom <strong>Eigentümer 
-          der Immobilie</strong> beauftragt und beantragt werden.
+          Die Installation einer Wärmepumpe greift in die Gebäudetechnik ein und muss
+          vom <strong>Eigentümer der Immobilie</strong> beauftragt werden. Auch eine
+          mögliche Förderung muss deshalb mit dem Eigentümer geprüft und beantragt werden.
         </p>
         <p>
           <strong>Unser Tipp:</strong> Sprechen Sie mit Ihrem Vermieter oder Ihrer Hausverwaltung über das Thema 

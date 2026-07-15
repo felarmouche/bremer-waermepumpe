@@ -1,6 +1,6 @@
 ---
 name: optimize-bremer-waermepumpe-seo
-description: Optimize exactly one existing Astro content page of bremer-waermepumpe.de for sustainable Google search visibility while preserving the site's architecture and preventing keyword cannibalization. Use when an AI coding agent is asked in a new thread to improve, audit, rewrite, or maximize SEO for one page of the Bremer Waermepumpe project, especially for local Bremen search intent, GSC-driven content updates, E-E-A-T signals, metadata, internal links, structured data, CTR opportunities, current funding or regulatory facts, and post-build SEO validation.
+description: Optimize exactly one existing Astro content page of bremer-waermepumpe.de for sustainable Google search visibility, driven by the local GSC and DataForSEO snapshots in seo-data/, while preserving the site architecture and preventing keyword cannibalization. Use when asked to improve, audit, rewrite, or maximize SEO for one page of this project, especially for local Bremen search intent, data-driven content updates, E-E-A-T signals, metadata, internal links, structured data, CTR opportunities, current funding or regulatory facts, and post-build SEO validation.
 ---
 
 # Bremer Waermepumpe SEO
@@ -9,126 +9,110 @@ Optimize one page end to end. Improve relevance, clarity, trust, CTR potential, 
 
 All page text and visible edits must be in plain German unless the user explicitly requests otherwise. Technical notes to the reviewer may remain in English.
 
-## Phase 1: Gather & Decide
+Scope guard: the deliverable is a patch containing only page-scoped content and metadata edits. Do not redesign navigation, add pages, change URLs, or refactor shared components. If a narrow shared-component fix is unavoidable, document the proposed change and get user approval before committing it.
 
-Required:
-1. Confirm the primary role: content & SEO editor. Deliverable: a patch that contains only page-scoped content and metadata edits. If a shared component fix is required, document the proposed narrow change and do not commit it without user approval.
-2. Read [references/site-contract.md](references/site-contract.md).
-3. Locate the repository root and inspect `git status --short --branch`.
-4. Identify the target URL unambiguously from the repository, the ownership map, provided GSC data, or direct user confirmation.
-5. Read the complete target page before editing.
-6. Read the most relevant sibling pages from the URL ownership map.
-7. Inspect shared components used by the target page only enough to understand existing head metadata, layout, breadcrumbs, FAQ rendering, and schema generation.
+## Phase 1: Read The Data
 
-Optional:
-8. If the user supplies additional SEO artifacts (for example: a keyword research CSV, brand style guide, or local-schema template), incorporate them; otherwise proceed using only the repository, GSC (if provided), and the guidance below.
-9. If no GSC data is provided, use repository content, site search analytics if available, and a 14-day baseline inferred from current SERP intent. State explicitly in the report that GSC data was unavailable and that recommendations are based on repository and public SERP signals only.
-10. Use entity SEO guidance only when entity recognition is materially relevant.
+`seo-data/REPORT.md` is the entry point for every optimization. It condenses the latest Search Console and DataForSEO snapshots into ranked findings (winners/losers, striking distance, CTR gaps, cannibalization, zero-impression pages, volume opportunities, keyword gap).
 
-Version control:
-- Create a feature branch named `seo/<target-path>-<short-desc>` and commit with a message prefixed `seo:`.
-- Include a PR summary that lists the established page contract fields and the validation checklist.
+| Command | Purpose | Cost |
+| --- | --- | --- |
+| `npm run seo:sync` | Fresh GSC snapshot + rebuild REPORT.md | free |
+| `npm run seo:report` | Rebuild REPORT.md from existing snapshots | free |
+| `npm run seo:dfs -- serp "kw1, kw2"` | Live SERP for specific keywords | cents |
+| `npm run seo:inspect -- <full-url>` | Google index status of a URL | free |
 
-If the target URL cannot be unambiguously identified from the repo, the ownership map, or provided GSC data, stop and ask the user. Do not proceed if more than one candidate URL matches the requested scope or if you lack write access to the target file. If multiple candidate URLs match, respond with the candidate list and ask the user to select one.
+Rules:
+- If the newest snapshot under `seo-data/gsc/` is older than 7 days, run `npm run seo:sync` first.
+- Raw data lives in `seo-data/gsc/<date>/` (GSC: query, page, query-page, page-date, sitemap) and `seo-data/dfs/<date>/` (DataForSEO: ranked keywords with volumes, competitors, SERPs). Consult raw files when the report's top-N tables are not enough — `query-page-current.json` holds the full query set per page.
+- Dated snapshots are the measurement baseline. Never delete them; comparing the post-deploy snapshot against the pre-deploy snapshot is how success is judged.
+- DataForSEO calls cost money and are logged to `seo-data/dfs-costs.log`. Run `serp` only when the edit depends on knowing the live SERP (who ranks, which formats). Monthly `ranked`/`competitors` refreshes are routine maintenance, not part of a page optimization.
 
-Do not redesign navigation, add pages, or refactor shared components unless the user explicitly expands the scope or the target page cannot be fixed correctly without a narrowly scoped shared fix.
+## Phase 2: Select The Target Page
 
-## Establish The Page Contract
+Exactly one existing URL per run.
 
-Before editing, write down the working contract:
+- If the user names a page, use it.
+- If not, propose candidates from REPORT.md section "Nächste Schritte" and let the user pick.
+- If the requested target is ambiguous (multiple matching URLs) or the file is not writable, stop, list the candidates, and ask.
+
+The data determines the intervention type. Apply **one intervention per page per cycle**, so the next report can attribute the effect:
+
+| Finding in REPORT.md | Intervention |
+| --- | --- |
+| CTR gap (good position, weak CTR) | Sharpen title and meta description; align snippet with dominant query wording |
+| Striking distance (position 4–15) | Extend content: add a section/H2 that answers the specific query |
+| Loser / decay | Refresh facts, dates, sources; check live SERP for new competitor formats |
+| Cannibalization | Sharpen intent boundaries between the affected pages; fix titles/H1s that compete |
+| Zero impressions | Check index status via `npm run seo:inspect` before touching content |
+
+## Phase 3: Gather Context
+
+1. Read [references/site-contract.md](references/site-contract.md) — architecture rules, URL ownership map, shared Astro contracts, primary sources.
+2. Inspect `git status --short --branch`; work on a feature branch `seo/<target-path>-<short-desc>`, commit messages prefixed `seo:`.
+3. Read the complete target page before editing.
+4. Read the neighboring pages from the ownership map that must stay differentiated.
+5. Inspect shared components (`Head.astro`, `FAQSection.astro`, `Breadcrumb.astro`) only enough to use their existing metadata, breadcrumb, FAQ, and schema contracts.
+
+## Phase 4: Establish The Page Contract
+
+Write down the working contract before editing:
 
 | Field | Required decision |
 | --- | --- |
 | Target URL | Exactly one existing URL |
 | Primary intent | The single user problem this page must answer best |
-| Primary query cluster | One coherent keyword theme, not a list of unrelated terms |
-| Local modifier | Bremen or another explicit local intent, if applicable |
+| Primary query cluster | One coherent keyword theme from the GSC data, not a list of unrelated terms |
+| Local modifier | Bremen intent, or explicitly none (de-localized cost spokes) |
 | Neighboring URLs | Pages that must remain differentiated |
 | Delegated details | Topics to summarize briefly and link to a dedicated spoke |
 | Freshness-sensitive claims | Facts that require current primary-source verification |
-| Success signals | Relevant GSC and technical metrics |
+| Success signals | Target queries and expected movement (CTR, position, clicks) checkable in the next report |
 
-If the requested target page cannot be identified unambiguously from the repository, ownership map, or provided GSC data, stop and ask the user. Otherwise infer the contract from the repository, GSC data, and current search intent.
+Ground the contract in the target's actual query set from `query-page-current.json`: which queries drive impressions, at which positions, with which CTR. Do not optimize around noisy queries that do not match the page's intended user journey, and do not treat impressions from unrelated countries as local demand.
 
-## Analyze Search Data
+## Phase 5: Verify Current Facts
 
-When the user supplies Google Search Console exports or GSC access is available:
+Browse before changing unstable claims. Prefer current official primary sources (starting points in the site contract):
 
-- If GSC exports are malformed or incomplete, report the parsing error and proceed with repository-only analysis, marking the missing GSC-derived metrics as "not available".
-- If no GSC data is provided, use repository content, site search analytics if available, and a 14-day baseline inferred from current SERP intent. State explicitly in the report that GSC data was unavailable and that recommendations are based on repository and public SERP signals only.
-
-1. Read the query, page, country, device, appearance, filter, and time-series data that exist.
-2. Isolate the target URL before drawing conclusions.
-3. Prefer `country = Germany` and `search type = Web` for the primary local assessment.
-4. Report clicks, impressions, CTR, and average position for the target URL and its main query cluster.
-5. Identify high-impression low-CTR opportunities, striking country anomalies, and query-to-URL overlap.
-6. Compare the target query cluster against sibling URLs to detect cannibalization.
-7. Preserve a concise pre-deploy baseline for 14-day and 28-day measurement.
-
-Do not treat raw impressions from unrelated countries as evidence of local demand. Do not optimize around noisy queries that do not match the page's intended user journey.
-
-## Verify Current Facts
-
-Browse before changing unstable claims. Prefer current official primary sources:
-
-1. Use official Google Search documentation for current SEO guidance.
-2. Use KfW, BAFA, BAB Bremen, Bremen service portals, Bremen environmental authorities, laws, or other authoritative institutions for funding and regulatory facts.
-3. Record the verification date visibly on pages that contain time-sensitive funding, regulatory, or program eligibility claims.
+1. Official Google Search documentation for SEO guidance.
+2. KfW, BAFA, BAB Bremen, Bremen service portals, Bremen environmental authorities, and laws for funding and regulatory facts.
+3. Record the verification date visibly on pages with time-sensitive funding, regulatory, or eligibility claims.
 4. Link visible primary sources near the relevant content or in a clearly labeled source block.
-5. Phrase announced but unavailable programs precisely: distinguish planned, announced, closed, and currently applicable offers.
+5. Distinguish planned, announced, closed, and currently applicable programs precisely.
 
 Never invent expert review, partner approval, eligibility guarantees, funding guarantees, or legal certainty. Mark informational content as non-binding when appropriate.
 
-## Design The Optimization
+## Phase 6: Design The Optimization
 
 Prefer an answer-first structure:
 
 1. Provide a concise direct answer immediately after the hero.
 2. Keep the introduction focused on the actual search intent.
-3. Reduce generic market commentary unless it directly helps the user decide.
-4. Organize the page around the smallest useful set of choices, steps, or comparisons.
-5. Summarize spoke topics and delegate detail with descriptive internal links.
-6. Add Bremen-specific value only where it changes the user's understanding or next action.
-7. Use plain German, short paragraphs, descriptive headings, lists, and tables where they improve scanning.
+3. Organize the page around the smallest useful set of choices, steps, or comparisons.
+4. Summarize spoke topics and delegate detail with descriptive internal links.
+5. Add Bremen-specific value only where it changes the user's understanding or next action — and never on the de-localized cost spokes (see site contract).
+6. Use plain German, short paragraphs, descriptive headings, lists, and tables where they improve scanning.
 
-For important time-sensitive pages, include:
+For time-sensitive pages include: a visible checked/updated date, editorial responsibility linked to `/kontakt/`, visible source status, a non-binding information notice, and transparent CTA wording. For lead-generation CTAs, state that the first classification happens in the browser and that contact data is forwarded to the business named under `/fachpartner/` only after explicit consent.
 
-- a visible checked or updated date
-- editorial responsibility linked to `/kontakt/`
-- a visible source status
-- a non-binding information notice
-- transparent CTA wording
+Cannibalization protection:
 
-For lead-generation CTAs, state that the first classification happens in the browser and that contact data is forwarded to the business named under `/fachpartner/` only after explicit consent.
+1. One primary intent per URL; preserve the ownership boundaries in the site contract.
+2. Do not copy the full detail scope of a spoke into a hub.
+3. Link hubs to spokes with descriptive anchor text; link spokes back to a hub only when it helps orientation.
+4. Avoid titles and H1s that make two pages compete for the same dominant query — REPORT.md section "Kannibalisierung" shows current overlaps; check whether the target is involved before and after the edit.
 
-## Protect Against Cannibalization
-
-Apply these rules:
-
-1. Keep one primary intent per URL.
-2. Preserve the ownership boundaries in [references/site-contract.md](references/site-contract.md).
-3. Do not copy the full detail scope of a spoke into a hub.
-4. Link hubs to spokes with descriptive anchor text.
-5. Link spokes back to a relevant hub only when it helps orientation.
-6. Avoid titles and H1 headings that make two pages compete for the same dominant query.
-7. Re-check query-to-URL distribution after deployment.
-
-## Implement In Astro
+## Phase 7: Implement In Astro
 
 Keep edits page-scoped and consistent with existing patterns.
 
-### Metadata
+Metadata:
+- One clear title with the primary intent near the front; a specific, honest meta description that improves click relevance.
+- Exactly one visible `h1`; HTTPS self-canonical through the existing layout contract.
+- Update `dateModified` when the page materially changes. Add a visible human-readable update date only on pages with time-sensitive claims; omit it on evergreen pages.
 
-- Use one clear title with the primary intent near the front.
-- Write a specific, honest meta description that improves click relevance.
-- Keep exactly one visible `h1`.
-- Preserve or add an HTTPS self-canonical through the existing layout contract.
-- Update `dateModified` whenever visible factual or verification-date changes are added, or otherwise when the page materially changes.
-- Add a visible human-readable update date only on pages that contain time-sensitive claims such as funding, regulatory status, or program eligibility. For evergreen technical or informational pages, omit a visible update date.
-
-### Social And Article Image
-
-Use a relevant page-specific hero image for Open Graph and Article schema. When the project uses Astro assets, explicitly generate the social image so the rendered URL points to a real build artifact:
+Social and Article image — generate the OG image explicitly so the rendered URL points to a real build artifact:
 
 ```astro
 import { getImage } from "astro:assets";
@@ -142,32 +126,16 @@ const ogImage = await getImage({
 });
 ```
 
-Pass `ogImage={ogImage.src}` to the existing layout. After building, resolve the rendered OG URL against `dist/client` and verify that the file exists. Also verify that Article schema uses the same image.
+Pass `ogImage={ogImage.src}` to the layout. After building, verify the rendered OG URL resolves to a file under `dist/client` and that Article schema uses the same image.
 
-### Structured Data
+Structured data:
+- Preserve valid existing `Article` and `BreadcrumbList` markup; keep visible content and schema synchronized.
+- Use `FAQPage` markup only with genuinely helpful visible FAQs; do not promise FAQ rich results.
+- No speculative schema layers without a real supported purpose.
 
-- Preserve valid existing `Article` and `BreadcrumbList` markup.
-- Use visible FAQ content and matching `FAQPage` markup only when FAQs genuinely help the page.
-- Keep visible content and schema synchronized.
-- Do not add speculative AI schema or schema layers without a real supported purpose.
-- Treat schema as machine-readable clarification, not as a ranking shortcut.
-- Do not promise FAQ rich results; Google restricts their display substantially.
+E-E-A-T (quality framework, not a ranking factor): show editorial responsibility, cite authoritative sources, use precise dates for changing facts, distinguish information from binding advice, disclose lead handling, avoid unsupported superlatives.
 
-### E-E-A-T And Trust
-
-Treat E-E-A-T as a quality framework, not a direct ranking factor:
-
-- show editorial responsibility
-- cite authoritative sources
-- use precise dates for changing facts
-- distinguish information from binding advice
-- disclose lead handling
-- avoid unsupported superlatives and unverifiable claims
-- retain HTTPS, canonical clarity, and accessible semantic HTML
-
-## Validate Before Reporting Completion
-
-Run:
+## Phase 8: Validate Before Reporting Completion
 
 ```powershell
 npx astro check
@@ -176,53 +144,22 @@ git diff --check
 git status --short --branch
 ```
 
-Inspect the generated HTML for the target route and verify:
+Inspect the generated HTML for the target route: exactly one `h1`; expected title and description; HTTPS self-canonical; OG image URL resolves to an artifact in `dist/client`; Article image matches; current `dateModified`; visible sources and editorial responsibility where required; JSON-LD parses; no stale claim remains.
 
-- exactly one `h1`
-- expected title and meta description
-- HTTPS self-canonical
-- relevant OG image URL
-- OG image artifact exists in `dist/client`
-- Article image matches the OG image
-- current `dateModified`
-- visible primary sources
-- visible editorial responsibility where required
-- no stale or misleading claim remains
-- JSON-LD parses successfully
-- existing Article, Breadcrumb, and visible FAQ markup remain synchronized
+If the build or OG generation fails, do not commit content changes — present the error and remediation steps instead. Do not claim local edits are live before deployment.
 
-If OG image generation or `npm run build` fails, do not commit content changes. Record the error, attempt one automated retry, then abort and present the build logs and recommended remediation steps to the user.
-
-When a live site exists, distinguish local validation from deployment state. Check:
-
-- HTTP root redirects to HTTPS
-- an HTTP inner route redirects to HTTPS
-- live HTTPS target returns `200`
-- live canonical is HTTPS
-- affected legacy redirects still work
-
-Do not claim that local edits are live before deployment.
-
-## Deployment Handoff
+## Phase 9: Deployment & Measurement
 
 After deployment:
 
-1. Re-check live title, description, canonical, OG image, schema, and sources.
-2. Run Google's Rich Results Test for Article and Breadcrumb eligibility.
-3. Request indexing for the target URL in GSC.
-4. Review GSC after 14 and 28 days with `page = target URL`, `country = Germany`, and `search type = Web`.
-5. Compare CTR, impressions, position, and query-to-URL distribution against the saved baseline.
-6. Review Core Web Vitals with field data where available: LCP under `2.5 s`, INP under `200 ms`, CLS under `0.1`.
+1. Re-check live title, description, canonical, OG image, schema, and sources on the live URL.
+2. Verify index status: `npm run seo:inspect -- <live-url>`; request indexing manually in the GSC UI (the API cannot request indexing).
+3. Run Google's Rich Results Test for Article and Breadcrumb eligibility.
+4. After 14–28 days, run `npm run seo:sync` and compare the new REPORT.md and snapshot against the pre-deploy snapshot: CTR, position, clicks for the target queries, and the query-to-URL distribution (cannibalization section).
+5. Core Web Vitals with field data where available: LCP < 2.5 s, INP < 200 ms, CLS < 0.1.
 
 ## Report Concisely
 
-State:
+State: which single page changed, how its intent was sharpened, how cannibalization was prevented, which facts and sources were verified, which validations passed, and which actions still require deployment or the GSC UI. Name the concrete success signals to check in the next report.
 
-1. which single page changed
-2. how its intent was sharpened
-3. how cannibalization was prevented
-4. which current facts and sources were verified
-5. which validations passed
-6. which actions still require deployment or external dashboard access
-
-Never guarantee traffic or ranking gains. Explain that the work improves relevance, CTR potential, freshness, trust, and technical clarity.
+Never guarantee traffic or ranking gains. The work improves relevance, CTR potential, freshness, trust, and technical clarity.
