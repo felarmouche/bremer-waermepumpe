@@ -1,0 +1,483 @@
+---
+import Layout from "../layout/Layout.astro";
+import Breadcrumb from "../components/Breadcrumb.astro";
+import HeroSection from "../components/HeroSection.astro";
+import TrustBar from "../components/TrustBar.astro";
+import CTASection from "../components/CTASection.astro";
+import FAQSection from "../components/FAQSection.astro";
+import SectionShell from "../components/SectionShell.astro";
+import NoticeSuccess from "../components/content/NoticeSuccess.astro";
+import CheckList from "../components/content/CheckList.astro";
+import InternalLinkCard from "../components/InternalLinkCard.astro";
+import heroImage from "../images/heat-pump-bremen-hero.webp";
+
+import type { PageData } from "../types/page";
+
+const data: PageData = {
+    title: "Wärmepumpe Abstand zum Nachbarn: Regeln je Bundesland 2026",
+    description: "Wie viel Abstand muss die Wärmepumpe zum Nachbarn halten? Grenzabstand nach Landesbauordnung je Bundesland, TA-Lärm-Werte und Schallschutz – kompakt erklärt.",
+    lastUpdated: "16. Juli 2026",
+    hero: {
+        headline: "Wärmepumpe Abstand zum Nachbarn",
+        subtext: "Grenzabstand nach Landesbauordnung, TA Lärm und Schallschutz – was bundesweit gilt und wo die Länder abweichen.",
+        primaryCTA: {
+            label: "Eignung & Aufstellung prüfen",
+            href: "/check/"
+        },
+        secondaryCTA: {
+            label: "Luft-Wasser-Kosten",
+            href: "/luft-wasser-waermepumpe-kosten/"
+        }
+    },
+    trustItems: [
+        {
+            text: "Alle 16 Bundesländer"
+        },
+        {
+            text: "TA Lärm erklärt"
+        },
+        {
+            text: "Reihenhaus & Grenze"
+        },
+        {
+            text: "Stand Juli 2026"
+        }
+    ],
+    breadcrumb: [
+        {
+            label: "Startseite",
+            href: "/"
+        },
+        {
+            label: "Abstand zum Nachbarn"
+        }
+    ],
+    ctaBlock: {
+        headline: "Ist die Aufstellung bei Ihnen realistisch?",
+        text: "Der Check erfasst Gebäude-, Heizungs- und Standortdaten für eine erste Einschätzung.",
+        variant: "highlight",
+        primaryCTA: {
+            label: "Eignung prüfen",
+            href: "/check/"
+        },
+        secondaryCTA: {
+            label: "Schallschutz & Kosten",
+            href: "/luft-wasser-waermepumpe-kosten/"
+        }
+    },
+    faqHeading: "FAQ: Wärmepumpe Abstand zum Nachbarn",
+    faqs: [
+        {
+            question: "Wie viel Abstand muss eine Wärmepumpe zum Nachbarn haben?",
+            answer: "Einen bundeseinheitlichen Mindestabstand gibt es nicht. Baurechtlich gilt die Landesbauordnung des jeweiligen Bundeslandes – die meisten Länder lassen Außengeräte bis etwa 2 Meter Höhe (oft mit 3 Metern Gesamtlänge an der Grenze) ohne eigenen Grenzabstand zu. Unabhängig davon müssen die Immissionsrichtwerte der TA Lärm am nächsten schutzbedürftigen Nachbarfenster eingehalten werden."
+        },
+        {
+            question: "Darf die Wärmepumpe direkt an der Grundstücksgrenze stehen?",
+            answer: "In vielen Bundesländern ja, sofern die Größenbedingungen der jeweiligen Landesbauordnung eingehalten werden – häufig maximal 2 Meter Höhe und 3 Meter Länge je Grundstücksgrenze. Der Lärmschutz gilt trotzdem: Nachts sind zum Beispiel im reinen Wohngebiet 35 dB(A) am maßgeblichen Nachbarfenster einzuhalten."
+        },
+        {
+            question: "Braucht eine Wärmepumpe eine Baugenehmigung?",
+            answer: "Wärmepumpen an Wohngebäuden sind in den meisten Bundesländern verfahrensfrei, also ohne Baugenehmigung zulässig. Verfahrensfrei heißt aber nicht regelfrei: Abstandsflächenrecht, TA Lärm und örtliche Bebauungspläne gelten weiterhin. Im Zweifel hilft die untere Bauaufsichtsbehörde."
+        },
+        {
+            question: "Was tun, wenn der Nachbar sich über die Wärmepumpe beschwert?",
+            answer: "Zuerst das Gespräch suchen und den schallreduzierten Nachtmodus aktivieren, falls vorhanden. Bringt das nichts, schafft eine Schallprognose oder -messung nach TA Lärm Klarheit. Werden Richtwerte überschritten, helfen Maßnahmen wie Schwingungsentkopplung, ein anderer Aufstellort oder eine Schallschutzhaube."
+        }
+    ],
+    schema: {
+        type: "Article",
+        datePublished: "2026-07-16",
+        dateModified: "2026-07-16"
+    }
+};
+
+const canonical = data.canonical ?? Astro.url.href;
+const hero = { ...data.hero, imageSrc: heroImage };
+const dateLine = data.lastUpdated ? `Stand: ${data.lastUpdated}` : null;
+const pageSchema = data.schema
+    ? {
+          ...data.schema,
+          datePublished: data.schema.datePublished ?? data.schema.dateModified,
+          dateModified: data.schema.dateModified ?? data.schema.datePublished,
+      }
+    : undefined;
+
+const laenderRegeln = [
+    {
+        land: "Baden-Württemberg",
+        regel: "Abstandsfrei: Wärmepumpen brauchen keine eigene Abstandsfläche und dürfen in Abstandsflächen stehen. Lärmschutz bleibt Pflicht.",
+        quelle: "§ 6 Abs. 1 S. 1 Nr. 3 LBO BW",
+        href: "https://www.landesrecht-bw.de/jportal/?quelle=jlink&query=BauO+BW+%C2%A7+6&psml=bsbawueprod.psml&max=true",
+    },
+    {
+        land: "Bayern",
+        regel: "Bis 2 m Höhe lösen Wärmepumpen samt Einhausung keine Abstandsflächen aus – seit 01.01.2025 gesetzlich klargestellt.",
+        quelle: "Art. 6 BayBO",
+        href: "https://www.gesetze-bayern.de/Content/Document/BayBO-6",
+    },
+    {
+        land: "Berlin",
+        regel: "Bis 2 m Höhe und 3 m Gesamtlänge je Grundstücksgrenze (inkl. Fundament und Einhausung) ohne eigene Abstandsfläche zulässig.",
+        quelle: "§ 6 Abs. 8 BauO Bln",
+        href: "https://gesetze.berlin.de/bsbe/document/jlr-BauOBE2005V11P6",
+    },
+    {
+        land: "Brandenburg",
+        regel: "Privilegiert bis 2 m Höhe und 3 m Gesamtlänge je Grundstücksgrenze.",
+        quelle: "§ 6 Abs. 8 BbgBO",
+    },
+    {
+        land: "Bremen",
+        regel: "0 m möglich: privilegiert bis 2 m Höhe und 3 m Länge je Grenze.",
+        quelle: "§ 6 Abs. 8 Nr. 4 BremLBO",
+        href: "https://www.transparenz.bremen.de/metainformationen/bremische-landesbauordnung-vom-29-mai-2024-232736",
+        intern: { href: "/waermepumpe-abstand-nachbar-bremen/", label: "Details für Bremen" },
+    },
+    {
+        land: "Hamburg",
+        regel: "Privilegiert bis 2 m Höhe und 3 m Gesamtlänge je Grundstücksgrenze.",
+        quelle: "§ 6 Abs. 7 HBauO",
+    },
+    {
+        land: "Hessen",
+        regel: "Gebäudeunabhängige Wärmepumpen bis 2 m Höhe und 3 m Gesamtlänge an der Grenze zulässig; das Land erklärt Details im Leitfaden Wärmepumpen.",
+        quelle: "§ 6 Abs. 10 Nr. 11 HBO",
+        href: "https://wirtschaft.hessen.de/wohnen-bauen/bauvorschriften/hessische-bauordnung-hbo",
+    },
+    {
+        land: "Mecklenburg-Vorpommern",
+        regel: "Seit der Novelle 2025 privilegiert bis 2 m Höhe und 3 m Länge (inkl. Fundament und Einhausung).",
+        quelle: "§ 6 LBauO M-V",
+        href: "https://www.architektenkammer-mv.de/media/architektenkammer-mv/Aktuelles_Veranstaltungen/aktuelles-2025/LBauO_Handlungsempfehlungen%20M%C3%A4rz%202025.pdf",
+    },
+    {
+        land: "Niedersachsen",
+        regel: "Bis 2 m Höhe ohne Grenzabstand zulässig, an der Grenze mit maximal 3 m Gesamtlänge (seit 01.07.2024).",
+        quelle: "§ 5 Abs. 8 NBauO",
+        href: "https://www.mw.niedersachsen.de/download/196665",
+    },
+    {
+        land: "Nordrhein-Westfalen",
+        regel: "Bis 2 m Höhe und 3 m Gesamtlänge je Grenze in und ohne Abstandsflächen zulässig (seit 01.01.2024); Lärmschutzwerte sind einzuhalten.",
+        quelle: "§ 6 Abs. 8 BauO NRW",
+        href: "https://bauportal.nrw/waermepumpe-bauen-nordrhein-westfalen",
+    },
+    {
+        land: "Rheinland-Pfalz",
+        regel: "Übliche Außengeräte gelten nach der Rechtsprechung nicht als gebäudeähnlich und lösen in der Regel keine Abstandsfläche aus.",
+        quelle: "LBauO RLP; VG Mainz, Urt. v. 30.09.2020",
+    },
+    {
+        land: "Saarland",
+        regel: "Privilegiert bis 2 m Höhe und 3 m Länge je Grundstücksgrenze; TA Lärm einhalten.",
+        quelle: "§ 8 Abs. 2 LBO Saarland",
+    },
+    {
+        land: "Sachsen",
+        regel: "Keine ausdrückliche Privilegierung im Gesetz. Laut Hinweisschreiben des Staatsministeriums für Regionalentwicklung (21.12.2023) lösen Luftwärmepumpen bis 2 m Höhe in der Regel keine Abstandsflächen aus.",
+        quelle: "§ 6 SächsBO; SMR-Schreiben v. 21.12.2023",
+    },
+    {
+        land: "Sachsen-Anhalt",
+        regel: "Rechtslage zuletzt uneinheitlich dargestellt; eine ausdrückliche 2-m/3-m-Privilegierung war 2025 als Novelle in Arbeit. Vor der Aufstellung die untere Bauaufsichtsbehörde fragen.",
+        quelle: "§ 6 BauO LSA",
+    },
+    {
+        land: "Schleswig-Holstein",
+        regel: "Privilegiert bis 2 m Höhe und 3 m Gesamtlänge je Grundstücksgrenze.",
+        quelle: "§ 6 Abs. 8 LBO SH",
+    },
+    {
+        land: "Thüringen",
+        regel: "Seit der Novelle 2024 direkt an der Grenze zulässig bis 2 m Höhe und 3 m Gesamtlänge (inkl. Fundament und Einhausung).",
+        quelle: "§ 6 ThürBO",
+        href: "https://landesrecht.thueringen.de/bsth/document/jlr-BauOTH2024pP6",
+    },
+];
+
+const taLaermWerte = [
+    { gebiet: "Reines Wohngebiet", tags: "50 dB(A)", nachts: "35 dB(A)" },
+    { gebiet: "Allgemeines Wohngebiet / Kleinsiedlungsgebiet", tags: "55 dB(A)", nachts: "40 dB(A)" },
+    { gebiet: "Kern-, Dorf- und Mischgebiet", tags: "60 dB(A)", nachts: "45 dB(A)" },
+    { gebiet: "Urbanes Gebiet", tags: "63 dB(A)", nachts: "45 dB(A)" },
+    { gebiet: "Gewerbegebiet", tags: "65 dB(A)", nachts: "50 dB(A)" },
+    { gebiet: "Kurgebiet, Krankenhäuser, Pflegeanstalten", tags: "45 dB(A)", nachts: "35 dB(A)" },
+];
+---
+
+<Layout
+    title={data.title}
+    description={data.description}
+    canonical={canonical}
+    noindex={data.noindex}
+    pageSchema={pageSchema}
+>
+    {data.breadcrumb?.length > 0 && <Breadcrumb items={data.breadcrumb} />}
+    <HeroSection {...hero} />
+    {data.trustItems?.length > 0 && <TrustBar items={data.trustItems} />}
+    {dateLine && (
+        <div class="bg-background border-b border-border">
+            <p class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-3 text-xs text-text-muted">
+                {dateLine} · Redaktion bremer-waermepumpe.de · Alle Angaben ohne Gewähr
+            </p>
+        </div>
+    )}
+
+<SectionShell>
+  <article class="max-w-3xl space-y-4 text-text-muted leading-relaxed">
+    <div class="bg-highlight border border-border rounded p-5">
+      <p class="font-bold text-text mb-2">Schnelle Antwort</p>
+      <p class="text-sm leading-relaxed">
+        Beim Abstand der Wärmepumpe zum Nachbarn sind <strong class="text-text">zwei
+        getrennte Prüfungen</strong> nötig. Erstens das Baurecht: Den Grenzabstand regelt
+        die <strong class="text-text">Landesbauordnung</strong> des jeweiligen Bundeslandes –
+        die meisten Länder lassen Außengeräte bis etwa 2 m Höhe inzwischen ohne eigenen
+        Grenzabstand zu, teils direkt an der Grenze. Zweitens der Lärmschutz: Unabhängig
+        vom Baurecht muss die Anlage die <strong class="text-text">TA-Lärm-Richtwerte am
+        nächsten schutzbedürftigen Nachbarfenster</strong> einhalten – nachts ist das
+        meist der Engpass.
+      </p>
+    </div>
+    <p>
+      Die häufigste Sorge vor dem Einbau einer Luft-Wasser-Wärmepumpe ist nicht die
+      Technik, sondern der <strong class="text-text">Aufstellort nahe am Nachbarn</strong>.
+      Gerade bei Reihenhäusern mit üblichen Grundstücksbreiten von rund 6 Metern wäre
+      mit einem klassischen 3-Meter-Abstand gar keine Außenaufstellung möglich. Deshalb
+      haben fast alle Bundesländer ihre Bauordnungen zwischen 2022 und 2025 angepasst
+      und Wärmepumpen beim Grenzabstand privilegiert – aber unterschiedlich weitgehend.
+    </p>
+    <NoticeSuccess>
+      <p>
+        <strong>Wichtig:</strong> Der Grenzabstand ist nur die halbe Prüfung. Auch bei
+        0 m Abstand müssen die TA-Lärm-Werte am maßgeblichen Nachbarfenster eingehalten
+        werden – und örtliche Bebauungspläne können zusätzliche Vorgaben machen.
+      </p>
+    </NoticeSuccess>
+    <div class="bg-highlight border border-border rounded p-5 flex flex-col sm:flex-row gap-4 sm:items-center sm:justify-between">
+      <div>
+        <p class="font-semibold text-text">Aufstellort im Bestand prüfen?</p>
+        <p class="text-sm text-text-muted mt-1">Der Check erfasst Haus- und Heizungsdaten für die erste Einordnung.</p>
+      </div>
+      <a href="/check/" class="btn-accent shrink-0 text-center">Aufstellung prüfen</a>
+    </div>
+  </article>
+</SectionShell>
+
+<SectionShell variant="alt">
+  <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
+    Grenzabstand der Wärmepumpe je Bundesland
+  </h2>
+  <p class="text-text-muted max-w-3xl mb-6">
+    Landesbaurecht ändert sich laufend; maßgeblich ist die aktuelle Fassung der
+    jeweiligen Landesbauordnung, dazu können Bebauungspläne örtlich abweichen.
+    Angaben ohne Gewähr, Stand Juli 2026.
+  </p>
+  <div class="surface-card overflow-x-auto max-w-5xl">
+    <table class="w-full text-sm text-left border-collapse">
+      <caption class="sr-only">
+        Grenzabstand-Regeln für Wärmepumpen in den Landesbauordnungen der 16 Bundesländer
+      </caption>
+      <thead>
+        <tr class="border-b border-border text-text bg-highlight">
+          <th scope="col" class="px-4 py-3 font-semibold">Bundesland</th>
+          <th scope="col" class="px-4 py-3 font-semibold">Regel zum Grenzabstand (Kurzfassung)</th>
+          <th scope="col" class="px-4 py-3 font-semibold">Rechtsgrundlage</th>
+        </tr>
+      </thead>
+      <tbody class="text-text-muted">
+        {laenderRegeln.map((row, i) => (
+          <tr class={i < laenderRegeln.length - 1 ? "border-b border-border" : ""}>
+            <th scope="row" class="px-4 py-3 font-medium text-text align-top">{row.land}</th>
+            <td class="px-4 py-3 align-top">
+              {row.regel}
+              {row.intern && (
+                <>
+                  {" "}
+                  <a href={row.intern.href} class="text-primary underline">{row.intern.label}</a>
+                </>
+              )}
+            </td>
+            <td class="px-4 py-3 align-top">
+              {row.href ? (
+                <a href={row.href} class="text-primary underline" target="_blank" rel="noopener">{row.quelle}</a>
+              ) : (
+                row.quelle
+              )}
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+  <p class="text-text-muted max-w-3xl text-sm mt-6">
+    Die verbreitete Formel „bis 2 m Höhe, 3 m Gesamtlänge je Grundstücksgrenze" geht auf
+    die geänderte Musterbauordnung zurück, an der sich viele Länder orientiert haben.
+    Ob Fundament, Einhausung oder mehrere Geräte mitzählen, regelt jedes Land selbst –
+    im Zweifel hilft die untere Bauaufsichtsbehörde.
+  </p>
+</SectionShell>
+
+<SectionShell>
+  <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
+    TA Lärm: Entscheidend ist der Pegel am Nachbarfenster
+  </h2>
+  <p class="text-text-muted max-w-3xl mb-6">
+    Für den Lärmschutz zählt nicht, wie laut das Gerät am Gehäuse ist, sondern welcher
+    Beurteilungspegel am <strong class="text-text">maßgeblichen Immissionsort</strong>
+    ankommt: 0,5 m vor dem geöffneten Fenster des am stärksten betroffenen
+    schutzbedürftigen Raums beim Nachbarn – etwa Schlafzimmer oder Wohnzimmer.
+    Terrassen und die Grundstücksgrenze selbst sind dafür nicht maßgeblich. Nachts
+    (22–6 Uhr) gelten strengere Werte als tags (6–22 Uhr).
+  </p>
+  <div class="surface-card overflow-x-auto max-w-3xl">
+    <table class="w-full text-sm text-left border-collapse">
+      <caption class="sr-only">
+        Immissionsrichtwerte der TA Lärm nach Gebietstyp, tags und nachts
+      </caption>
+      <thead>
+        <tr class="border-b border-border text-text bg-highlight">
+          <th scope="col" class="px-4 py-3 font-semibold">Gebietstyp</th>
+          <th scope="col" class="px-4 py-3 font-semibold">Tags (6–22 Uhr)</th>
+          <th scope="col" class="px-4 py-3 font-semibold">Nachts (22–6 Uhr)</th>
+        </tr>
+      </thead>
+      <tbody class="text-text-muted">
+        {taLaermWerte.map((row, i) => (
+          <tr class={i < taLaermWerte.length - 1 ? "border-b border-border" : ""}>
+            <th scope="row" class="px-4 py-3 font-medium text-text">{row.gebiet}</th>
+            <td class="px-4 py-3">{row.tags}</td>
+            <td class="px-4 py-3">{row.nachts}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+  <p class="text-text-muted max-w-3xl text-sm mt-6">
+    Werte nach Nr. 6.1 der <a href="https://www.verwaltungsvorschriften-im-internet.de/bsvwvbund_26081998_IG19980826.htm" class="text-primary underline" target="_blank" rel="noopener">TA Lärm</a>.
+    Unterschreitet die Anlage die Richtwerte um mindestens 6 dB(A), gilt ihr Geräusch
+    als nicht relevant. Für eine überschlägige Prognose vor dem Angebot eignet sich der
+    <a href="https://www.waermepumpe.de/schallrechner/" class="text-primary underline" target="_blank" rel="noopener">Schallrechner des Bundesverbands Wärmepumpe</a>.
+  </p>
+  <NoticeSuccess class="mt-6">
+    <p>
+      <strong>Praxis:</strong> Nachtmodus, Ausblasrichtung und Reflexionen an Wänden
+      oder Ecken verändern den Pegel um mehrere dB(A). Eine einfache Schallberechnung
+      vor dem Angebot beugt Streit mit dem Nachbarn vor – nicht jede Behörde erkennt
+      den schallreduzierten Nachtbetrieb automatisch an.
+    </p>
+  </NoticeSuccess>
+</SectionShell>
+
+<SectionShell variant="alt">
+  <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
+    Abstand zur Hauswand, Fenster und Ausblasseite
+  </h2>
+  <p class="text-text-muted max-w-3xl mb-6">
+    Neben dem Grenzabstand gibt es <strong class="text-text">technische
+    Mindestabstände</strong> zur eigenen Hauswand, zu Fenstern und vor der
+    Ausblasseite. Diese sind nicht gesetzlich geregelt, sondern
+    <strong class="text-text"> herstellerabhängig</strong>: Maßgeblich ist die
+    Montageanleitung des konkreten Geräts, die Freiräume für Luftführung, Wartung
+    und Kondensatablauf vorgibt. Pauschale Zentimeterwerte aus dem Internet ersetzen
+    diese Angaben nicht.
+  </p>
+  <CheckList
+    items={[
+      { lead: "Ausblasrichtung:", text: "möglichst nicht auf das Nachbarfenster oder die Terrasse richten – das senkt den Pegel am maßgeblichen Immissionsort deutlich." },
+      { lead: "Freiraum vor dem Ventilator:", text: "die Ausblasseite braucht freien Luftweg nach Montageanleitung, sonst sinken Effizienz und Lebensdauer." },
+      { lead: "Ecken und Nischen meiden:", text: "Reflexionen zwischen Wänden können den Schallpegel um mehrere dB(A) erhöhen." },
+      { lead: "Kondensat und Vereisung:", text: "Abtauwasser braucht einen frostsicheren Ablauf; Gehwege neben dem Gerät können vereisen." },
+      { lead: "Wartungszugang:", text: "um das Gerät herum muss Platz für Service und Reinigung bleiben – auch das steht in der Montageanleitung." },
+    ]}
+  />
+</SectionShell>
+
+<SectionShell>
+  <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
+    Reihenhaus und Doppelhaus: wenig Platz an der Grenze
+  </h2>
+  <article class="max-w-3xl space-y-4 text-text-muted leading-relaxed">
+    <p>
+      Im Reihenhaus treffen beide Prüfungen verschärft aufeinander: Die Grenze ist
+      nah, und das nächste Nachbarfenster oft nur wenige Meter entfernt. Baurechtlich
+      ist die Aufstellung dank der Länder-Privilegierungen meist möglich – den
+      Ausschlag gibt fast immer der <strong class="text-text">Nachtwert der TA Lärm</strong>
+      am Schlafzimmerfenster nebenan.
+    </p>
+    <p>
+      Bewährte Stellschrauben: ein Aufstellort, der nicht direkt vor dem
+      Nachbarfenster liegt, ein leises Gerät mit schallreduziertem Nachtbetrieb,
+      Schwingungsentkopplung auf dem Fundament und notfalls eine Schallschutzhaube.
+      Reicht das nicht, kann eine Innenaufstellung oder eine Sole-Wärmepumpe die
+      Alternative sein. Wie eine solche Prüfung konkret aussieht, zeigt unsere
+      <a href="/waermepumpe-abstand-nachbar-bremen/" class="text-primary underline">lokale Einordnung für Bremer Reihenhäuser</a>.
+    </p>
+  </article>
+</SectionShell>
+
+<SectionShell variant="alt">
+  <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
+    Schallschutz: Maßnahmen und grobe Kosten
+  </h2>
+  <p class="text-text-muted max-w-3xl mb-6">
+    Wenn der Aufstellort kritisch ist, lässt sich mit überschaubarem Aufwand
+    nachsteuern. Redaktionelle Kostenspannen zur Orientierung:
+  </p>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl">
+    <div class="surface-card p-5">
+      <h3 class="font-semibold text-text">Schallberechnung</h3>
+      <p class="text-2xl font-bold text-primary my-2">400 - 800 €</p>
+      <p class="text-text-muted text-sm">Sinnvoll bei dichter Bebauung und Reihenhäusern – vor dem Angebot.</p>
+    </div>
+    <div class="surface-card p-5">
+      <h3 class="font-semibold text-text">Entkopplung/Sockel</h3>
+      <p class="text-2xl font-bold text-primary my-2">300 - 1.200 €</p>
+      <p class="text-text-muted text-sm">Reduziert Körperschall und Vibrationen.</p>
+    </div>
+    <div class="surface-card p-5">
+      <h3 class="font-semibold text-text">Schallschutzwand/-haube</h3>
+      <p class="text-2xl font-bold text-primary my-2">800 - 2.500 €</p>
+      <p class="text-text-muted text-sm">Nur nötig, wenn Gerät und Standort kritisch sind.</p>
+    </div>
+  </div>
+</SectionShell>
+
+<SectionShell>
+  <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
+    Quellen und redaktioneller Stand
+  </h2>
+  <div class="surface-card p-5 max-w-3xl text-sm text-text-muted leading-relaxed">
+    <p class="font-semibold text-text mb-3">Stand: 16. Juli 2026</p>
+    <ul class="space-y-2">
+      <li>
+        Bund: <a href="https://www.verwaltungsvorschriften-im-internet.de/bsvwvbund_26081998_IG19980826.htm" class="text-primary underline" target="_blank" rel="noopener">TA Lärm (Sechste Allgemeine Verwaltungsvorschrift zum BImSchG)</a>
+      </li>
+      <li>
+        Landesbauordnungen: die Rechtsgrundlagen je Bundesland sind in der Tabelle oben verlinkt, soweit ein amtlicher oder offizieller Nachweis verfügbar ist.
+      </li>
+      <li>
+        Übersichten: <a href="https://www.energie-fachberater.de/beratung-foerdermittel/gesetzliche-vorgaben/gesetze-bundeslaender/waermepumpe-mindestabstand-nachbar-regelungen-der-bundeslaender.php" class="text-primary underline" target="_blank" rel="noopener">energie-fachberater.de (09/2025)</a>,
+        <a href="https://www.gebaeudeforum.de/service/newsletter/ausgabe-08/2024/waermepumpen-im-reihenhaus/" class="text-primary underline" target="_blank" rel="noopener">dena-Gebäudeforum (10/2024)</a>,
+        <a href="https://www.wochederwaermepumpe.de/fileadmin/wdwp/Downloads/Aufstellung_von_Luft-Waermepumpen_bei_Reihenhausbebauung.pdf" class="text-primary underline" target="_blank" rel="noopener">BWP: Luft-Wärmepumpen bei Reihenhausbebauung (10/2024)</a>
+      </li>
+      <li>
+        Diese Seite ordnet rechtliche Rahmenbedingungen redaktionell ein und ersetzt keine Rechtsberatung. Alle Angaben ohne Gewähr; Hinweise gern über <a href="/kontakt/" class="text-primary underline">Kontakt</a>.
+      </li>
+    </ul>
+  </div>
+</SectionShell>
+
+<SectionShell variant="alt">
+  <h2 class="text-2xl md:text-3xl font-bold text-text mb-6">Weiterlesen</h2>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-5xl">
+    <InternalLinkCard href="/waermepumpe-abstand-nachbar-bremen/" title="Abstand in Bremen" description="BremLBO, Reihenhaus und lokale Einordnung für Bremen." />
+    <InternalLinkCard href="/luft-wasser-waermepumpe-kosten/" title="Luft-Wasser-Kosten" description="Kosten, Stromverbrauch und Schallschutz der häufigsten Bauart." />
+    <InternalLinkCard href="/check/" title="Eignung prüfen" description="Aufstellung, Schallschutz und Förderung im Browser einschätzen." />
+  </div>
+</SectionShell>
+
+    {data.ctaBlock && <CTASection {...data.ctaBlock} />}
+    {data.faqs?.length > 0 && (
+        <FAQSection heading={data.faqHeading} items={data.faqs} />
+    )}
+</Layout>

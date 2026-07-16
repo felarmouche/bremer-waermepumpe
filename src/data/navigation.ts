@@ -118,6 +118,11 @@ export const navClusters: NavCluster[] = [
         label: "Abstand zum Nachbarn",
         description: "BremLBO, Grenzabstand, TA Lärm und Schallschutz.",
       },
+      {
+        href: "/waermepumpe-abstand-nachbar/",
+        label: "Abstand & Grenze (bundesweit)",
+        description: "Grenzabstand je Bundesland, TA Lärm und Schallschutz.",
+      },
     ],
   },
   {
