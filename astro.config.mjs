@@ -29,7 +29,11 @@ export default defineConfig({
 
   integrations: [
     sitemap({
-      filter: (page) => !/\/auswertung-/.test(page) && !/\/api\//.test(page),
+      // /check/danke/ is noindex — submitting it would raise a GSC coverage error.
+      filter: (page) =>
+        !/\/auswertung-/.test(page) &&
+        !/\/api\//.test(page) &&
+        !/\/check\/danke\//.test(page),
     }),
     react(),
   ],
