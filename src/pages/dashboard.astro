@@ -1,0 +1,2592 @@
+---
+// Internes Lead-Dashboard. Nicht verlinkt, noindex (Meta + X-Robots-Tag),
+// nicht in der Sitemap (Filter in astro.config.mjs). Zugang nur mit
+// Admin-Session (KV). DSGVO-Aktionen: Widerruf erfassen, Datenauskunft,
+// Stammdaten-Löschung (Nachweis bleibt 5 J.), Volllöschung (unverifiziert).
+import { env } from "cloudflare:workers";
+import "../styles/global.css";
+import {
+    ADMIN_SESSION_COOKIE,
+    applyAdminResponseHeaders,
+    isValidAdminSession,
+} from "../lib/admin-auth";
+import {
+    getAllLeads,
+    getSmsAggregate,
+    type LeadRow,
+    type SmsAggregate,
+} from "../lib/leads";
+import type { KvLike } from "../lib/lead-flow";
+
+export const prerender = false;
+
+type Env = { DB?: unknown; SESSION?: KvLike };
+const e = env as Env;
+
+applyAdminResponseHeaders(Astro.response.headers);
+// Die gebaute Seite lädt Script/Style ausschließlich extern — 'unsafe-inline'
+// braucht nur Astros Dev-HMR.
+const inline = import.meta.env.DEV ? " 'unsafe-inline'" : "";
+Astro.response.headers.set(
+    "Content-Security-Policy",
+    [
+        "default-src 'self'",
+        `script-src 'self'${inline}`,
+        `style-src 'self'${inline}`,
+        "img-src 'self' data:",
+        "connect-src 'self'",
+        "frame-ancestors 'none'",
+        "base-uri 'self'",
+        "form-action 'self'",
+        "object-src 'none'",
+    ].join("; "),
+);
+
+const token = Astro.cookies.get(ADMIN_SESSION_COOKIE)?.value;
+const authed = await isValidAdminSession(e.SESSION, token);
+
+let leads: LeadRow[] = [];
+let smsAgg: SmsAggregate = { codes_sent: 0, codes_verified: 0, avg_attempts: null };
+if (authed && e.DB) {
+    leads = await getAllLeads(e.DB as never);
+    smsAgg = await getSmsAggregate(e.DB as never);
+}
+
+// created_at kommt als "YYYY-MM-DD HH:MM:SS" (UTC, SQLite), andere als ISO.
+function parseDbDate(s: string | null): Date | null {
+    if (!s) return null;
+    let iso = s.includes("T") ? s : s.replace(" ", "T");
+    if (!/[Zz]|[+-]\d\d:\d\d$/.test(iso)) iso += "Z";
+    const d = new Date(iso);
+    return Number.isNaN(d.getTime()) ? null : d;
+}
+const fmtShort = new Intl.DateTimeFormat("de-DE", {
+    timeZone: "Europe/Berlin",
+    day: "2-digit",
+    month: "2-digit",
+    year: "2-digit",
+});
+const fmtLong = new Intl.DateTimeFormat("de-DE", {
+    timeZone: "Europe/Berlin",
+    day: "2-digit",
+    month: "2-digit",
+    year: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+});
+const fmtDate = (s: string | null) => {
+    const d = parseDbDate(s);
+    return d ? fmtLong.format(d) + " Uhr" : "—";
+};
+const fmtDay = (s: string | null) => {
+    const d = parseDbDate(s);
+    return d ? fmtShort.format(d) : "—";
+};
+
+const CRM_META: Record<string, { label: string; cls: string }> = {
+    neu: { label: "Neu", cls: "crm-neu" },
+    kontaktiert: { label: "Kontaktiert", cls: "crm-kontaktiert" },
+    termin: { label: "Termin", cls: "crm-termin" },
+    uebergeben: { label: "Übergeben", cls: "crm-uebergeben" },
+    abgeschlossen: { label: "Abgeschlossen", cls: "crm-abgeschlossen" },
+    verloren: { label: "Verloren", cls: "crm-verloren" },
+    spam: { label: "Spam", cls: "crm-spam" },
+};
+
+const now = Date.now();
+const dayMs = 24 * 3600 * 1000;
+const isDeleted = (l: LeadRow) => l.status === "deleted";
+const isRevoked = (l: LeadRow) => !!l.revoked_at || l.status === "revoked";
+const isUnverified = (l: LeadRow) =>
+    l.status === "sms_pending" || l.status === "failed";
+const isReal = (l: LeadRow) => !isDeleted(l) && !isRevoked(l) && !isUnverified(l);
+const mayContact = (l: LeadRow) => isReal(l) && !!l.telefon;
+const isDone = (l: LeadRow) =>
+    ["abgeschlossen", "verloren", "spam"].includes(l.crm_status);
+
+// Kategorien für die Filter-Chips (ein Lead kann mehrere tragen).
+function catsFor(l: LeadRow): string[] {
+    if (isDeleted(l)) return ["geloescht"];
+    // Widerrufene Leads sind gesperrt — nie "neu"/"aktiv", nur Achtung.
+    if (isRevoked(l)) return ["alle", "achtung"];
+    const cats = ["alle"];
+    if (isReal(l) && l.crm_status === "neu") cats.push("neu");
+    if (["kontaktiert", "termin", "uebergeben"].includes(l.crm_status))
+        cats.push("aktiv");
+    if (isDone(l)) cats.push("erledigt");
+    if (isUnverified(l)) cats.push("achtung");
+    return cats;
+}
+
+// Hinweis-Badges: Kontaktsperren + fällige Löschprüfungen (Datenschutz Ziff. 5).
+function flagsFor(l: LeadRow): { label: string; cls: string }[] {
+    const flags: { label: string; cls: string }[] = [];
+    if (isDeleted(l)) {
+        flags.push({ label: "Stammdaten gelöscht", cls: "flag-muted" });
+        return flags;
+    }
+    if (isRevoked(l)) {
+        flags.push({ label: "Widerrufen — nicht kontaktieren", cls: "flag-danger" });
+        flags.push({ label: "Löschung fällig", cls: "flag-warn" });
+        return flags;
+    }
+    if (l.status === "sms_pending")
+        flags.push({ label: "Unverifiziert — nicht kontaktieren", cls: "flag-warn" });
+    if (l.status === "failed")
+        flags.push({ label: "Verifizierung fehlgeschlagen", cls: "flag-muted" });
+    if (l.timeline === "Sofort" && isReal(l))
+        flags.push({ label: "⚡ Sofort", cls: "flag-urgent" });
+    const updated = parseDbDate(l.crm_updated_at);
+    if (isDone(l) && (!updated || now - updated.getTime() > 60 * dayMs))
+        flags.push({ label: "Löschprüfung empfohlen", cls: "flag-warn" });
+    return flags;
+}
+
+const counts: Record<string, number> = {
+    alle: 0,
+    neu: 0,
+    aktiv: 0,
+    erledigt: 0,
+    achtung: 0,
+    geloescht: 0,
+};
+for (const l of leads) for (const c of catsFor(l)) counts[c] = (counts[c] ?? 0) + 1;
+
+const CHIPS: { key: string; label: string }[] = [
+    { key: "alle", label: "Alle" },
+    { key: "neu", label: "Neu" },
+    { key: "aktiv", label: "Aktiv" },
+    { key: "erledigt", label: "Erledigt" },
+    { key: "achtung", label: "Achtung" },
+    { key: "geloescht", label: "Gelöscht" },
+];
+
+// ── Statistik: ausschließlich Aggregation bereits erhobener Daten ──
+// Kein Tracking und keine zusätzliche Erfassung: Klicktiefe VOR dem Absenden
+// existiert nicht in der DB (Datenschutzerklärung Ziff. 5, 8 und 9a).
+const pctOf = (n: number, d: number) => (d > 0 ? Math.round((n / d) * 100) : 0);
+const stat = {
+    total: leads.length,
+    verified: leads.filter((l) => l.sms_verified_at).length,
+    delivered: leads.filter((l) => l.admin_email_sent_at).length,
+    smsOpen: leads.filter((l) => l.status === "sms_pending").length,
+    smsFailed: leads.filter((l) => l.status === "failed" && !l.sms_verified_at)
+        .length,
+    deliveryFailed: leads.filter(
+        (l) => l.status === "failed" && !!l.sms_verified_at,
+    ).length,
+    revoked: leads.filter((l) => !!l.revoked_at).length,
+    deleted: leads.filter(isDeleted).length,
+};
+const pipeline = [
+    {
+        label: "Formular abgesendet",
+        value: stat.total,
+        pct: stat.total > 0 ? 100 : 0,
+        lost: null,
+    },
+    {
+        label: "SMS bestätigt",
+        value: stat.verified,
+        pct: pctOf(stat.verified, stat.total),
+        lost: Math.max(0, stat.total - stat.verified),
+    },
+    {
+        label: "Fachbetrieb benachrichtigt",
+        value: stat.delivered,
+        pct: pctOf(stat.delivered, stat.total),
+        lost: Math.max(0, stat.verified - stat.delivered),
+    },
+];
+const verifyDurations = leads
+    .map((l) => {
+        const a = parseDbDate(l.created_at);
+        const b = parseDbDate(l.sms_verified_at);
+        return a && b ? (b.getTime() - a.getTime()) / 60000 : null;
+    })
+    .filter((m): m is number => m !== null && m >= 0)
+    .sort((x, y) => x - y);
+const verifyMid = Math.floor(verifyDurations.length / 2);
+const medianVerifyMin = verifyDurations.length
+    ? verifyDurations.length % 2
+        ? verifyDurations[verifyMid]
+        : (verifyDurations[verifyMid - 1] + verifyDurations[verifyMid]) / 2
+    : null;
+const fmtDuration = (min: number) =>
+    min < 60
+        ? `${Math.round(min)} Min.`
+        : min < 48 * 60
+          ? `${Math.round(min / 60)} Std.`
+          : `${Math.round(min / 1440)} Tg.`;
+
+// Letzte 8 Wochen (Montag-Start, Berlin ≈ UTC reicht für Wochenraster)
+const weekMs2 = 7 * dayMs;
+const nowDate = new Date();
+const monday = new Date(nowDate);
+monday.setUTCHours(0, 0, 0, 0);
+monday.setUTCDate(monday.getUTCDate() - ((monday.getUTCDay() + 6) % 7));
+const weeks = Array.from({ length: 8 }, (_, i) => {
+    const start = new Date(monday.getTime() - (7 - i) * weekMs2);
+    const end = new Date(start.getTime() + weekMs2);
+    const count = leads.filter((l) => {
+        const d = parseDbDate(l.created_at);
+        return d !== null && d >= start && d < end;
+    }).length;
+    return { label: `ab ${fmtShort.format(start)}`, count };
+});
+const weekMax = Math.max(1, ...weeks.map((w) => w.count));
+
+// Verteilungen (nur nicht-gelöschte Leads — bei gelöschten sind die Angaben weg)
+function dist(
+    vals: (string | null)[],
+    top = 8,
+): { label: string; count: number; pct: number }[] {
+    const m = new Map<string, number>();
+    for (const v of vals) if (v) m.set(v, (m.get(v) ?? 0) + 1);
+    const totalN = vals.filter(Boolean).length;
+    return [...m.entries()]
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, top)
+        .map(([label, count]) => ({ label, count, pct: pctOf(count, totalN) }));
+}
+const statLeads = leads.filter((l) => !isDeleted(l));
+const distHeating = dist(statLeads.map((l) => l.heating_current));
+const distBuilding = dist(statLeads.map((l) => l.building_type));
+const distTimeline = dist(statLeads.map((l) => l.timeline));
+const distPlz = dist(statLeads.map((l) => l.plz || null), 6);
+
+// CRM in fester Reihenfolge, Anteil an nicht-gelöschten Leads
+const crmDist = Object.entries(CRM_META).map(([k, m]) => {
+    const count = statLeads.filter((l) => l.crm_status === k).length;
+    return { key: k, label: m.label, count, pct: pctOf(count, statLeads.length) };
+});
+const abschluss = statLeads.filter((l) => l.crm_status === "abgeschlossen").length;
+const verloren = statLeads.filter((l) => l.crm_status === "verloren").length;
+const abschlussQuote =
+    abschluss + verloren > 0 ? pctOf(abschluss, abschluss + verloren) : null;
+
+function searchBlob(l: LeadRow): string {
+    return [
+        l.reference,
+        l.vorname,
+        l.nachname,
+        l.telefon,
+        l.telefon_raw,
+        l.strasse,
+        l.plz,
+        l.ort,
+    ]
+        .filter(Boolean)
+        .join(" ")
+        .toLowerCase();
+}
+function mapsUrl(l: LeadRow): string {
+    const q = encodeURIComponent(
+        `${l.strasse} ${l.hausnummer}, ${l.plz} ${l.ort}`,
+    );
+    return `https://www.google.com/maps/search/?api=1&query=${q}`;
+}
+function projektLine(l: LeadRow): string {
+    const parts = [
+        [l.plz, l.ort].filter(Boolean).join(" "),
+        l.building_type,
+        l.heating_current && `${l.heating_current}-Heizung`,
+    ].filter(Boolean);
+    return parts.join(" · ") || "—";
+}
+---
+
+<!doctype html>
+<html lang="de">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="robots" content="noindex, nofollow, noarchive" />
+        <meta name="referrer" content="no-referrer" />
+        <link rel="icon" href="/favicon.ico" />
+        <title>Lead-Verwaltung · Bremer Wärmepumpe</title>
+    </head>
+    <body class="bg-surface text-text min-h-screen">
+        {
+            !authed ? (
+                <main class="login-wrap">
+                    <form id="login-form" class="login-card" novalidate>
+                        <p class="login-kicker">Bremer Wärmepumpe</p>
+                        <h1 class="login-title">Lead-Verwaltung</h1>
+                        <p class="login-sub">
+                            Interner Bereich — Zugang nur für den Betreiber.
+                        </p>
+                        <label class="login-label" for="login-email">
+                            E-Mail
+                        </label>
+                        <input
+                            id="login-email"
+                            name="email"
+                            type="email"
+                            class="input-base"
+                            autocomplete="username"
+                            required
+                        />
+                        <label class="login-label" for="login-password">
+                            Passwort
+                        </label>
+                        <input
+                            id="login-password"
+                            name="password"
+                            type="password"
+                            class="input-base"
+                            autocomplete="current-password"
+                            required
+                        />
+                        <p id="login-error" class="login-error" hidden />
+                        <button type="submit" class="login-btn" id="login-btn">
+                            Anmelden
+                        </button>
+                    </form>
+                </main>
+            ) : (
+                <>
+                    <header class="topbar">
+                        <div class="topbar-brand">
+                            <span class="topbar-mark" aria-hidden="true">
+                                BW
+                            </span>
+                            <div>
+                                <p class="topbar-title">Leads</p>
+                                <p class="topbar-sub">
+                                    {counts.alle} aktiv
+                                    {counts.neu > 0 && ` · ${counts.neu} neu`}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="topbar-actions">
+                            <a href="/api/admin/export" class="topbar-btn">
+                                CSV
+                            </a>
+                            <button
+                                type="button"
+                                id="logout-btn"
+                                class="topbar-btn topbar-btn-ghost"
+                            >
+                                Abmelden
+                            </button>
+                        </div>
+                    </header>
+
+                    <main class="shell">
+                        <nav class="tabs" aria-label="Ansicht" role="tablist">
+                            <button
+                                type="button"
+                                class="tab tab-on"
+                                id="tab-leads"
+                                role="tab"
+                                aria-selected="true"
+                                aria-controls="view-leads"
+                            >
+                                Leads
+                            </button>
+                            <button
+                                type="button"
+                                class="tab"
+                                id="tab-stats"
+                                role="tab"
+                                aria-selected="false"
+                                aria-controls="view-stats"
+                            >
+                                Statistik
+                            </button>
+                        </nav>
+
+                        <div id="view-leads" role="tabpanel" aria-labelledby="tab-leads">
+                        <nav class="chips" aria-label="Filter">
+                            {CHIPS.map((c, i) => (
+                                <button
+                                    type="button"
+                                    class:list={["chip", i === 0 && "chip-on"]}
+                                    data-cat={c.key}
+                                    aria-pressed={i === 0 ? "true" : "false"}
+                                >
+                                    {c.label}
+                                    <span class="chip-n">{counts[c.key]}</span>
+                                </button>
+                            ))}
+                        </nav>
+
+                        <input
+                            id="search"
+                            type="search"
+                            class="input-base search"
+                            aria-label="Leads durchsuchen"
+                            placeholder="Name, Referenz, PLZ, Telefon …"
+                            autocomplete="off"
+                        />
+
+                        <details class="guide">
+                            <summary>
+                                <span class="guide-icon" aria-hidden="true">§</span>
+                                Umgang mit Lead-Daten (DSGVO-Leitfaden)
+                                <span class="guide-chev" aria-hidden="true">▾</span>
+                            </summary>
+                            <div class="guide-body">
+                                <p class="guide-always">
+                                    <strong>Immer gilt:</strong> Die Daten sind
+                                    ausschließlich für die Vermittlung an den auf
+                                    <a href="/fachpartner/" target="_blank">/fachpartner/</a>
+                                    benannten SHK-Betrieb da — kein Verkauf, keine
+                                    anderen Empfänger, keine andere Werbung.
+                                    Notizen sachlich halten (keine Gesundheits-
+                                    oder sonstigen sensiblen Daten). CSV-Exporte
+                                    sicher verwahren und nach Gebrauch löschen.
+                                    Zugang nicht teilen.
+                                </p>
+                                <div class="guide-grid">
+                                    <section>
+                                        <h3>
+                                            Neuer Lead kommt rein
+                                        </h3>
+                                        <ul>
+                                            <li>
+                                                Anrufen nur, wenn <strong>kein
+                                                Warn-Badge</strong> auf der Karte
+                                                steht (= SMS bestätigt). „SMS
+                                                offen“ und „Widerrufen“ sind
+                                                tabu — der Anruf-Button fehlt
+                                                dort absichtlich.
+                                            </li>
+                                            <li>
+                                                Nach jedem Schritt den Status
+                                                pflegen (Kontaktiert → Termin →
+                                                Übergeben → Abgeschlossen).
+                                            </li>
+                                        </ul>
+                                    </section>
+                                    <section>
+                                        <h3>
+                                            Widerruf geht ein
+                                            <span class="frist">sofort</span>
+                                        </h3>
+                                        <ul>
+                                            <li>
+                                                Gilt formfrei — auch am Telefon
+                                                oder per Mail/Post (Art. 7
+                                                Abs. 3 DSGVO).
+                                            </li>
+                                            <li>
+                                                Noch am selben Tag beim Lead
+                                                <strong>„Widerruf erfassen“</strong>
+                                                klicken: sperrt den Lead und
+                                                informiert den Partner
+                                                automatisch. Danach nie wieder
+                                                kontaktieren.
+                                            </li>
+                                        </ul>
+                                    </section>
+                                    <section>
+                                        <h3>
+                                            Löschung wird verlangt
+                                            <span class="frist">unverzüglich</span>
+                                        </h3>
+                                        <ul>
+                                            <li>
+                                                Identität prüfen, dann
+                                                <strong>„Stammdaten löschen“</strong>
+                                                — binnen weniger Tage, nicht
+                                                Wochen (Art. 17 DSGVO). Kurz
+                                                zurückmelden, dass gelöscht
+                                                wurde.
+                                            </li>
+                                            <li>
+                                                Der Einwilligungs-Nachweis
+                                                bleibt dabei automatisch 5 Jahre
+                                                erhalten — das ist rechtens
+                                                (Art. 17 Abs. 3 lit. e DSGVO,
+                                                § 7a Abs. 2 UWG).
+                                            </li>
+                                        </ul>
+                                    </section>
+                                    <section>
+                                        <h3>
+                                            Auskunft wird verlangt
+                                            <span class="frist">1 Monat</span>
+                                        </h3>
+                                        <ul>
+                                            <li>
+                                                Identität prüfen — z. B. Rückruf
+                                                auf die hinterlegte Nummer, nie
+                                                blind an fremde Mail-Adressen
+                                                senden.
+                                            </li>
+                                            <li>
+                                                <strong>„Datenauskunft“</strong>
+                                                beim Lead öffnen und den Auszug
+                                                übermitteln (Art. 15 DSGVO).
+                                            </li>
+                                        </ul>
+                                    </section>
+                                    <section>
+                                        <h3>
+                                            Beratung beendet / kein Interesse
+                                        </h3>
+                                        <ul>
+                                            <li>
+                                                Status auf „Abgeschlossen“ oder
+                                                „Verloren“ setzen.
+                                            </li>
+                                            <li>
+                                                Erscheint das Badge
+                                                <strong>„Löschprüfung
+                                                empfohlen“</strong>: Stammdaten
+                                                löschen — der Zweck ist erfüllt,
+                                                längeres Aufbewahren wäre nicht
+                                                mehr gedeckt.
+                                            </li>
+                                            <li>
+                                                Spam/Test ohne SMS-Bestätigung:
+                                                <strong>„Vollständig löschen“</strong>
+                                                (hier gibt es keinen
+                                                aufbewahrungspflichtigen
+                                                Nachweis).
+                                            </li>
+                                        </ul>
+                                    </section>
+                                    <section>
+                                        <h3>
+                                            „Woher haben Sie meine Nummer?“
+                                        </h3>
+                                        <ul>
+                                            <li>
+                                                Einwilligung wird bestritten
+                                                (Betroffener, Anwalt,
+                                                Behörde): unten die
+                                                <strong>Nachweis-Suche</strong>
+                                                mit der Telefonnummer nutzen.
+                                            </li>
+                                            <li>
+                                                Der Auszug belegt die Kette:
+                                                Nummer → SMS-Code-Bestätigung
+                                                (Zeitpunkt) → Einwilligungstext
+                                                mit Version, IP und Zeitstempel.
+                                                Funktioniert auch nach
+                                                Stammdaten-Löschung.
+                                            </li>
+                                        </ul>
+                                    </section>
+                                    <section>
+                                        <h3>
+                                            Datenpanne
+                                            <span class="frist">72 h</span>
+                                        </h3>
+                                        <ul>
+                                            <li>
+                                                Gerät mit offener Sitzung
+                                                verloren, Fremdzugriff,
+                                                Fehlversand: hier abmelden,
+                                                Passwort wechseln.
+                                            </li>
+                                            <li>
+                                                Bei Risiko für Betroffene binnen
+                                                72 h an die LfDI Bremen melden
+                                                (<a href="https://www.datenschutz.bremen.de/" target="_blank" rel="noreferrer noopener">datenschutz.bremen.de</a>,
+                                                Art. 33 DSGVO).
+                                            </li>
+                                        </ul>
+                                    </section>
+                                    <section>
+                                        <h3>Daten sind falsch</h3>
+                                        <ul>
+                                            <li>
+                                                Berichtigung (Art. 16): Korrektur
+                                                als Notiz festhalten und dem
+                                                Partner korrigiert weitergeben.
+                                            </li>
+                                        </ul>
+                                    </section>
+                                </div>
+                                <form
+                                    class="proof-search"
+                                    action="/api/admin/lead-data"
+                                    method="get"
+                                    target="_blank"
+                                >
+                                    <label class="detail-label" for="proof-phone">
+                                        Nachweis-Suche: Einwilligung zu einer Telefonnummer belegen
+                                    </label>
+                                    <div class="proof-row">
+                                        <input
+                                            id="proof-phone"
+                                            name="phone"
+                                            type="tel"
+                                            class="input-base"
+                                            placeholder="z. B. 0151 12345678"
+                                            required
+                                        />
+                                        <button type="submit" class="btn-mini">
+                                            Nachweis suchen
+                                        </button>
+                                    </div>
+                                    <p class="legal-hint">
+                                        Durchsucht auch die SMS-Verifizierungs-Nachweise —
+                                        findet Einwilligungen selbst dann, wenn die
+                                        Stammdaten bereits gelöscht sind.
+                                    </p>
+                                </form>
+                                <p class="guide-foot">
+                                    Verbindlich sind
+                                    <a href="/datenschutz/" target="_blank">Datenschutzerklärung</a>
+                                    (Ziff. 5, 5a, 6, 10, 11) und
+                                    <a href="/agb/" target="_blank">Nutzungsbedingungen</a>.
+                                    Dieser Leitfaden ist eine Arbeitshilfe, keine Rechtsberatung.
+                                </p>
+                            </div>
+                        </details>
+
+                        <p class="count-line" id="count-label" aria-live="polite" />
+
+                        {leads.length === 0 ? (
+                            <p class="empty">
+                                Noch keine Leads. Sobald der Wärmepumpen-Check
+                                ausgefüllt wird, erscheinen die Anfragen hier.
+                            </p>
+                        ) : (
+                            <ol class="leadlist">
+                                {leads.map((l) => {
+                                    const deleted = isDeleted(l);
+                                    const revoked = isRevoked(l);
+                                    const flags = flagsFor(l);
+                                    const crm = CRM_META[l.crm_status] ?? CRM_META.neu;
+                                    return (
+                                        <li
+                                            class:list={[
+                                                "lead",
+                                                revoked && !deleted && "lead-revoked",
+                                                deleted && "lead-deleted",
+                                            ]}
+                                            data-id={String(l.id)}
+                                            data-ref={l.reference}
+                                            data-cats={catsFor(l).join(" ")}
+                                            data-search={searchBlob(l)}
+                                        >
+                                            <button
+                                                type="button"
+                                                class="lead-head"
+                                                data-id={String(l.id)}
+                                                aria-expanded="false"
+                                            >
+                                                <span class="lead-id">
+                                                    <span class="lead-name">
+                                                        {deleted
+                                                            ? "Stammdaten gelöscht"
+                                                            : `${l.vorname} ${l.nachname}`.trim() || "—"}
+                                                    </span>
+                                                    <span class="lead-line">
+                                                        {deleted
+                                                            ? l.reference
+                                                            : projektLine(l)}
+                                                    </span>
+                                                </span>
+                                                <span class="lead-when">
+                                                    <span class="mono">{fmtDay(l.created_at)}</span>
+                                                    <span
+                                                        class="rel-time"
+                                                        data-ts={l.created_at}
+                                                    />
+                                                </span>
+                                                <span class="chev" aria-hidden="true">▾</span>
+                                            </button>
+
+                                            {flags.length > 0 && (
+                                                <div class="lead-flags">
+                                                    {flags.map((f) => (
+                                                        <span class:list={["flag", f.cls]}>
+                                                            {f.label}
+                                                        </span>
+                                                    ))}
+                                                </div>
+                                            )}
+
+                                            {!deleted && (
+                                                <div class="lead-actions">
+                                                    {mayContact(l) ? (
+                                                        <a
+                                                            class="btn-call"
+                                                            href={`tel:${l.telefon}`}
+                                                        >
+                                                            <svg
+                                                                width="14"
+                                                                height="14"
+                                                                viewBox="0 0 24 24"
+                                                                fill="none"
+                                                                stroke="currentColor"
+                                                                stroke-width="2"
+                                                                stroke-linecap="round"
+                                                                stroke-linejoin="round"
+                                                                aria-hidden="true"
+                                                            >
+                                                                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" />
+                                                            </svg>
+                                                            <span class="mono">{l.telefon}</span>
+                                                        </a>
+                                                    ) : (
+                                                        <span class="btn-call btn-call-off">
+                                                            Kontakt gesperrt
+                                                        </span>
+                                                    )}
+                                                    <select
+                                                        class:list={["crm-select", crm.cls]}
+                                                        data-id={String(l.id)}
+                                                        data-prev={l.crm_status}
+                                                        aria-label={`Bearbeitungsstatus für ${l.reference}`}
+                                                    >
+                                                        {Object.entries(CRM_META).map(
+                                                            ([k, m]) => (
+                                                                <option
+                                                                    value={k}
+                                                                    selected={k === l.crm_status}
+                                                                >
+                                                                    {m.label}
+                                                                </option>
+                                                            ),
+                                                        )}
+                                                    </select>
+                                                </div>
+                                            )}
+
+                                            <div
+                                                class="lead-detail"
+                                                data-detail-for={String(l.id)}
+                                                hidden
+                                            >
+                                                {revoked && !deleted && (
+                                                    <p class="revoked-warning">
+                                                        Einwilligung widerrufen am{" "}
+                                                        {fmtDate(l.revoked_at)} — jede
+                                                        weitere Kontaktaufnahme ist
+                                                        unzulässig. Stammdaten bei der
+                                                        nächsten Bereinigung löschen.
+                                                    </p>
+                                                )}
+                                                <dl class="detail-grid">
+                                                    <div>
+                                                        <dt>Referenz</dt>
+                                                        <dd class="mono">{l.reference}</dd>
+                                                    </div>
+                                                    <div>
+                                                        <dt>Eingegangen</dt>
+                                                        <dd>{fmtDate(l.created_at)}</dd>
+                                                    </div>
+                                                    {!deleted && (
+                                                        <>
+                                                            <div>
+                                                                <dt>Kontakt</dt>
+                                                                <dd>
+                                                                    {l.salutation} {l.vorname} {l.nachname}
+                                                                    <br />
+                                                                    <span class="mono">{l.telefon || "—"}</span>
+                                                                </dd>
+                                                            </div>
+                                                            <div>
+                                                                <dt>Adresse</dt>
+                                                                <dd>
+                                                                    {l.strasse} {l.hausnummer},{" "}
+                                                                    {l.plz} {l.ort}{" "}
+                                                                    <a
+                                                                        href={mapsUrl(l)}
+                                                                        target="_blank"
+                                                                        rel="noreferrer noopener"
+                                                                        class="detail-link"
+                                                                    >
+                                                                        Karte ↗
+                                                                    </a>
+                                                                </dd>
+                                                            </div>
+                                                            <div>
+                                                                <dt>Heizung</dt>
+                                                                <dd>
+                                                                    {l.heating_current ?? "—"}
+                                                                    {l.heating_age && ` · ${l.heating_age}`}
+                                                                    {l.heating_location && ` · ${l.heating_location}`}
+                                                                </dd>
+                                                            </div>
+                                                            <div>
+                                                                <dt>Gebäude / Zeitplan</dt>
+                                                                <dd>
+                                                                    {l.building_type ?? "—"}
+                                                                    {l.is_owner === 1 && " · Eigentümer"}
+                                                                    {l.timeline && ` · ${l.timeline}`}
+                                                                </dd>
+                                                            </div>
+                                                        </>
+                                                    )}
+                                                    <div>
+                                                        <dt>Verifizierung</dt>
+                                                        <dd>
+                                                            {l.sms_verified_at
+                                                                ? `SMS bestätigt ${fmtDate(l.sms_verified_at)}`
+                                                                : "Nicht verifiziert"}
+                                                            {l.admin_email_sent_at &&
+                                                                ` · Mail ${fmtDate(l.admin_email_sent_at)}`}
+                                                        </dd>
+                                                    </div>
+                                                    <div>
+                                                        <dt>Zuletzt bearbeitet</dt>
+                                                        <dd>{fmtDate(l.crm_updated_at)}</dd>
+                                                    </div>
+                                                </dl>
+
+                                                {!deleted && (
+                                                    <div class="notes-wrap">
+                                                        <label
+                                                            class="detail-label"
+                                                            for={`notes-${l.id}`}
+                                                        >
+                                                            Notizen (sachlich, keine sensiblen Daten)
+                                                        </label>
+                                                        <textarea
+                                                            id={`notes-${l.id}`}
+                                                            class="notes-input"
+                                                            rows="3"
+                                                            maxlength="2000"
+                                                            placeholder="z. B. 2× angerufen, Rückruf Mittwoch …"
+                                                            data-id={String(l.id)}
+                                                            set:text={l.crm_notes ?? ""}
+                                                        />
+                                                        <div class="notes-actions">
+                                                            <button
+                                                                type="button"
+                                                                class="btn-mini notes-save"
+                                                                data-id={String(l.id)}
+                                                            >
+                                                                Notiz speichern
+                                                            </button>
+                                                            <span
+                                                                class="notes-status"
+                                                                data-id={String(l.id)}
+                                                                aria-live="polite"
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                )}
+
+                                                <div class="legal-wrap">
+                                                    <p class="detail-label">
+                                                        Rechtliches (DSGVO)
+                                                    </p>
+                                                    <div class="legal-actions">
+                                                        <a
+                                                            class="btn-mini"
+                                                            href={`/api/admin/lead-data?id=${l.id}`}
+                                                            target="_blank"
+                                                        >
+                                                            Datenauskunft (Art. 15)
+                                                        </a>
+                                                        {!deleted && !revoked && (
+                                                            <button
+                                                                type="button"
+                                                                class="btn-mini act-revoke"
+                                                                data-id={String(l.id)}
+                                                                data-ref={l.reference}
+                                                            >
+                                                                Widerruf erfassen
+                                                            </button>
+                                                        )}
+                                                        {!deleted && (
+                                                            <button
+                                                                type="button"
+                                                                class="btn-mini btn-danger act-anon"
+                                                                data-id={String(l.id)}
+                                                                data-ref={l.reference}
+                                                            >
+                                                                Stammdaten löschen
+                                                            </button>
+                                                        )}
+                                                        {!l.sms_verified_at && (
+                                                            <button
+                                                                type="button"
+                                                                class="btn-mini btn-danger act-full"
+                                                                data-id={String(l.id)}
+                                                                data-ref={l.reference}
+                                                            >
+                                                                Vollständig löschen
+                                                            </button>
+                                                        )}
+                                                    </div>
+                                                    <p class="legal-hint">
+                                                        {l.sms_verified_at
+                                                            ? "Verifizierte Einwilligung: Nachweis bleibt bei Stammdaten-Löschung 5 Jahre erhalten (§ 7a Abs. 2 UWG)."
+                                                            : "Keine verifizierte Einwilligung — vollständige Löschung inkl. aller Nachweise möglich."}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    );
+                                })}
+                            </ol>
+                        )}
+                        </div>
+
+                        <div id="view-stats" role="tabpanel" aria-labelledby="tab-stats" hidden>
+                            <aside class="stats-intro">
+                                <strong>Datenbasis ab dem Absenden</strong>
+                                <span>
+                                    Erfasst werden Anfragen und ihre vorhandenen
+                                    Statuswechsel. Klicks, Besucher und einzelne
+                                    Schritte davor werden nicht gemessen.
+                                </span>
+                            </aside>
+
+                            <section class="stats-card pipeline-card">
+                                <h2>
+                                    Anfrage-Pipeline
+                                    <span class="h2-note">Anteil an allen abgesendeten Anfragen</span>
+                                </h2>
+                                <ol class="pipeline-list">
+                                    {pipeline.map((step, index) => (
+                                        <li class="pipeline-step">
+                                            <div class="pipeline-head">
+                                                <span>
+                                                    <span class="pipeline-index" aria-hidden="true">
+                                                        {index + 1}
+                                                    </span>
+                                                    <strong>{step.label}</strong>
+                                                </span>
+                                                <span class="pipeline-value mono">
+                                                    {step.value} · {step.pct} %
+                                                </span>
+                                            </div>
+                                            <span class="pipeline-track" aria-hidden="true">
+                                                <span style={`width: ${step.pct}%`} />
+                                            </span>
+                                            {step.lost !== null && (
+                                                <p class="pipeline-loss">
+                                                    {step.lost === 0
+                                                        ? "Kein Abbruch gegenüber dem vorherigen Schritt"
+                                                        : `${step.lost} erreichen diesen Schritt nicht`}
+                                                </p>
+                                            )}
+                                        </li>
+                                    ))}
+                                </ol>
+                            </section>
+
+                            <section class="stat-tiles" aria-label="Kennzahlen">
+                                <div class="tile">
+                                    <p class="tile-num">{stat.total}</p>
+                                    <p class="tile-label">Anfragen gesamt</p>
+                                </div>
+                                <div class="tile">
+                                    <p class="tile-num">
+                                        {stat.verified}
+                                        <span class="tile-pct">
+                                            {pctOf(stat.verified, stat.total)} %
+                                        </span>
+                                    </p>
+                                    <p class="tile-label">SMS bestätigt</p>
+                                </div>
+                                <div class="tile">
+                                    <p class="tile-num">
+                                        {stat.delivered}
+                                        <span class="tile-pct">
+                                            {pctOf(stat.delivered, stat.total)} %
+                                        </span>
+                                    </p>
+                                    <p class="tile-label">Zugestellt</p>
+                                </div>
+                                <div class="tile">
+                                    <p class="tile-num">
+                                        {stat.smsOpen + stat.smsFailed}
+                                    </p>
+                                    <p class="tile-label">
+                                        SMS offen / Versand fehlgeschlagen
+                                    </p>
+                                </div>
+                                <div class="tile">
+                                    <p class="tile-num">{stat.deliveryFailed}</p>
+                                    <p class="tile-label">
+                                        Verifiziert, Zustellung fehlgeschlagen
+                                    </p>
+                                </div>
+                                <div class="tile">
+                                    <p class="tile-num">
+                                        {medianVerifyMin !== null
+                                            ? fmtDuration(medianVerifyMin)
+                                            : "—"}
+                                    </p>
+                                    <p class="tile-label">
+                                        Median bis SMS-Bestätigung
+                                    </p>
+                                </div>
+                            </section>
+
+                            <section class="stats-card">
+                                <h2>Anfragen der letzten 8 Wochen</h2>
+                                {weeks.map((w) => (
+                                    <div class="dist-row" title={`${w.label}: ${w.count}`}>
+                                        <span class="dist-label">{w.label}</span>
+                                        <svg
+                                            class="dist-bar"
+                                            viewBox="0 0 100 8"
+                                            preserveAspectRatio="none"
+                                            aria-hidden="true"
+                                        >
+                                            <rect
+                                                width={String(pctOf(w.count, weekMax))}
+                                                height="8"
+                                            />
+                                        </svg>
+                                        <span class="dist-val mono">{w.count}</span>
+                                    </div>
+                                ))}
+                            </section>
+
+                            <section class="stats-card">
+                                <h2>
+                                    Bearbeitungsstand
+                                    {abschlussQuote !== null && (
+                                        <span class="h2-note">
+                                            Abschlussquote {abschlussQuote} % (
+                                            {abschluss} von {abschluss + verloren}{" "}
+                                            entschiedenen)
+                                        </span>
+                                    )}
+                                </h2>
+                                {crmDist.map((d) => (
+                                    <div class="dist-row" title={`${d.label}: ${d.count}`}>
+                                        <span class="dist-label">{d.label}</span>
+                                        <svg
+                                            class="dist-bar"
+                                            viewBox="0 0 100 8"
+                                            preserveAspectRatio="none"
+                                            aria-hidden="true"
+                                        >
+                                            <rect width={String(d.pct)} height="8" />
+                                        </svg>
+                                        <span class="dist-val mono">
+                                            {d.count} · {d.pct} %
+                                        </span>
+                                    </div>
+                                ))}
+                            </section>
+
+                            <section class="stats-card">
+                                <h2>SMS-Verifizierung</h2>
+                                <div class="dist-row metric-row">
+                                    <span class="dist-label">Codes versendet</span>
+                                    <span class="dist-val mono">{smsAgg.codes_sent}</span>
+                                </div>
+                                <div class="dist-row metric-row">
+                                    <span class="dist-label">Codes bestätigt</span>
+                                    <span class="dist-val mono">
+                                        {smsAgg.codes_verified} ·{" "}
+                                        {pctOf(smsAgg.codes_verified, smsAgg.codes_sent)} %
+                                    </span>
+                                </div>
+                                <div class="dist-row metric-row">
+                                    <span class="dist-label">Ø Eingabeversuche</span>
+                                    <span class="dist-val mono">
+                                        {smsAgg.avg_attempts !== null
+                                            ? smsAgg.avg_attempts.toFixed(1)
+                                            : "—"}
+                                    </span>
+                                </div>
+                            </section>
+
+                            <div class="stats-2col">
+                                <section class="stats-card">
+                                    <h2>Aktuelle Heizung</h2>
+                                    {distHeating.length === 0 && (
+                                        <p class="dist-empty">Keine Angaben.</p>
+                                    )}
+                                    {distHeating.map((d) => (
+                                        <div class="dist-row" title={`${d.label}: ${d.count}`}>
+                                            <span class="dist-label">{d.label}</span>
+                                            <svg class="dist-bar" viewBox="0 0 100 8" preserveAspectRatio="none" aria-hidden="true">
+                                                <rect width={String(d.pct)} height="8" />
+                                            </svg>
+                                            <span class="dist-val mono">{d.count}</span>
+                                        </div>
+                                    ))}
+                                </section>
+                                <section class="stats-card">
+                                    <h2>Gebäudetyp</h2>
+                                    {distBuilding.length === 0 && (
+                                        <p class="dist-empty">Keine Angaben.</p>
+                                    )}
+                                    {distBuilding.map((d) => (
+                                        <div class="dist-row" title={`${d.label}: ${d.count}`}>
+                                            <span class="dist-label">{d.label}</span>
+                                            <svg class="dist-bar" viewBox="0 0 100 8" preserveAspectRatio="none" aria-hidden="true">
+                                                <rect width={String(d.pct)} height="8" />
+                                            </svg>
+                                            <span class="dist-val mono">{d.count}</span>
+                                        </div>
+                                    ))}
+                                </section>
+                                <section class="stats-card">
+                                    <h2>Zeithorizont</h2>
+                                    {distTimeline.length === 0 && (
+                                        <p class="dist-empty">Keine Angaben.</p>
+                                    )}
+                                    {distTimeline.map((d) => (
+                                        <div class="dist-row" title={`${d.label}: ${d.count}`}>
+                                            <span class="dist-label">{d.label}</span>
+                                            <svg class="dist-bar" viewBox="0 0 100 8" preserveAspectRatio="none" aria-hidden="true">
+                                                <rect width={String(d.pct)} height="8" />
+                                            </svg>
+                                            <span class="dist-val mono">{d.count}</span>
+                                        </div>
+                                    ))}
+                                </section>
+                                <section class="stats-card">
+                                    <h2>Top-PLZ</h2>
+                                    {distPlz.length === 0 && (
+                                        <p class="dist-empty">Keine Angaben.</p>
+                                    )}
+                                    {distPlz.map((d) => (
+                                        <div class="dist-row" title={`${d.label}: ${d.count}`}>
+                                            <span class="dist-label mono">{d.label}</span>
+                                            <svg class="dist-bar" viewBox="0 0 100 8" preserveAspectRatio="none" aria-hidden="true">
+                                                <rect width={String(d.pct)} height="8" />
+                                            </svg>
+                                            <span class="dist-val mono">{d.count}</span>
+                                        </div>
+                                    ))}
+                                </section>
+                            </div>
+
+                            <p class="stats-note">
+                                Interne, zusammengefasste Auswertung ausschließlich
+                                bereits erhobener Anfrage- und Statusdaten — es wird
+                                nichts zusätzlich erfasst. Die Klicktiefe <em>vor</em>
+                                dem Absenden des Checks wird gemäß Datenschutzerklärung
+                                (Ziff. 5, 8 und 9a) nicht gemessen. Widerrufe: {stat.revoked}.
+                                Nach Stammdaten-Löschung ({stat.deleted}) zählen
+                                Leads nur noch in den Gesamtzahlen, nicht in den
+                                Profil-Verteilungen.
+                            </p>
+                        </div>
+
+                        <p class="footer-note">
+                            Interner Bereich · noindex · Zeiten Europe/Berlin ·
+                            Widerrufene und unverifizierte Leads dürfen nicht
+                            kontaktiert werden.
+                        </p>
+                    </main>
+                </>
+            )
+        }
+
+        <script>
+            // ---------- Login ----------
+            const loginForm = document.getElementById(
+                "login-form",
+            ) as HTMLFormElement | null;
+            if (loginForm) {
+                loginForm.addEventListener("submit", async (ev) => {
+                    ev.preventDefault();
+                    const btn = document.getElementById(
+                        "login-btn",
+                    ) as HTMLButtonElement;
+                    const errEl = document.getElementById(
+                        "login-error",
+                    ) as HTMLParagraphElement;
+                    const email = (
+                        document.getElementById(
+                            "login-email",
+                        ) as HTMLInputElement
+                    ).value.trim();
+                    const password = (
+                        document.getElementById(
+                            "login-password",
+                        ) as HTMLInputElement
+                    ).value;
+                    errEl.hidden = true;
+                    btn.disabled = true;
+                    btn.textContent = "Anmelden …";
+                    try {
+                        const res = await fetch("/api/admin/login", {
+                            method: "POST",
+                            headers: { "content-type": "application/json" },
+                            body: JSON.stringify({ email, password }),
+                        });
+                        if (res.ok) {
+                            location.reload();
+                            return;
+                        }
+                        const data = (await res.json().catch(() => ({}))) as {
+                            error?: string;
+                        };
+                        errEl.textContent =
+                            data.error ?? "Anmeldung fehlgeschlagen.";
+                        errEl.hidden = false;
+                    } catch {
+                        errEl.textContent =
+                            "Netzwerkfehler. Bitte erneut versuchen.";
+                        errEl.hidden = false;
+                    } finally {
+                        btn.disabled = false;
+                        btn.textContent = "Anmelden";
+                    }
+                });
+            }
+
+            // ---------- Logout ----------
+            document
+                .getElementById("logout-btn")
+                ?.addEventListener("click", async () => {
+                    await fetch("/api/admin/logout", { method: "POST" }).catch(
+                        () => {},
+                    );
+                    location.reload();
+                });
+
+            // ---------- Relative Zeiten ----------
+            function relTime(iso: string): string {
+                let s = iso.includes("T") ? iso : iso.replace(" ", "T");
+                if (!/[Zz]|[+-]\d\d:\d\d$/.test(s)) s += "Z";
+                const t = new Date(s).getTime();
+                if (Number.isNaN(t)) return "";
+                const mins = Math.round((Date.now() - t) / 60000);
+                if (mins < 1) return "gerade eben";
+                if (mins < 60) return `vor ${mins} Min.`;
+                const h = Math.round(mins / 60);
+                if (h < 24) return `vor ${h} Std.`;
+                const d = Math.round(h / 24);
+                return d === 1 ? "gestern" : `vor ${d} Tg.`;
+            }
+            document
+                .querySelectorAll(".rel-time")
+                .forEach((n) => {
+                    const el = n as unknown as HTMLElement;
+                    const rel = relTime(el.dataset.ts ?? "");
+                    if (rel) el.textContent = rel;
+                });
+
+            // ---------- Ansicht: Leads / Statistik ----------
+            const viewLeads = document.getElementById("view-leads");
+            const viewStats = document.getElementById("view-stats");
+            const tabLeads = document.getElementById("tab-leads");
+            const tabStats = document.getElementById("tab-stats");
+            function showStats(on: boolean) {
+                if (!viewLeads || !viewStats) return;
+                viewLeads.hidden = on;
+                viewStats.hidden = !on;
+                tabLeads?.classList.toggle("tab-on", !on);
+                tabStats?.classList.toggle("tab-on", on);
+                tabLeads?.setAttribute("aria-selected", on ? "false" : "true");
+                tabStats?.setAttribute("aria-selected", on ? "true" : "false");
+                history.replaceState(
+                    null,
+                    "",
+                    on ? "#statistik" : location.pathname + location.search,
+                );
+            }
+            tabLeads?.addEventListener("click", () => showStats(false));
+            tabStats?.addEventListener("click", () => showStats(true));
+            document.querySelector("[role='tablist']")?.addEventListener(
+                "keydown",
+                (ev) => {
+                    const key = (ev as KeyboardEvent).key;
+                    if (key !== "ArrowLeft" && key !== "ArrowRight") return;
+                    ev.preventDefault();
+                    const showStatistics = key === "ArrowRight";
+                    showStats(showStatistics);
+                    (showStatistics ? tabStats : tabLeads)?.focus();
+                },
+            );
+            if (
+                location.hash === "#statistik" &&
+                !new URLSearchParams(location.search).get("lead")
+            ) {
+                showStats(true);
+            }
+
+            // ---------- Filter: Chips + Suche ----------
+            const search = document.getElementById(
+                "search",
+            ) as HTMLInputElement | null;
+            const countLabel = document.getElementById("count-label");
+            const rows = Array.from(document.querySelectorAll(".lead")).map(
+                (n) => n as unknown as HTMLElement,
+            );
+            const chips = Array.from(document.querySelectorAll(".chip")).map(
+                (n) => n as unknown as HTMLButtonElement,
+            );
+            let activeCat = "alle";
+
+            function applyFilter() {
+                const q = (search?.value ?? "").trim().toLowerCase();
+                let shown = 0;
+                for (const row of rows) {
+                    const cats = (row.dataset.cats ?? "").split(" ");
+                    const okCat = cats.includes(activeCat);
+                    const okQ =
+                        !q || (row.dataset.search ?? "").includes(q);
+                    const visible = okCat && okQ;
+                    row.hidden = !visible;
+                    if (visible) shown++;
+                }
+                if (countLabel)
+                    countLabel.textContent = `${shown} Lead${shown === 1 ? "" : "s"} angezeigt`;
+            }
+            chips.forEach((chip) => {
+                chip.addEventListener("click", () => {
+                    activeCat = chip.dataset.cat ?? "alle";
+                    chips.forEach((c) => {
+                        const on = c === chip;
+                        c.classList.toggle("chip-on", on);
+                        c.setAttribute("aria-pressed", on ? "true" : "false");
+                    });
+                    applyFilter();
+                });
+            });
+            search?.addEventListener("input", applyFilter);
+            if (rows.length) applyFilter();
+
+            document.addEventListener("keydown", (ev) => {
+                const tag = document.activeElement?.tagName;
+                if (
+                    ev.key === "/" &&
+                    search &&
+                    tag !== "INPUT" &&
+                    tag !== "TEXTAREA" &&
+                    tag !== "SELECT"
+                ) {
+                    ev.preventDefault();
+                    search.focus();
+                }
+            });
+
+            // ---------- Details auf/zu ----------
+            function detailFor(id: string): HTMLElement | null {
+                return document.querySelector(
+                    `.lead-detail[data-detail-for="${id}"]`,
+                ) as unknown as HTMLElement | null;
+            }
+            document.querySelectorAll(".lead-head").forEach((n) => {
+                const btn = n as unknown as HTMLButtonElement;
+                btn.addEventListener("click", () => {
+                    const det = detailFor(btn.dataset.id ?? "");
+                    if (!det) return;
+                    det.hidden = !det.hidden;
+                    btn.setAttribute(
+                        "aria-expanded",
+                        det.hidden ? "false" : "true",
+                    );
+                    btn.closest(".lead")?.classList.toggle(
+                        "lead-open",
+                        !det.hidden,
+                    );
+                });
+            });
+
+            // ---------- API-Helfer ----------
+            async function postJson(
+                url: string,
+                payload: object,
+            ): Promise<{ ok: boolean; error?: string }> {
+                try {
+                    const res = await fetch(url, {
+                        method: "POST",
+                        headers: { "content-type": "application/json" },
+                        body: JSON.stringify(payload),
+                    });
+                    const data = (await res.json().catch(() => ({}))) as {
+                        error?: string;
+                    };
+                    return { ok: res.ok, error: data.error };
+                } catch {
+                    return { ok: false, error: "Netzwerkfehler." };
+                }
+            }
+
+            // ---------- Status ändern ----------
+            const CRM_CLASSES = [
+                "crm-neu",
+                "crm-kontaktiert",
+                "crm-termin",
+                "crm-uebergeben",
+                "crm-abgeschlossen",
+                "crm-verloren",
+                "crm-spam",
+            ];
+            document.querySelectorAll(".crm-select").forEach((n) => {
+                const sel = n as unknown as HTMLSelectElement;
+                sel.addEventListener("change", async () => {
+                    const id = parseInt(sel.dataset.id ?? "", 10);
+                    const next = sel.value;
+                    const prev = sel.dataset.prev ?? "neu";
+                    sel.disabled = true;
+                    const r = await postJson("/api/admin/lead-update", {
+                        id,
+                        crm_status: next,
+                    });
+                    sel.disabled = false;
+                    if (!r.ok) {
+                        sel.value = prev;
+                        alert(
+                            r.error ??
+                                "Status konnte nicht gespeichert werden.",
+                        );
+                        return;
+                    }
+                    sel.dataset.prev = next;
+                    CRM_CLASSES.forEach((c) => sel.classList.remove(c));
+                    sel.classList.add(`crm-${next}`);
+                    const row = sel.closest(".lead") as unknown as HTMLElement | null;
+                    if (row) {
+                        row.classList.add("lead-flash");
+                        setTimeout(
+                            () => row.classList.remove("lead-flash"),
+                            900,
+                        );
+                    }
+                });
+            });
+
+            // ---------- Notizen ----------
+            document.querySelectorAll(".notes-save").forEach((n) => {
+                const btn = n as unknown as HTMLButtonElement;
+                btn.addEventListener("click", async () => {
+                    const id = parseInt(btn.dataset.id ?? "", 10);
+                    const ta = document.getElementById(
+                        `notes-${id}`,
+                    ) as HTMLTextAreaElement | null;
+                    const status = document.querySelector(
+                        `.notes-status[data-id="${id}"]`,
+                    ) as unknown as HTMLElement | null;
+                    if (!ta) return;
+                    btn.disabled = true;
+                    if (status) status.textContent = "Speichere …";
+                    const r = await postJson("/api/admin/lead-update", {
+                        id,
+                        crm_notes: ta.value,
+                    });
+                    btn.disabled = false;
+                    if (status)
+                        status.textContent = r.ok
+                            ? "Gespeichert ✓"
+                            : (r.error ?? "Fehler beim Speichern.");
+                    if (r.ok && status)
+                        setTimeout(() => {
+                            status.textContent = "";
+                        }, 2500);
+                });
+            });
+
+            // ---------- DSGVO-Aktionen ----------
+            document.querySelectorAll(".act-revoke").forEach((n) => {
+                const btn = n as unknown as HTMLButtonElement;
+                btn.addEventListener("click", async () => {
+                    const ref = btn.dataset.ref ?? "";
+                    if (
+                        !confirm(
+                            `Widerruf für ${ref} erfassen?\n\nDer Lead wird sofort für jede Kontaktaufnahme gesperrt und der Partner nachrichtlich informiert. (Art. 7 Abs. 3 DSGVO — formfrei gültig.)`,
+                        )
+                    )
+                        return;
+                    btn.disabled = true;
+                    const r = await postJson("/api/admin/lead-revoke", {
+                        id: parseInt(btn.dataset.id ?? "", 10),
+                        channel: "sonstig",
+                    });
+                    if (!r.ok) {
+                        btn.disabled = false;
+                        alert(r.error ?? "Widerruf konnte nicht erfasst werden.");
+                        return;
+                    }
+                    location.reload();
+                });
+            });
+
+            document.querySelectorAll(".act-anon").forEach((n) => {
+                const btn = n as unknown as HTMLButtonElement;
+                btn.addEventListener("click", async () => {
+                    const ref = btn.dataset.ref ?? "";
+                    if (
+                        !confirm(
+                            `Stammdaten von ${ref} unwiderruflich löschen?\n\nName, Telefon, Adresse und Check-Angaben werden entfernt. Referenz + Zeitstempel bleiben pseudonymisiert; der Einwilligungs-/SMS-Nachweis bleibt 5 Jahre erhalten (§ 7a Abs. 2 UWG).`,
+                        )
+                    )
+                        return;
+                    btn.disabled = true;
+                    const r = await postJson("/api/admin/lead-delete", {
+                        id: parseInt(btn.dataset.id ?? "", 10),
+                        reference: ref,
+                        mode: "anonymize",
+                    });
+                    if (!r.ok) {
+                        btn.disabled = false;
+                        alert(r.error ?? "Löschung fehlgeschlagen.");
+                        return;
+                    }
+                    location.reload();
+                });
+            });
+
+            document.querySelectorAll(".act-full").forEach((n) => {
+                const btn = n as unknown as HTMLButtonElement;
+                btn.addEventListener("click", async () => {
+                    const ref = btn.dataset.ref ?? "";
+                    const typed = prompt(
+                        `VOLLSTÄNDIG löschen — entfernt auch alle Einwilligungs- und SMS-Nachweise!\n\nNur für Spam/Tests ohne verifizierte Einwilligung.\nZur Bestätigung die Referenz eingeben:\n${ref}`,
+                    );
+                    if (typed === null) return;
+                    if (typed.trim() !== ref) {
+                        alert("Referenz stimmt nicht überein — abgebrochen.");
+                        return;
+                    }
+                    btn.disabled = true;
+                    const r = await postJson("/api/admin/lead-delete", {
+                        id: parseInt(btn.dataset.id ?? "", 10),
+                        reference: ref,
+                        mode: "full",
+                    });
+                    if (!r.ok) {
+                        btn.disabled = false;
+                        alert(r.error ?? "Löschung fehlgeschlagen.");
+                        return;
+                    }
+                    location.reload();
+                });
+            });
+
+            // ---------- Deep-Link aus der Admin-Mail: /dashboard?lead=BWP-… ----------
+            const deepRef = new URLSearchParams(location.search).get("lead");
+            if (deepRef && rows.length) {
+                const target = rows.find((r) => r.dataset.ref === deepRef);
+                if (target) {
+                    const cats = (target.dataset.cats ?? "").split(" ");
+                    activeCat = cats.includes("alle") ? "alle" : cats[0];
+                    chips.forEach((c) => {
+                        const on = c.dataset.cat === activeCat;
+                        c.classList.toggle("chip-on", on);
+                        c.setAttribute("aria-pressed", on ? "true" : "false");
+                    });
+                    if (search) search.value = deepRef;
+                    applyFilter();
+                    const det = detailFor(target.dataset.id ?? "");
+                    const head = target.querySelector(
+                        ".lead-head",
+                    ) as unknown as HTMLButtonElement | null;
+                    if (det) det.hidden = false;
+                    head?.setAttribute("aria-expanded", "true");
+                    target.classList.add("lead-open", "lead-flash");
+                    setTimeout(
+                        () => target.classList.remove("lead-flash"),
+                        1600,
+                    );
+                    target.scrollIntoView({ block: "center" });
+                } else if (countLabel) {
+                    countLabel.textContent = `Lead ${deepRef} nicht gefunden`;
+                }
+            }
+        </script>
+
+        <style>
+            /* ==== Mobile-first Konsole: warmes Papier, tiefes Grün, Mono-Daten ==== */
+            .mono {
+                font-family:
+                    ui-monospace, "Cascadia Mono", "SF Mono", Menlo, Consolas,
+                    monospace;
+                font-size: 0.8125rem;
+                font-variant-numeric: tabular-nums;
+            }
+
+            /* ---- Login ---- */
+            .login-wrap {
+                min-height: 100vh;
+                display: grid;
+                place-items: center;
+                padding: 1.5rem;
+                background:
+                    radial-gradient(
+                        60rem 30rem at 85% -10%,
+                        color-mix(in srgb, var(--color-primary) 8%, transparent),
+                        transparent
+                    ),
+                    var(--color-surface);
+            }
+            .login-card {
+                width: 100%;
+                max-width: 24rem;
+                background: var(--color-background);
+                border: 1px solid var(--color-border);
+                border-top: 4px solid var(--color-primary);
+                border-radius: 0.75rem;
+                padding: 2rem;
+                display: flex;
+                flex-direction: column;
+                gap: 0.4rem;
+                box-shadow: 0 20px 50px -30px rgba(27, 77, 62, 0.45);
+            }
+            .login-kicker {
+                font-size: 0.6875rem;
+                letter-spacing: 0.14em;
+                text-transform: uppercase;
+                color: var(--color-primary);
+                font-weight: 700;
+            }
+            .login-title {
+                font-size: 1.5rem;
+                font-weight: 800;
+                letter-spacing: -0.02em;
+            }
+            .login-sub {
+                color: var(--color-text-muted);
+                font-size: 0.8125rem;
+                margin-bottom: 1rem;
+            }
+            .login-label {
+                font-size: 0.75rem;
+                font-weight: 600;
+                color: var(--color-text-muted);
+                margin-top: 0.5rem;
+            }
+            .login-error {
+                color: #b91c1c;
+                background: #fef2f2;
+                border: 1px solid #fecaca;
+                border-radius: 0.375rem;
+                font-size: 0.8125rem;
+                padding: 0.5rem 0.75rem;
+                margin-top: 0.75rem;
+            }
+            .login-btn {
+                margin-top: 1.25rem;
+                background: var(--color-primary);
+                color: #fff;
+                font-weight: 700;
+                font-size: 0.875rem;
+                padding: 0.75rem;
+                border-radius: 0.5rem;
+                cursor: pointer;
+                transition: background-color 0.15s;
+            }
+            .login-btn:hover {
+                background: var(--color-primary-hover);
+            }
+            .login-btn:disabled {
+                opacity: 0.6;
+                cursor: wait;
+            }
+
+            /* ---- Topbar ---- */
+            .topbar {
+                position: sticky;
+                top: 0;
+                z-index: 40;
+                background: var(--color-primary);
+                color: #fff;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 0.75rem;
+                padding: 0.6rem 1rem;
+                padding-top: max(0.6rem, env(safe-area-inset-top));
+            }
+            .topbar-brand {
+                display: flex;
+                align-items: center;
+                gap: 0.6rem;
+                min-width: 0;
+            }
+            .topbar-mark {
+                display: grid;
+                place-items: center;
+                width: 2rem;
+                height: 2rem;
+                border: 1.5px solid rgba(255, 255, 255, 0.4);
+                border-radius: 0.5rem;
+                font-weight: 800;
+                font-size: 0.75rem;
+                letter-spacing: 0.05em;
+                flex-shrink: 0;
+            }
+            .topbar-title {
+                font-weight: 800;
+                letter-spacing: -0.01em;
+                line-height: 1.15;
+                font-size: 0.95rem;
+            }
+            .topbar-sub {
+                font-size: 0.7rem;
+                color: rgba(255, 255, 255, 0.65);
+                white-space: nowrap;
+            }
+            .topbar-actions {
+                display: flex;
+                gap: 0.4rem;
+                flex-shrink: 0;
+            }
+            .topbar-btn {
+                display: inline-flex;
+                align-items: center;
+                min-height: 2.75rem;
+                background: rgba(255, 255, 255, 0.12);
+                border: 1px solid rgba(255, 255, 255, 0.25);
+                color: #fff;
+                font-size: 0.78rem;
+                font-weight: 600;
+                padding: 0.4rem 0.75rem;
+                border-radius: 0.375rem;
+                text-decoration: none;
+                cursor: pointer;
+                transition: background-color 0.15s;
+            }
+            .topbar-btn:hover {
+                background: rgba(255, 255, 255, 0.22);
+            }
+            .topbar-btn-ghost {
+                background: transparent;
+            }
+
+            /* ---- Shell ---- */
+            .shell {
+                max-width: 64rem;
+                margin: 0 auto;
+                padding: 0.75rem 0.75rem 4rem;
+            }
+
+            /* ---- Ansicht-Tabs ---- */
+            .tabs {
+                display: flex;
+                gap: 0.25rem;
+                background: var(--color-surface-alt);
+                border: 1px solid var(--color-border);
+                border-radius: 0.5rem;
+                padding: 0.2rem;
+                margin: 0.25rem 0 0.6rem;
+            }
+            .tab {
+                flex: 1;
+                min-height: 2.75rem;
+                font-size: 0.8125rem;
+                font-weight: 700;
+                color: var(--color-text-muted);
+                padding: 0.45rem;
+                border-radius: 0.35rem;
+                cursor: pointer;
+                background: transparent;
+                transition: background-color 0.15s, color 0.15s;
+            }
+            .tab-on {
+                background: var(--color-background);
+                color: var(--color-text);
+                box-shadow: 0 1px 2px rgba(28, 31, 26, 0.08);
+            }
+
+            /* ---- Statistik ---- */
+            .stats-intro {
+                display: grid;
+                gap: 0.2rem;
+                color: var(--color-text);
+                background: var(--color-highlight);
+                border: 1px solid var(--color-border-strong);
+                border-left: 4px solid var(--color-primary);
+                border-radius: 0.5rem;
+                padding: 0.75rem 0.9rem;
+                margin-bottom: 0.6rem;
+                font-size: 0.78rem;
+                line-height: 1.5;
+            }
+            .stats-intro span {
+                color: var(--color-text-muted);
+            }
+            .pipeline-list {
+                display: grid;
+                gap: 0.7rem;
+                list-style: none;
+            }
+            .pipeline-step {
+                min-width: 0;
+            }
+            .pipeline-head {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 0.75rem;
+                margin-bottom: 0.3rem;
+                font-size: 0.78rem;
+            }
+            .pipeline-head > span:first-child {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.45rem;
+                min-width: 0;
+            }
+            .pipeline-index {
+                display: inline-grid;
+                place-items: center;
+                width: 1.35rem;
+                height: 1.35rem;
+                flex: 0 0 1.35rem;
+                color: #fff;
+                background: var(--color-primary);
+                border-radius: 9999px;
+                font: 700 0.68rem/1 ui-monospace, Menlo, Consolas, monospace;
+            }
+            .pipeline-value {
+                color: var(--color-text);
+                white-space: nowrap;
+            }
+            .pipeline-track {
+                display: block;
+                height: 0.65rem;
+                overflow: hidden;
+                background: var(--color-surface-alt);
+                border: 1px solid var(--color-border);
+                border-radius: 2px;
+            }
+            .pipeline-track > span {
+                display: block;
+                height: 100%;
+                background: var(--color-primary);
+            }
+            .pipeline-loss {
+                color: var(--color-text-muted);
+                font-size: 0.68rem;
+                margin: 0.2rem 0 0 1.8rem;
+            }
+            .stat-tiles {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.5rem;
+                margin-bottom: 0.6rem;
+            }
+            @media (min-width: 640px) {
+                .stat-tiles {
+                    grid-template-columns: repeat(3, 1fr);
+                }
+            }
+            .tile {
+                background: var(--color-background);
+                border: 1px solid var(--color-border);
+                border-radius: 0.5rem;
+                padding: 0.65rem 0.8rem;
+            }
+            .tile-num {
+                font-family: ui-monospace, Menlo, Consolas, monospace;
+                font-variant-numeric: tabular-nums;
+                font-size: 1.4rem;
+                font-weight: 700;
+                line-height: 1.15;
+                color: var(--color-primary);
+            }
+            .tile-pct {
+                font-size: 0.72rem;
+                font-weight: 700;
+                color: var(--color-text-muted);
+                margin-left: 0.2rem;
+            }
+            .tile-label {
+                font-size: 0.68rem;
+                color: var(--color-text-muted);
+                margin-top: 0.15rem;
+            }
+            .stats-card {
+                background: var(--color-background);
+                border: 1px solid var(--color-border);
+                border-radius: 0.5rem;
+                padding: 0.8rem 0.9rem;
+                margin-bottom: 0.6rem;
+            }
+            .stats-card.pipeline-card {
+                border-top: 3px solid var(--color-primary);
+            }
+            .stats-card h2 {
+                font-size: 0.72rem;
+                text-transform: uppercase;
+                letter-spacing: 0.08em;
+                font-weight: 800;
+                color: var(--color-primary);
+                margin-bottom: 0.55rem;
+                display: flex;
+                align-items: baseline;
+                gap: 0.5rem;
+                flex-wrap: wrap;
+            }
+            .h2-note {
+                font-size: 0.68rem;
+                text-transform: none;
+                letter-spacing: 0;
+                font-weight: 600;
+                color: var(--color-text-muted);
+            }
+            .stats-2col {
+                display: grid;
+                grid-template-columns: 1fr;
+                gap: 0.6rem;
+                margin-bottom: 0.6rem;
+            }
+            @media (min-width: 640px) {
+                .stats-2col {
+                    grid-template-columns: 1fr 1fr;
+                }
+            }
+            .dist-row {
+                display: grid;
+                grid-template-columns: minmax(6rem, 10rem) 1fr auto;
+                align-items: center;
+                gap: 0.6rem;
+                padding: 0.22rem 0;
+            }
+            .dist-label {
+                font-size: 0.75rem;
+                color: var(--color-text);
+                overflow-wrap: anywhere;
+            }
+            .dist-bar {
+                width: 100%;
+                height: 8px;
+                background: var(--color-surface-alt);
+                border-radius: 2px;
+                display: block;
+            }
+            .dist-bar rect {
+                fill: var(--color-primary);
+            }
+            .dist-val {
+                font-size: 0.72rem;
+                color: var(--color-text-muted);
+                white-space: nowrap;
+            }
+            .metric-row {
+                grid-template-columns: minmax(0, 1fr) auto;
+            }
+            .dist-empty {
+                font-size: 0.75rem;
+                color: var(--color-text-muted);
+            }
+            .stats-note {
+                font-size: 0.68rem;
+                color: var(--color-text-muted);
+                line-height: 1.5;
+                background: var(--color-surface);
+                border: 1px dashed var(--color-border);
+                border-radius: 0.4rem;
+                padding: 0.6rem 0.8rem;
+            }
+
+            /* ---- Filter-Chips (Stats + Filter in einem) ---- */
+            .chips {
+                display: flex;
+                gap: 0.4rem;
+                overflow-x: auto;
+                padding: 0.25rem 0 0.5rem;
+                scrollbar-width: none;
+                -webkit-overflow-scrolling: touch;
+            }
+            .chips::-webkit-scrollbar {
+                display: none;
+            }
+            .chip {
+                flex: 0 0 auto;
+                display: inline-flex;
+                align-items: center;
+                min-height: 2.75rem;
+                gap: 0.4rem;
+                font-size: 0.8125rem;
+                font-weight: 600;
+                color: var(--color-text);
+                background: var(--color-background);
+                border: 1px solid var(--color-border);
+                border-radius: 9999px;
+                padding: 0.4rem 0.85rem;
+                cursor: pointer;
+                white-space: nowrap;
+                transition:
+                    background-color 0.15s,
+                    border-color 0.15s;
+            }
+            .chip:hover {
+                border-color: var(--color-border-strong);
+            }
+            .chip-n {
+                font-family: ui-monospace, Menlo, Consolas, monospace;
+                font-size: 0.72rem;
+                font-weight: 700;
+                background: var(--color-surface-alt);
+                border-radius: 9999px;
+                padding: 0.05rem 0.45rem;
+                color: var(--color-text-muted);
+            }
+            .chip-on {
+                background: var(--color-primary);
+                border-color: var(--color-primary);
+                color: #fff;
+            }
+            .chip-on .chip-n {
+                background: rgba(255, 255, 255, 0.2);
+                color: #fff;
+            }
+
+            .search {
+                padding: 0.6rem 1rem;
+                font-size: 16px; /* verhindert iOS-Zoom beim Fokus */
+                background: var(--color-background);
+                margin-bottom: 0.5rem;
+            }
+
+            /* ---- DSGVO-Leitfaden ---- */
+            .guide {
+                background: var(--color-background);
+                border: 1px solid var(--color-border);
+                border-left: 3px solid var(--color-primary);
+                border-radius: 0.5rem;
+                margin-bottom: 0.75rem;
+            }
+            .guide summary {
+                display: flex;
+                align-items: center;
+                gap: 0.6rem;
+                font-size: 0.8125rem;
+                font-weight: 700;
+                padding: 0.65rem 0.9rem;
+                cursor: pointer;
+                list-style: none;
+                user-select: none;
+            }
+            .guide summary::-webkit-details-marker {
+                display: none;
+            }
+            .guide-icon {
+                display: grid;
+                place-items: center;
+                width: 1.4rem;
+                height: 1.4rem;
+                border-radius: 9999px;
+                background: var(--color-highlight);
+                color: var(--color-primary);
+                font-weight: 800;
+                font-size: 0.8rem;
+                flex-shrink: 0;
+            }
+            .guide-chev {
+                margin-left: auto;
+                color: var(--color-text-muted);
+                transition: transform 0.15s;
+            }
+            .guide[open] .guide-chev {
+                transform: rotate(180deg);
+            }
+            .guide-body {
+                border-top: 1px solid var(--color-border);
+                padding: 0.9rem;
+            }
+            .guide-grid {
+                display: grid;
+                grid-template-columns: 1fr;
+                gap: 0.9rem;
+            }
+            @media (min-width: 640px) {
+                .guide-grid {
+                    grid-template-columns: 1fr 1fr;
+                }
+            }
+            @media (min-width: 960px) {
+                .guide-grid {
+                    grid-template-columns: 1fr 1fr 1fr;
+                }
+            }
+            .guide-always {
+                font-size: 0.78rem;
+                line-height: 1.5;
+                color: var(--color-text-muted);
+                background: var(--color-surface);
+                border: 1px solid var(--color-border);
+                border-radius: 0.4rem;
+                padding: 0.6rem 0.8rem;
+                margin-bottom: 0.9rem;
+            }
+            .guide-always strong {
+                color: var(--color-text);
+            }
+            .guide-always a {
+                color: var(--color-primary);
+                font-weight: 600;
+                text-decoration: none;
+            }
+            .guide-grid h3 {
+                font-size: 0.72rem;
+                text-transform: uppercase;
+                letter-spacing: 0.08em;
+                font-weight: 800;
+                color: var(--color-primary);
+                margin-bottom: 0.35rem;
+                display: flex;
+                align-items: center;
+                gap: 0.4rem;
+                flex-wrap: wrap;
+            }
+            .frist {
+                font-size: 0.62rem;
+                font-weight: 800;
+                letter-spacing: 0.02em;
+                text-transform: none;
+                color: #92400e;
+                background: #fffbeb;
+                border: 1px solid #fcd34d;
+                border-radius: 9999px;
+                padding: 0.08rem 0.5rem;
+                white-space: nowrap;
+            }
+            .proof-search {
+                margin-top: 0.9rem;
+                padding-top: 0.75rem;
+                border-top: 1px dashed var(--color-border);
+            }
+            .proof-row {
+                display: flex;
+                gap: 0.5rem;
+                flex-wrap: wrap;
+            }
+            .proof-row .input-base {
+                flex: 1 1 12rem;
+                padding: 0.5rem 0.8rem;
+                font-size: 16px;
+                background: var(--color-background);
+            }
+            @media (min-width: 640px) {
+                .proof-row .input-base {
+                    font-size: 0.8125rem;
+                }
+            }
+            .guide-grid ul {
+                list-style: disc;
+                padding-left: 1.1rem;
+                display: flex;
+                flex-direction: column;
+                gap: 0.3rem;
+            }
+            .guide-grid li {
+                font-size: 0.78rem;
+                line-height: 1.45;
+                color: var(--color-text-muted);
+            }
+            .guide-grid strong {
+                color: var(--color-text);
+            }
+            .guide-grid a,
+            .guide-foot a {
+                color: var(--color-primary);
+                font-weight: 600;
+                text-decoration: none;
+            }
+            .guide-grid a:hover,
+            .guide-foot a:hover {
+                text-decoration: underline;
+            }
+            .guide-foot {
+                margin-top: 0.8rem;
+                padding-top: 0.6rem;
+                border-top: 1px dashed var(--color-border);
+                font-size: 0.72rem;
+                color: var(--color-text-muted);
+            }
+
+            .count-line {
+                font-size: 0.72rem;
+                color: var(--color-text-muted);
+                margin: 0.25rem 0.25rem 0.5rem;
+                font-variant-numeric: tabular-nums;
+            }
+
+            /* ---- Lead-Karten ---- */
+            .leadlist {
+                display: flex;
+                flex-direction: column;
+                gap: 0.6rem;
+                list-style: none;
+            }
+            .lead {
+                background: var(--color-background);
+                border: 1px solid var(--color-border);
+                border-radius: 0.6rem;
+                overflow: hidden;
+                transition: border-color 0.15s;
+            }
+            .lead-open {
+                border-color: var(--color-border-strong);
+            }
+            .lead-flash {
+                border-color: var(--color-primary);
+                box-shadow: 0 0 0 3px
+                    color-mix(in srgb, var(--color-primary) 25%, transparent);
+            }
+            .lead-revoked {
+                border-left: 4px solid #b91c1c;
+            }
+            .lead-deleted {
+                opacity: 0.75;
+            }
+
+            .lead-head {
+                display: grid;
+                grid-template-columns: minmax(0, 1fr) auto 1.2rem;
+                align-items: center;
+                gap: 0.6rem;
+                width: 100%;
+                text-align: left;
+                padding: 0.75rem 0.9rem 0.55rem;
+                cursor: pointer;
+                background: none;
+            }
+            .lead-id {
+                min-width: 0;
+            }
+            .lead-name {
+                display: block;
+                font-weight: 700;
+                font-size: 0.95rem;
+                letter-spacing: -0.01em;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+            .lead-line {
+                display: block;
+                font-size: 0.75rem;
+                color: var(--color-text-muted);
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                margin-top: 0.1rem;
+            }
+            .lead-when {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-end;
+                gap: 0.05rem;
+            }
+            .lead-when .mono {
+                font-size: 0.72rem;
+                color: var(--color-text);
+            }
+            .rel-time {
+                font-size: 0.68rem;
+                color: var(--color-text-muted);
+                white-space: nowrap;
+            }
+            .chev {
+                color: var(--color-text-muted);
+                font-size: 0.8rem;
+                transition: transform 0.15s;
+                text-align: center;
+            }
+            .lead-open .chev {
+                transform: rotate(180deg);
+            }
+
+            .lead-flags {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0.35rem;
+                padding: 0 0.9rem 0.55rem;
+            }
+            .flag {
+                font-size: 0.68rem;
+                font-weight: 700;
+                border-radius: 9999px;
+                padding: 0.12rem 0.55rem;
+                border: 1px solid;
+                white-space: nowrap;
+            }
+            .flag-danger {
+                color: #fff;
+                background: #b91c1c;
+                border-color: #991b1b;
+            }
+            .flag-warn {
+                color: #92400e;
+                background: #fffbeb;
+                border-color: #fcd34d;
+            }
+            .flag-urgent {
+                color: #fff;
+                background: var(--color-accent);
+                border-color: var(--color-accent);
+            }
+            .flag-muted {
+                color: var(--color-text-muted);
+                background: var(--color-surface-alt);
+                border-color: var(--color-border);
+            }
+
+            .lead-actions {
+                display: flex;
+                gap: 0.5rem;
+                align-items: center;
+                padding: 0 0.9rem 0.75rem;
+                flex-wrap: wrap;
+            }
+            .btn-call {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.45rem;
+                background: var(--color-primary);
+                color: #fff;
+                font-weight: 700;
+                font-size: 0.8125rem;
+                border-radius: 0.45rem;
+                padding: 0.5rem 0.9rem;
+                text-decoration: none;
+                transition: background-color 0.15s;
+            }
+            .btn-call:hover {
+                background: var(--color-primary-hover);
+            }
+            .btn-call .mono {
+                color: #fff;
+                font-size: 0.8125rem;
+            }
+            .btn-call-off {
+                background: var(--color-surface-alt);
+                color: var(--color-text-muted);
+                cursor: not-allowed;
+                font-weight: 600;
+            }
+
+            /* CRM-Select als farbige Pille */
+            .crm-select {
+                font-size: 0.78rem;
+                font-weight: 700;
+                border-radius: 9999px;
+                border: 1px solid var(--color-border-strong);
+                padding: 0.45rem 1.7rem 0.45rem 0.8rem;
+                cursor: pointer;
+                appearance: none;
+                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%235C6258' fill='none' stroke-width='1.5'/%3E%3C/svg%3E");
+                background-repeat: no-repeat;
+                background-position: right 0.6rem center;
+                max-width: 100%;
+            }
+            .crm-neu {
+                background-color: #fffbeb;
+                border-color: #fcd34d;
+                color: #92400e;
+            }
+            .crm-kontaktiert {
+                background-color: #eff6ff;
+                border-color: #bfdbfe;
+                color: #1d4ed8;
+            }
+            .crm-termin {
+                background-color: #eef2ff;
+                border-color: #c7d2fe;
+                color: #4338ca;
+            }
+            .crm-uebergeben {
+                background-color: var(--color-highlight);
+                border-color: var(--color-border-strong);
+                color: var(--color-primary);
+            }
+            .crm-abgeschlossen {
+                background-color: var(--color-primary);
+                border-color: var(--color-primary);
+                color: #fff;
+            }
+            .crm-verloren {
+                background-color: var(--color-surface-alt);
+                border-color: var(--color-border);
+                color: var(--color-text-muted);
+            }
+            .crm-spam {
+                background-color: #fef2f2;
+                border-color: #fecaca;
+                color: #991b1b;
+            }
+
+            /* ---- Detailbereich ---- */
+            .lead-detail {
+                border-top: 1px solid var(--color-border);
+                background: var(--color-surface);
+                padding: 0.9rem;
+            }
+            .revoked-warning {
+                background: #b91c1c;
+                color: #fff;
+                font-size: 0.78rem;
+                font-weight: 600;
+                border-radius: 0.375rem;
+                padding: 0.5rem 0.8rem;
+                margin-bottom: 0.8rem;
+            }
+            .detail-grid {
+                display: grid;
+                grid-template-columns: 1fr;
+                gap: 0.6rem 1.25rem;
+                font-size: 0.8125rem;
+            }
+            @media (min-width: 560px) {
+                .detail-grid {
+                    grid-template-columns: 1fr 1fr;
+                }
+            }
+            @media (min-width: 900px) {
+                .detail-grid {
+                    grid-template-columns: 1fr 1fr 1fr;
+                }
+            }
+            .detail-grid dt,
+            .detail-label {
+                font-size: 0.64rem;
+                text-transform: uppercase;
+                letter-spacing: 0.09em;
+                font-weight: 800;
+                color: var(--color-text-muted);
+                margin-bottom: 0.12rem;
+                display: block;
+            }
+            .detail-grid dd {
+                line-height: 1.4;
+            }
+            .detail-link {
+                color: var(--color-primary);
+                font-weight: 600;
+                text-decoration: none;
+            }
+            .detail-link:hover {
+                text-decoration: underline;
+            }
+
+            .notes-wrap {
+                margin-top: 0.9rem;
+            }
+            .notes-input {
+                width: 100%;
+                border: 1px solid var(--color-border);
+                border-radius: 0.375rem;
+                background: var(--color-background);
+                font-size: 16px;
+                padding: 0.5rem 0.75rem;
+                resize: vertical;
+            }
+            @media (min-width: 640px) {
+                .notes-input {
+                    font-size: 0.8125rem;
+                }
+            }
+            .notes-input:focus {
+                outline: none;
+                border-color: var(--color-border-strong);
+            }
+            .notes-actions {
+                display: flex;
+                align-items: center;
+                gap: 0.75rem;
+                margin-top: 0.4rem;
+            }
+            .notes-status {
+                font-size: 0.72rem;
+                color: var(--color-text-muted);
+            }
+
+            .btn-mini {
+                display: inline-flex;
+                align-items: center;
+                min-height: 2.75rem;
+                font-size: 0.75rem;
+                font-weight: 700;
+                color: var(--color-primary);
+                border: 1px solid var(--color-border-strong);
+                background: var(--color-background);
+                border-radius: 0.375rem;
+                padding: 0.4rem 0.75rem;
+                cursor: pointer;
+                text-decoration: none;
+                transition: background-color 0.15s;
+            }
+            .btn-mini:hover {
+                background: var(--color-highlight);
+            }
+            .btn-mini:disabled {
+                opacity: 0.6;
+            }
+            .btn-danger {
+                color: #b91c1c;
+                border-color: #fecaca;
+            }
+            .btn-danger:hover {
+                background: #fef2f2;
+            }
+
+            .legal-wrap {
+                margin-top: 0.9rem;
+                padding-top: 0.75rem;
+                border-top: 1px dashed var(--color-border);
+            }
+            .legal-actions {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0.4rem;
+            }
+            .legal-hint {
+                margin-top: 0.45rem;
+                font-size: 0.68rem;
+                color: var(--color-text-muted);
+                line-height: 1.4;
+            }
+
+            .empty {
+                background: var(--color-background);
+                border: 1px dashed var(--color-border-strong);
+                border-radius: 0.5rem;
+                padding: 2.5rem 1.5rem;
+                text-align: center;
+                color: var(--color-text-muted);
+                font-size: 0.9rem;
+            }
+            .footer-note {
+                margin-top: 1rem;
+                font-size: 0.68rem;
+                color: var(--color-text-muted);
+                text-align: center;
+                line-height: 1.5;
+            }
+
+            :is(button, a, input, select, textarea, summary):focus-visible {
+                outline: 3px solid color-mix(in srgb, var(--color-primary) 72%, white);
+                outline-offset: 2px;
+            }
+
+            @media (prefers-reduced-motion: reduce) {
+                *,
+                *::before,
+                *::after {
+                    scroll-behavior: auto !important;
+                    animation-duration: 0.01ms !important;
+                    animation-iteration-count: 1 !important;
+                    transition-duration: 0.01ms !important;
+                }
+            }
+
+            /* ---- Desktop: Karte wird zur Zeile ---- */
+            @media (min-width: 900px) {
+                .shell {
+                    padding: 1rem 1.25rem 4rem;
+                }
+                .lead:not(.lead-deleted):not(.lead-open) {
+                    display: grid;
+                    grid-template-columns: minmax(0, 1fr) auto auto;
+                    align-items: center;
+                }
+                .lead:not(.lead-deleted):not(.lead-open) .lead-head {
+                    padding: 0.7rem 0.9rem;
+                }
+                .lead:not(.lead-deleted):not(.lead-open) .lead-flags {
+                    padding: 0 0.5rem 0 0;
+                }
+                .lead:not(.lead-deleted):not(.lead-open) .lead-actions {
+                    padding: 0.55rem 0.9rem;
+                    flex-wrap: nowrap;
+                }
+                .lead:not(.lead-deleted):not(.lead-open) .lead-detail {
+                    grid-column: 1 / -1;
+                }
+                .lead-detail {
+                    padding: 1rem 1.1rem;
+                }
+            }
+        </style>
+    </body>
+</html>

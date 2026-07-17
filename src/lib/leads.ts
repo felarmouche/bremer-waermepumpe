@@ -40,7 +40,23 @@ export type LeadRow = {
   admin_email_sent_at: string | null;
   status: string;
   revoked_at: string | null;
+
+  crm_status: string;
+  crm_notes: string | null;
+  crm_updated_at: string | null;
 };
+
+/** Bearbeitungsstatus im Lead-Dashboard (unabhängig vom Funnel-`status`). */
+export const CRM_STATUSES = [
+  "neu",
+  "kontaktiert",
+  "termin",
+  "uebergeben",
+  "abgeschlossen",
+  "verloren",
+  "spam",
+] as const;
+export type CrmStatus = (typeof CRM_STATUSES)[number];
 
 export type AdminNotifiedRow = {
   id: number;
@@ -199,6 +215,173 @@ export async function getLeadsByPhone(
     .bind(phoneE164)
     .all<LeadRow>();
   return result.results;
+}
+
+export type ConsentRow = {
+  id: number;
+  lead_id: number;
+  consent_version: string;
+  consent_text: string;
+  consent_timestamp: string;
+  consent_ip: string;
+  consent_user_agent: string | null;
+  partners_version: string;
+  partners_snapshot: string;
+  sms_verification_id: number | null;
+};
+
+export type RevocationRow = {
+  id: number;
+  lead_id: number;
+  revoked_at: string;
+  revocation_channel: string | null;
+  revocation_ip: string | null;
+  revocation_token: string | null;
+  notes: string | null;
+};
+
+export async function getConsentsByLeadId(
+  db: D1Database,
+  lead_id: number,
+): Promise<ConsentRow[]> {
+  const result = await db
+    .prepare(`SELECT * FROM lead_consents WHERE lead_id = ?`)
+    .bind(lead_id)
+    .all<ConsentRow>();
+  return result.results;
+}
+
+export async function getSmsVerificationsByLeadId(
+  db: D1Database,
+  lead_id: number,
+): Promise<SmsVerificationRow[]> {
+  const result = await db
+    .prepare(`SELECT * FROM sms_verifications WHERE lead_id = ? ORDER BY id`)
+    .bind(lead_id)
+    .all<SmsVerificationRow>();
+  return result.results;
+}
+
+export async function getRevocationsByLeadId(
+  db: D1Database,
+  lead_id: number,
+): Promise<RevocationRow[]> {
+  const result = await db
+    .prepare(`SELECT * FROM revocations WHERE lead_id = ? ORDER BY id`)
+    .bind(lead_id)
+    .all<RevocationRow>();
+  return result.results;
+}
+
+export type SmsAggregate = {
+  codes_sent: number;
+  codes_verified: number;
+  avg_attempts: number | null;
+};
+
+/** Aggregat über alle SMS-Codes — für die Dashboard-Statistik (keine PII). */
+export async function getSmsAggregate(db: D1Database): Promise<SmsAggregate> {
+  const row = await db
+    .prepare(
+      `SELECT COUNT(*) AS codes_sent,
+              COALESCE(SUM(CASE WHEN verified_at IS NOT NULL THEN 1 ELSE 0 END), 0) AS codes_verified,
+              AVG(attempts) AS avg_attempts
+       FROM sms_verifications`,
+    )
+    .bind()
+    .first<SmsAggregate>();
+  return row ?? { codes_sent: 0, codes_verified: 0, avg_attempts: null };
+}
+
+/**
+ * Nachweis-Suche: findet alle Lead-IDs zu einer Telefonnummer — auch nach
+ * Stammdaten-Löschung, denn sms_verifications behält die Nummer als Teil
+ * des Einwilligungs-Nachweises (§ 7a Abs. 2 UWG).
+ */
+export async function findLeadIdsByPhone(
+  db: D1Database,
+  phoneE164: string,
+): Promise<number[]> {
+  const result = await db
+    .prepare(
+      `SELECT DISTINCT lead_id AS id FROM sms_verifications WHERE phone_e164 = ?
+       UNION
+       SELECT id FROM leads WHERE telefon = ?
+       ORDER BY id`,
+    )
+    .bind(phoneE164, phoneE164)
+    .all<{ id: number }>();
+  return result.results.map((r) => r.id);
+}
+
+/**
+ * Löscht die Lead-Stammdaten DSGVO-konform (Datenschutzerklärung Ziffer 5):
+ * personenbezogene Felder werden geleert, nur Referenz + Zeitstempel bleiben
+ * als pseudonymisierte Audit-Daten. Einwilligungs- und SMS-Nachweis in
+ * lead_consents/sms_verifications bleiben unberührt (5 Jahre, § 7a Abs. 2 UWG).
+ */
+export async function anonymizeLead(db: D1Database, id: number): Promise<void> {
+  await db
+    .prepare(
+      `UPDATE leads SET
+        salutation = '', vorname = '', nachname = '', email = NULL,
+        telefon = '', telefon_raw = '', sms_phone_verified = NULL,
+        strasse = '', hausnummer = '', plz = '', ort = '',
+        heating_current = NULL, heating_age = NULL, building_type = NULL,
+        is_owner = NULL, heating_location = NULL, timeline = NULL,
+        crm_notes = NULL, status = 'deleted', crm_updated_at = ?
+      WHERE id = ?`,
+    )
+    .bind(new Date().toISOString(), id)
+    .run();
+}
+
+/**
+ * Entfernt einen Lead restlos inklusive aller Nachweise. Nur für Einträge
+ * ohne verifizierte Einwilligung (Spam, Tests, abgebrochene Verifizierung) —
+ * bei verifizierten Leads gilt die 5-Jahres-Aufbewahrung des Nachweises,
+ * dort anonymizeLead verwenden.
+ */
+export async function deleteLeadFull(db: D1Database, id: number): Promise<void> {
+  await db.prepare(`DELETE FROM lead_admin_notified WHERE lead_id = ?`).bind(id).run();
+  await db.prepare(`DELETE FROM lead_consents WHERE lead_id = ?`).bind(id).run();
+  await db.prepare(`DELETE FROM revocations WHERE lead_id = ?`).bind(id).run();
+  await db.prepare(`DELETE FROM sms_verifications WHERE lead_id = ?`).bind(id).run();
+  await db.prepare(`DELETE FROM leads WHERE id = ?`).bind(id).run();
+}
+
+export async function getAllLeads(db: D1Database): Promise<LeadRow[]> {
+  const result = await db
+    .prepare(`SELECT * FROM leads ORDER BY id DESC`)
+    .bind()
+    .all<LeadRow>();
+  return result.results;
+}
+
+export async function updateLeadCrm(
+  db: D1Database,
+  id: number,
+  fields: { crm_status?: CrmStatus; crm_notes?: string },
+): Promise<void> {
+  const now = new Date().toISOString();
+  if (fields.crm_status !== undefined && fields.crm_notes !== undefined) {
+    await db
+      .prepare(
+        `UPDATE leads SET crm_status = ?, crm_notes = ?, crm_updated_at = ? WHERE id = ?`,
+      )
+      .bind(fields.crm_status, fields.crm_notes, now, id)
+      .run();
+  } else if (fields.crm_status !== undefined) {
+    await db
+      .prepare(`UPDATE leads SET crm_status = ?, crm_updated_at = ? WHERE id = ?`)
+      .bind(fields.crm_status, now, id)
+      .run();
+  } else if (fields.crm_notes !== undefined) {
+    await db
+      .prepare(`UPDATE leads SET crm_notes = ?, crm_updated_at = ? WHERE id = ?`)
+      .bind(fields.crm_notes, now, id)
+      .run();
+  }
 }
 
 export async function insertConsent(

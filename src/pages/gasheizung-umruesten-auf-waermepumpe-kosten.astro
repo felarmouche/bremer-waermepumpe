@@ -1,0 +1,708 @@
+---
+import { getImage } from "astro:assets";
+import Layout from "../layout/Layout.astro";
+import Breadcrumb from "../components/Breadcrumb.astro";
+import HeroSection from "../components/HeroSection.astro";
+import TrustBar from "../components/TrustBar.astro";
+import CTASection from "../components/CTASection.astro";
+import FAQSection from "../components/FAQSection.astro";
+import SectionShell from "../components/SectionShell.astro";
+import NoticeSuccess from "../components/content/NoticeSuccess.astro";
+import CheckList from "../components/content/CheckList.astro";
+import NumberedSteps from "../components/content/NumberedSteps.astro";
+import InternalLinkCard from "../components/InternalLinkCard.astro";
+import heroImage from "../images/heat-pump-bremen-hero.webp";
+
+import type { PageData } from "../types/page";
+
+const data: PageData = {
+  title: "Gasheizung umrüsten auf Wärmepumpe: Kosten 2026",
+  description:
+    "Was kostet es, eine Gasheizung auf Wärmepumpe umzurüsten? Kosten für Gerät, Ausbau, Heizkörper und Elektrik – plus Förderung und Angebots-Check.",
+  lastUpdated: "17. Juli 2026",
+  hero: {
+    headline: "Gasheizung auf Wärmepumpe umrüsten: Kosten & Ablauf",
+    subtext:
+      "Was der Wechsel von Gas zur Wärmepumpe wirklich kostet – inklusive Ausbau der Gastherme, Heizkörper, Elektrik, Förderung und vollständigem Angebot.",
+    primaryCTA: {
+      label: "Umstieg kostenlos prüfen",
+      href: "/check/",
+    },
+    secondaryCTA: {
+      label: "Kostenpositionen ansehen",
+      href: "#kosten",
+    },
+  },
+  trustItems: [
+    { text: "Umbaukosten vollständig aufgeschlüsselt" },
+    { text: "Gastherme & Gasheizung berücksichtigt" },
+    { text: "Förderung separat geprüft" },
+    { text: "Check für PLZ 27xxx und 28xxx" },
+  ],
+  breadcrumb: [
+    { label: "Startseite", href: "/" },
+    { label: "Kosten Bremen", href: "/waermepumpe-kosten-bremen/" },
+    { label: "Gasheizung umrüsten" },
+  ],
+  ctaBlock: {
+    headline: "Was kostet der Umstieg für Ihr Haus?",
+    text: "Der kostenlose Check erfasst Ihre Gasheizung, Ihr Gebäude und den geplanten Zeitraum. Nach der SMS-Bestätigung prüft ein Bremer Fachpartner Ihre Angaben persönlich und unverbindlich.",
+    variant: "highlight",
+    primaryCTA: {
+      label: "Gasheizung-Umstieg prüfen",
+      href: "/check/",
+    },
+    secondaryCTA: {
+      label: "Förderung in Bremen ansehen",
+      href: "/waermepumpe-foerderung-bremen/",
+    },
+  },
+  faqHeading: "FAQ: Gasheizung auf Wärmepumpe umrüsten",
+  faqs: [
+    {
+      question: "Was kostet es, eine Gasheizung auf Wärmepumpe umzurüsten?",
+      answer:
+        "Für den Wechsel auf eine Luft-Wasser-Wärmepumpe im Einfamilienhaus ist ein Brutto-Planungsrahmen von etwa 22.000 bis 35.000 Euro vor Förderung realistisch. Bei aufwendiger Elektrik, langen Leitungswegen, vielen neuen Heizkörpern oder besonderen Schallschutzmaßnahmen kann das Projekt darüber liegen. Entscheidend ist ein vollständiges Angebot, nicht der Gerätepreis allein.",
+    },
+    {
+      question: "Kann eine Gastherme direkt durch eine Wärmepumpe ersetzt werden?",
+      answer:
+        "Die Gastherme wird normalerweise nicht umgebaut, sondern demontiert und durch ein neu ausgelegtes Wärmepumpensystem ersetzt. Ob Heizkörper, Speicher und Leitungen weitergenutzt werden können, ergibt sich aus Heizlast, Vorlauftemperatur, Warmwasserbedarf und Anlagenplanung.",
+    },
+    {
+      question: "Müssen beim Umstieg alle Heizkörper getauscht werden?",
+      answer:
+        "Nein. Ausreichend große vorhandene Heizkörper können weiterlaufen. Häufig genügt es, einzelne zu kleine Heizkörper zu ersetzen und die Anlage hydraulisch abzugleichen. Eine raumweise Prüfung ist belastbarer als die pauschale Annahme, alle Heizkörper müssten raus.",
+    },
+    {
+      question: "Braucht eine Wärmepumpe im Altbau eine Fußbodenheizung?",
+      answer:
+        "Nein. Eine Fußbodenheizung ist günstig, aber keine Voraussetzung. Auch Bestandsgebäude mit Heizkörpern können geeignet sein. Als technische Faustregel gilt eine möglichst ganzjährig unter 55 °C liegende Vorlauftemperatur; sie ist keine starre Grenze.",
+    },
+    {
+      question: "Was kostet der Ausbau der alten Gasheizung?",
+      answer:
+        "Dafür gibt es keinen verlässlichen Pauschalpreis. Demontage, Entsorgung, Arbeiten am Abgasweg sowie Stilllegung oder Rückbau von Gaszähler und Anschluss hängen vom Bestand und vom Netzbetreiber ab. Lassen Sie diese Leistungen im Angebot getrennt ausweisen.",
+    },
+    {
+      question: "Welche Förderung gibt es beim Wechsel von Gas zur Wärmepumpe?",
+      answer:
+        "Die KfW-Heizungsförderung kann Grundförderung und – bei erfüllten Voraussetzungen – persönliche Boni kombinieren. Weil sich die Bedingungen zum 21. Juli 2026 ändern und die KfW die veröffentlichten Eckpunkte unter Richtlinienvorbehalt stellt, sollten Fördersatz und förderfähige Kosten unmittelbar vor Antragstellung geprüft werden. Förderung wird nicht pauschal vom Angebotspreis abgezogen.",
+    },
+    {
+      question: "Wie lange dauert der Austausch von Gasheizung auf Wärmepumpe?",
+      answer:
+        "Die eigentliche Montage dauert je nach Umfang oft mehrere Arbeitstage. Für das Gesamtprojekt müssen zusätzlich Vorprüfung, Heizlastberechnung, Angebot, Förderantrag, Lieferzeit und mögliche Elektro- oder Heizkörperarbeiten eingeplant werden. Ein belastbarer Terminplan gehört deshalb ins Angebot.",
+    },
+    {
+      question: "Was passiert mit Gasvertrag, Gaszähler und Schornstein?",
+      answer:
+        "Nach dem vollständigen Wechsel sollten Sie Gasliefervertrag, Zählerausbau sowie Stilllegung oder Rückbau des Anschlusses mit Lieferant und Netzbetreiber koordinieren. Der Schornsteinfeger sollte einbezogen werden, wenn der bisherige Abgasweg entfällt. Kosten und Zuständigkeiten sind lokal unterschiedlich und müssen vorab geklärt werden.",
+    },
+  ],
+  schema: {
+    type: "Article",
+    datePublished: "2026-07-17",
+    dateModified: "2026-07-17",
+  },
+};
+
+const canonical = new URL(
+  "/gasheizung-umruesten-auf-waermepumpe-kosten/",
+  Astro.site ?? Astro.url.origin,
+).href;
+const hero = {
+  ...data.hero,
+  imageSrc: heroImage,
+  quickstartLabel: "Gasheizung? Umstieg in 3 Minuten prüfen",
+};
+const ogImage = await getImage({
+  src: heroImage,
+  width: 1200,
+  height: 630,
+  fit: "cover",
+  format: "jpg",
+});
+const dateLine = data.lastUpdated ? `Stand: ${data.lastUpdated}` : null;
+const pageSchema = data.schema
+  ? {
+      ...data.schema,
+      datePublished: data.schema.datePublished ?? data.schema.dateModified,
+      dateModified: data.schema.dateModified ?? data.schema.datePublished,
+    }
+  : undefined;
+---
+
+<Layout
+  title={data.title}
+  description={data.description}
+  canonical={canonical}
+  ogImage={ogImage.src}
+  noindex={data.noindex}
+  pageSchema={pageSchema}
+>
+  {data.breadcrumb.length > 0 && <Breadcrumb items={data.breadcrumb} />}
+  <HeroSection {...hero} />
+  {data.trustItems.length > 0 && <TrustBar items={data.trustItems} />}
+  {
+    dateLine && (
+      <div class="bg-background border-b border-border">
+        <p class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-3 text-xs text-text-muted">
+          {dateLine} · Redaktion bremer-waermepumpe.de · Alle Preisangaben brutto
+          und ohne Gewähr
+        </p>
+      </div>
+    )
+  }
+
+  <SectionShell>
+    <article class="max-w-3xl space-y-5 text-text-muted leading-relaxed">
+      <div class="border border-border bg-highlight rounded-lg p-5 sm:p-6">
+        <p class="text-xs font-bold uppercase tracking-[0.16em] text-primary mb-2">
+          Schnelle Antwort
+        </p>
+        <p class="text-lg sm:text-xl text-text leading-relaxed">
+          Eine Gasheizung auf Wärmepumpe umzurüsten kostet im Einfamilienhaus
+          meist etwa <strong>22.000 bis 35.000 Euro brutto vor Förderung</strong>.
+          Der Korridor gilt als redaktioneller Planungsrahmen für eine
+          Luft-Wasser-Wärmepumpe inklusive Einbau. Aufwendige Elektroarbeiten,
+          lange Leitungswege, mehrere neue Heizkörper oder Schallschutz können
+          das Projekt verteuern.
+        </p>
+      </div>
+
+      <p>
+        „Umrüsten“ bedeutet dabei normalerweise nicht, den alten Gaskessel
+        umzubauen. Die Gastherme wird demontiert und durch ein passend geplantes
+        Wärmepumpensystem ersetzt. Entscheidend sind deshalb nicht nur Gerät und
+        Montage, sondern auch Heizlast, Heizflächen, Warmwasser, Aufstellort,
+        Elektrik und der Umgang mit dem Gasanschluss.
+      </p>
+
+      <NoticeSuccess>
+        <p>
+          <strong>Wichtig:</strong> Vorhandene Heizkörper oder ein älteres Haus
+          schließen den Wechsel nicht aus. Häufig reichen eine saubere
+          Auslegung, ein hydraulischer Abgleich und der Tausch einzelner zu
+          kleiner Heizkörper.
+        </p>
+      </NoticeSuccess>
+
+      <div class="border-l-4 border-accent bg-surface-alt p-5 sm:flex sm:items-center sm:justify-between sm:gap-6">
+        <div>
+          <p class="font-bold text-text">Gasheizung ersetzen – passt Ihr Haus?</p>
+          <p class="text-sm mt-1">
+            Der kostenlose Check fragt Bestandsheizung, Gebäudetyp und Zeitplan
+            ab. Für Bremen und das Umland mit PLZ 27xxx und 28xxx.
+          </p>
+        </div>
+        <a href="/check/" class="btn-accent mt-4 sm:mt-0 shrink-0 text-center">
+          Umstieg kostenlos prüfen
+        </a>
+      </div>
+    </article>
+  </SectionShell>
+
+  <SectionShell id="kosten" variant="alt">
+    <div class="max-w-3xl mb-8">
+      <p class="text-xs font-bold uppercase tracking-[0.16em] text-primary mb-2">
+        Umbauakte 01 · Kosten
+      </p>
+      <h2 class="text-2xl md:text-3xl font-bold text-text">
+        Was kostet es, eine Gasheizung auf Wärmepumpe umzurüsten?
+      </h2>
+      <p class="text-text-muted mt-4 leading-relaxed">
+        Ein vollständiger Preis besteht aus mehreren Gewerken. Die folgende
+        Kostenakte zeigt, was im Angebot ausdrücklich enthalten oder separat
+        beziffert sein sollte.
+      </p>
+    </div>
+
+    <div class="overflow-x-auto border border-border rounded-lg bg-background shadow-sm">
+      <table class="w-full min-w-[720px] text-left text-sm">
+        <caption class="sr-only">
+          Kostenblöcke beim Austausch einer Gasheizung gegen eine Wärmepumpe
+        </caption>
+        <thead class="bg-primary text-white">
+          <tr>
+            <th scope="col" class="px-4 py-3 w-16">Nr.</th>
+            <th scope="col" class="px-4 py-3">Kostenblock</th>
+            <th scope="col" class="px-4 py-3">Im Angebot prüfen</th>
+            <th scope="col" class="px-4 py-3 w-32">Einfluss</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-border text-text-muted">
+          <tr>
+            <th scope="row" class="px-4 py-4 font-bold text-primary tabular-nums">01</th>
+            <td class="px-4 py-4 font-semibold text-text">Wärmepumpe & Inneneinheit</td>
+            <td class="px-4 py-4">Gerät, Regelung, Montage, Inbetriebnahme und Einweisung</td>
+            <td class="px-4 py-4 font-medium text-text">größter Anteil</td>
+          </tr>
+          <tr>
+            <th scope="row" class="px-4 py-4 font-bold text-primary tabular-nums">02</th>
+            <td class="px-4 py-4 font-semibold text-text">Gasheizung ausbauen</td>
+            <td class="px-4 py-4">Demontage, Entsorgung, Abgasweg, Gaszähler und Anschluss</td>
+            <td class="px-4 py-4 font-medium text-text">objektabhängig</td>
+          </tr>
+          <tr>
+            <th scope="row" class="px-4 py-4 font-bold text-primary tabular-nums">03</th>
+            <td class="px-4 py-4 font-semibold text-text">Hydraulik & Speicher</td>
+            <td class="px-4 py-4">Warmwasser, mögliche Speicher, Pumpen und hydraulischer Abgleich</td>
+            <td class="px-4 py-4 font-medium text-text">oft unterschätzt</td>
+          </tr>
+          <tr>
+            <th scope="row" class="px-4 py-4 font-bold text-primary tabular-nums">04</th>
+            <td class="px-4 py-4 font-semibold text-text">Elektrik & Zähler</td>
+            <td class="px-4 py-4">Zählerplatz, Absicherung, Steuerung und Leitungsweg</td>
+            <td class="px-4 py-4 font-medium text-text">Bestand prüfen</td>
+          </tr>
+          <tr>
+            <th scope="row" class="px-4 py-4 font-bold text-primary tabular-nums">05</th>
+            <td class="px-4 py-4 font-semibold text-text">Heizkörper</td>
+            <td class="px-4 py-4">Raumweise Prüfung; nur zu kleine Heizflächen austauschen</td>
+            <td class="px-4 py-4 font-medium text-text">0 bis variabel</td>
+          </tr>
+          <tr>
+            <th scope="row" class="px-4 py-4 font-bold text-primary tabular-nums">06</th>
+            <td class="px-4 py-4 font-semibold text-text">Außenbereich & Planung</td>
+            <td class="px-4 py-4">Fundament, Kernbohrung, Leitungsweg, Schall und Förderbegleitung</td>
+            <td class="px-4 py-4 font-medium text-text">Grundstück zählt</td>
+          </tr>
+        </tbody>
+        <tfoot class="border-t-2 border-primary bg-highlight">
+          <tr>
+            <th scope="row" colspan="3" class="px-4 py-4 text-text font-bold">
+              Planungsrahmen Einfamilienhaus, Luft-Wasser-Wärmepumpe, vor Förderung
+            </th>
+            <td class="px-4 py-4 text-xl font-bold text-primary tabular-nums whitespace-nowrap">
+              22–35 Tsd. €
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+    <p class="text-xs text-text-muted max-w-3xl mt-4 leading-relaxed">
+      Die Zeilen sind nicht als pauschale Einzelpreise zu addieren. Viele
+      Leistungen stecken je nach Anbieter bereits im Kernpaket. Bei komplexen
+      Randbedingungen kann der Gesamtpreis über dem Planungsrahmen liegen.
+    </p>
+  </SectionShell>
+
+  <SectionShell>
+    <div class="max-w-3xl mb-7">
+      <p class="text-xs font-bold uppercase tracking-[0.16em] text-primary mb-2">
+        Umbauakte 02 · Leistungsumfang
+      </p>
+      <h2 class="text-2xl md:text-3xl font-bold text-text">
+        Diese Kosten entstehen beim Austausch der Gasheizung
+      </h2>
+    </div>
+    <CheckList
+      marker="diamond"
+      items={[
+        {
+          lead: "Wärmepumpensystem:",
+          text: "Außen- und Inneneinheit müssen zur berechneten Heizlast passen. Ein übergroßes Gerät ist nicht automatisch besser und kann Anschaffung und Betrieb verteuern.",
+        },
+        {
+          lead: "Demontage der Gastherme:",
+          text: "Ausbau, Entsorgung und Arbeiten am bisherigen Abgasweg gehören als eigene Position in das Angebot.",
+        },
+        {
+          lead: "Warmwasser & Hydraulik:",
+          text: "Speichergröße, Pumpen, Ventile und hydraulischer Abgleich werden auf die neue Anlage abgestimmt.",
+        },
+        {
+          lead: "Stromanschluss:",
+          text: "Elektriker und gegebenenfalls Netzbetreiber prüfen Absicherung, Zählerplatz, Steuerung und mögliche Tarifoptionen.",
+        },
+        {
+          lead: "Heizflächen:",
+          text: "Vorhandene Heizkörper werden raumweise bewertet. Nur tatsächlich zu kleine Heizflächen sollten in den Preis einfließen.",
+        },
+        {
+          lead: "Aufstellort & Schall:",
+          text: "Fundament, Wanddurchführung, Leitungsweg und Schallplanung sind besonders bei engen Bremer Grundstücken relevante Kostentreiber.",
+        },
+        {
+          lead: "Gasanschluss:",
+          text: "Kündigung, Zählerausbau, Stilllegung oder Rückbau sind separat mit Lieferant und Netzbetreiber zu klären.",
+        },
+      ]}
+    />
+  </SectionShell>
+
+  <SectionShell variant="alt">
+    <div class="max-w-3xl mb-8">
+      <p class="text-xs font-bold uppercase tracking-[0.16em] text-primary mb-2">
+        Umbauakte 03 · Modellfälle
+      </p>
+      <h2 class="text-2xl md:text-3xl font-bold text-text">
+        Was kostet die Umrüstung im Einfamilienhaus? Drei Modellfälle
+      </h2>
+      <p class="text-text-muted mt-4 leading-relaxed">
+        Die Beispiele sind redaktionelle Planungskorridore, keine
+        Kundenreferenzen oder Angebote. Förderung ist noch nicht abgezogen.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+      <article class="surface-card p-5 border-t-4 border-primary">
+        <p class="text-xs font-bold uppercase tracking-wider text-primary">Fall A</p>
+        <h3 class="font-bold text-text text-lg mt-2">Geradliniger Wechsel</h3>
+        <p class="text-3xl font-bold text-primary mt-4 tabular-nums">22–27 Tsd. €</p>
+        <p class="text-sm text-text-muted mt-3 leading-relaxed">
+          Weiter nutzbare Heizkörper, kurzer Leitungsweg, geeigneter Zählerplatz
+          und einfacher Aufstellort.
+        </p>
+      </article>
+
+      <article class="surface-card p-5 border-t-4 border-primary">
+        <p class="text-xs font-bold uppercase tracking-wider text-primary">Fall B</p>
+        <h3 class="font-bold text-text text-lg mt-2">Typischer Bestand</h3>
+        <p class="text-3xl font-bold text-primary mt-4 tabular-nums">27–35 Tsd. €</p>
+        <p class="text-sm text-text-muted mt-3 leading-relaxed">
+          Einzelne neue Heizkörper, Arbeiten an Speicher oder Hydraulik und
+          überschaubare Anpassungen an der Elektrik.
+        </p>
+      </article>
+
+      <article class="surface-card p-5 border-t-4 border-text">
+        <p class="text-xs font-bold uppercase tracking-wider text-text-muted">Fall C</p>
+        <h3 class="font-bold text-text text-lg mt-2">Komplexe Randbedingungen</h3>
+        <p class="text-3xl font-bold text-text mt-4 tabular-nums">ab 35 Tsd. €</p>
+        <p class="text-sm text-text-muted mt-3 leading-relaxed">
+          Umfangreiche Elektroarbeiten, mehrere Heizflächen, langer Leitungsweg
+          oder besondere Aufstell- und Schallschutzlösung.
+        </p>
+      </article>
+    </div>
+  </SectionShell>
+
+  <SectionShell>
+    <div class="max-w-3xl mb-7">
+      <p class="text-xs font-bold uppercase tracking-[0.16em] text-primary mb-2">
+        Umbauakte 04 · Machbarkeit
+      </p>
+      <h2 class="text-2xl md:text-3xl font-bold text-text">
+        Gasheizung umrüsten: Ist Ihr Haus für eine Wärmepumpe geeignet?
+      </h2>
+      <p class="text-text-muted mt-4 leading-relaxed">
+        Baujahr und Dämmstandard allein reichen für die Entscheidung nicht. Der
+        Fachbetrieb muss das System als Ganzes betrachten.
+      </p>
+    </div>
+    <CheckList
+      items={[
+        { lead: "Heizlast:", text: "Sie bestimmt die tatsächlich benötigte Leistung der Wärmepumpe." },
+        { lead: "Vorlauftemperatur:", text: "Möglichst niedrige Temperaturen verbessern Effizienz; unter 55 °C ist eine hilfreiche Faustregel, keine starre Grenze." },
+        { lead: "Heizflächen:", text: "Große vorhandene Heizkörper können geeignet sein; einzelne Engpässe lassen sich gezielt ersetzen." },
+        { lead: "Warmwasser:", text: "Personenzahl und Nutzungsprofil beeinflussen Speicher und Leistung." },
+        { lead: "Aufstellort:", text: "Platz, Leitungsweg, Luftführung und Schall müssen zum Grundstück passen." },
+        { lead: "Elektrik:", text: "Zählerplatz, Absicherung und Netzanschluss werden vor Auftrag geprüft." },
+      ]}
+    />
+
+    <div class="mt-8 max-w-3xl border border-border bg-highlight rounded-lg p-5 sm:flex sm:items-center sm:justify-between sm:gap-6">
+      <div>
+        <p class="font-bold text-text">Technik vor dem Angebot klären</p>
+        <p class="text-sm text-text-muted mt-1">
+          Der Check ordnet Ihre bestehende Gasheizung und das Gebäude ein,
+          bevor Sie Preise vergleichen.
+        </p>
+      </div>
+      <a href="/check/" class="btn-accent mt-4 sm:mt-0 shrink-0 text-center">
+        Eignung kostenlos prüfen
+      </a>
+    </div>
+  </SectionShell>
+
+  <SectionShell variant="alt">
+    <h2 class="text-2xl md:text-3xl font-bold text-text mb-7">
+      Heizkörper, Vorlauftemperatur und Dämmung: Was muss wirklich geändert werden?
+    </h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <article class="surface-card p-5">
+        <p class="text-xs font-bold uppercase tracking-wider text-primary">Mythos 01</p>
+        <h3 class="font-bold text-text mt-2">„Alle Heizkörper müssen raus.“</h3>
+        <p class="text-sm text-text-muted mt-3 leading-relaxed">
+          Nein. Große Bestandsheizkörper können weiterarbeiten. Geprüft wird
+          raumweise, wo bei niedrigerer Vorlauftemperatur Leistung fehlt.
+        </p>
+      </article>
+      <article class="surface-card p-5">
+        <p class="text-xs font-bold uppercase tracking-wider text-primary">Mythos 02</p>
+        <h3 class="font-bold text-text mt-2">„Ohne Fußbodenheizung geht es nicht.“</h3>
+        <p class="text-sm text-text-muted mt-3 leading-relaxed">
+          Eine Flächenheizung hilft, ist aber keine Pflicht. Auch geeignete
+          Heizkörper können eine Wärmepumpe effizient mit Wärme verteilen.
+        </p>
+      </article>
+      <article class="surface-card p-5">
+        <p class="text-xs font-bold uppercase tracking-wider text-primary">Mythos 03</p>
+        <h3 class="font-bold text-text mt-2">„Erst komplett sanieren.“</h3>
+        <p class="text-sm text-text-muted mt-3 leading-relaxed">
+          Nicht automatisch. Sinnvoll sind die Maßnahmen, die Heizlast und
+          notwendige Vorlauftemperatur wirtschaftlich reduzieren.
+        </p>
+      </article>
+    </div>
+    <p class="text-sm text-text-muted max-w-3xl mt-6">
+      Mehr dazu: <a href="/waermepumpe-altbau-bremen/" class="text-primary underline">Wärmepumpe im Bremer Altbau</a>
+      und <a href="/waermepumpe-altbau-kosten/" class="text-primary underline">Kosten für Heizkörper und Bestandsanpassungen</a>.
+    </p>
+  </SectionShell>
+
+  <SectionShell>
+    <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
+      Gasheizung komplett ersetzen oder mit Wärmepumpe nachrüsten?
+    </h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-4xl">
+      <article class="surface-card p-5 border-l-4 border-primary">
+        <h3 class="font-bold text-text">Kompletter Wechsel</h3>
+        <p class="text-sm text-text-muted mt-3 leading-relaxed">
+          Die Wärmepumpe übernimmt Heizung und Warmwasser. Gasvertrag,
+          Gaszähler und Anschluss können anschließend geklärt werden. Diese
+          Seite behandelt vor allem diesen vollständigen Austausch.
+        </p>
+      </article>
+      <article class="surface-card p-5">
+        <h3 class="font-bold text-text">Hybrid: Gas plus Wärmepumpe</h3>
+        <p class="text-sm text-text-muted mt-3 leading-relaxed">
+          Eine vorhandene Gasheizung mit Wärmepumpe nachzurüsten kann bei
+          besonderen Lastspitzen eine Übergangslösung sein. Dafür bleiben zwei
+          Systeme, Wartung und der Gasanschluss bestehen. Die Wirtschaftlichkeit
+          muss separat gerechnet werden.
+        </p>
+      </article>
+    </div>
+    <p class="text-sm text-text-muted max-w-3xl mt-5">
+      Für den Systemvergleich gehört der Intent auf die Seite
+      <a href="/waermepumpe-oder-gasheizung-bremen/" class="text-primary underline">Wärmepumpe oder Gasheizung in Bremen</a>.
+    </p>
+  </SectionShell>
+
+  <SectionShell variant="highlight">
+    <div class="max-w-3xl">
+      <p class="text-xs font-bold uppercase tracking-[0.16em] text-primary mb-2">
+        Umbauakte 05 · Förderung
+      </p>
+      <h2 class="text-2xl md:text-3xl font-bold text-text">
+        Welche Förderung senkt die Kosten beim Wechsel?
+      </h2>
+      <p class="text-text-muted mt-4 leading-relaxed">
+        Förderung wird auf förderfähige Kosten angewendet, nicht pauschal auf
+        jeden Euro des Projekts. Erst wenn das Angebot vollständig ist, lassen
+        sich möglicher Fördersatz, Zuschuss und tatsächlicher Eigenanteil
+        belastbar einordnen.
+      </p>
+      <div class="mt-6 border border-border bg-background rounded-lg p-5">
+        <p class="font-bold text-text">Aktueller Hinweis zum 21. Juli 2026</p>
+        <p class="text-sm text-text-muted mt-2 leading-relaxed">
+          Die KfW hat Änderungen an Förderhöchstbetrag und Bonuslogik ab diesem
+          Datum angekündigt. Die veröffentlichten Eckpunkte stehen laut KfW noch
+          unter dem Vorbehalt der Bestätigung durch die Förderrichtlinie. Deshalb
+          rechnen die Modellfälle oben bewusst ohne pauschalen Zuschuss.
+        </p>
+      </div>
+      <div class="flex flex-col sm:flex-row gap-3 mt-6">
+        <a href="/kfw-458-waermepumpe/" class="btn-secondary text-center">
+          KfW 458 aktuell prüfen
+        </a>
+        <a href="/waermepumpe-foerderung-bremen/" class="btn-secondary text-center">
+          Förderwege in Bremen
+        </a>
+      </div>
+    </div>
+  </SectionShell>
+
+  <SectionShell>
+    <div class="max-w-3xl mb-7">
+      <p class="text-xs font-bold uppercase tracking-[0.16em] text-primary mb-2">
+        Umbauakte 06 · Projektfolge
+      </p>
+      <h2 class="text-2xl md:text-3xl font-bold text-text">
+        Ablauf: Von der alten Gastherme zur Wärmepumpe
+      </h2>
+    </div>
+    <NumberedSteps
+      items={[
+        {
+          title: "Verbrauch und Bestandsheizung erfassen",
+          text: "Gasverbrauch, Baujahr, Warmwasser, Heizflächen und gewünschter Zeitplan bilden die Ausgangslage.",
+        },
+        {
+          title: "Heizlast und Vorlauftemperatur prüfen",
+          text: "Der Wärmebedarf wird fachgerecht bestimmt; kritische Räume und Heizkörper werden identifiziert.",
+        },
+        {
+          title: "Aufstellort und Elektrik planen",
+          text: "Außeneinheit, Schall, Leitungsweg, Fundament, Zählerplatz und Netzanschluss werden vorab geklärt.",
+        },
+        {
+          title: "Vollständiges Angebot erstellen",
+          text: "Gerät, Montage, Demontage der Gasheizung und alle Nebengewerke werden verbindlich beschrieben.",
+        },
+        {
+          title: "Förderung korrekt vorbereiten",
+          text: "Fachunternehmen erstellt die Bestätigung zum Antrag. Vertrag und Antrag müssen die zum Antragstermin geltenden KfW-Regeln erfüllen; die Zusage kommt vor Umsetzung.",
+        },
+        {
+          title: "Gasheizung ausbauen und Wärmepumpe montieren",
+          text: "Die Gewerke werden koordiniert, das Wärmeverteilsystem hydraulisch abgeglichen und die Anlage in Betrieb genommen.",
+        },
+        {
+          title: "Nachweise und Gasanschluss abschließen",
+          text: "Nachweise für die Förderung werden eingereicht; Gasvertrag, Zähler, Anschluss und Abgasweg werden mit den zuständigen Stellen geklärt.",
+        },
+      ]}
+    />
+  </SectionShell>
+
+  <SectionShell variant="alt">
+    <div class="max-w-3xl mb-7">
+      <p class="text-xs font-bold uppercase tracking-[0.16em] text-primary mb-2">
+        Umbauakte 07 · Angebotsprüfung
+      </p>
+      <h2 class="text-2xl md:text-3xl font-bold text-text">
+        Was gehört in ein vollständiges Angebot?
+      </h2>
+      <p class="text-text-muted mt-4 leading-relaxed">
+        Vergleichen Sie nicht nur Endpreise. Markieren Sie, welche Leistungen
+        enthalten, optional oder ausdrücklich ausgeschlossen sind.
+      </p>
+    </div>
+    <CheckList
+      items={[
+        "Heizlast, Auslegungspunkt und geplante Vorlauftemperatur",
+        "Exakte Gerätebezeichnung, Leistungsdaten und Schallwerte",
+        "Warmwasserlösung, Speicher und vollständige Hydraulik",
+        "Hydraulischer Abgleich und raumweise Heizflächenprüfung",
+        "Demontage und Entsorgung der Gastherme sowie Arbeiten am Abgasweg",
+        "Elektroanschluss, Zählerplatz, Absicherung und mögliche Netzarbeiten",
+        "Fundament, Kernbohrungen, Leitungsweg und Wiederherstellungsarbeiten",
+        "Schallschutz, Inbetriebnahme, Einweisung, Dokumentation und Wartung",
+        "Förderfähige Kosten, BzA/BnD sowie klare Zahlungs- und Förderbedingungen",
+        "Zuständigkeit für Gaszähler, Stilllegung oder Rückbau des Anschlusses",
+      ]}
+    />
+    <div class="mt-8 max-w-3xl bg-background border border-border rounded-lg p-5 sm:flex sm:items-center sm:justify-between sm:gap-6">
+      <div>
+        <p class="font-bold text-text">Angebot noch nicht vorhanden?</p>
+        <p class="text-sm text-text-muted mt-1">
+          Starten Sie mit der Eignungs- und Bedarfseinordnung für Ihr Haus.
+        </p>
+      </div>
+      <a href="/check/" class="btn-accent mt-4 sm:mt-0 shrink-0 text-center">
+        Projekt kostenlos einordnen
+      </a>
+    </div>
+  </SectionShell>
+
+  <SectionShell>
+    <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
+      Was in Bremen zusätzlich wichtig ist
+    </h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <article class="surface-card p-5">
+        <h3 class="font-bold text-text">Wärmeplan als Orientierung</h3>
+        <p class="text-sm text-text-muted mt-3 leading-relaxed">
+          Der Bremer Wärmeplan zeigt Eignungen auf Baublockebene. Er schafft
+          keinen Anschlusszwang und ersetzt keine Prüfung des einzelnen Hauses.
+        </p>
+      </article>
+      <article class="surface-card p-5">
+        <h3 class="font-bold text-text">Aufstellort früh prüfen</h3>
+        <p class="text-sm text-text-muted mt-3 leading-relaxed">
+          Reihenhäuser und schmale Grundstücke brauchen eine sorgfältige
+          Standort- und Schallplanung. Das gehört vor Auftrag in die Kosten.
+        </p>
+      </article>
+      <article class="surface-card p-5">
+        <h3 class="font-bold text-text">Förderprogramme trennen</h3>
+        <p class="text-sm text-text-muted mt-3 leading-relaxed">
+          Bundesförderung, ausgelaufene Bremer Zuschüsse und angekündigte
+          Programme dürfen nicht als ein pauschaler Förderbetrag gerechnet werden.
+        </p>
+      </article>
+    </div>
+    <p class="text-sm text-text-muted max-w-3xl mt-5">
+      Für eine enge Aufstellung: <a href="/waermepumpe-abstand-nachbar-bremen/" class="text-primary underline">Abstand, Schall und Nachbarschaft in Bremen</a>.
+    </p>
+  </SectionShell>
+
+  <SectionShell variant="alt">
+    <h2 class="text-2xl md:text-3xl font-bold text-text mb-5">
+      Quellen und redaktioneller Stand
+    </h2>
+    <div class="surface-card p-5 max-w-4xl text-sm text-text-muted leading-relaxed">
+      <p class="font-semibold text-text mb-3">Stand: 17. Juli 2026</p>
+      <ul class="space-y-3">
+        <li>
+          KfW: <a href="https://www.kfw.de/inlandsfoerderung/Bundesf%C3%B6rderung-f%C3%BCr-effiziente-Geb%C3%A4ude/Anpassungen-2026/" class="text-primary underline" target="_blank" rel="noopener">Anpassungen der Bundesförderung für effiziente Gebäude 2026</a>
+        </li>
+        <li>
+          Verbraucherzentrale: <a href="https://www.verbraucherzentrale.de/wissen/energie/heizen-und-warmwasser/waermepumpe-im-eigenheim-welche-voraussetzungen-muss-mein-haus-erfuellen-113948" class="text-primary underline" target="_blank" rel="noopener">Voraussetzungen für Wärmepumpen im Bestand</a>
+        </li>
+        <li>
+          Bundesverband Wärmepumpe: <a href="https://www.waermepumpe.de/presse/news/details/leitfaden-waermepumpendimensionierung-veroeffentlicht/" class="text-primary underline" target="_blank" rel="noopener">Leitfaden zur Dimensionierung</a>
+        </li>
+        <li>
+          Freie Hansestadt Bremen: <a href="https://waermeplanung.bremen.de/faqs-1473" class="text-primary underline" target="_blank" rel="noopener">FAQ zum beschlossenen Wärmeplan</a>
+        </li>
+        <li>
+          Verbraucherzentrale: <a href="https://www.verbraucherzentrale.de/wissen/energie/heizen-und-warmwasser/gasanschluss-kuendigen-welche-kosten-duerfen-entstehen-118900" class="text-primary underline" target="_blank" rel="noopener">Gasanschluss kündigen und mögliche Kosten</a>
+        </li>
+        <li>
+          Umweltbundesamt: <a href="https://www.umweltbundesamt.de/luft-wasser-waermepumpe-statt-erdgasheizung" class="text-primary underline" target="_blank" rel="noopener">dokumentiertes Praxisprojekt Gasheizung zu Wärmepumpe</a>
+        </li>
+      </ul>
+      <p class="mt-4 text-xs">
+        Die Preisbereiche auf dieser Seite sind redaktionelle Planungsrahmen aus
+        veröffentlichten Markt- und Projektwerten. Sie ersetzen weder Angebot
+        noch Heizlastberechnung oder Förderprüfung.
+      </p>
+    </div>
+  </SectionShell>
+
+  <SectionShell>
+    <h2 class="text-2xl md:text-3xl font-bold text-text mb-6">
+      Passende Ratgeber
+    </h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-5xl">
+      <InternalLinkCard
+        href="/waermepumpe-kosten-bremen/"
+        title="Wärmepumpe Kosten Bremen"
+        description="Allgemeine Kosten nach Bauart und lokale Kostentreiber im Überblick."
+      />
+      <InternalLinkCard
+        href="/waermepumpe-altbau-bremen/"
+        title="Altbau-Eignung Bremen"
+        description="Heizlast, Vorlauftemperatur und Heizkörper im Bestandsgebäude."
+      />
+      <InternalLinkCard
+        href="/waermepumpe-oder-gasheizung-bremen/"
+        title="Wärmepumpe oder Gasheizung"
+        description="Anschaffung, Betrieb und Systementscheidung im Vergleich."
+      />
+      <InternalLinkCard
+        href="/kfw-458-waermepumpe/"
+        title="KfW 458 aktuell"
+        description="Förderfähige Kosten, Bonuslogik und Antragsreihenfolge."
+      />
+      <InternalLinkCard
+        href="/waermepumpe-abstand-nachbar-bremen/"
+        title="Aufstellung & Abstand"
+        description="Schall, Grundstücksgrenze und Planung in Bremer Wohnlagen."
+      />
+      <InternalLinkCard
+        href="/check/"
+        title="Gasheizung-Umstieg prüfen"
+        description="Eignung und Projektbedarf für Ihr Haus kostenlos einordnen."
+      />
+    </div>
+  </SectionShell>
+
+  {data.ctaBlock && <CTASection {...data.ctaBlock} />}
+  {data.faqs.length > 0 && <FAQSection heading={data.faqHeading} items={data.faqs} />}
+</Layout>

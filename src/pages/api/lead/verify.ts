@@ -191,6 +191,7 @@ export const POST: APIRoute = async ({ request }) => {
     smsPhoneVerified: smsRow.phone_e164,
     smsSentAt: smsRow.sent_at,
     smsVerifiedAt: smsVerifiedAtIso,
+    dashboardUrl: `${siteUrl}/dashboard?lead=${encodeURIComponent(lead.reference)}`,
   };
 
   let anyEmailOk = false;

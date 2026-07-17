@@ -30,10 +30,12 @@ export default defineConfig({
   integrations: [
     sitemap({
       // /check/danke/ is noindex — submitting it would raise a GSC coverage error.
+      // /dashboard/ is the internal, login-gated lead console — never index it.
       filter: (page) =>
         !/\/auswertung-/.test(page) &&
         !/\/api\//.test(page) &&
-        !/\/check\/danke\//.test(page),
+        !/\/check\/danke\//.test(page) &&
+        !/\/dashboard\/?$/.test(page),
     }),
     react(),
   ],

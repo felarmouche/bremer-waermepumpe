@@ -24,6 +24,8 @@ export type LeadEmailPayload = {
   smsPhoneVerified: string;
   smsSentAt: string;
   smsVerifiedAt: string;
+  /** Deep-Link auf den Lead im internen Dashboard (leer = kein Link im Mailtext). */
+  dashboardUrl?: string;
 };
 
 function labelFunnel(payload: LeadEmailPayload): string {
@@ -77,9 +79,13 @@ export async function sendAdminNotification(
     timeZone: "Europe/Berlin",
   });
 
+  const dashboardBlock = lead.dashboardUrl
+    ? `\nAlle Daten zu diesem Lead im Dashboard (Login erforderlich):\n  ${lead.dashboardUrl}\n`
+    : "";
+
   const body = `Neue Anfrage für kostenlose Wärmepumpen-Erstberatung: ${lead.reference}${urgencyTag}
 Eingegangen: ${consentLocal} (Europe/Berlin)
-
+${dashboardBlock}
 Kontakt:
   ${lead.salutation} ${lead.vorname} ${lead.nachname}
   Telefon: ${lead.telefon} (SMS-verifiziert)

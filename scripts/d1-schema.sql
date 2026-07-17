@@ -36,7 +36,12 @@ CREATE TABLE leads (
 
   admin_email_sent_at TEXT,
   status TEXT NOT NULL DEFAULT 'sms_pending',
-  revoked_at TEXT
+  revoked_at TEXT,
+
+  -- CRM-Felder für das Lead-Dashboard (/dashboard)
+  crm_status TEXT NOT NULL DEFAULT 'neu',
+  crm_notes TEXT,
+  crm_updated_at TEXT
 );
 
 CREATE TABLE sms_verifications (
@@ -95,3 +100,4 @@ CREATE INDEX idx_revocations_token ON revocations(revocation_token);
 CREATE INDEX idx_sms_lead_id ON sms_verifications(lead_id);
 CREATE INDEX idx_sms_phone ON sms_verifications(phone_e164);
 CREATE INDEX idx_admin_notified_lead_id ON lead_admin_notified(lead_id);
+CREATE INDEX idx_leads_crm_status ON leads(crm_status);

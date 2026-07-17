@@ -56,6 +56,11 @@ export const navClusters: NavCluster[] = [
     inFooter: true,
     links: [
       {
+        href: "/gasheizung-umruesten-auf-waermepumpe-kosten/",
+        label: "Gasheizung umrüsten",
+        description: "Kosten, Zusatzarbeiten und Ablauf beim Wechsel zur Wärmepumpe.",
+      },
+      {
         href: "/waermepumpe-altbau-kosten/",
         label: "Altbau Kosten",
         description: "Kostenrahmen für Bestandsgebäude inkl. Heizkörper-Posten.",

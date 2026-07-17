@@ -1,0 +1,16 @@
+# Vorlage für .dev.vars (lokale Secrets für `astro dev` / `wrangler dev`).
+# Kopieren nach `.dev.vars` und Werte einsetzen — .dev.vars ist gitignored.
+# In Produktion werden dieselben Namen per `wrangler secret put <NAME>` gesetzt.
+
+# --- Lead-Funnel ---
+# Brevo API-Key für E-Mail- und SMS-Versand
+BREVO_API_KEY=
+# 32-Byte-Hex, Pepper für den SHA-256-Hash der SMS-Codes: openssl rand -hex 32
+SMS_PEPPER=
+
+# --- Lead-Dashboard (/dashboard) ---
+# Login-E-Mail des Betreibers
+ADMIN_EMAIL=
+# Passwort-Hash im Format pbkdf2:<iterations>:<salt-hex>:<hash-hex>
+# Erzeugen mit: node scripts/hash-admin-password.mjs
+ADMIN_PASSWORD_HASH=
