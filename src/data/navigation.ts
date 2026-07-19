@@ -131,6 +131,11 @@ export const navClusters: NavCluster[] = [
         label: "Abstand & Grenze (bundesweit)",
         description: "Grenzabstand je Bundesland, TA Lärm und Schallschutz.",
       },
+      {
+        href: "/waermepumpe-lautstaerke-nachbar/",
+        label: "Lautstärke & Schallschutz",
+        description: "Wie laut darf eine Wärmepumpe sein? dB-Werte, TA Lärm, Abhilfe.",
+      },
     ],
   },
   {

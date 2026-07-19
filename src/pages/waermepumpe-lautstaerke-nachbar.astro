@@ -1,0 +1,464 @@
+---
+import Layout from "../layout/Layout.astro";
+import Breadcrumb from "../components/Breadcrumb.astro";
+import HeroSection from "../components/HeroSection.astro";
+import TrustBar from "../components/TrustBar.astro";
+import CTASection from "../components/CTASection.astro";
+import FAQSection from "../components/FAQSection.astro";
+import SectionShell from "../components/SectionShell.astro";
+import NoticeSuccess from "../components/content/NoticeSuccess.astro";
+import CheckList from "../components/content/CheckList.astro";
+import NumberedSteps from "../components/content/NumberedSteps.astro";
+import InternalLinkCard from "../components/InternalLinkCard.astro";
+import heroImage from "../images/heat-pump-bremen-hero.webp";
+
+import type { PageData } from "../types/page";
+
+const data: PageData = {
+    title: "Wärmepumpe Lautstärke: Wie laut darf sie sein? Regeln 2026",
+    description: "Wärmepumpe Lautstärke & Nachbar: TA-Lärm-Grenzwerte in dB, Nachtbetrieb, Schallschutz-Kosten und was hilft, wenn die Wärmepumpe zu laut ist.",
+    lastUpdated: "19. Juli 2026",
+    hero: {
+        headline: "Wärmepumpe Lautstärke: Wie laut darf sie beim Nachbarn sein?",
+        subtext: "dB-Werte nach Abstand, TA-Lärm-Grenzwerte, Nachtbetrieb und Schallschutz – was wirklich zählt.",
+        primaryCTA: {
+            label: "Aufstellort prüfen lassen",
+            href: "/check/"
+        },
+        secondaryCTA: {
+            label: "Abstand zum Nachbarn",
+            href: "/waermepumpe-abstand-nachbar/"
+        }
+    },
+    trustItems: [
+        {
+            text: "TA-Lärm-Werte erklärt"
+        },
+        {
+            text: "dB-Tabelle nach Abstand"
+        },
+        {
+            text: "Schallschutz-Kosten"
+        },
+        {
+            text: "Stand Juli 2026"
+        }
+    ],
+    breadcrumb: [
+        {
+            label: "Startseite",
+            href: "/"
+        },
+        {
+            label: "Lautstärke & Schallschutz"
+        }
+    ],
+    ctaBlock: {
+        headline: "Ist Ihr Aufstellort unkritisch – oder braucht er Schallschutz?",
+        text: "Der Check erfasst Gebäude-, Heizungs- und Standortdaten für eine erste Einschätzung.",
+        variant: "highlight",
+        primaryCTA: {
+            label: "Aufstellort prüfen",
+            href: "/check/"
+        },
+        secondaryCTA: {
+            label: "Abstand zum Nachbarn",
+            href: "/waermepumpe-abstand-nachbar/"
+        }
+    },
+    faqHeading: "FAQ: Wärmepumpe Lautstärke",
+    faqs: [
+        {
+            question: "Wie laut darf eine Wärmepumpe nachts sein?",
+            answer: "Nachts (22–6 Uhr) gelten die Immissionsrichtwerte der TA Lärm am nächsten schutzbedürftigen Nachbarfenster: 35 dB(A) im reinen Wohngebiet, 40 dB(A) im allgemeinen Wohngebiet, 45 dB(A) im Misch- oder urbanen Gebiet. Gemessen wird die lauteste volle Nachtstunde, 0,5 m vor dem geöffneten Fenster. Die dB-Angabe des Herstellers am Gerät ist damit nicht gemeint – entscheidend ist, was beim Nachbarn ankommt."
+        },
+        {
+            question: "Was tun, wenn die Wärmepumpe des Nachbarn zu laut ist?",
+            answer: "Zuerst das Gespräch suchen und ein einfaches Lärmprotokoll führen (Datum, Uhrzeit, Art des Geräuschs). Oft löst schon der schallreduzierte Nachtmodus das Problem, den viele Anlagen haben, der aber nicht immer aktiviert ist. Hilft das nicht, kann die Immissionsschutzbehörde eine Messung nach TA Lärm veranlassen. Zivilrechtlich besteht bei wesentlichen Beeinträchtigungen ein Anspruch auf Beseitigung und Unterlassung (§ 1004 in Verbindung mit § 906 BGB); die Gerichte orientieren sich dabei an den TA-Lärm-Richtwerten."
+        },
+        {
+            question: "Wie viel dB hat eine moderne Luft-Wasser-Wärmepumpe?",
+            answer: "Aktuelle Geräte liegen meist bei 50 bis 60 dB(A) Schallleistung, besonders leise Modelle darunter. Am Nachbarfenster kommt deutlich weniger an: In 3 m Abstand entspricht eine Schallleistung von 55 dB(A) etwa 38 dB(A) Schalldruck – ungefähr das Niveau eines leisen Schlafzimmers. Der Nachtmodus senkt den Pegel je nach Hersteller um weitere 3 bis 10 dB(A)."
+        },
+        {
+            question: "Bringt eine Schallschutzhaube wirklich etwas?",
+            answer: "Eine gut konstruierte Schallschutzhaube kann den Pegel um etwa 3 bis 10 dB(A) senken – 10 dB(A) werden als Halbierung der Lautstärke empfunden. Wichtig: Die Haube muss die Luftführung des Geräts erhalten und vom Hersteller freigegeben sein, sonst drohen Effizienzverlust und Garantieprobleme. Oft sind Aufstellort, Schwingungsentkopplung und Nachtmodus die günstigere Lösung; die Haube ist der letzte Schritt, nicht der erste."
+        }
+    ],
+    schema: {
+        type: "Article",
+        datePublished: "2026-07-19",
+        dateModified: "2026-07-19"
+    }
+};
+
+const canonical = data.canonical ?? Astro.url.href;
+const hero = { ...data.hero, imageSrc: heroImage };
+const dateLine = data.lastUpdated ? `Stand: ${data.lastUpdated}` : null;
+const pageSchema = data.schema
+    ? {
+          ...data.schema,
+          datePublished: data.schema.datePublished ?? data.schema.dateModified,
+          dateModified: data.schema.dateModified ?? data.schema.datePublished,
+      }
+    : undefined;
+
+// Freifeld-Näherung (halbkugelförmige Ausbreitung): Lp ≈ LW − 8 − 20·log10(r).
+// Werte gerundet; Reflexionen an Wand (+3) oder Innenecke (+6) kommen hinzu.
+const schallNachAbstand = [
+    { lw: "50 dB(A)", einordnung: "sehr leise", m1: "42", m3: "33", m5: "28", m10: "22" },
+    { lw: "55 dB(A)", einordnung: "leise", m1: "47", m3: "38", m5: "33", m10: "27" },
+    { lw: "60 dB(A)", einordnung: "üblich", m1: "52", m3: "43", m5: "38", m10: "32" },
+    { lw: "65 dB(A)", einordnung: "laut / ältere Geräte", m1: "57", m3: "48", m5: "43", m10: "37" },
+];
+
+const alltagsvergleiche = [
+    { pegel: "30 dB(A)", beispiel: "Flüstern" },
+    { pegel: "35–40 dB(A)", beispiel: "leises Schlafzimmer, Kühlschrank-Summen" },
+    { pegel: "45–50 dB(A)", beispiel: "leise Unterhaltung, Regen" },
+    { pegel: "55–60 dB(A)", beispiel: "normales Gespräch" },
+    { pegel: "70 dB(A)", beispiel: "Staubsauger in 1 m" },
+];
+
+const taLaermWerte = [
+    { gebiet: "Reines Wohngebiet", tags: "50 dB(A)", nachts: "35 dB(A)" },
+    { gebiet: "Allgemeines Wohngebiet / Kleinsiedlungsgebiet", tags: "55 dB(A)", nachts: "40 dB(A)" },
+    { gebiet: "Kern-, Dorf- und Mischgebiet", tags: "60 dB(A)", nachts: "45 dB(A)" },
+    { gebiet: "Urbanes Gebiet", tags: "63 dB(A)", nachts: "45 dB(A)" },
+    { gebiet: "Gewerbegebiet", tags: "65 dB(A)", nachts: "50 dB(A)" },
+    { gebiet: "Kurgebiet, Krankenhäuser, Pflegeanstalten", tags: "45 dB(A)", nachts: "35 dB(A)" },
+];
+---
+
+<Layout
+    title={data.title}
+    description={data.description}
+    canonical={canonical}
+    noindex={data.noindex}
+    pageSchema={pageSchema}
+>
+    {data.breadcrumb?.length > 0 && <Breadcrumb items={data.breadcrumb} />}
+    <HeroSection {...hero} />
+    {data.trustItems?.length > 0 && <TrustBar items={data.trustItems} />}
+    {dateLine && (
+        <div class="bg-background border-b border-border">
+            <p class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-3 text-xs text-text-muted">
+                {dateLine} · Redaktion bremer-waermepumpe.de · Alle Angaben ohne Gewähr
+            </p>
+        </div>
+    )}
+
+<SectionShell>
+  <article class="max-w-3xl space-y-4 text-text-muted leading-relaxed">
+    <div class="bg-highlight border border-border rounded p-5">
+      <p class="font-bold text-text mb-2">Schnelle Antwort</p>
+      <p class="text-sm leading-relaxed">
+        Wie laut eine Wärmepumpe sein darf, steht nicht auf dem Datenblatt, sondern
+        in der <strong class="text-text">TA Lärm</strong>: Am nächsten schutzbedürftigen
+        Nachbarfenster sind nachts <strong class="text-text">35 dB(A)</strong> im reinen
+        und <strong class="text-text">40 dB(A)</strong> im allgemeinen Wohngebiet erlaubt,
+        tags 50 bzw. 55 dB(A). Moderne Geräte mit 50–60 dB(A) Schallleistung kommen in
+        3–5 m Abstand auf etwa 28–43 dB(A) – meist unkritisch, wenn Aufstellort und
+        Nachtbetrieb stimmen.
+      </p>
+    </div>
+    <p>
+      Die Zahl im Prospekt sagt wenig darüber, was der Nachbar nachts tatsächlich hört.
+      Hersteller nennen den <strong class="text-text">Schallleistungspegel</strong> –
+      eine Rechengröße direkt am Gerät. Rechtlich zählt aber der
+      <strong class="text-text"> Schalldruckpegel am Nachbarfenster</strong>, und der
+      liegt je nach Abstand 10 bis 30 dB(A) darunter. Wer diese beiden Werte einmal
+      auseinanderhält, kann die meisten Lärm-Diskussionen entschärfen, bevor sie anfangen.
+    </p>
+    <NoticeSuccess>
+      <p>
+        <strong>Wichtig:</strong> Lautstärke und Grenzabstand sind zwei getrennte
+        Prüfungen. Auch ein baurechtlich zulässiger Aufstellort direkt an der Grenze
+        muss die TA-Lärm-Werte einhalten – die Abstandsregeln je Bundesland stehen im
+        Ratgeber <a href="/waermepumpe-abstand-nachbar/" class="text-primary underline">Wärmepumpe Abstand zum Nachbarn</a>.
+      </p>
+    </NoticeSuccess>
+    <div class="bg-highlight border border-border rounded p-5 flex flex-col sm:flex-row gap-4 sm:items-center sm:justify-between">
+      <div>
+        <p class="font-semibold text-text">Aufstellort auf Lärm-Risiko prüfen?</p>
+        <p class="text-sm text-text-muted mt-1">Der Check erfasst Haus- und Standortdaten für die erste Einordnung.</p>
+      </div>
+      <a href="/check/" class="btn-accent shrink-0 text-center">Aufstellort prüfen</a>
+    </div>
+  </article>
+</SectionShell>
+
+<SectionShell variant="alt">
+  <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
+    Wie laut ist eine Wärmepumpe wirklich?
+  </h2>
+  <article class="max-w-3xl space-y-4 text-text-muted leading-relaxed mb-6">
+    <p>
+      Aktuelle Luft-Wasser-Wärmepumpen erreichen eine Schallleistung von etwa
+      <strong class="text-text">50 bis 60 dB(A)</strong>, besonders leise Modelle
+      liegen darunter, ältere oder sehr günstige Geräte auch darüber. Entscheidend
+      ist, was davon in einigen Metern Entfernung übrig bleibt. Als Faustregel gilt:
+      Pro Verdopplung des Abstands sinkt der Pegel um rund 6 dB(A).
+    </p>
+  </article>
+  <div class="surface-card overflow-x-auto max-w-4xl">
+    <table class="w-full text-sm text-left border-collapse">
+      <caption class="sr-only">
+        Schalldruckpegel einer Wärmepumpe nach Abstand, abhängig vom Schallleistungspegel des Geräts
+      </caption>
+      <thead>
+        <tr class="border-b border-border text-text bg-highlight">
+          <th scope="col" class="px-4 py-3 font-semibold">Schallleistung (Gerät)</th>
+          <th scope="col" class="px-4 py-3 font-semibold">in 1 m</th>
+          <th scope="col" class="px-4 py-3 font-semibold">in 3 m</th>
+          <th scope="col" class="px-4 py-3 font-semibold">in 5 m</th>
+          <th scope="col" class="px-4 py-3 font-semibold">in 10 m</th>
+        </tr>
+      </thead>
+      <tbody class="text-text-muted">
+        {schallNachAbstand.map((row, i) => (
+          <tr class={i < schallNachAbstand.length - 1 ? "border-b border-border" : ""}>
+            <th scope="row" class="px-4 py-3 font-medium text-text">
+              {row.lw} <span class="font-normal text-text-muted">({row.einordnung})</span>
+            </th>
+            <td class="px-4 py-3">≈ {row.m1} dB(A)</td>
+            <td class="px-4 py-3">≈ {row.m3} dB(A)</td>
+            <td class="px-4 py-3">≈ {row.m5} dB(A)</td>
+            <td class="px-4 py-3">≈ {row.m10} dB(A)</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+  <p class="text-text-muted max-w-3xl text-sm mt-4">
+    Freifeld-Näherung bei ungehinderter Ausbreitung, gerundet. Steht das Gerät vor
+    einer Wand, kommen etwa 3 dB(A) hinzu, in einer Innenecke etwa 6 dB(A). Eine
+    belastbare Prognose für den konkreten Aufstellort liefert der
+    <a href="https://www.waermepumpe.de/schallrechner/" class="text-primary underline" target="_blank" rel="noopener">Schallrechner des Bundesverbands Wärmepumpe</a>.
+  </p>
+  <div class="surface-card p-5 max-w-3xl mt-6">
+    <p class="font-semibold text-text mb-3">Zum Vergleich: Alltagsgeräusche</p>
+    <ul class="text-sm space-y-2">
+      {alltagsvergleiche.map((row, i) => (
+        <li class={`flex justify-between gap-4 ${i > 0 ? "border-t border-border pt-2" : ""}`}>
+          <span class="text-text-muted">{row.beispiel}</span>
+          <span class="font-semibold text-text shrink-0">{row.pegel}</span>
+        </li>
+      ))}
+    </ul>
+  </div>
+</SectionShell>
+
+<SectionShell>
+  <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
+    Wie laut darf eine Wärmepumpe sein? Die TA-Lärm-Grenzwerte
+  </h2>
+  <article class="max-w-3xl space-y-4 text-text-muted leading-relaxed mb-6">
+    <p>
+      Die verbindliche Antwort gibt die <strong class="text-text">TA Lärm</strong>
+      (Technische Anleitung zum Schutz gegen Lärm). Sie legt Immissionsrichtwerte
+      fest, die am <strong class="text-text">maßgeblichen Immissionsort</strong>
+      einzuhalten sind: 0,5 m vor dem geöffneten Fenster des am stärksten betroffenen
+      schutzbedürftigen Raums beim Nachbarn – typischerweise Schlaf- oder Wohnzimmer.
+      Terrasse und Grundstücksgrenze sind dafür nicht maßgeblich. Welcher Wert gilt,
+      hängt vom Gebietstyp ab, der sich aus dem Bebauungsplan oder der tatsächlichen
+      Bebauung ergibt.
+    </p>
+  </article>
+  <div class="surface-card overflow-x-auto max-w-3xl">
+    <table class="w-full text-sm text-left border-collapse">
+      <caption class="sr-only">
+        Immissionsrichtwerte der TA Lärm nach Gebietstyp, tags und nachts
+      </caption>
+      <thead>
+        <tr class="border-b border-border text-text bg-highlight">
+          <th scope="col" class="px-4 py-3 font-semibold">Gebietstyp</th>
+          <th scope="col" class="px-4 py-3 font-semibold">Tags (6–22 Uhr)</th>
+          <th scope="col" class="px-4 py-3 font-semibold">Nachts (22–6 Uhr)</th>
+        </tr>
+      </thead>
+      <tbody class="text-text-muted">
+        {taLaermWerte.map((row, i) => (
+          <tr class={i < taLaermWerte.length - 1 ? "border-b border-border" : ""}>
+            <th scope="row" class="px-4 py-3 font-medium text-text">{row.gebiet}</th>
+            <td class="px-4 py-3">{row.tags}</td>
+            <td class="px-4 py-3">{row.nachts}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+  <article class="max-w-3xl space-y-4 text-text-muted leading-relaxed mt-6">
+    <p>
+      In der Praxis entscheidet fast immer der <strong class="text-text">Nachtwert</strong>,
+      denn die Wärmepumpe läuft in kalten Nächten durch – und beurteilt wird die
+      <strong class="text-text"> lauteste volle Nachtstunde</strong>, nicht der Durchschnitt.
+      Dazu kommen einige Rechenregeln, die Laien oft überraschen:
+    </p>
+  </article>
+  <CheckList
+    class="mt-4"
+    items={[
+      { lead: "Zuschläge:", text: "Für auffällige Töne (etwa tieffrequentes Brummen) werden je nach Ausprägung 3 oder 6 dB(A) auf den gemessenen Pegel aufgeschlagen." },
+      { lead: "Geräuschspitzen:", text: "Kurzzeitige Spitzen – etwa beim Abtauen oder Verdichter-Anlauf – dürfen den Nachtrichtwert um höchstens 20 dB(A) überschreiten." },
+      { lead: "Summenwirkung:", text: "Stehen mehrere Anlagen in der Nachbarschaft, zählt die Gesamtbelastung. Die neue Wärmepumpe muss also nicht nur allein leise genug sein." },
+      { lead: "Irrelevanz-Regel:", text: "Bleibt die Anlage mindestens 6 dB(A) unter dem Richtwert, gilt ihr Beitrag als nicht relevant – ein guter Planungspuffer." },
+      { lead: "Nachtmodus:", text: "Ein schallreduzierter Nachtbetrieb darf in der Prognose berücksichtigt werden, wenn er fest eingestellt ist – nicht jede Behörde akzeptiert eine bloße Option im Menü." },
+    ]}
+  />
+  <p class="text-text-muted max-w-3xl text-sm mt-6">
+    Für die behördliche Beurteilung von Luft-Wärmepumpen in Wohngebieten gibt es
+    zusätzlich den <a href="https://www.lai-immissionsschutz.de/documents/leitfaden-laerm-bei-stationaeren-geraeten-kurzfassung_1698053205.pdf" class="text-primary underline" target="_blank" rel="noopener">LAI-Leitfaden (Kurzfassung Luftwärmepumpen, 2023)</a>
+    mit einem vereinfachten Prüfverfahren samt Abstandstabellen. Eine Weiterentwicklung
+    der TA Lärm ist im Koalitionsvertrag 2025 angekündigt; beschlossen ist davon bis
+    Juli 2026 nichts – es gelten die Werte oben.
+  </p>
+</SectionShell>
+
+<SectionShell variant="alt">
+  <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
+    Wärmepumpe zu laut: Was tun?
+  </h2>
+  <article class="max-w-3xl space-y-4 text-text-muted leading-relaxed mb-6">
+    <p>
+      Wird die eigene Anlage lauter als erwartet, steckt selten ein „lautes Gerät"
+      dahinter – meist sind es Einstellung, Aufstellung oder Körperschall. Die
+      wirksamsten Stellschrauben in dieser Reihenfolge:
+    </p>
+  </article>
+  <CheckList
+    items={[
+      { lead: "Nachtmodus aktivieren:", text: "Viele Anlagen werden ohne konfigurierten Nachtbetrieb übergeben. Die Absenkung bringt je nach Hersteller 3 bis 10 dB(A) – kostenlos." },
+      { lead: "Lüfterkennlinie anpassen:", text: "Der Fachbetrieb kann Drehzahl und Heizkurve oft so einstellen, dass das Gerät länger, aber leiser läuft." },
+      { lead: "Körperschall entkoppeln:", text: "Brummen im Haus oder beim Nachbarn kommt häufig über Fundament oder Wandkonsole. Schwingungsdämpfer und flexible Anschlüsse helfen." },
+      { lead: "Ausblasrichtung und Reflexionen prüfen:", text: "Vom Nachbarfenster weg ausblasen, Ecken und enge Nischen meiden – das verändert den Pegel um mehrere dB(A)." },
+      { lead: "Abtauen und Anlauf prüfen lassen:", text: "Auffällige Einzelgeräusche (Zischen, Klacken, Aufheulen) sind ein Fall für den Service, nicht für die Schallschutzhaube." },
+      { lead: "Erst dann baulich nachrüsten:", text: "Haube oder Lärmschutzwand sind der letzte Schritt, wenn Einstellung und Entkopplung ausgereizt sind – Kosten siehe unten." },
+    ]}
+  />
+  <h3 class="text-xl font-bold text-text mt-10 mb-4">
+    Und wenn die Wärmepumpe des Nachbarn zu laut ist?
+  </h3>
+  <NumberedSteps
+    items={[
+      { title: "Gespräch suchen und Protokoll führen", text: "Konkrete Zeiten und Geräuschart notieren (Dauerrauschen, Brummen, Spitzen). Viele Betreiber wissen nicht, dass ihre Anlage nachts hörbar ist – oder dass sie einen Nachtmodus hat." },
+      { title: "Technische Abhilfe ansprechen", text: "Nachtmodus, Entkopplung oder eine geänderte Ausblasrichtung lösen die meisten Fälle schneller und billiger als jeder Streit." },
+      { title: "Messung durch die Behörde", text: "Bleibt es laut, kann die zuständige Immissionsschutzbehörde eine Beurteilung nach TA Lärm veranlassen. Bei Überschreitung muss der Betreiber nachbessern." },
+      { title: "Zivilrechtliche Ansprüche prüfen", text: "Bei wesentlicher Beeinträchtigung besteht ein Anspruch auf Beseitigung und Unterlassung (§ 1004 i. V. m. § 906 BGB). Gerichte orientieren sich an den TA-Lärm-Werten; hier hilft anwaltliche Beratung." },
+    ]}
+  />
+</SectionShell>
+
+<SectionShell>
+  <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
+    Was kostet Schallschutz bei einer Wärmepumpe?
+  </h2>
+  <p class="text-text-muted max-w-3xl mb-6">
+    Gute Nachricht: Bei den meisten Einfamilienhäusern reicht die Kombination aus
+    passendem Aufstellort, Entkopplung und Nachtmodus – ohne weitere Kosten. Wenn der
+    Standort kritisch ist, gelten diese redaktionellen Kostenspannen zur Orientierung:
+  </p>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl">
+    <div class="surface-card p-5">
+      <h3 class="font-semibold text-text">Entkopplung/Sockel</h3>
+      <p class="text-2xl font-bold text-primary my-2">300 - 1.200 €</p>
+      <p class="text-text-muted text-sm">Gegen Körperschall und Brummen – die häufigste und günstigste Maßnahme.</p>
+    </div>
+    <div class="surface-card p-5">
+      <h3 class="font-semibold text-text">Schallschutzhaube</h3>
+      <p class="text-2xl font-bold text-primary my-2">800 - 2.500 €</p>
+      <p class="text-text-muted text-sm">Senkt den Pegel um etwa 3–10 dB(A). Nur mit Herstellerfreigabe montieren.</p>
+    </div>
+    <div class="surface-card p-5">
+      <h3 class="font-semibold text-text">Lärmschutzwand</h3>
+      <p class="text-2xl font-bold text-primary my-2">800 - 2.500 €</p>
+      <p class="text-text-muted text-sm">Wirkt nur, wenn sie die Sichtlinie zum Nachbarfenster vollständig unterbricht.</p>
+    </div>
+  </div>
+  <article class="max-w-3xl space-y-4 text-text-muted leading-relaxed mt-6">
+    <p>
+      Dazu kommt bei dichter Bebauung gegebenenfalls eine
+      <strong class="text-text"> Schallberechnung vor dem Angebot</strong> (400–800 €) –
+      deutlich günstiger als ein nachträglicher Umbau.
+      <strong class="text-text"> Schallschutz selber machen?</strong> Vorsicht: Eine
+      selbst gebaute Einhausung, die die Luftführung stört, senkt die Effizienz, kann
+      das Gerät beschädigen und die Garantie kosten. Bewährt in Eigenleistung sind
+      dagegen Schwingungsdämpfer unter dem Gerät und eine bepflanzte, versetzt
+      stehende Sichtschutzwand mit Abstand zum Gerät.
+    </p>
+  </article>
+</SectionShell>
+
+<SectionShell variant="alt">
+  <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
+    Leise Wärmepumpe kaufen: Worauf es 2026 ankommt
+  </h2>
+  <article class="max-w-3xl space-y-4 text-text-muted leading-relaxed">
+    <p>
+      „Leiseste Wärmepumpe"-Listen veralten schnell – belastbarer ist der Blick ins
+      Datenblatt. Vergleichen Sie den <strong class="text-text">Schallleistungspegel
+      (L<sub>WA</sub>)</strong> nach EU-Ökodesign-Angabe, nicht die werblich oft
+      genannten Schalldruckwerte „in X Metern". Die leisesten aktuellen Geräte liegen
+      um <strong class="text-text">48–54 dB(A)</strong> Schallleistung, gute
+      Mittelklasse bei 55–60 dB(A).
+    </p>
+    <p>
+      Eine praktische Messlatte liefert seit Januar 2026 die Förderung: Gefördert
+      werden Luft-Wasser-Wärmepumpen nur noch, wenn sie mindestens 10 dB unter den
+      EU-Ökodesign-Grenzwerten bleiben – praktisch maximal
+      <strong class="text-text">55 dB(A)</strong> unter 6 kW und
+      <strong class="text-text">60 dB(A)</strong> bei 6–12 kW Heizleistung. Ein
+      förderfähiges Gerät ist damit automatisch ein vergleichsweise leises; Details
+      stehen im Ratgeber <a href="/waermepumpe-foerderung-2026/" class="text-primary underline">Wärmepumpen-Förderung 2026</a>.
+    </p>
+    <p>
+      Genauso wichtig wie das Gerät: ein <strong class="text-text">Nachtmodus, der ab
+      Werk konfiguriert wird</strong>, eine saubere Schwingungsentkopplung im Angebot
+      und ein Aufstellort, der nicht auf das nächste Schlafzimmerfenster zielt. Was
+      eine Luft-Wasser-Wärmepumpe insgesamt kostet, steht im Ratgeber
+      <a href="/luft-wasser-waermepumpe-kosten/" class="text-primary underline">Luft-Wasser-Wärmepumpe: Kosten</a>.
+    </p>
+  </article>
+</SectionShell>
+
+<SectionShell>
+  <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
+    Quellen und redaktioneller Stand
+  </h2>
+  <div class="surface-card p-5 max-w-3xl text-sm text-text-muted leading-relaxed">
+    <p class="font-semibold text-text mb-3">Stand: 19. Juli 2026</p>
+    <ul class="space-y-2">
+      <li>
+        Bund: <a href="https://www.verwaltungsvorschriften-im-internet.de/bsvwvbund_26081998_IG19980826.htm" class="text-primary underline" target="_blank" rel="noopener">TA Lärm (Sechste Allgemeine Verwaltungsvorschrift zum BImSchG)</a> – Immissionsrichtwerte nach Nr. 6.1, Zuschläge und Messverfahren nach Anhang
+      </li>
+      <li>
+        LAI: <a href="https://www.lai-immissionsschutz.de/documents/leitfaden-laerm-bei-stationaeren-geraeten-kurzfassung_1698053205.pdf" class="text-primary underline" target="_blank" rel="noopener">Leitfaden Lärm bei stationären Geräten – Kurzfassung Luftwärmepumpen (08/2023)</a>
+      </li>
+      <li>
+        dena-Gebäudeforum: <a href="https://www.gebaeudeforum.de/realisieren/heizungstechnik/waermepumpen/geraeuschemission/" class="text-primary underline" target="_blank" rel="noopener">Geräuschemissionen von Wärmepumpen</a>
+      </li>
+      <li>
+        Bundesverband Wärmepumpe: <a href="https://www.waermepumpe.de/schallrechner/" class="text-primary underline" target="_blank" rel="noopener">Schallrechner</a> für die überschlägige Prognose am eigenen Aufstellort
+      </li>
+      <li>
+        Diese Seite ordnet Technik und Rechtslage redaktionell ein und ersetzt keine Rechtsberatung oder Schallprognose im Einzelfall. Alle Angaben ohne Gewähr; Hinweise gern über <a href="/kontakt/" class="text-primary underline">Kontakt</a>.
+      </li>
+    </ul>
+  </div>
+</SectionShell>
+
+<SectionShell variant="alt">
+  <h2 class="text-2xl md:text-3xl font-bold text-text mb-6">Weiterlesen</h2>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-5xl">
+    <InternalLinkCard href="/waermepumpe-abstand-nachbar/" title="Abstand je Bundesland" description="Grenzabstand-Regeln aller 16 Bundesländer und Baurecht an der Grenze." />
+    <InternalLinkCard href="/waermepumpe-abstand-nachbar-bremen/" title="Abstand in Bremen" description="BremLBO, Reihenhaus und lokale Einordnung für Bremen." />
+    <InternalLinkCard href="/luft-wasser-waermepumpe-kosten/" title="Luft-Wasser-Kosten" description="Kosten, Stromverbrauch und Schallschutz der häufigsten Bauart." />
+    <InternalLinkCard href="/waermepumpe-altbau-bremen/" title="Altbau Bremen" description="Machbarkeit im Bestandsgebäude prüfen." />
+  </div>
+</SectionShell>
+
+    {data.ctaBlock && <CTASection {...data.ctaBlock} />}
+    {data.faqs?.length > 0 && (
+        <FAQSection heading={data.faqHeading} items={data.faqs} />
+    )}
+</Layout>
