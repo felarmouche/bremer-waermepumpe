@@ -1,12 +1,20 @@
 ---
 import { Image } from "astro:assets";
 import logo from "../assets/Logo.webp";
-import { headerLinks, primaryCta, isActivePath } from "../data/navigation";
+import {
+  megaMenuClusters,
+  headerDirectLinks,
+  primaryCta,
+  isActivePath,
+} from "../data/navigation";
 
 const pathname = Astro.url.pathname;
+const megaActive = megaMenuClusters.some((cluster) =>
+  cluster.links.some((link) => isActivePath(pathname, link.href)),
+);
 ---
 
-<div data-header-nav class="flex flex-col">
+<div data-header-nav class="relative flex flex-col">
   <div
     class="flex flex-row items-center justify-between px-4 sm:px-6 lg:px-16 py-4 mx-auto w-full"
   >
@@ -45,8 +53,33 @@ const pathname = Astro.url.pathname;
     </button>
 
     <nav class="hidden md:flex items-center gap-6">
+      <button
+        data-mega-toggle
+        type="button"
+        aria-expanded="false"
+        aria-controls="mega-nav"
+        class:list={[
+          "inline-flex items-center gap-1.5 text-sm transition-colors",
+          megaActive
+            ? "text-primary font-semibold"
+            : "text-text-muted hover:text-text",
+        ]}
+      >
+        Alle Themen
+        <svg
+          data-mega-chevron
+          class="w-4 h-4 transition-transform duration-200"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+        >
+          <path stroke-linecap="round" stroke-linejoin="round" d="m6 9 6 6 6-6"
+          ></path>
+        </svg>
+      </button>
       {
-        headerLinks.map((link) => (
+        headerDirectLinks.map((link) => (
           <a
             href={link.href}
             class:list={[
@@ -66,28 +99,103 @@ const pathname = Astro.url.pathname;
     </nav>
   </div>
 
+  <div
+    id="mega-nav"
+    data-mega-panel
+    class="hidden absolute inset-x-0 top-full border-b border-border bg-white shadow-lg"
+  >
+    <div
+      class="mx-auto max-w-6xl px-6 lg:px-8 py-8 grid grid-cols-2 lg:grid-cols-4 gap-x-10 gap-y-8"
+    >
+      {
+        megaMenuClusters.map((cluster) => (
+          <div>
+            <p class="text-xs font-semibold uppercase tracking-wider text-text-muted border-b border-border pb-2 mb-3">
+              {cluster.label}
+            </p>
+            <ul class="space-y-1">
+              {cluster.links.map((link) => (
+                <li>
+                  <a
+                    href={link.href}
+                    class:list={[
+                      "group block rounded-md px-3 py-2 -mx-3 transition-colors hover:bg-surface",
+                      isActivePath(pathname, link.href) && "bg-surface",
+                    ]}
+                  >
+                    <span
+                      class:list={[
+                        "block text-sm font-medium transition-colors",
+                        isActivePath(pathname, link.href)
+                          ? "text-primary"
+                          : "text-text group-hover:text-primary",
+                      ]}
+                    >
+                      {link.label}
+                    </span>
+                    {link.description && (
+                      <span class="block text-xs text-text-muted mt-0.5 leading-relaxed">
+                        {link.description}
+                      </span>
+                    )}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+
   <nav
     id="mobile-nav"
     data-nav-mobile
     class="overflow-hidden max-h-0 transition-[max-height] duration-300 ease-in-out border-t border-border bg-surface md:hidden"
   >
-    <div class="flex flex-col p-4 gap-3">
+    <div class="flex flex-col p-4 gap-5">
       {
-        headerLinks.map((link) => (
-          <a
-            href={link.href}
-            class:list={[
-              "text-sm transition-colors py-1",
-              isActivePath(pathname, link.href)
-                ? "text-primary font-semibold"
-                : "text-text-muted hover:text-text",
-            ]}
-          >
-            {link.navLabel ?? link.label}
-          </a>
+        megaMenuClusters.map((cluster) => (
+          <div>
+            <p class="text-xs font-semibold uppercase tracking-wider text-text-muted mb-2">
+              {cluster.label}
+            </p>
+            <div class="flex flex-col gap-1">
+              {cluster.links.map((link) => (
+                <a
+                  href={link.href}
+                  class:list={[
+                    "text-sm transition-colors py-1",
+                    isActivePath(pathname, link.href)
+                      ? "text-primary font-semibold"
+                      : "text-text-muted hover:text-text",
+                  ]}
+                >
+                  {link.label}
+                </a>
+              ))}
+            </div>
+          </div>
         ))
       }
-      <a href={primaryCta.href} class="btn-accent text-sm text-center mt-2">
+      <div class="flex flex-col gap-1 border-t border-border pt-4">
+        {
+          headerDirectLinks.map((link) => (
+            <a
+              href={link.href}
+              class:list={[
+                "text-sm transition-colors py-1",
+                isActivePath(pathname, link.href)
+                  ? "text-primary font-semibold"
+                  : "text-text-muted hover:text-text",
+              ]}
+            >
+              {link.navLabel ?? link.label}
+            </a>
+          ))
+        }
+      </div>
+      <a href={primaryCta.href} class="btn-accent text-sm text-center">
         {primaryCta.label}
       </a>
     </div>
@@ -96,22 +204,82 @@ const pathname = Astro.url.pathname;
 
 <script>
   document.querySelectorAll("[data-header-nav]").forEach((header) => {
+    // --- Mobile: Hamburger auf/zu ---
     const button = header.querySelector("[data-nav-toggle]");
     const mobileNav = header.querySelector("[data-nav-mobile]") as HTMLElement;
 
-    if (!button || !mobileNav) return;
+    if (button && mobileNav) {
+      button.addEventListener("click", () => {
+        const isOpen =
+          mobileNav.style.maxHeight && mobileNav.style.maxHeight !== "0px";
+        if (isOpen) {
+          mobileNav.style.maxHeight = "0px";
+          mobileNav.style.overflowY = "";
+          button.setAttribute("aria-expanded", "false");
+          button.setAttribute("aria-label", "Menü öffnen");
+        } else {
+          // Nicht höher als der restliche Viewport, sonst sind untere Links unerreichbar
+          const available =
+            window.innerHeight - mobileNav.getBoundingClientRect().top - 8;
+          mobileNav.style.maxHeight =
+            Math.min(mobileNav.scrollHeight, available) + "px";
+          mobileNav.style.overflowY = "auto";
+          button.setAttribute("aria-expanded", "true");
+          button.setAttribute("aria-label", "Menü schließen");
+        }
+      });
+    }
 
-    button.addEventListener("click", () => {
-      const isOpen =
-        mobileNav.style.maxHeight && mobileNav.style.maxHeight !== "0px";
-      if (isOpen) {
-        mobileNav.style.maxHeight = "0px";
-        button.setAttribute("aria-expanded", "false");
-        button.setAttribute("aria-label", "Menü öffnen");
-      } else {
-        mobileNav.style.maxHeight = mobileNav.scrollHeight + "px";
-        button.setAttribute("aria-expanded", "true");
-        button.setAttribute("aria-label", "Menü schließen");
+    // --- Desktop: Mega-Menü ---
+    const megaToggle = header.querySelector(
+      "[data-mega-toggle]",
+    ) as HTMLElement;
+    const megaPanel = header.querySelector("[data-mega-panel]") as HTMLElement;
+    const chevron = header.querySelector("[data-mega-chevron]");
+
+    if (!megaToggle || !megaPanel) return;
+
+    let megaOpen = false;
+    let closeTimer: ReturnType<typeof setTimeout> | undefined;
+
+    const setMegaOpen = (open: boolean) => {
+      megaOpen = open;
+      megaPanel.classList.toggle("hidden", !open);
+      megaToggle.setAttribute("aria-expanded", String(open));
+      chevron?.classList.toggle("rotate-180", open);
+    };
+
+    const hoverCapable = window.matchMedia("(hover: hover)").matches;
+
+    megaToggle.addEventListener("click", (e) => {
+      // Maus-Geräte: Hover hat schon geöffnet — der Klick soll das nicht
+      // sofort wieder schließen (e.detail > 0 = echter Mausklick).
+      const isMouseClick = hoverCapable && (e as MouseEvent).detail > 0;
+      setMegaOpen(isMouseClick ? true : !megaOpen);
+    });
+
+    // Auf Geräten mit Maus zusätzlich per Hover öffnen/schließen
+    if (hoverCapable) {
+      megaToggle.addEventListener("mouseenter", () => {
+        clearTimeout(closeTimer);
+        setMegaOpen(true);
+      });
+      [megaToggle, megaPanel].forEach((el) => {
+        el.addEventListener("mouseenter", () => clearTimeout(closeTimer));
+        el.addEventListener("mouseleave", () => {
+          closeTimer = setTimeout(() => setMegaOpen(false), 150);
+        });
+      });
+    }
+
+    document.addEventListener("click", (e) => {
+      if (megaOpen && !header.contains(e.target as Node)) setMegaOpen(false);
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && megaOpen) {
+        setMegaOpen(false);
+        megaToggle.focus();
       }
     });
   });

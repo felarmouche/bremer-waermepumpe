@@ -9,7 +9,10 @@ export type NavCluster = {
   id: string;
   label: string;
   description?: string;
+  /** Cluster erscheint im Header (Mega-Menü bzw. als Direktlink). */
   inHeader: boolean;
+  /** Links dieses Clusters stehen direkt in der Leiste statt im Mega-Menü. */
+  headerDirect?: boolean;
   inFooter: boolean;
   links: NavLink[];
 };
@@ -52,7 +55,7 @@ export const navClusters: NavCluster[] = [
     id: "kosten-detail",
     label: "Kosten im Detail",
     description: "Vertiefende Spokes zu Wärmepumpen-Kosten.",
-    inHeader: false,
+    inHeader: true,
     inFooter: true,
     links: [
       {
@@ -81,7 +84,7 @@ export const navClusters: NavCluster[] = [
     id: "foerderung-detail",
     label: "Förderung im Detail",
     description: "Vertiefende Spokes zur Wärmepumpen-Förderung.",
-    inHeader: false,
+    inHeader: true,
     inFooter: true,
     links: [
       {
@@ -110,7 +113,7 @@ export const navClusters: NavCluster[] = [
     id: "vergleich-praxis",
     label: "Vergleich & Praxis",
     description: "Entscheidungs- und Praxisfragen rund um Wärmepumpen in Bremen.",
-    inHeader: false,
+    inHeader: true,
     inFooter: true,
     links: [
       {
@@ -149,6 +152,7 @@ export const navClusters: NavCluster[] = [
     id: "ueber",
     label: "Über",
     inHeader: true,
+    headerDirect: true,
     inFooter: true,
     links: [
       {
@@ -178,10 +182,13 @@ export const primaryCta: NavLink = {
   label: "Eignung & Förderung prüfen",
 };
 
-export const headerClusters = navClusters.filter((c) => c.inHeader);
+export const megaMenuClusters = navClusters.filter(
+  (c) => c.inHeader && !c.headerDirect,
+);
+export const headerDirectLinks: NavLink[] = navClusters
+  .filter((c) => c.inHeader && c.headerDirect)
+  .flatMap((c) => c.links);
 export const footerClusters = navClusters.filter((c) => c.inFooter);
-
-export const headerLinks: NavLink[] = headerClusters.flatMap((c) => c.links);
 
 export function isActivePath(pathname: string, href: string): boolean {
   if (href === "/") return pathname === "/" || pathname === "";
