@@ -8,6 +8,7 @@
  *   npm run seo:dfs                        ranked_keywords eigene Domain
  *   npm run seo:dfs -- ranked <domain>     ranked_keywords Wettbewerber (Gap-Basis)
  *   npm run seo:dfs -- competitors         Wettbewerber-Domains
+ *   npm run seo:dfs -- volume "kw1, kw2"   Suchvolumen/CPC/Difficulty einzelner Keywords
  *   npm run seo:dfs -- serp "kw1, kw2"     Live-SERPs für einzelne Keywords
  */
 import { appendFileSync, mkdirSync, readFileSync, writeFileSync, existsSync } from 'node:fs';
@@ -107,6 +108,27 @@ if (cmd === 'ranked') {
     );
   }
   save('competitors.json', data);
+} else if (cmd === 'volume') {
+  const keywords = rest
+    .join(' ')
+    .split(',')
+    .map((k) => k.trim())
+    .filter(Boolean);
+  if (!keywords.length) fail('Nutzung: npm run seo:dfs -- volume "keyword1, keyword2"');
+  const data = await post(
+    '/dataforseo_labs/google/keyword_overview/live',
+    [{ keywords, location_code: LOCATION, language_code: LANGUAGE }],
+    `volume ${keywords.length}kw`
+  );
+  const items = data.tasks?.[0]?.result?.[0]?.items ?? [];
+  for (const i of items) {
+    const ki = i.keyword_info ?? {};
+    const diff = i.keyword_properties?.keyword_difficulty;
+    console.log(
+      `${i.keyword} | vol=${ki.search_volume ?? '?'} | cpc=${ki.cpc ?? '?'} | comp=${ki.competition_level ?? '?'} | difficulty=${diff ?? '?'}`
+    );
+  }
+  save(`volume-${new Date().toISOString().slice(0, 16).replace(/[T:]/g, '-')}.json`, data);
 } else if (cmd === 'serp') {
   const keywords = rest
     .join(' ')
@@ -114,17 +136,16 @@ if (cmd === 'ranked') {
     .map((k) => k.trim())
     .filter(Boolean);
   if (!keywords.length) fail('Nutzung: npm run seo:dfs -- serp "keyword1, keyword2"');
-  const data = await post(
-    '/serp/google/organic/live/advanced',
-    keywords.map((keyword) => ({
-      keyword,
-      location_code: LOCATION,
-      language_code: LANGUAGE,
-      device: 'desktop',
-      depth: 20,
-    })),
-    `serp ${keywords.length}kw`
-  );
+  // Der Live-Endpoint akzeptiert nur einen Task pro Request — daher einzeln abfragen.
+  const data = { tasks: [] };
+  for (const keyword of keywords) {
+    const single = await post(
+      '/serp/google/organic/live/advanced',
+      [{ keyword, location_code: LOCATION, language_code: LANGUAGE, device: 'desktop', depth: 20 }],
+      `serp ${keyword}`
+    );
+    data.tasks.push(...(single.tasks ?? []));
+  }
   for (const task of data.tasks ?? []) {
     const items = (task.result?.[0]?.items ?? []).filter((i) => i.type === 'organic');
     console.log(`\n"${task.data?.keyword}":`);
@@ -134,5 +155,5 @@ if (cmd === 'ranked') {
   }
   save(`serp-${new Date().toISOString().slice(0, 16).replace(/[T:]/g, '-')}.json`, data);
 } else {
-  fail(`Unbekanntes Kommando "${cmd}". Verfügbar: ranked [domain] | competitors | serp "kw1, kw2"`);
+  fail(`Unbekanntes Kommando "${cmd}". Verfügbar: ranked [domain] | competitors | volume "kw1, kw2" | serp "kw1, kw2"`);
 }
