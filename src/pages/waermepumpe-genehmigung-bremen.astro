@@ -1,0 +1,610 @@
+---
+import { getImage } from "astro:assets";
+import Layout from "../layout/Layout.astro";
+import Breadcrumb from "../components/Breadcrumb.astro";
+import HeroSection from "../components/HeroSection.astro";
+import TrustBar from "../components/TrustBar.astro";
+import CTASection from "../components/CTASection.astro";
+import FAQSection from "../components/FAQSection.astro";
+import SectionShell from "../components/SectionShell.astro";
+import NoticeSuccess from "../components/content/NoticeSuccess.astro";
+import CheckList from "../components/content/CheckList.astro";
+import NumberedSteps from "../components/content/NumberedSteps.astro";
+import InternalLinkCard from "../components/InternalLinkCard.astro";
+import heroImage from "../images/heat-pump-bremen-hero.webp";
+
+import type { PageData } from "../types/page";
+
+const data: PageData = {
+  title: "Wärmepumpe Bremen: Genehmigung & Anmeldung – was gilt 2026?",
+  description:
+    "Luft-Wasser-Wärmepumpe in Bremen: meist ohne Baugenehmigung, aber mit Anmeldung beim Netzbetreiber. Was bei Denkmalschutz, Erdwärme und Aufstellort gilt.",
+  lastUpdated: "19. Juli 2026",
+  hero: {
+    headline: "Wärmepumpe in Bremen: Genehmigung, Anmeldung und Vorschriften",
+    subtext:
+      "Wann keine Baugenehmigung nötig ist, wer die Wärmepumpe bei wesernetz anmeldet und welche Sonderfälle Sie vor dem Auftrag klären sollten.",
+    primaryCTA: {
+      label: "Vorhaben prüfen lassen",
+      href: "/check/",
+    },
+    secondaryCTA: {
+      label: "Abstand zum Nachbarn Bremen",
+      href: "/waermepumpe-abstand-nachbar-bremen/",
+    },
+  },
+  trustItems: [
+    {
+      text: "BremLBO mit Ausnahmen erklärt",
+    },
+    {
+      text: "wesernetz-Anmeldung Schritt für Schritt",
+    },
+    {
+      text: "Denkmalschutz & Erdwärme",
+    },
+    {
+      text: "Geprüft am 19. Juli 2026",
+    },
+  ],
+  breadcrumb: [
+    {
+      label: "Startseite",
+      href: "/",
+    },
+    {
+      label: "Genehmigung Bremen",
+    },
+  ],
+  ctaBlock: {
+    headline: "Sind Aufstellort und Anmeldeweg bei Ihnen geklärt?",
+    text: "Der Browser-Check ordnet Gebäude und Vorhaben zunächst unverbindlich ein. Kontaktdaten werden erst nach ausdrücklicher Einwilligung an den unter /fachpartner/ genannten Bremer Fachbetrieb weitergegeben.",
+    variant: "highlight",
+    primaryCTA: {
+      label: "Vorhaben prüfen lassen",
+      href: "/check/",
+    },
+    secondaryCTA: {
+      label: "Abstand in Bremen prüfen",
+      href: "/waermepumpe-abstand-nachbar-bremen/",
+    },
+  },
+  faqHeading: "FAQ: Wärmepumpe genehmigen und anmelden in Bremen",
+  faqs: [
+    {
+      question:
+        "Braucht man in Bremen eine Baugenehmigung für eine Wärmepumpe?",
+      answer:
+        "Für eine typische, dem Grundstück untergeordnete Luft-Wasser-Wärmepumpe ist in Bremen meist keine Baugenehmigung nötig. § 61 Absatz 1 Nummer 3 Buchstabe b BremLBO erfasst gebäudeunabhängige Anlagen zur Wärmeversorgung bis 3 Meter Höhe und 9 Meter Gesamtlänge. Die Regel gilt dort nicht, wo eine örtliche Gestaltungsvorschrift nach § 86 Absatz 1 Nummer 1 BremLBO greift. Denkmalschutz, Erhaltungssatzung, Schallschutz und Abstandsrecht sind außerdem getrennt zu prüfen.",
+    },
+    {
+      question: "Muss ich eine Wärmepumpe anmelden – und wo?",
+      answer:
+        "Ja. Im Netzgebiet von wesernetz meldet ein eingetragener Elektroinstallateur die Wärmepumpe vor der Installation über das Netzportal an. Privatkunden sehen diese Anmeldestrecke nicht. wesernetz bezeichnet Wärmepumpen ausdrücklich als anmeldepflichtig, aber nicht als genehmigungspflichtig; geprüft werden Hausanschluss und Netzverträglichkeit. Die Meldung und Überprüfung sind laut wesernetz kostenlos.",
+    },
+    {
+      question: "Was gilt im denkmalgeschützten Bremer Haus?",
+      answer:
+        "Nicht jedes Bremer Haus ist ein Kulturdenkmal. Ist das Gebäude geschützt, braucht eine Veränderung des Bestands oder Erscheinungsbilds nach § 10 Bremisches Denkmalschutzgesetz eine Genehmigung der Denkmalschutzbehörde. Das kann auch ein sichtbares Außengerät betreffen. Eine Genehmigung kann zudem nötig sein, wenn das eigene Haus nicht gelistet ist, aber in der Umgebung eines geschützten unbeweglichen Kulturdenkmals liegt. Zusätzlich kann in einem Erhaltungssatzungsgebiet eine Genehmigung nach § 173 BauGB nötig sein.",
+    },
+    {
+      question: "Ist eine Erdwärmepumpe in Bremen genehmigungspflichtig?",
+      answer:
+        "Für Erdwärmesonden und Erdwärmekollektoren verlangt das Serviceportal Bremen vor der Errichtung eine Erlaubnis der Wasserbehörde. Der Antrag muss dort spätestens acht Wochen vor Beginn vorliegen; auch ein Response-Test ist antragspflichtig. Das ist eine eigene fachrechtliche Erlaubnis – auch wenn die Anlage nach der BremLBO bauordnungsrechtlich verfahrensfrei sein kann.",
+    },
+  ],
+  schema: {
+    type: "Article",
+    datePublished: "2026-07-19",
+    dateModified: "2026-07-19",
+  },
+};
+
+const canonical = data.canonical ?? Astro.url.href;
+const hero = { ...data.hero, imageSrc: heroImage };
+const ogImage = await getImage({
+  src: heroImage,
+  width: 1200,
+  height: 630,
+  fit: "cover",
+  format: "jpg",
+});
+const dateLine = data.lastUpdated ? `Stand: ${data.lastUpdated}` : null;
+const pageSchema = data.schema
+  ? {
+      ...data.schema,
+      datePublished: data.schema.datePublished ?? data.schema.dateModified,
+      dateModified: data.schema.dateModified ?? data.schema.datePublished,
+    }
+  : undefined;
+
+const genehmigungsFaelle = [
+  {
+    fall: "Typische Luft-Wasser-Wärmepumpe am Einfamilienhaus",
+    baugenehmigung:
+      "Meist nein, wenn die Grenzen aus § 61 BremLBO eingehalten sind",
+    zusaetzlich: "Anmeldung bei wesernetz; Aufstellort und Lärm prüfen",
+  },
+  {
+    fall: "Grundstück mit örtlicher Gestaltungsvorschrift",
+    baugenehmigung: "Vorher mit der Bauaufsicht klären",
+    zusaetzlich: "Vorgaben zur äußeren Gestaltung können gelten",
+  },
+  {
+    fall: "Kulturdenkmal oder dessen geschützte Umgebung",
+    baugenehmigung: "Bauverfahren und Denkmalschutz getrennt prüfen",
+    zusaetzlich: "Denkmalschutzrechtliche Genehmigung kann nötig sein",
+  },
+  {
+    fall: "Erdwärmesonde oder Erdwärmekollektor",
+    baugenehmigung: "Bauordnungsrechtlich häufig verfahrensfrei",
+    zusaetzlich: "Erlaubnis der Bremer Wasserbehörde erforderlich",
+  },
+  {
+    fall: "Außengerät über 3 m Höhe oder 9 m Gesamtlänge",
+    baugenehmigung: "Nicht von der genannten Verfahrensfreiheit erfasst",
+    zusaetzlich: "Bauaufsicht vor der Beauftragung einbeziehen",
+  },
+];
+---
+
+<Layout
+  title={data.title}
+  description={data.description}
+  canonical={canonical}
+  ogImage={ogImage.src}
+  noindex={data.noindex}
+  pageSchema={pageSchema}
+>
+  {data.breadcrumb?.length > 0 && <Breadcrumb items={data.breadcrumb} />}
+  <HeroSection {...hero} />
+  {data.trustItems?.length > 0 && <TrustBar items={data.trustItems} />}
+  {
+    dateLine && (
+      <div class="bg-background border-b border-border">
+        <p class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-3 text-xs text-text-muted">
+          {dateLine} · Verantwortlich: <a
+            href="/kontakt/"
+            class="text-primary underline">Ferris El-Armouche</a
+          >, Redaktion bremer-waermepumpe.de · Alle Angaben ohne Gewähr
+        </p>
+      </div>
+    )
+  }
+
+  <SectionShell>
+    <article class="max-w-3xl space-y-4 text-text-muted leading-relaxed">
+      <div class="bg-highlight border border-border rounded p-5">
+        <p class="font-bold text-text mb-2">Schnelle Antwort</p>
+        <p class="text-sm leading-relaxed">
+          Eine übliche Luft-Wasser-Wärmepumpe am Einfamilienhaus braucht in
+          Bremen <strong class="text-text">meist keine Baugenehmigung</strong>.
+          Nach § 61 BremLBO sind untergeordnete, gebäudeunabhängige technische
+          Anlagen zur gebäudebezogenen Wärmeversorgung bis <strong class="text-text">3 m Höhe und 9 m
+          Gesamtlänge</strong> verfahrensfrei. Das gilt nicht im Bereich bestimmter
+          örtlicher Gestaltungsvorschriften.
+        </p>
+        <p class="text-sm leading-relaxed mt-3">
+          Ganz ohne Formalitäten geht es trotzdem nicht: Die Wärmepumpe muss vor
+          der Installation durch einen Elektrofachbetrieb bei{" "}
+          <strong class="text-text">wesernetz angemeldet</strong> werden. Bei
+          Denkmalschutz, Erhaltungssatzung oder Erdwärme ist zusätzlich eine eigene
+          Genehmigung beziehungsweise Erlaubnis zu prüfen.
+        </p>
+      </div>
+      <p>
+        „Genehmigung“ und „Anmeldung“ werden im Alltag oft gleichgesetzt. Für die
+        Planung macht der Unterschied viel aus: Die{" "}
+        <strong class="text-text">Bauaufsicht</strong> prüft das Baurecht, der{" "}
+        <strong class="text-text">Netzbetreiber</strong> den Stromanschluss und
+        Fachbehörden kümmern sich etwa um Denkmal- oder Wasserrecht. Eine Stelle
+        ersetzt die andere nicht.
+      </p>
+      <NoticeSuccess>
+        <p>
+          <strong>Merksatz:</strong> Keine Baugenehmigung heißt nicht „keine
+          Vorschriften“. Verfahrensfreie Anlagen müssen weiterhin alle öffentlich-
+          rechtlichen Anforderungen einhalten. Das steht ausdrücklich in § 59
+          Absatz 2 BremLBO.
+        </p>
+      </NoticeSuccess>
+      <div class="bg-highlight border border-border rounded p-5 flex flex-col sm:flex-row gap-4 sm:items-center sm:justify-between">
+        <div>
+          <p class="font-semibold text-text">Sonderfall oder normaler Standardfall?</p>
+          <p class="text-sm text-text-muted mt-1">
+            Der Check sammelt Gebäude- und Standortdaten für eine erste Einordnung
+            im Browser. Eine Behördenentscheidung ersetzt er nicht. Kontaktdaten
+            werden erst nach ausdrücklicher Einwilligung an den unter
+            <a href="/fachpartner/" class="text-primary underline">Fachpartner</a>
+            genannten Bremer Betrieb weitergegeben.
+          </p>
+        </div>
+        <a href="/check/" class="btn-accent shrink-0 text-center">
+          Vorhaben prüfen
+        </a>
+      </div>
+    </article>
+  </SectionShell>
+
+  <SectionShell variant="alt">
+    <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
+      Braucht eine Wärmepumpe in Bremen eine Baugenehmigung?
+    </h2>
+    <article class="max-w-3xl space-y-4 text-text-muted leading-relaxed mb-6">
+      <p>
+        Für das typische Außengerät lautet die Antwort: in der Regel nein.
+        § 61 Absatz 1 Nummer 3 Buchstabe b der Bremischen Landesbauordnung nennt
+        gebäudeunabhängige Anlagen zur Wärmeversorgung ausdrücklich. Verfahrensfrei
+        sind sie, wenn sie der Grundstücksnutzung untergeordnet bleiben, höchstens
+        3 m hoch und insgesamt höchstens 9 m lang sind.
+      </p>
+      <p>
+        Es gibt aber eine wichtige Ausnahme: Diese Regel greift nicht im
+        Geltungsbereich örtlicher Bauvorschriften zur Gestaltung nach § 86 Absatz 1
+        Nummer 1 BremLBO. Auch ein ungewöhnlich großes Gerät fällt nicht automatisch
+        unter die genannten Maße. In beiden Fällen sollte die untere Bauaufsicht den
+        konkreten Standort vor der Bestellung einordnen.
+      </p>
+    </article>
+
+    <div class="surface-card overflow-x-auto max-w-5xl">
+      <table class="w-full text-sm text-left border-collapse">
+        <caption class="sr-only">
+          Überblick zur Baugenehmigung und zu weiteren Erlaubnissen für Wärmepumpen
+          in Bremen
+        </caption>
+        <thead>
+          <tr class="border-b border-border text-text bg-highlight">
+            <th scope="col" class="px-4 py-3 font-semibold">Vorhaben</th>
+            <th scope="col" class="px-4 py-3 font-semibold">Baugenehmigung</th>
+            <th scope="col" class="px-4 py-3 font-semibold">Was zusätzlich zählt</th>
+          </tr>
+        </thead>
+        <tbody class="text-text-muted">
+          {
+            genehmigungsFaelle.map((row, index) => (
+              <tr
+                class={
+                  index < genehmigungsFaelle.length - 1
+                    ? "border-b border-border"
+                    : ""
+                }
+              >
+                <th scope="row" class="px-4 py-3 font-medium text-text">
+                  {row.fall}
+                </th>
+                <td class="px-4 py-3">{row.baugenehmigung}</td>
+                <td class="px-4 py-3">{row.zusaetzlich}</td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+    <p class="text-text-muted max-w-3xl text-sm mt-5">
+      Die Tabelle ist eine erste Einordnung, keine Genehmigungszusage. Die aktuelle
+      BremLBO gilt im Land Bremen; zuständig sind die unteren Bauaufsichtsbehörden
+      der Stadtgemeinden Bremen und Bremerhaven.
+    </p>
+  </SectionShell>
+
+  <SectionShell>
+    <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
+      Wärmepumpe beim Netzbetreiber anmelden: So läuft es bei wesernetz
+    </h2>
+    <article class="max-w-3xl space-y-4 text-text-muted leading-relaxed mb-7">
+      <p>
+        In Bremen übernimmt nicht der Hauseigentümer die technische Anmeldung.
+        Ein bei wesernetz eingetragener{" "}
+        <strong class="text-text">Elektroinstallateur meldet die Wärmepumpe vor
+        dem Einbau über das Netzportal an</strong>. Die Anmeldestrecke ist deshalb
+        für Privatkunden nicht sichtbar. Die Wärmepumpe selbst anzumelden, also
+        ohne Elektriker, ist in diesem Ablauf nicht vorgesehen.
+      </p>
+      <p>
+        wesernetz formuliert den Unterschied klar: Wärmepumpen sind{" "}
+        <strong class="text-text">anmeldepflichtig, aber nicht
+        genehmigungspflichtig</strong>. Trotzdem wartet der Installateur die Prüfung
+        ab, denn je nach Anschluss können ein Zählerumbau oder eine Verstärkung der
+        Netzanschlussleitung nötig werden.
+      </p>
+    </article>
+
+    <NumberedSteps
+      items={[
+        {
+          title: "Geräte- und Standortdaten zusammenstellen",
+          text: "Benötigt werden unter anderem elektrische Leistung, Hersteller, Modellbezeichnung und ein Lageplan. Der Elektrofachbetrieb prüft außerdem Zählerplatz und Hausanschluss.",
+        },
+        {
+          title: "Anmeldung im wesernetz-Netzportal",
+          text: "Der eingetragene Installateur übermittelt die Daten online. Ein separates, öffentliches Anmeldeformular für Privatkunden gibt es in diesem Ablauf nicht.",
+        },
+        {
+          title: "Netz- und Anschlussprüfung abwarten",
+          text: "wesernetz prüft, ob Hausanschluss und Netz zur neuen Last passen, und meldet sich mit einer Bestätigung oder den nötigen Anpassungen zurück. Meldung und Prüfung sind laut wesernetz kostenlos.",
+        },
+        {
+          title: "Anschließen und in Betrieb nehmen",
+          text: "Sind alle Voraussetzungen erfüllt, installiert der Fachbetrieb die Anlage und nimmt den elektrischen Anschluss fachgerecht in Betrieb.",
+        },
+      ]}
+    />
+
+    <div class="surface-card p-5 max-w-3xl mt-8">
+      <h3 class="font-semibold text-text mb-2">
+        Was bedeutet § 14a EnWG für die Wärmepumpe?
+      </h3>
+      <div class="space-y-3 text-text-muted text-sm leading-relaxed">
+        <p>
+          Die Vorgaben gelten für Wärmepumpen, die seit dem 1. Januar 2024 neu in
+          Betrieb genommen werden, direkt oder indirekt an die Niederspannung
+          angeschlossen sind und mehr als 4,2 kW{" "}
+          <strong class="text-text">elektrische Netzanschlussleistung</strong>{" "}
+          haben. Gemeint ist nicht die thermische Heizleistung. Zusatz- und
+          Notheizungen wie Heizstäbe zählen mit; mehrere kleinere Wärmepumpen desselben
+          Betreibers werden zusammengerechnet.
+        </p>
+        <p>
+          Im Gegenzug für die technische Steuerbarkeit gibt es eine Reduzierung beim
+          Netzentgelt. Der normale Haushaltsstrom bleibt von einer möglichen
+          netzbedingten Leistungsreduzierung unberührt. Die Auslegung übernimmt der
+          Elektrofachbetrieb – § 14a ist keine Baugenehmigung und kein zweites
+          Behördenverfahren.
+        </p>
+      </div>
+    </div>
+  </SectionShell>
+
+  <SectionShell variant="alt">
+    <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
+      Sonderfälle: Wann eine weitere Genehmigung nötig ist
+    </h2>
+    <p class="text-text-muted max-w-3xl mb-7">
+      Die meisten Luft-Wasser-Wärmepumpen sind baurechtlich unkompliziert. Bei den
+      folgenden drei Fällen sollte die Klärung aber vor Angebot und Gerätebestellung
+      beginnen.
+    </p>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-5xl">
+      <article class="surface-card p-5">
+        <h3 class="font-semibold text-text mb-2">Kulturdenkmal</h3>
+        <p class="text-text-muted text-sm leading-relaxed">
+          Wird der Bestand oder das Erscheinungsbild eines geschützten Gebäudes
+          verändert, ist eine Genehmigung der Denkmalschutzbehörde nötig. Das kann
+          ein sichtbares Außengerät, Leitungen oder eine Einhausung betreffen. Auch
+          die Umgebung eines geschützten unbeweglichen Kulturdenkmals kann erfasst
+          sein.
+        </p>
+      </article>
+      <article class="surface-card p-5">
+        <h3 class="font-semibold text-text mb-2">Erhaltungs- oder Gestaltungssatzung</h3>
+        <p class="text-text-muted text-sm leading-relaxed">
+          In einem Erhaltungssatzungsgebiet kann selbst für ein sonst
+          verfahrensfreies Vorhaben eine Genehmigung nach § 173 BauGB nötig sein.
+          Örtliche Gestaltungsvorschriften können die Verfahrensfreiheit nach § 61
+          BremLBO ausschließen. Entscheidend ist die konkrete Adresse, nicht allein
+          der Stadtteil.
+        </p>
+      </article>
+      <article class="surface-card p-5">
+        <h3 class="font-semibold text-text mb-2">Erdwärme</h3>
+        <p class="text-text-muted text-sm leading-relaxed">
+          Für Erdwärmesonden und Erdwärmekollektoren verlangt Bremen vorab eine
+          Erlaubnis der Wasserbehörde. Laut Serviceportal muss der Antrag spätestens
+          acht Wochen vor Beginn vorliegen; auch ein Response-Test ist antragspflichtig.
+          Je nach Vorhaben kann außerdem ein Nachweis über die Online-Anzeige beim
+          Landesamt für Bergbau, Energie und Geologie verlangt werden.
+        </p>
+      </article>
+    </div>
+
+    <div class="surface-card p-5 max-w-3xl mt-7 text-sm text-text-muted leading-relaxed">
+      <p class="font-semibold text-text mb-2">Mietshaus oder Eigentumswohnung?</p>
+      <p>
+        Mieter sollten das Vorhaben zuerst mit dem Eigentümer klären. Bei einer
+        Wohnungseigentümergemeinschaft ist für eine bauliche Veränderung am
+        Gemeinschaftseigentum regelmäßig ein Beschluss nach § 20 WEG nötig. Diese
+        privatrechtliche Zustimmung ersetzt weder die wesernetz-Anmeldung noch eine
+        mögliche behördliche Genehmigung.
+      </p>
+    </div>
+  </SectionShell>
+
+  <SectionShell>
+    <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
+      Aufstellort der Wärmepumpe: Welche Vorschriften gelten in Bremen?
+    </h2>
+    <article class="max-w-3xl space-y-4 text-text-muted leading-relaxed mb-6">
+      <p>
+        Einen einzigen Pauschalabstand, mit dem jeder Aufstellort automatisch
+        zulässig ist, gibt es nicht. Baurecht, Lärmschutz, Grundstückssituation und
+        Herstellerangaben werden getrennt betrachtet. Für die Genehmigungsfrage
+        reicht deshalb ein Blick auf den Abstand zur Grenze nicht aus.
+      </p>
+    </article>
+    <CheckList
+      items={[
+        {
+          lead: "BremLBO und Satzungen:",
+          text: "Geräteabmessungen prüfen und klären, ob für die Adresse eine örtliche Gestaltungs- oder Erhaltungssatzung gilt.",
+        },
+        {
+          lead: "Grundstücksgrenze:",
+          text: "Bremen privilegiert bestimmte Wärmepumpen in Abstandsflächen. Die Maße und Grenzen erklärt der eigene Ratgeber zum Abstand in Bremen.",
+        },
+        {
+          lead: "TA Lärm:",
+          text: "Rechtlich zählt der Pegel am maßgeblichen Nachbarfenster, nicht nur die dB-Angabe im Prospekt. Schallleistung, Nachtmodus und Reflexionen gehören in die Planung.",
+        },
+        {
+          lead: "Luft, Wasser und Eis:",
+          text: "Ausblasluft und Kondensat dürfen auf Gehwegen oder beim Nachbarn keine Gefahr schaffen. Herstellerabstände für Luftführung und Wartung müssen frei bleiben.",
+        },
+        {
+          lead: "Zugang und Leitungsweg:",
+          text: "Fundament, Rohrführung und Wartungszugang vorab festlegen. Spätere Standortwechsel können eine neue Schall- oder Behördenprüfung auslösen.",
+        },
+      ]}
+    />
+    <p class="text-text-muted max-w-3xl text-sm mt-6">
+      Die Details bleiben bewusst auf den zuständigen Seiten: Hier finden Sie die
+      <a
+        href="/waermepumpe-abstand-nachbar-bremen/"
+        class="text-primary underline">Bremer Regeln zum Abstand</a
+      > und dort die
+      <a
+        href="/waermepumpe-lautstaerke-nachbar/"
+        class="text-primary underline">TA-Lärm-Werte und Schallschutzmaßnahmen</a
+      >. So lassen sich Genehmigung, Grenzabstand und Lärm einzeln sauber prüfen.
+    </p>
+  </SectionShell>
+
+  <SectionShell variant="alt">
+    <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
+      Checkliste vor der Beauftragung
+    </h2>
+    <p class="text-text-muted max-w-3xl mb-6">
+      Diese Unterlagen sparen Rückfragen beim Fachbetrieb, Netzbetreiber und – falls
+      nötig – bei der Behörde.
+    </p>
+    <CheckList
+      items={[
+        {
+          lead: "Gerätedatenblatt:",
+          text: "Abmessungen, elektrische Anschlussleistung und Schallleistungspegel einschließlich Nachtbetrieb bereithalten.",
+        },
+        {
+          lead: "Lageplan:",
+          text: "Außengerät, Grundstücksgrenzen, Nachbarfenster, Leitungsweg und Abstände einzeichnen.",
+        },
+        {
+          lead: "Grundstücksstatus:",
+          text: "Denkmalliste, Erhaltungs- und Gestaltungssatzung für die konkrete Adresse prüfen – nicht nur nach dem Gebäudetyp urteilen.",
+        },
+        {
+          lead: "Sondererlaubnis:",
+          text: "Denkmalschutz oder Wasserbehörde vor Bestellung einbeziehen, wenn Kulturdenkmal oder Erdwärme betroffen sind.",
+        },
+        {
+          lead: "Netzanmeldung:",
+          text: "Im Angebot festhalten, welcher eingetragene Elektrofachbetrieb die Anmeldung bei wesernetz übernimmt.",
+        },
+        {
+          lead: "Nachweise ablegen:",
+          text: "Bestätigung von wesernetz, Schallprognose, behördliche Schreiben und Inbetriebnahmeprotokoll gemeinsam dokumentieren.",
+        },
+      ]}
+    />
+  </SectionShell>
+
+  <SectionShell>
+    <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
+      Quellen und redaktioneller Stand
+    </h2>
+    <div class="surface-card p-5 max-w-3xl text-sm text-text-muted leading-relaxed">
+      <p class="font-semibold text-text mb-3">
+        Geprüft am 19. Juli 2026 anhand der folgenden Primärquellen
+      </p>
+      <ul class="space-y-2">
+        <li>
+          Bremen: <a
+            href="https://www.transparenz.bremen.de/metainformationen/bremische-landesbauordnung-vom-29-mai-2024-232736?template=20_gp_ifg_meta_detail_d"
+            class="text-primary underline"
+            target="_blank"
+            rel="noopener">Bremische Landesbauordnung</a
+          > – insbesondere § 59 Absatz 2, § 61 Absatz 1 Nummer 3 Buchstabe b und
+          § 6 Absatz 8
+        </li>
+        <li>
+          wesernetz: <a
+            href="https://www.wesernetz.de/fuer-mein-zuhause/nachhaltiges-zuhause/waermepumpe"
+            class="text-primary underline"
+            target="_blank"
+            rel="noopener">Wärmepumpe anmelden</a
+          > – Ablauf, Unterlagen, Netzprüfung und Zuständigkeit des Installateurs
+        </li>
+        <li>
+          Bundesnetzagentur: <a
+            href="https://www.bundesnetzagentur.de/DE/Vportal/Energie/SteuerbareVBE/BetroffeneAnlagen_table.html"
+            class="text-primary underline"
+            target="_blank"
+            rel="noopener">steuerbare Verbrauchseinrichtungen nach § 14a EnWG</a
+          > – Anwendungsbereich ab mehr als 4,2 kW und Netzentgeltreduzierung
+        </li>
+        <li>
+          Bremen: <a
+            href="https://www.transparenz.bremen.de/metainformationen/bremisches-gesetz-zur-pflege-und-zum-schutz-der-kulturdenkmaeler-bremisches-denkmalschutzgesetz-bremdschg-vom-18-dezember-2018-124518?template=20_gp_ifg_meta_detail_d"
+            class="text-primary underline"
+            target="_blank"
+            rel="noopener">Bremisches Denkmalschutzgesetz, § 10</a
+          > – genehmigungspflichtige Änderungen und Umgebungsschutz
+        </li>
+        <li>
+          Bau Bremen: <a
+            href="https://bau.bremen.de/bau/planen-und-bauen/antraege-formulare-3555"
+            class="text-primary underline"
+            target="_blank"
+            rel="noopener">Antrag nach § 173 BauGB für Erhaltungssatzungsgebiete</a
+          >
+        </li>
+        <li>
+          Serviceportal Bremen: <a
+            href="https://www.service.bremen.de/dienstleistungen/antrag-auf-erlaubnis-zur-errichtung-einer-erdwaermegewinnungsanlage-16811"
+            class="text-primary underline"
+            target="_blank"
+            rel="noopener">Erlaubnis für eine Erdwärmegewinnungsanlage</a
+          > – Wasserbehörde, Unterlagen und Acht-Wochen-Frist
+        </li>
+        <li>
+          Bundesrecht: <a
+            href="https://www.gesetze-im-internet.de/woeigg/__20.html"
+            class="text-primary underline"
+            target="_blank"
+            rel="noopener">§ 20 Wohnungseigentumsgesetz</a
+          > – Beschluss über bauliche Veränderungen am Gemeinschaftseigentum
+        </li>
+      </ul>
+      <p class="mt-4">
+        Diese private Informationsseite ordnet die Rechts- und Verfahrenslage
+        redaktionell ein. Sie ersetzt keine Rechtsberatung, Genehmigung oder
+        verbindliche Auskunft von Bauaufsicht, Denkmalschutzbehörde, Wasserbehörde
+        oder Netzbetreiber. Hinweise zur Aktualisierung gern über
+        <a href="/kontakt/" class="text-primary underline">Kontakt</a>.
+      </p>
+    </div>
+  </SectionShell>
+
+  <SectionShell variant="alt">
+    <h2 class="text-2xl md:text-3xl font-bold text-text mb-6">Weiterlesen</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 max-w-5xl">
+      <InternalLinkCard
+        href="/waermepumpe-abstand-nachbar-bremen/"
+        title="Abstand zum Nachbarn in Bremen"
+        description="BremLBO, Grenzaufstellung und Planung bei kleinen Grundstücken."
+      />
+      <InternalLinkCard
+        href="/waermepumpe-foerderung-bremen/"
+        title="Förderung in Bremen"
+        description="KfW 458, Bremer Förderstatus und die richtige Reihenfolge vor dem Auftrag."
+      />
+      <InternalLinkCard
+        href="/waermepumpe-kosten-bremen/"
+        title="Kosten in Bremen"
+        description="Investition, Umfeldmaßnahmen und realistische Kostenfaktoren für Bremer Häuser."
+      />
+      <InternalLinkCard
+        href="/waermepumpe-altbau-bremen/"
+        title="Wärmepumpe im Altbau"
+        description="Eignung, Vorlauftemperatur und Planung für den Bremer Gebäudebestand."
+      />
+    </div>
+  </SectionShell>
+
+  {data.ctaBlock && <CTASection {...data.ctaBlock} />}
+  {
+    data.faqs?.length > 0 && (
+      <FAQSection heading={data.faqHeading} items={data.faqs} />
+    )
+  }
+</Layout>

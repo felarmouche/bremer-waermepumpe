@@ -109,7 +109,7 @@ export default function SuccessScreen({ reference }: SuccessScreenProps) {
           </div>
 
           <div className="bg-surface border border-border rounded-xl p-5 text-left text-xs text-text-muted leading-relaxed">
-            <strong className="text-text block mb-1">Wer meldet sich?</strong>
+            <strong className="text-text block mb-1">Wer meldet sich?</strong>{" "}
             Der unter{' '}
             <a href="/fachpartner/" target="_blank" rel="noopener" className="underline text-primary">
               /fachpartner/

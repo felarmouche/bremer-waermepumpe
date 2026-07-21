@@ -122,6 +122,12 @@ export const navClusters: NavCluster[] = [
         description: "Kosten, Förderung und GEG-Pflicht im Vergleich.",
       },
       {
+        href: "/waermepumpe-genehmigung-bremen/",
+        label: "Genehmigung & Anmeldung",
+        description:
+          "Baugenehmigung, wesernetz-Anmeldung und Sonderfälle in Bremen.",
+      },
+      {
         href: "/waermepumpe-abstand-nachbar-bremen/",
         label: "Abstand zum Nachbarn",
         description: "BremLBO, Grenzabstand, TA Lärm und Schallschutz.",
