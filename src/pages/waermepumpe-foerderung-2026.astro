@@ -61,7 +61,7 @@ const data: PageData = {
     ],
     ctaBlock: {
         headline: "Lohnt sich Ihr Heizungstausch unter den 2026er-Bedingungen?",
-        text: "Der Browser-Check ordnet Ihre Förderfähigkeit unter den aktuellen 2026er-Regeln ein – ohne Datenübermittlung. Kontaktdaten werden erst nach ausdrücklicher Einwilligung an den unter /fachpartner/ genannten Bremer Betrieb weitergegeben.",
+        text: "Der Browser-Check ordnet Ihre Förderfähigkeit unter den aktuellen 2026er-Regeln ein – unverbindlich & kostenlos. Kontaktdaten werden erst nach ausdrücklicher Einwilligung an den unter /fachpartner/ genannten Bremer Betrieb weitergegeben.",
         variant: "highlight",
         primaryCTA: {
             label: "Eignung & Förderung prüfen",
@@ -337,22 +337,22 @@ const pageSchema = data.schema
   </p>
 </SectionShell>
 
-{/* Bremen-Kontext */}
+{/* Verweis auf die lokale Ebene — dieser Spoke bleibt bewusst de-lokalisiert,
+    damit er nicht mit dem Bremen-Hub um dieselben Queries konkurriert. */}
 <SectionShell>
   <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
-    Was bedeutet das 2026 für Bremen?
+    Gelten die Regeln bundesweit?
   </h2>
   <p class="text-text-muted max-w-3xl mb-4">
-    Die Förderhöhen und die neuen Bundesregeln gelten in Bremen wie überall. Lokal
-    kommt hinzu: Das frühere Bremer Zuschussprogramm{" "}
-    <strong class="text-text">BAB Heizungstausch</strong> ist für neue Anträge
-    geschlossen, und ein neues BAB-Kreditprogramm für die Wärmewende ist für
-    Herbst 2026 angekündigt. Auch die kommunale Wärmeplanung schreitet in Bremen
-    als Großstadt voran und dient als Orientierung, welche Stadtteile auf Fernwärme
-    setzen.
+    Ja. Förderhöhen, Boni und die neuen Bundesregeln gelten überall gleich.
+    Unterschiede entstehen erst eine Ebene darunter: Länder und Kommunen legen
+    eigene Zuschuss- und Kreditprogramme auf, die zusätzlich beantragt werden
+    können, und die kommunale Wärmeplanung entscheidet vor Ort darüber, welche
+    Straßenzüge auf Fernwärme umgestellt werden. Beides ändert sich häufig und
+    lohnt einen Blick auf die Programme der eigenen Stadt.
   </p>
   <p class="text-text-muted max-w-3xl text-sm">
-    Den vollständigen Überblick über die lokalen Förderwege gibt der Hub
+    Für Bremen sind die lokalen Programme hier zusammengefasst:
     <a href="/waermepumpe-foerderung-bremen/" class="text-brand underline">Wärmepumpe Förderung Bremen</a>.
   </p>
 </SectionShell>
