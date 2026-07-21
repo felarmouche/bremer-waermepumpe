@@ -14,12 +14,15 @@ import heroImage from "../images/heat-pump-bremen-hero.webp";
 import type { PageData } from "../types/page";
 
 const data: PageData = {
-    title: "Luft-Wasser-Wärmepumpe Kosten 2026: Bremen & Altbau",
-    description: "Luft-Wasser-Wärmepumpe Kosten 2026: Gerät, Einbau, Stromverbrauch, Schallschutz und Förderung für Bremer Bestandsgebäude.",
+    // De-lokalisierter Kosten-Spoke: zielt auf „luft wasser wärmepumpe kosten"
+    // (bundesweites Volumen). Der Bremen-Bezug gehört auf den lokalen Hub —
+    // hier erzeugte er nur Konkurrenz um Bremen-Queries ohne einen Klick.
+    title: "Luft-Wasser-Wärmepumpe Kosten 2026: Preise, Einbau, Betrieb",
+    description: "Luft-Wasser-Wärmepumpe Kosten 2026: Gerät, Einbau, Stromverbrauch und Schallschutz – realistisch aufgeschlüsselt für Bestandsgebäude.",
     lastUpdated: "Mai 2026",
     hero: {
         headline: "Luft-Wasser-Wärmepumpe Kosten",
-        subtext: "Die häufigste Bauart in Bremer Bestandsgebäuden – ehrliche Aufschlüsselung von Anschaffung, Einbau und laufenden Kosten.",
+        subtext: "Die häufigste Bauart im Bestandsgebäude – ehrliche Aufschlüsselung von Anschaffung, Einbau und laufenden Kosten.",
         primaryCTA: {
             label: "Eignung & Förderung prüfen",
             href: "/check/"
@@ -31,16 +34,16 @@ const data: PageData = {
     },
     trustItems: [
         {
-            text: "BremLBO 0 m Grenzabstand"
+            text: "Preise nach Leistungsklasse"
         },
         {
-            text: "TA-Lärm-Rahmen Bremen"
+            text: "Inkl. Schallschutz-Kosten"
         },
         {
             text: "Stand Mai 2026"
         },
         {
-            text: "Inkl. swb-Stromtarif"
+            text: "Inkl. Stromkosten pro Jahr"
         }
     ],
     breadcrumb: [
@@ -73,23 +76,23 @@ const data: PageData = {
     faqs: [
         {
             question: "Was kostet eine Luft-Wasser-Wärmepumpe inklusive Einbau?",
-            answer: "Für ein Bremer Einfamilienhaus liegen die Komplettkosten typischerweise zwischen 22.000 und 35.000 Euro brutto. Davon entfallen etwa 9.000 bis 16.000 Euro auf das Gerät und 7.000 bis 14.500 Euro auf Installation, Hydraulik und Inbetriebnahme. Hochtemperatur-Modelle mit dem natürlichen Kältemittel R290 liegen häufig am oberen Ende der Spanne."
+            answer: "Für ein Einfamilienhaus liegen die Komplettkosten typischerweise zwischen 22.000 und 35.000 Euro brutto. Davon entfallen etwa 9.000 bis 16.000 Euro auf das Gerät und 7.000 bis 14.500 Euro auf Installation, Hydraulik und Inbetriebnahme. Hochtemperatur-Modelle mit dem natürlichen Kältemittel R290 liegen häufig am oberen Ende der Spanne."
         },
         {
             question: "Wie viel Strom verbraucht eine Luft-Wasser-Wärmepumpe pro Jahr?",
-            answer: "Ein Bremer Einfamilienhaus mit 140 m² teilsanierter Bausubstanz und 14.000 kWh Heizwärmebedarf benötigt bei einer realistischen Jahresarbeitszahl (JAZ) von 3,5 etwa 4.000 kWh Wärmepumpenstrom pro Jahr. Im swb-Wärmepumpentarif (24,98 ct/kWh, Stand Mai 2026) sind das rund 1.000 Euro Stromkosten pro Jahr."
+            answer: "Ein Einfamilienhaus mit 140 m² teilsanierter Bausubstanz und 14.000 kWh Heizwärmebedarf benötigt bei einer realistischen Jahresarbeitszahl (JAZ) von 3,5 etwa 4.000 kWh Wärmepumpenstrom pro Jahr. Bei einem Wärmepumpentarif um 25 ct/kWh sind das rund 1.000 Euro Stromkosten pro Jahr."
         },
         {
             question: "Lohnt sich eine Luft-Wasser-Wärmepumpe gegenüber einer Gasheizung?",
             answer: "Auf 20-Jahres-Sicht kann sie sich lohnen. Eine neue Gasheizung ist in der Anschaffung meist günstiger, verursacht aber fossile Brennstoff- und CO₂-Kosten. Bei der Wärmepumpe zählen neben der Investition der Stromtarif, die Effizienz und eine mögliche Förderung, deren aktuelle Konditionen separat geprüft werden müssen."
         },
         {
-            question: "Wie laut ist eine Luft-Wasser-Wärmepumpe in einer Bremer Reihenhauszeile?",
-            answer: "Moderne Geräte erreichen am Aufstellort 47–55 dB(A) im Volllastbetrieb. Bremen erlaubt nach BremLBO §6 Abs. 8 Nr. 4 einen Grenzabstand von 0 Metern – das vereinfacht die Aufstellung. Die TA-Lärm-Nachtwerte von 35 dB(A) im reinen Wohngebiet bzw. 45 dB(A) im Mischgebiet werden bei sauberer Aufstellung deutlich unterschritten – am Nachbar-Schlafzimmer-Fenster, nicht direkt am Gerät."
+            question: "Welchen Anteil machen Schallschutz und Aufstellung an den Kosten aus?",
+            answer: "Kalkulieren Sie 400 bis 800 Euro für eine akustische Fachplanung und 300 bis 1.200 Euro für schwingungsentkoppelte Aufstellung. Eine nachträgliche Schallschutzhaube kostet 800 bis 2.500 Euro und wird meist nur nötig, wenn Aufstellort und Gerätewahl vorher nicht geprüft wurden. Zusammen sind das rund 3 bis 6 Prozent der Gesamtinvestition."
         },
         {
-            question: "Welche Hersteller sind in Bremen häufig?",
-            answer: "Marktführend in Bremen sind Vaillant aroTHERM, Viessmann Vitocal, Wolf CHA, Stiebel Eltron WPL, Daikin Altherma und Bosch Compress. Hochtemperatur-R290-Modelle (für Altbau) bieten u. a. Vaillant aroTHERM plus, Viessmann Vitocal 250-A, Wolf CHA-Monoblock und Bosch Compress 5800i AW. Eine konkrete Empfehlung kann nur ein Heizungsbauer nach Heizlastberechnung geben."
+            question: "Welche Hersteller kommen für Bestandsgebäude infrage?",
+            answer: "Verbreitet sind Vaillant aroTHERM, Viessmann Vitocal, Wolf CHA, Stiebel Eltron WPL, Daikin Altherma und Bosch Compress. Hochtemperatur-R290-Modelle (für Altbau) bieten u. a. Vaillant aroTHERM plus, Viessmann Vitocal 250-A, Wolf CHA-Monoblock und Bosch Compress 5800i AW. Eine konkrete Empfehlung kann nur ein Heizungsbauer nach Heizlastberechnung geben."
         }
     ],
     schema: {
@@ -135,7 +138,7 @@ const pageSchema = data.schema
     <div class="bg-highlight border border-border rounded p-5">
       <p class="font-bold text-text mb-2">Schnelle Antwort</p>
       <p class="text-sm leading-relaxed">
-        Eine Luft-Wasser-Wärmepumpe kostet in einem Bremer Bestandsgebäude
+        Eine Luft-Wasser-Wärmepumpe kostet in einem Bestandsgebäude
         typischerweise <strong class="text-text">22.000 bis 35.000 €</strong>{" "}
         vor Förderung. Bei Altbau, R290-Hochtemperaturgerät, Schallschutz oder
         Heizkörpertausch kann der obere Bereich realistisch sein. Eine mögliche
@@ -145,15 +148,13 @@ const pageSchema = data.schema
     </div>
     <p>
       Die <strong class="text-text">Luft-Wasser-Wärmepumpe</strong> ist die mit Abstand
-      häufigste Bauart in Bremen. Sie braucht keine Bohrung und keine Erdaushub-Genehmigung,
-      passt in fast jeden Garten oder Innenhof und ist durch den Bremen-Vorteil{" "}
-      <strong class="text-text">0 Meter Grenzabstand</strong> auch in dichten
-      Reihenhauszeilen wie Findorff, Neustadt oder dem Viertel realistisch.
+      häufigste Bauart im Bestand. Sie braucht keine Bohrung und keine Erdaushub-Genehmigung
+      und passt in fast jeden Garten oder Innenhof – auch in dichten Reihenhauszeilen,
+      sofern Aufstellort und Schallschutz vorher geplant werden.
     </p>
     <p>
       Diese Seite ordnet die Kosten ehrlich ein – Anschaffung, Einbau, laufende
-      Stromkosten – und zeigt, wo im Bremer Kontext Spielraum nach oben oder unten
-      besteht.
+      Stromkosten – und zeigt, wo Spielraum nach oben oder unten besteht.
     </p>
   </article>
 </SectionShell>
@@ -164,8 +165,8 @@ const pageSchema = data.schema
     Was kostet eine Luft-Wasser-Wärmepumpe? Detailaufschlüsselung
   </h2>
   <p class="text-text-muted max-w-3xl mb-6">
-    Drei Leistungsklassen, wie sie in Bremen typisch sind. Alle Preise inklusive
-    Mehrwertsteuer, vor Abzug der Förderung.
+    Drei typische Leistungsklassen. Alle Preise inklusive Mehrwertsteuer, vor
+    Abzug der Förderung.
   </p>
 
   <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -211,53 +212,67 @@ const pageSchema = data.schema
   </NoticeSuccess>
 </SectionShell>
 
-{/* Bremen Lärm und Aufstellung */}
+{/* Schallschutz nur als Kostenposition. Die Regelwerke selbst (Grenzabstand,
+    TA-Lärm-Werte) gehören auf die Abstands- und Lautstärke-Seiten — ausgebaut
+    trat dieser Abschnitt gegen /waermepumpe-abstand-nachbar-bremen/ an und
+    nahm ihr Impressionen zu ihrer eigenen Query ab. */}
 <SectionShell>
   <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
-    Wie laut ist das Außengerät – und was gilt in Bremen?
+    Was Schallschutz kostet
   </h2>
   <p class="text-text-muted max-w-3xl mb-6">
-    Lärm ist der häufigste Einwand gegen Luft-Wasser-Wärmepumpen. In Bremen gibt es zwei
-    relevante Regelwerke:
+    Lärm ist der häufigste Einwand gegen Luft-Wasser-Wärmepumpen – und der
+    Posten, der in Angeboten am häufigsten fehlt. Drei Positionen sollten Sie
+    einkalkulieren:
   </p>
 
   <div class="space-y-4 max-w-3xl">
     <div class="surface-card p-5">
-      <p class="font-semibold text-text mb-1">BremLBO §6 Abs. 8 Nr. 4: 0 m Grenzabstand</p>
+      <p class="font-semibold text-text mb-1">Akustische Fachplanung: 400–800 €</p>
       <p class="text-text-muted text-sm leading-relaxed">
-        Das Bremer Landesbaurecht erlaubt für Wärmepumpen-Außengeräte ausnahmsweise einen
-        Grenzabstand von <strong class="text-text">0 Metern</strong> – in den meisten
-        anderen Bundesländern sind 3 Meter Pflicht. Damit lässt sich das Außengerät an
-        die Reihenhausgrenze stellen, sofern die Schallgrenzen am Nachbargrundstück
-        eingehalten werden.
+        Rechnet die zu erwartenden Schallwerte am Nachbargrundstück nach und
+        dokumentiert sie. Vermeidet Streit mit Nachbarn und Bauaufsicht und ist
+        die günstigste Position im Vergleich zu späteren Nachrüstungen.
       </p>
     </div>
     <div class="surface-card p-5">
-      <p class="font-semibold text-text mb-1">TA Lärm: nächtliche Grenzwerte</p>
+      <p class="font-semibold text-text mb-1">Aufstellung und Entkopplung: 300–1.200 €</p>
       <p class="text-text-muted text-sm leading-relaxed">
-        Am maßgeblichen Immissionsort (typisch: Schlafzimmerfenster Nachbar in 1 m Höhe) gelten 22:00–06:00 Uhr: <strong class="text-text">35 dB(A) im reinen Wohngebiet, 40 dB(A) im allgemeinen Wohngebiet, 45 dB(A) im Mischgebiet</strong>. Tags um jeweils 15 dB(A) höher.
+        Schwingungsentkoppeltes Fundament oder Wandkonsole, Führung der
+        Kondensatleitung, Ausrichtung der Ausblasrichtung weg vom Nachbarn.
+        Ein modernes Außengerät bei 50 dB(A) verliert über 3 Meter Distanz und
+        einfache Massnahmen rasch <strong class="text-text">15–20 dB(A)</strong>.
+      </p>
+    </div>
+    <div class="surface-card p-5">
+      <p class="font-semibold text-text mb-1">Schallschutzhaube nachträglich: 800–2.500 €</p>
+      <p class="text-text-muted text-sm leading-relaxed">
+        Nur nötig, wenn Aufstellort und Gerätewahl von vornherein ungünstig
+        waren – der Grund, warum sich die Fachplanung vorher rechnet.
       </p>
     </div>
   </div>
 
   <p class="text-text-muted max-w-3xl text-sm mt-6">
-    Praktisch: Ein modernes Außengerät bei 50 dB(A) am Gerät verliert über 3 Meter
-    Distanz und einfache Aufstellungsmaßnahmen rasch 15–20 dB(A). Eine{" "}
-    <strong class="text-text">akustische Fachplanung</strong> gibt
-    Sicherheit – sie kostet 400–800 Euro, vermeidet aber Streit mit Nachbarn und
-    Bauaufsicht.
+    Welche Grenzwerte und Grenzabstände dabei einzuhalten sind, unterscheidet
+    sich je Bundesland: <a href="/waermepumpe-abstand-nachbar/" class="text-primary underline"
+      >Abstand zum Nachbarn</a
+    > fasst die Landesbauordnungen zusammen,
+    <a href="/waermepumpe-lautstaerke-nachbar/" class="text-primary underline"
+      >Lautstärke und Nachbarschaft</a
+    > die TA-Lärm-Werte.
   </p>
 </SectionShell>
 
 {/* Stromkosten */}
 <SectionShell variant="alt">
   <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
-    Was kostet der Betrieb? Stromverbrauch und swb-Tarif
+    Was kostet der Betrieb? Stromverbrauch und Wärmepumpentarif
   </h2>
   <p class="text-text-muted max-w-3xl mb-4">
     Der Stromverbrauch hängt von der <strong class="text-text">Jahresarbeitszahl (JAZ)</strong>{" "}
     ab – sie sagt, wie viel kWh Wärme pro kWh Strom erzeugt werden. Realistische Werte
-    für Luft-Wasser-Wärmepumpen in Bremen:
+    für Luft-Wasser-Wärmepumpen:
   </p>
 
   <div class="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl">
@@ -280,9 +295,13 @@ const pageSchema = data.schema
 
   <p class="text-text-muted max-w-3xl text-sm mt-6">
     Bei 14.000 kWh Jahres-Heizwärmebedarf und JAZ 3,5 ergeben sich rund 4.000 kWh
-    Wärmepumpenstrom – das sind im swb-WP-Tarif (24,98 ct/kWh) etwa <strong
+    Wärmepumpenstrom – bei einem Wärmepumpentarif um 25 ct/kWh etwa <strong
     class="text-text">1.000 Euro Stromkosten pro Jahr</strong>. Wer Photovoltaik und/oder
-    Speicher dazu hat, kann diesen Wert um 20–40 % drücken.
+    Speicher dazu hat, kann diesen Wert um 20–40 % drücken. Die konkreten Bremer
+    Tarifkonditionen stehen auf
+    <a href="/waermepumpe-kosten-bremen/" class="text-primary underline"
+      >Wärmepumpe Kosten Bremen</a
+    >.
   </p>
 </SectionShell>
 
@@ -330,8 +349,8 @@ const pageSchema = data.schema
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-5xl">
     <InternalLinkCard
       href="/waermepumpe-kosten-bremen/"
-      title="Kosten Bremen (Hub)"
-      description="Alle Bauarten, alle Eigenanteile, lokale Faktoren."
+      title="Wärmepumpe Kosten Bremen"
+      description="Alle Bauarten, alle Eigenanteile, swb-Wärmepumpentarif."
     />
     <InternalLinkCard
       href="/waermepumpe-altbau-kosten/"
@@ -340,13 +359,13 @@ const pageSchema = data.schema
     />
     <InternalLinkCard
       href="/waermepumpe-foerderung-bremen/"
-      title="Förderung Bremen"
+      title="Wärmepumpe Förderung Bremen"
       description="Aktuelle KfW-Konditionen und die Einordnung technischer Projektmerkmale."
     />
     <InternalLinkCard
       href="/check/"
       title="Eignungscheck"
-      description="Prüfen, ob Luft-Wasser für Ihr Bremer Haus realistisch ist."
+      description="Prüfen, ob Luft-Wasser für Ihr Haus realistisch ist."
     />
   </div>
 </SectionShell>

@@ -72,8 +72,11 @@ const data: PageData = {
             answer: "Für ein Bremer Einfamilienhaus liegen Luft-Wasser-Wärmepumpen inklusive Installation typischerweise bei 22.000 bis 35.000 Euro brutto, Sole-Wasser-Wärmepumpen mit Erdsondenbohrung bei 30.000 bis 45.000 Euro. Der tatsächliche Eigenanteil lässt sich erst nach einem Angebot und einer Prüfung der dann geltenden Förderkonditionen seriös bestimmen."
         },
         {
-            question: "Wie viel Förderung gibt es für eine Wärmepumpe in Bremen?",
-            answer: "Für den Heizungstausch ist in der Regel die KfW-Heizungsförderung 458 relevant. Die Höhe hängt unter anderem von Antragstermin, Gebäude, Eigentums- und Nutzungssituation ab. Aktuelle Konditionen und Bremer Förderwege stehen zentral auf der Seite Wärmepumpe Förderung Bremen."
+            // Bewusst keine Förder-FAQ: die Frage „Wie viel Förderung gibt es
+            // in Bremen?" gehört wörtlich der Seite /waermepumpe-foerderung-bremen/.
+            // Als FAQ-Schema trat diese Seite damit um deren Query an.
+            question: "Womit muss ich beim Eigenanteil rechnen?",
+            answer: "Der Eigenanteil ist der Rechnungsbetrag abzüglich des bewilligten Zuschusses – und er lässt sich erst nach einem konkreten Angebot beziffern, weil förderfähige Kosten und Förderquote am Antragstermin hängen. Rechnen Sie nicht mit einer pauschalen Quote, sondern kalkulieren Sie zunächst die volle Investitionssumme und behandeln Sie den Zuschuss als Entlastung, die nachträglich eintritt."
         },
         {
             question: "Wie hoch sind die Stromkosten einer Wärmepumpe in Bremen?",
@@ -368,7 +371,7 @@ const pageSchema = data.schema
     />
     <InternalLinkCard
       href="/waermepumpe-foerderung-bremen/"
-      title="Förderung Bremen"
+      title="Wärmepumpe Förderung Bremen"
       description="Welche Förderung deckt diese Kosten ab? KfW 458, BAFA, BAB."
     />
     <InternalLinkCard

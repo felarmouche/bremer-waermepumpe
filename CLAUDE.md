@@ -41,3 +41,24 @@ DataForSEO-Kosten werden je Call geloggt (`seo-data/dfs-costs.log`) und im Repor
 - Generische Cost-Spokes bleiben de-lokalisiert; lokale Seiten tragen den Bremen-Bezug.
 
 **Credentials (nie committen):** `.secrets/gsc-service-account.json` (GSC, Service Account) und `.env.local` (`DATAFORSEO_LOGIN`/`DATAFORSEO_PASSWORD`). Beides ist gitignored.
+
+## Keyword-Eigentum (gegen Kannibalisierung)
+
+Belegt durch DataForSEO 2026-07-21: das **lokale Bremen-Keyworduniversum umfasst nur ~400 Suchen/Monat** über sechs Keywords (`wärmepumpe bremen` 260, `förderung wärmepumpe bremen` 70, `bremen förderung wärmepumpe` 30, `wärmepumpe abstand nachbar bremen` 20, `wärmepumpe in bremen` 10, `bremen wärmepumpe` 10). `wärmepumpe kosten bremen` hat **null** Volumen. Deshalb gilt:
+
+**Der Bremen-Bezug in Title, H1, H2 und FAQ-Fragen gehört ausschliesslich diesen Seiten:**
+
+| Seite | Primärkeyword | Vol./Mon |
+|---|---|---|
+| `/` | wärmepumpe bremen | 260 |
+| `/waermepumpe-foerderung-bremen/` | förderung wärmepumpe bremen | 100 |
+| `/waermepumpe-abstand-nachbar-bremen/` | wärmepumpe abstand nachbar bremen | 20 |
+| `/waermepumpe-kosten-bremen/` | swb wärmepumpentarif (lokal, kein „kosten bremen") | – |
+| `/bab-heizungstausch-bremen/` | bab heizungstausch (Programmname) | 40 |
+
+**Alle übrigen Seiten sind de-lokalisiert** und zielen auf das bundesweite Volumen, wo die Nachfrage tatsächlich liegt: `/waermepumpe-foerderung-2026/` → förderung wärmepumpe 2026 (9.900) · `/kfw-458-waermepumpe/` → kfw 458 (8.100) · `/bafa-foerderung-waermepumpe/` → bafa förderung wärmepumpe (2.400) · `/luft-wasser-waermepumpe-kosten/` → luft wasser wärmepumpe kosten (1.300) · `/waermepumpe-altbau-kosten/` → was kostet eine wärmepumpe für altbau (480).
+
+Konkret heisst das beim Bearbeiten einer Seite:
+- **Keine H2 und keine FAQ-Frage darf das Primärkeyword einer anderen Seite wörtlich enthalten.** Das war die Hauptursache der Kannibalisierung (Startseite trug „Wärmepumpe Förderung Bremen" als H2, `/waermepumpe-kosten-bremen/` die FAQ „Wie viel Förderung gibt es für eine Wärmepumpe in Bremen?").
+- Fremde Themen nur anreissen (2–3 Sätze) und mit dem Ankertext **„Wärmepumpe Förderung Bremen"** bzw. dem Titel der Zielseite verlinken, statt sie erneut auszubreiten.
+- `/check/` und `/kontakt/` sind Funnel- und Vertrauensseiten: sie sollen für **keine** inhaltliche Query ranken.
