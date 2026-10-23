@@ -15,9 +15,11 @@ import { createSign } from 'node:crypto';
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { localEnvironment, gscKeyPath } from './lib/environment.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
-const KEY_FILE = join(ROOT, '.secrets', 'gsc-service-account.json');
+const ENV = localEnvironment();
+const KEY_FILE = gscKeyPath(ENV);
 const DOMAIN = 'bremer-waermepumpe.de';
 const API = 'https://www.googleapis.com/webmasters/v3';
 const ROW_LIMIT = 25000;
@@ -71,7 +73,11 @@ async function gsc(token, path, body) {
 
 async function findProperty(token) {
   const { siteEntry = [] } = await gsc(token, '/sites');
-  const mine = siteEntry.filter((s) => s.siteUrl.includes(DOMAIN));
+  const mine = siteEntry.filter((s) => {
+    if (ENV.GSC_PROPERTY) return s.siteUrl === ENV.GSC_PROPERTY;
+    if (s.siteUrl === `sc-domain:${DOMAIN}`) return true;
+    try { return [DOMAIN, `www.${DOMAIN}`].includes(new URL(s.siteUrl).hostname); } catch { return false; }
+  });
   if (mine.length === 0) {
     fail(
       `Service Account hat keinen Zugriff auf ${DOMAIN}. ` +
@@ -162,7 +168,8 @@ const windows = {
 };
 
 const outDir = join(ROOT, 'seo-data', 'gsc', iso(new Date()));
-mkdirSync(outDir, { recursive: true });
+mkdirSync(dirname(outDir), { recursive: true });
+try { mkdirSync(outDir); } catch { fail('GSC-Snapshot für heute existiert bereits. Vorhandene Messdaten werden nicht überschrieben.'); }
 
 const cuts = { query: ['query'], page: ['page'], 'query-page': ['query', 'page'] };
 let pageRows = [];

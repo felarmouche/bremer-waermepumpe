@@ -1,12 +1,9 @@
 ---
 name: optimize-bremer-waermepumpe-seo
-description: Optimize exactly one existing Astro content page of bremer-waermepumpe.de for sustainable Google search visibility, driven by the local GSC/DataForSEO snapshots in seo-data/, while preserving architecture and preventing keyword cannibalization. Use when improving, auditing, rewriting, or maximizing SEO for one page of this project.
+description: Recherchiere, priorisiere und optimiere SEO für bremer-waermepumpe.de mit GSC, DataForSEO und technischen Prüfungen.
 ---
 
-# Bremer Waermepumpe SEO
-
-Read and follow the portable project skill at
-[`.agents/skills/optimize-bremer-waermepumpe-seo/SKILL.md`](../../../.agents/skills/optimize-bremer-waermepumpe-seo/SKILL.md).
-
-Treat that file as the single source of truth. Load its referenced resources relative to
-its own directory and apply the workflow to the current user request.
+Lies den gemeinsamen Skill unter
+[../../../.agents/skills/optimize-bremer-waermepumpe-seo/SKILL.md](../../../.agents/skills/optimize-bremer-waermepumpe-seo/SKILL.md).
+Er ist die einzige fachliche Quelle für den Workflow. Referenzen relativ zu seinem
+Verzeichnis auflösen und den aktuellen Nutzerauftrag beachten.

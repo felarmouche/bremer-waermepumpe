@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "dataforseo": {
+      "type": "stdio",
+      "command": "node",
+      "args": ["scripts/seo/mcp-dataforseo.mjs"]
+    }
+  }
+}

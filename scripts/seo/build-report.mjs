@@ -1,303 +1,108 @@
 #!/usr/bin/env node
-/**
- * Verdichtet die neuesten Snapshots aus seo-data/gsc/ und seo-data/dfs/ zu
- * seo-data/REPORT.md — dem Einstiegspunkt für jede Audit-Session.
- * Rein lokal, keine API-Calls. Nutzung: npm run seo:report
- */
-import { existsSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
-import { dirname, join } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { existsSync, readFileSync, readdirSync, mkdirSync, writeFileSync } from 'node:fs';
+import { resolve, join, relative } from 'node:path';
+import { pathToFileURL } from 'node:url';
+import { ROOT } from './lib/environment.mjs';
+import { dfsRecords, latestTasks, costSummary } from './lib/snapshots.mjs';
 
-const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
-const GSC_BASE = join(ROOT, 'seo-data', 'gsc');
-const DFS_BASE = join(ROOT, 'seo-data', 'dfs');
-const REPORT = join(ROOT, 'seo-data', 'REPORT.md');
-const COST_LOG = join(ROOT, 'seo-data', 'dfs-costs.log');
+const SITE = 'bremer-waermepumpe.de';
+const esc = x => String(x ?? 'unbekannt').replace(/\|/g, '\\|').replace(/[\r\n]+/g, ' ');
+const num = x => Number.isFinite(x) ? x.toLocaleString('de-DE', { maximumFractionDigits: 2 }) : 'unbekannt';
+const pct = x => Number.isFinite(x) ? `${num(x * 100)} %` : 'unbekannt';
+const path = u => { try { return new URL(u).pathname; } catch { return u; } };
+const norm = u => u.replace(/\/$/, '');
+const table = (headers, rows) => rows.length ? `| ${headers.join(' | ')} |\n|${headers.map(() => '---').join('|')}|\n${rows.map(r => `| ${r.map(esc).join(' | ')} |`).join('\n')}` : '_Keine Einträge in den verfügbaren Daten._';
+const age = (date, now, days) => (Date.parse(now) - Date.parse(date)) / 86400000 > days ? 'veraltet' : 'aktuell';
 
-// Schwellwerte (90-Tage-Fenster); bei wenig Traffic hier absenken.
-const MIN_IMPR_STRIKING = 30;
-const MIN_IMPR_CTR = 40;
-const MIN_IMPR_CANNIBAL = 50;
-const MIN_VOLUME = 50;
-// Grobe Erwartungs-CTR je (gerundeter) Position 1–5.
-const EXPECTED_CTR = [0, 0.28, 0.15, 0.1, 0.07, 0.05];
-
-const newestDir = (base) =>
-  existsSync(base)
-    ? readdirSync(base)
-        .filter((d) => /^\d{4}-\d{2}-\d{2}$/.test(d))
-        .sort()
-        .at(-1) ?? null
-    : null;
-
-const load = (dir, name) => {
-  const p = join(dir, name);
-  return existsSync(p) ? JSON.parse(readFileSync(p, 'utf8')) : null;
-};
-
-const num = (x) => Math.round(x).toLocaleString('de-DE');
-const pct = (x) => `${(100 * x).toFixed(1).replace('.', ',')} %`;
-const pos = (x) => x.toFixed(1).replace('.', ',');
-const rel = (u) => u.replace(/^https?:\/\/[^/]+/, '') || '/';
-const esc = (s) => String(s).replace(/\|/g, '\\|');
-const norm = (u) => u.replace(/\/$/, '');
-
-const table = (headers, rows) =>
-  rows.length
-    ? [
-        `| ${headers.join(' | ')} |`,
-        `|${headers.map(() => '---').join('|')}|`,
-        ...rows.map((r) => `| ${r.map(esc).join(' | ')} |`),
-      ].join('\n')
-    : '_Keine Einträge über den Schwellwerten._';
-
-// --- GSC laden -----------------------------------------------------------
-const gscDate = newestDir(GSC_BASE);
-if (!gscDate) {
-  console.error('Kein GSC-Snapshot gefunden. Erst: npm run seo:gsc');
-  process.exit(1);
-}
-const gscDir = join(GSC_BASE, gscDate);
-const meta = load(gscDir, 'meta.json');
-const pageCur = load(gscDir, 'page-current.json') ?? [];
-const pagePrev = load(gscDir, 'page-previous.json') ?? [];
-const qpCur = load(gscDir, 'query-page-current.json') ?? [];
-const sitemap = load(gscDir, 'sitemap.json') ?? [];
-
-const sum = (rows, f) => rows.reduce((a, r) => a + r[f], 0);
-const wPos = (rows) => {
-  const impr = sum(rows, 'impressions');
-  return impr ? rows.reduce((a, r) => a + r.position * r.impressions, 0) / impr : 0;
-};
-
-// --- Gewinner / Verlierer -------------------------------------------------
-const byPage = (rows) => new Map(rows.map((r) => [norm(r.keys[0]), r]));
-const curMap = byPage(pageCur);
-const prevMap = byPage(pagePrev);
-const deltas = [...new Set([...curMap.keys(), ...prevMap.keys()])]
-  .map((url) => {
-    const c = curMap.get(url);
-    const p = prevMap.get(url);
-    return {
-      url,
-      cur: c?.clicks ?? 0,
-      prev: p?.clicks ?? 0,
-      delta: (c?.clicks ?? 0) - (p?.clicks ?? 0),
-      posCur: c?.position,
-      posPrev: p?.position,
-    };
-  })
-  .filter((d) => d.cur + d.prev >= 5 && d.delta !== 0);
-const winners = [...deltas].sort((a, b) => b.delta - a.delta).slice(0, 8);
-const losers = [...deltas].sort((a, b) => a.delta - b.delta).filter((d) => d.delta < 0).slice(0, 8);
-
-const moverRow = (d) => [
-  rel(d.url),
-  num(d.prev),
-  num(d.cur),
-  (d.delta > 0 ? '+' : '') + num(d.delta),
-  d.posPrev && d.posCur ? `${pos(d.posPrev)} → ${pos(d.posCur)}` : '–',
-];
-
-// --- Striking Distance ------------------------------------------------------
-const striking = qpCur
-  .filter((r) => r.position >= 4 && r.position <= 15 && r.impressions >= MIN_IMPR_STRIKING)
-  .sort((a, b) => b.impressions - a.impressions)
-  .slice(0, 20)
-  .map((r) => [r.keys[0], rel(r.keys[1]), pos(r.position), num(r.impressions), num(r.clicks)]);
-
-// --- CTR-Lücken -------------------------------------------------------------
-const isBrand = (q) => /bremer.?w(ä|ae)rmepumpe/i.test(q);
-const ctrGaps = qpCur
-  .filter((r) => {
-    const p = Math.min(5, Math.round(r.position));
-    return (
-      r.position <= 5.4 &&
-      r.impressions >= MIN_IMPR_CTR &&
-      r.ctr < 0.5 * EXPECTED_CTR[p]
-    );
-  })
-  .sort((a, b) => b.impressions - a.impressions)
-  .slice(0, 15)
-  .map((r) => [
-    r.keys[0] + (isBrand(r.keys[0]) ? ' _(Brand)_' : ''),
-    rel(r.keys[1]),
-    pos(r.position),
-    num(r.impressions),
-    pct(r.ctr),
-    `~${pct(EXPECTED_CTR[Math.min(5, Math.round(r.position))])}`,
-  ]);
-
-// --- Kannibalisierung ---------------------------------------------------------
-const byQuery = new Map();
-for (const r of qpCur) {
-  const q = r.keys[0];
-  if (!byQuery.has(q)) byQuery.set(q, []);
-  byQuery.get(q).push(r);
-}
-const cannibal = [...byQuery.entries()]
-  .map(([q, rows]) => {
-    const total = sum(rows, 'impressions');
-    const significant = rows.filter((r) => r.impressions / total >= 0.2);
-    return { q, total, significant };
-  })
-  .filter((c) => c.total >= MIN_IMPR_CANNIBAL && c.significant.length >= 2)
-  .sort((a, b) => b.total - a.total)
-  .slice(0, 15)
-  .map((c) => [
-    c.q,
-    num(c.total),
-    c.significant
-      .sort((a, b) => b.impressions - a.impressions)
-      .map((r) => `${rel(r.keys[1])} (Pos ${pos(r.position)}, ${pct(r.impressions / c.total)})`)
-      .join('<br>'),
-  ]);
-
-// --- Seiten ohne Impressionen ---------------------------------------------
-const pagesWithImpr = new Set(pageCur.filter((r) => r.impressions > 0).map((r) => norm(r.keys[0])));
-const zeroImpr = sitemap.map(norm).filter((u) => !pagesWithImpr.has(u));
-
-// --- DataForSEO -------------------------------------------------------------
-const dfsDate = newestDir(DFS_BASE);
-const dfsDir = dfsDate ? join(DFS_BASE, dfsDate) : null;
-const dfsSections = [];
-if (dfsDir) {
-  const rankedItems = (file) =>
-    (load(dfsDir, file)?.tasks?.[0]?.result?.[0]?.items ?? []).filter(
-      (i) => i.ranked_serp_element?.serp_item?.type === 'organic'
-    );
-  const kwOf = (i) => i.keyword_data?.keyword;
-  const volOf = (i) => i.keyword_data?.keyword_info?.search_volume ?? 0;
-  const rankOf = (i) => i.ranked_serp_element?.serp_item?.rank_group ?? 999;
-  const urlOf = (i) => i.ranked_serp_element?.serp_item?.url ?? '';
-
-  const own = rankedItems('ranked.json');
-  if (own.length) {
-    const ownRaw = load(dfsDir, 'ranked.json')?.tasks?.[0]?.result?.[0];
-    const o = ownRaw?.metrics?.organic ?? {};
-    dfsSections.push(
-      `**Ranking-Verteilung** (${ownRaw?.total_count ?? own.length} Keywords, Snapshot ${dfsDate}): ` +
-        `Top 3: ${(o.pos_1 ?? 0) + (o.pos_2_3 ?? 0)} | Pos 4–10: ${o.pos_4_10 ?? 0} | ` +
-        `Pos 11–20: ${o.pos_11_20 ?? 0} | Pos 21–50: ${(o.pos_21_30 ?? 0) + (o.pos_31_40 ?? 0) + (o.pos_41_50 ?? 0)} | ` +
-        `geschätzter Traffic-Wert (ETV): ${num(o.etv ?? 0)}`
-    );
-    const opps = own
-      .filter((i) => rankOf(i) >= 11 && rankOf(i) <= 30 && volOf(i) >= MIN_VOLUME)
-      .sort((a, b) => volOf(b) - volOf(a))
-      .slice(0, 20)
-      .map((i) => [kwOf(i), num(volOf(i)), rankOf(i), rel(urlOf(i))]);
-    dfsSections.push(
-      `### Volumen-Chancen (Position 11–30, Volumen ≥ ${MIN_VOLUME})\n\n` +
-        table(['Keyword', 'Vol./Monat', 'Pos', 'Seite'], opps)
-    );
-
-    const ownKeywords = new Set(own.map(kwOf));
-    const gapMap = new Map();
-    for (const f of readdirSync(dfsDir).filter((f) => f.startsWith('ranked_'))) {
-      const domain = f.replace(/^ranked_/, '').replace(/\.json$/, '');
-      for (const i of rankedItems(f)) {
-        if (rankOf(i) <= 20 && volOf(i) >= MIN_VOLUME && !ownKeywords.has(kwOf(i))) {
-          const e = gapMap.get(kwOf(i)) ?? { vol: volOf(i), who: [] };
-          e.who.push(`${domain} (Pos ${rankOf(i)})`);
-          gapMap.set(kwOf(i), e);
-        }
+export function loadGsc(base) {
+  const dir = join(base, 'gsc'), issues = [];
+  if (!existsSync(dir)) return { data: null, issues };
+  for (const date of readdirSync(dir).filter(d => /^\d{4}-\d{2}-\d{2}$/.test(d)).sort().reverse()) {
+    try {
+      const read = name => JSON.parse(readFileSync(join(dir, date, name), 'utf8'));
+      const meta = read('meta.json');
+      if (!meta.property || !meta.windows?.current?.length || !meta.windows?.previous?.length) throw new Error('Metadaten unvollständig');
+      const data = { date, meta, page: read('page-current.json'), previous: read('page-previous.json'), queryPage: read('query-page-current.json'), sitemap: read('sitemap.json') };
+      for (const key of ['page', 'previous', 'queryPage']) {
+        if (!Array.isArray(data[key]) || data[key].some(r => !Array.isArray(r.keys) || r.keys.length !== (key === 'queryPage' ? 2 : 1) || r.keys.some(k => typeof k !== 'string') || ['clicks', 'impressions', 'ctr', 'position'].some(k => !Number.isFinite(r[k])))) throw new Error(`Ungültige Zeilen: ${key}`);
       }
-    }
-    if (gapMap.size) {
-      const gap = [...gapMap.entries()]
-        .sort((a, b) => b[1].vol - a[1].vol)
-        .slice(0, 20)
-        .map(([kw, e]) => [kw, num(e.vol), e.who.join(', ')]);
-      dfsSections.push(`### Keyword-Gap (Wettbewerber Top 20, wir nicht in Top 100)\n\n` + table(['Keyword', 'Vol./Monat', 'Wer rankt'], gap));
-    } else {
-      dfsSections.push(
-        '_Keyword-Gap: keine Wettbewerber-Snapshots vorhanden. ' +
-          'Für die Gap-Analyse: `npm run seo:dfs -- ranked <wettbewerber-domain>`._'
-      );
-    }
+      if (!Array.isArray(data.sitemap) || data.sitemap.some(u => typeof u !== 'string')) throw new Error('Ungültige Sitemap');
+      return { data, issues };
+    } catch { issues.push(`GSC ${date}: unvollständig oder fehlerhaft; verwende älteren gültigen Snapshot, sofern vorhanden.`); }
   }
+  return { data: null, issues };
+}
 
-  const comp = load(dfsDir, 'competitors.json')?.tasks?.[0]?.result?.[0]?.items ?? [];
-  if (comp.length) {
-    const rows = comp
-      .filter((c) => c.domain !== 'bremer-waermepumpe.de')
-      .slice(0, 10)
-      .map((c) => [c.domain, num(c.intersections ?? 0), c.avg_position ? pos(c.avg_position) : '–']);
-    dfsSections.push(`### Wettbewerber (gemeinsame Keywords)\n\n` + table(['Domain', 'Gemeinsame Keywords', 'Ø-Position'], rows));
+export function buildReport(base, now = new Date().toISOString()) {
+  const { records, issues } = dfsRecords(base);
+  const tasks = latestTasks(records);
+  const gsc = loadGsc(base);
+  const sections = [`# SEO-Report ${SITE}\n\nGeneriert: ${now}\n\nDataForSEO liefert externe Ranking-/Volumenschätzungen. GSC liefert eigene Suchperformance. Beide sind getrennte Datenquellen; fehlende Daten sind keine Nullmessung.`];
+  const costs = costSummary(base, records, now.slice(0, 7));
+  sections.push(`## Datenstand und Kosten\n\n${table(['Quelle', 'Stand', 'Status'], [
+    ['GSC', gsc.data?.date ?? 'fehlt', gsc.data ? `${age(gsc.data.date, now, 7)}; ${gsc.data.page.length} Seitenzeilen` : 'Klicks, CTR und Indexstatus unbekannt'],
+    ...tasks.map(r => [r.task.data?.function ?? r.endpoint, r.fetchedAt, `${age(r.fetchedAt, now, 30)}; ${r.task.data?.target ?? r.task.data?.keyword ?? 'Keyword-Abfrage'}`]),
+  ])}\n\nKosten ${now.slice(0, 7)}: **$${costs.verified.toFixed(5)}**, ${costs.tasks} eindeutige Tasks aus gespeicherten Antworten.\nLegacy-Kostenlog: $${costs.legacy.toFixed(5)} separat, nicht addiert (kann dieselben Calls enthalten). Dies ist kein vollständiger Kontoauszug und kein Ausgabenlimit.`);
+  if (issues.length || gsc.issues.length) sections.push(`### Datenfehler\n\n${[...issues, ...gsc.issues].map(i => `- ${i}`).join('\n')}`);
+  const next = [];
+  if (gsc.data) {
+    const g = gsc.data;
+    const old = new Map(g.previous.map(r => [norm(r.keys[0]), r]));
+    const current = new Map(g.page.map(r => [norm(r.keys[0]), r]));
+    const deltas = [...new Set([...old.keys(), ...current.keys()])].map(url => {
+      const c = current.get(url), p = old.get(url);
+      return { url, c: c?.clicks ?? null, p: p?.clicks ?? null, delta: c && p ? c.clicks - p.clicks : null };
+    });
+    const row = r => [path(r.url), num(r.p), num(r.c), num(r.delta)];
+    sections.push(`## Eigene Suchperformance\n\nProperty: ${g.meta.property}. Fenster: ${g.meta.windows.current.join(' bis ')}; Vergleich: ${g.meta.windows.previous.join(' bis ')}.\n\nNur in beiden Fenstern erfasste Seiten werden als Gewinner/Verlierer verglichen; fehlende Zeilen sind unbekannt. GSC kann Zeilen auslassen. Länder/Devices entsprechend Snapshot, ohne zusätzliche regionale Attribution.\n\n### Gewinner\n${table(['Seite', 'Vorher', 'Jetzt', 'Δ Klicks'], deltas.filter(d => d.delta !== null && d.delta > 0).sort((a,b) => b.delta-a.delta).slice(0,8).map(row))}\n\n### Verlierer\n${table(['Seite', 'Vorher', 'Jetzt', 'Δ Klicks'], deltas.filter(d => d.delta !== null && d.delta < 0).sort((a,b) => a.delta-b.delta).slice(0,8).map(row))}`);
+    const striking = g.queryPage.filter(r => r.position >= 4 && r.position <= 15 && r.impressions >= 30).sort((a,b) => b.impressions-a.impressions);
+    sections.push(`### Striking Distance\n${table(['Query', 'Seite', 'Position', 'Impressionen'], striking.slice(0,20).map(r => [r.keys[0],path(r.keys[1]),num(r.position),num(r.impressions)]))}`);
+    const expected = [0, .28, .15, .1, .07, .05];
+    const ctr = g.queryPage.filter(r => r.position >= 1 && r.position <= 5.4 && r.impressions >= 40 && r.ctr < expected[Math.min(5,Math.round(r.position))] * .5);
+    sections.push(`### CTR-Prüfkandidaten\n\nGrobe Positionsheuristik, keine Prognose; Brand, Gerät und SERP-Features vor Eingriff prüfen.\n${table(['Query', 'Seite', 'Position', 'CTR'], ctr.slice(0,15).map(r => [r.keys[0],path(r.keys[1]),num(r.position),pct(r.ctr)]))}`);
+    const queries = new Map();
+    for (const r of g.queryPage) { const rows = queries.get(r.keys[0]) ?? []; rows.push(r); queries.set(r.keys[0], rows); }
+    const overlaps = [...queries].filter(([,rows]) => {
+      const total = rows.reduce((s,r) => s+r.impressions,0);
+      return total >= 50 && rows.filter(r => r.impressions >= total*.2).length >= 2;
+    });
+    sections.push(`### Mehrfachrankings – Intent prüfen\n\nKeine bestätigte Kannibalisierung. Redirect-Artefakte und unterschiedliche Suchintentionen berücksichtigen.\n${table(['Query','Seiten'],overlaps.slice(0,15).map(([q,rows]) => [q,rows.map(r => path(r.keys[1])).join(', ')]))}`);
+    const seen = new Set(g.page.filter(r => r.impressions > 0).map(r => norm(r.keys[0])));
+    sections.push(`### Sitemap-Seiten ohne erfasste Impressionen\n\n${g.sitemap.filter(u => !seen.has(norm(u))).map(u => `- ${u}`).join('\n') || '_Keine._'}\n\nFehlende Zeilen sind kein Nachweis für null Impressionen oder fehlende Indexierung. URL Inspection separat ausführen.`);
+    if (ctr.length) next.push(`Snippet-Hypothese prüfen: ${path(ctr[0].keys[1])}.`);
+    if (striking.length) next.push(`Suchintention und fehlende Antwort prüfen: ${path(striking[0].keys[1])} für „${striking[0].keys[0]}“.`);
+  } else {
+    sections.push('## Eigene Suchperformance\n\n**GSC fehlt oder ist nicht verwertbar.** Keine Aussagen über tatsächliche Klicks, CTR, Indexierungsstatus oder Lead-Erfolg möglich. GSC-Service-Account verbinden; externe Rankings ersetzen diese Messungen nicht.');
+    next.push('GSC-Service-Account verbinden und danach `npm run seo:sync` ausführen.');
   }
+  const ranked = tasks.filter(r => r.endpoint.includes('/ranked_keywords/') && r.task.data?.location_code === 2276 && r.task.data?.language_code === 'de');
+  const own = ranked.find(r => r.task.data?.target === SITE);
+  const items = r => (r?.task.result?.[0]?.items ?? []).filter(i => i.ranked_serp_element?.serp_item?.type === 'organic');
+  const kw = i => i.keyword_data?.keyword;
+  const volume = i => i.keyword_data?.keyword_info?.search_volume;
+  const position = i => i.ranked_serp_element?.serp_item?.rank_group;
+  const url = i => i.ranked_serp_element?.serp_item?.url;
+  if (own) {
+    sections.push(`## DataForSEO: eigene Rankings\n\nStand ${own.fetchedAt}; Deutschland/Deutsch. ${items(own).length} organische Einträge erfasst; Datenbankgesamtzahl ${num(own.task.result[0].total_count)}. Leere Ergebnisse bedeuten keine erfassten Rankings, nicht bewiesene Unsichtbarkeit.\n\n${table(['Keyword','Volumen/Monat','Position','Seite'],items(own).slice(0,50).map(i => [kw(i),num(volume(i)),num(position(i)),path(url(i))]))}`);
+    const ownKws = new Set(items(own).map(kw));
+    const gaps = ranked.filter(r => r !== own).flatMap(r => items(r).filter(i => !ownKws.has(kw(i)) && position(i) <= 20).map(i => [kw(i),num(volume(i)),r.task.data.target,num(position(i)),r.date]));
+    sections.push(`### Themen bei Wettbewerbern, im eigenen erfassten Datensatz nicht enthalten\n\nKeine Aussage „nicht in Top 100“: Exporte und Datenbankabdeckung sind begrenzt. Unterschiedliche Messdaten beachten.\n${table(['Keyword','Volumen','Domain','Position','Stand'],gaps.slice(0,20))}`);
+    next.push('Eigene Rankings nach lokaler Relevanz, Anfrage-Nähe und konkreter Antwortlücke priorisieren; SERP gezielt prüfen.');
+  } else sections.push('## DataForSEO: eigene Rankings\n\nKein gültiger Ranking-Snapshot für Deutschland/Deutsch vorhanden.');
+  const competitors = tasks.find(r => r.endpoint.includes('/competitors_domain/') && r.task.data?.target === SITE && r.task.data?.location_code === 2276);
+  if (competitors) sections.push(`### Wettbewerber\n\nStand ${competitors.fetchedAt}.\n${table(['Domain','Gemeinsame Keywords'],(competitors.task.result[0].items ?? []).slice(0,10).map(i => [i.domain,num(i.intersections)]))}`);
+  sections.push(`## Recherchebelege\n\n${records.length ? records.map(r => `- ${relative(base,r.file)} (${r.fetchedAt})`).join('\n') : '_Noch keine gültigen DataForSEO-Antworten gespeichert._'}`);
+  sections.push(`## Nächste Schritte\n\n${next.map(n => `- ${n}`).join('\n')}\n- Eine Änderungshypothese für eine bestehende Seite dokumentieren; aktuelle Primärquellen für veränderliche Fakten prüfen.\n- Technische Fehler separat beheben. Veröffentlichung und Messbeginn im Journal festhalten; Vergleich nach 14–28 Tagen, saisonale Einflüsse beachten.`);
+  const journal = join(base, 'changes.jsonl');
+  if (existsSync(journal)) {
+    const changes = readFileSync(journal,'utf8').trim().split('\n').filter(Boolean).map(line => { try { return JSON.parse(line); } catch { return { url:'?',hypothesis:'Fehlerhafter Journaleintrag',publishedAt:null }; } });
+    sections.push(`## Änderungsjournal\n\n${table(['URL','Hypothese','Veröffentlicht','Messung'],changes.map(c => [c.url,c.hypothesis,c.publishedAt ?? 'nicht veröffentlicht',c.publishedAt ? '14–28 Tage ab Veröffentlichung; Änderungen und Saison berücksichtigen' : 'noch nicht gestartet']))}`);
+  }
+  return `${sections.join('\n\n')}\n`;
 }
-if (!dfsSections.length) {
-  dfsSections.push('_Noch kein DataForSEO-Snapshot. Erzeugen mit `npm run seo:dfs` (kostet Cents)._');
+if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href) {
+  const base = join(ROOT,'seo-data');
+  mkdirSync(base,{recursive:true});
+  writeFileSync(join(base,'REPORT.md'),buildReport(base));
+  console.log('Report: seo-data/REPORT.md');
 }
-
-// --- Monatskosten DFS -------------------------------------------------------
-let costLine = '';
-if (existsSync(COST_LOG)) {
-  const month = new Date().toISOString().slice(0, 7);
-  const total = readFileSync(COST_LOG, 'utf8')
-    .split('\n')
-    .filter((l) => l.startsWith(month))
-    .reduce((s, l) => s + Number(l.split('\t')[2] ?? 0), 0);
-  costLine = `DataForSEO-Kosten im ${month}: $${total.toFixed(2)}`;
-}
-
-// --- Nächste Schritte --------------------------------------------------------
-const nextSteps = [];
-if (ctrGaps.length)
-  nextSteps.push(`**Snippet-Fix:** ${ctrGaps[0][1]} — Query „${ctrGaps[0][0]}" holt bei Position ${ctrGaps[0][2]} nur ${ctrGaps[0][4]} CTR. Title/Description schärfen.`);
-if (striking.length)
-  nextSteps.push(`**Inhalt erweitern:** ${striking[0][1]} — „${striking[0][0]}" steht bei Position ${striking[0][2]} mit ${striking[0][3]} Impressionen. Abschnitt/H2 zur Query ergänzen.`);
-if (cannibal.length)
-  nextSteps.push(`**Kannibalisierung klären:** „${cannibal[0][0]}" verteilt sich auf mehrere Seiten. Intent trennen oder intern konsolidieren (keine URL-Änderung!).`);
-if (losers.length)
-  nextSteps.push(`**Decay verteidigen:** ${rel(losers[0].url)} verliert (${num(losers[0].prev)} → ${num(losers[0].cur)} Klicks). Inhalt aktualisieren, Konkurrenz-SERP prüfen.`);
-nextSteps.push('Regel: **eine Maßnahme pro Seite pro Zyklus**, Umsetzung via `/optimize-bremer-waermepumpe-seo`, Wirkung nach 2–4 Wochen im nächsten Report prüfen.');
-
-// --- Report schreiben --------------------------------------------------------
-const [curW, prevW] = [meta?.windows?.current, meta?.windows?.previous];
-const md = `# SEO-Report bremer-waermepumpe.de
-
-Generiert: ${new Date().toISOString().slice(0, 16).replace('T', ' ')} | GSC-Snapshot: ${gscDate} | Property: ${meta?.property ?? '?'}
-Fenster: **${curW?.[0]} bis ${curW?.[1]}** vs. ${prevW?.[0]} bis ${prevW?.[1]} ${costLine ? `| ${costLine}` : ''}
-
-**Gesamt:** ${num(sum(pageCur, 'clicks'))} Klicks (Vorperiode: ${num(sum(pagePrev, 'clicks'))}) | ${num(sum(pageCur, 'impressions'))} Impressionen (${num(sum(pagePrev, 'impressions'))}) | Ø-Position ${pos(wPos(pageCur))} (${pos(wPos(pagePrev))})
-
-## 1. Gewinner / Verlierer (Klicks, 90 Tage vs. Vorperiode)
-
-### Gewinner
-${table(['Seite', 'Vorher', 'Jetzt', 'Δ', 'Position'], winners.map(moverRow))}
-
-### Verlierer
-${table(['Seite', 'Vorher', 'Jetzt', 'Δ', 'Position'], losers.map(moverRow))}
-
-## 2. Striking Distance (Position 4–15, Impressionen ≥ ${MIN_IMPR_STRIKING})
-
-${table(['Query', 'Seite', 'Pos', 'Impr.', 'Klicks'], striking)}
-
-## 3. CTR-Lücken (Top-5-Position, CTR < 50 % der Erwartung, Impressionen ≥ ${MIN_IMPR_CTR})
-
-${table(['Query', 'Seite', 'Pos', 'Impr.', 'CTR', 'Erwartung'], ctrGaps)}
-
-## 4. Kannibalisierung (≥ 2 Seiten mit ≥ 20 % Impressionsanteil)
-
-${table(['Query', 'Impr. gesamt', 'Seiten'], cannibal)}
-
-## 5. Sitemap-Seiten ohne Impressionen (${zeroImpr.length})
-
-${zeroImpr.length ? zeroImpr.map((u) => `- ${rel(u)}`).join('\n') + '\n\nIndexstatus prüfen: `npm run seo:inspect -- <volle-url>`' : '_Alle Sitemap-Seiten haben Impressionen._'}
-
-## 6. DataForSEO
-
-${dfsSections.join('\n\n')}
-
-## 7. Nächste Schritte (Kandidaten — Agent priorisiert)
-
-${nextSteps.map((s) => `- ${s}`).join('\n')}
-`;
-
-writeFileSync(REPORT, md);
-console.log(`Report: ${REPORT}`);
-console.log(
-  `Gewinner: ${winners.length} | Verlierer: ${losers.length} | Striking: ${striking.length} | ` +
-    `CTR-Lücken: ${ctrGaps.length} | Kannibalisierung: ${cannibal.length} | Ohne Impressionen: ${zeroImpr.length}`
-);

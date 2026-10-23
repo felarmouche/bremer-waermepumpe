@@ -1,0 +1,5 @@
+[mcp_servers.dataforseo]
+command = "node"
+args = ["scripts/seo/mcp-dataforseo.mjs"]
+startup_timeout_sec = 30
+tool_timeout_sec = 120

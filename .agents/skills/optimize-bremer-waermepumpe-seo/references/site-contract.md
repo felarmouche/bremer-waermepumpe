@@ -1,20 +1,15 @@
-# Bremer Waermepumpe Site Contract
+# URL-Zuordnung und Komponenten
 
-Read this file before optimizing a content page. Confirm the current repository state because URLs and ownership boundaries can evolve.
+Vor Seitenänderungen lesen und mit dem aktuellen Bestand abgleichen. Die Zuordnung
+beschreibt die beabsichtigte Suchintention, keine unveränderliche SEO-Strategie.
 
-## Architecture Rules
+Hubs orientieren, Detailseiten vertiefen. Die überregionalen Kostenseiten bleiben ohne
+künstlichen Bremen-Zusatz. Andere Themen über beschreibende interne Links erschließen.
 
-- Optimize one explicit existing page per thread.
-- Preserve the current site architecture unless the user explicitly changes scope.
-- Do not add pages, navigation entries, redirects, or shared-component refactors as incidental SEO work.
-- Use hubs for concise orientation and spokes for depth.
-- Keep the generic cost spokes de-localized: `/waermepumpe-kosten-einfamilienhaus/`, `/luft-wasser-waermepumpe-kosten/`, and `/waermepumpe-altbau-kosten/` deliberately carry no Bremen references, so they can rank nationally without competing with the local pages. Do not add local modifiers to them.
-- Keep `/check/`, `/kontakt/`, and `/fachpartner/` flows transparent.
-- Preserve truthful editorial and business attribution.
+## Zuständigkeit bestehender Seiten
 
-## Current URL Ownership Map
 
-| URL | Primary ownership |
+| URL | Suchintention |
 | --- | --- |
 | `/` | Local Bremen heat-pump service overview and main conversion entry |
 | `/waermepumpe-foerderung-bremen/` | Local info-first funding hub for Bremen |
@@ -29,14 +24,20 @@ Read this file before optimizing a content page. Confirm the current repository 
 | `/waermepumpe-altbau-kosten/` | Cost detail for existing buildings |
 | `/waermepumpe-oder-gasheizung-bremen/` | Local system comparison and decision support |
 | `/waermepumpe-abstand-nachbar-bremen/` | Local distance, neighbor, and placement questions |
+| `/waermepumpe-abstand-nachbar/` | Bundesweite Grenzabstände und Unterschiede zwischen Bundesländern |
+| `/waermepumpe-lautstaerke-nachbar/` | Lärm, Schallpegel und Schallschutz; keine lokale Abstandsseite |
+| `/waermepumpe-genehmigung-bremen/` | Bremer Genehmigung, Anmeldung und Sonderfälle |
+| `/gasheizung-umruesten-auf-waermepumpe-kosten/` | Kosten und Planung des Umstiegs von Gas; keine allgemeine Kosten-Hub-Seite |
 
-If a target page overlaps with this map, retain its owned intent and delegate neighboring details with descriptive internal links.
+Support-/Conversion-Seiten: `/check/` = Eignungscheck, `/kontakt/` = Redaktion/Kontakt, `/fachpartner/` = transparente Partnerzuordnung. Rechtliche Seiten sind keine Keyword-Landingpages. `/check/danke/`, `/404.html` und `/dashboard/` bleiben noindex.
+
+Überschneidungen anhand der tatsächlichen Suchintention prüfen, bevor Seiten zusammengelegt werden.
 
 Legacy URLs: `/waermepumpe-kosten-foerderung/` no longer exists and 301-redirects to `/waermepumpe-foerderung-bremen/`. It can still appear in GSC data (including cannibalization tables) until Google consolidates the redirect — treat such rows as redirect artifacts, not content problems.
 
-## Shared Astro Contracts
+## Gemeinsame Astro-Komponenten
 
-Inspect these files before changing markup patterns:
+Bei Änderungen an den entsprechenden Mustern prüfen:
 
 | File | Purpose |
 | --- | --- |
@@ -44,27 +45,3 @@ Inspect these files before changing markup patterns:
 | `src/components/FAQSection.astro` | Visible FAQs and synchronized FAQ schema |
 | `src/components/Breadcrumb.astro` | Visible breadcrumbs and BreadcrumbList schema |
 | target page imports | Existing layout and reusable content patterns |
-
-## Primary Source Starting Points
-
-Use these as starting points and verify their current contents before publishing:
-
-### Google Search
-
-- Helpful content: <https://developers.google.com/search/docs/fundamentals/creating-helpful-content>
-- AI features: <https://developers.google.com/search/docs/appearance/ai-features>
-- Title links: <https://developers.google.com/search/docs/appearance/title-link>
-- Snippets: <https://developers.google.com/search/docs/appearance/snippet>
-- Core Web Vitals: <https://developers.google.com/search/docs/appearance/core-web-vitals>
-- FAQ markup: <https://developers.google.com/search/docs/appearance/structured-data/faqpage>
-
-### Funding And Bremen
-
-- KfW 458: <https://www.kfw.de/inlandsfoerderung/Privatpersonen/Bestehende-Immobilie/F%C3%B6rderprodukte/Heizungsf%C3%B6rderung-f%C3%BCr-Privatpersonen-Wohngeb%C3%A4ude-%28458%29/>
-- BAFA heating optimization: <https://www.bafa.de/DE/Energie/Effiziente_Gebaeude/Sanierung_Wohngebaeude/Heizungsoptimierung/heizungsoptimierung_node.html>
-- BAB Bremen news: <https://www.bab-bremen.de/de/page/news/82957>
-- Bremen service portal: <https://www.service.bremen.de/dienstleistungen/foerderung-fuer-den-heizungstausch-beantragen-190934>
-- Bremen GEG guidance: <https://umwelt.bremen.de/klima/energie/gebaeudeenergiegesetz-geg/anforderungen-an-bestehende-gebaeude-2387269>
-- Bremen heat planning: <https://umwelt.bremen.de/klima/waermewende/die-kommunale-waermeplanung-2383791>
-
-Add page-specific primary sources when the target intent requires them. Do not treat this list as a substitute for current-source verification.

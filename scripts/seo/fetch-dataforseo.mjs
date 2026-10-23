@@ -11,9 +11,10 @@
  *   npm run seo:dfs -- volume "kw1, kw2"   Suchvolumen/CPC/Difficulty einzelner Keywords
  *   npm run seo:dfs -- serp "kw1, kw2"     Live-SERPs für einzelne Keywords
  */
-import { appendFileSync, mkdirSync, readFileSync, writeFileSync, existsSync } from 'node:fs';
+import { appendFileSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { importResponse } from './lib/snapshots.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
 const OWN_DOMAIN = 'bremer-waermepumpe.de';
@@ -55,6 +56,11 @@ async function post(path, tasks, label) {
   for (const t of data.tasks ?? []) {
     if (t.status_code !== 20000) console.warn(`Task-Fehler: ${t.status_code} ${t.status_message}`);
   }
+  // Archive at receipt time, even when a later display/export fails.
+  importResponse(join(ROOT, 'seo-data'), {
+    schemaVersion: 1, complete: true, source: 'dataforseo-script',
+    fetchedAt: new Date().toISOString(), endpoint: `/v3${path}`, request: tasks, response: data,
+  });
   logCost(label, data.cost);
   return data;
 }
@@ -63,8 +69,8 @@ const iso = new Date().toISOString().slice(0, 10);
 const outDir = join(ROOT, 'seo-data', 'dfs', iso);
 mkdirSync(outDir, { recursive: true });
 const save = (name, data) => {
-  const file = join(outDir, name);
-  writeFileSync(file, JSON.stringify(data));
+  const file = join(outDir, `${name.replace(/\.json$/, '')}-${Date.now()}.json`);
+  writeFileSync(file, JSON.stringify(data), { flag: 'wx', mode: 0o600 });
   console.log(`Gespeichert: ${file}`);
 };
 
