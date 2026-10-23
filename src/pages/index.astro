@@ -1,4 +1,5 @@
 ---
+import { getImage } from "astro:assets";
 import Layout from "../layout/Layout.astro";
 import HeroSection from "../components/HeroSection.astro";
 import TrustBar from "../components/TrustBar.astro";
@@ -7,15 +8,33 @@ import ProcessSection from "../components/ProcessSection.astro";
 import FAQSection from "../components/FAQSection.astro";
 import CTASection from "../components/CTASection.astro";
 import heroImage from "../images/heat-pump-bremen-hero.webp";
+import { currentPartnerVersion } from "../data/partners";
 
-const title = "Wärmepumpe Bremen 2026: Kosten, KfW-Förderung & Eignungscheck";
+const title = "Wärmepumpe Bremen: Kostenlose Einschätzung, Kosten & Förderung";
 const description =
-    "Wärmepumpe in Bremen planen: Eignung im Altbau, Kosten, swb-Heizstrom, KfW-458-Förderung und lokale Fachpartner-Einschätzung prüfen.";
+    "Passt eine Wärmepumpe zu Ihrem Haus in Bremen? Kostenlose, unverbindliche Ersteinschätzung zu Eignung, Kosten und KfW-Förderung – ein Angebot nur auf Wunsch.";
 const canonical = Astro.url.href;
+const ogImage = await getImage({ src: heroImage, width: 1200, height: 630, fit: "cover", format: "jpg" });
+const partner = currentPartnerVersion.partners[0];
 
 // Bei jeder inhaltlichen Aktualisierung hochsetzen (Frische-Signal für Google):
-const lastUpdatedISO = "2026-07-15";
-const lastUpdatedDisplay = "1. Juni 2026";
+const lastUpdatedISO = "2026-10-20";
+const lastUpdatedDisplay = "20. Oktober 2026";
+
+const nextSteps = [
+    {
+        title: "Check ausfüllen",
+        text: "Heizung, Gebäude, Eigentum und Zeitplan in wenigen Schritten angeben – kostenlos und ohne Anmeldung.",
+    },
+    {
+        title: "Telefonnummer bestätigen",
+        text: "Erst nach Ihrer Einwilligung und der SMS-Bestätigung wird die Anfrage weitergeleitet – an genau einen Betrieb.",
+    },
+    {
+        title: "Kostenlose Ersteinschätzung",
+        text: "Ein Bremer Fachbetrieb meldet sich und schätzt Eignung, groben Kostenrahmen und Förderung ein. Prüfung vor Ort oder ein Angebot gibt es nur, wenn Sie das möchten.",
+    },
+];
 
 const trustItems = [
     { text: "Fokus auf Bremen und Umgebung" },
@@ -71,7 +90,7 @@ const faqs = [
     },
     {
         question: "Was kostet eine Wärmepumpe in Bremen?",
-        answer: "Die Gesamtkosten liegen je nach Objekt typischerweise zwischen 25.000 und 50.000 Euro vor Förderung – unverbindliche Orientierung, Stand 2026. Faktoren wie Altbau-Anpassungen beeinflussen den Preis.",
+        answer: "Eine Luft-Wasser-Wärmepumpe im Einfamilien- oder Reihenhaus kostet in Bremen vor Förderung meist rund 22.000 bis 35.000 Euro; Erdwärme-Anlagen liegen deutlich darüber. Altbau-Anpassungen wie neue Heizkörper beeinflussen den Preis – unverbindliche Orientierung, Stand 2026.",
     },
     {
         question: "Welche Förderung gibt es aktuell?",
@@ -107,7 +126,7 @@ const faqs = [
     title={title}
     description={description}
     canonical={canonical}
-    ogImage={heroImage.src}
+    ogImage={ogImage.src}
     pageSchema={{
         dateModified: lastUpdatedISO,
     }}
@@ -115,7 +134,7 @@ const faqs = [
     <HeroSection
         imageSrc={heroImage}
         headline="Wärmepumpe Bremen"
-        subtext="Eignung, Kosten und Förderung für Bremer Eigentümer prüfen"
+        subtext="Kostenlose Ersteinschätzung zu Eignung, Kosten und Förderung – unverbindlich, ein Angebot nur auf Wunsch"
         primaryCTA={{
             label: "Eignung & Förderung prüfen",
             href: "/check/",
@@ -152,13 +171,97 @@ const faqs = [
                 ist ein ehrlicher <a
                     href="/check/"
                     class="text-primary underline">Eignungscheck</a
-                >
-                statt eines pauschalen Gerätevergleichs.
+                >{" "}statt eines pauschalen Gerätevergleichs.
             </p>
             <p class="text-xs text-text-muted mt-4">
-                Zuletzt aktualisiert: {lastUpdatedDisplay} · Inhalte in Zusammenarbeit
-                mit regionalen SHK-Fachbetrieben aus Bremen.
+                Zuletzt aktualisiert: {lastUpdatedDisplay} · Redaktionell
+                zusammengetragen, keine Rechts- oder Energieberatung.
             </p>
+        </div>
+    </SectionShell>
+
+    <!-- Einschätzung statt Verkaufsgespräch -->
+    <SectionShell variant="alt">
+        <h2
+            class="text-2xl md:text-3xl font-bold tracking-tight text-text mb-4"
+        >
+            Wärmepumpe in Bremen: Erst ehrlich einschätzen lassen, dann entscheiden
+        </h2>
+        <p class="text-text-muted leading-relaxed max-w-2xl mb-8">
+            Viele Eigentümer wollen zuerst wissen, ob eine Wärmepumpe überhaupt
+            zu ihrem Haus passt – bevor sie mit Verkäufern sprechen. Genau dafür
+            ist der Check gedacht: eine kostenlose Ersteinschätzung, ohne
+            Kaufverpflichtung.
+        </p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl">
+            <div class="surface-card p-6">
+                <p
+                    class="text-xs font-semibold text-primary uppercase tracking-wide mb-4"
+                >
+                    Was Sie bekommen
+                </p>
+                <ul class="space-y-3">
+                    {
+                        [
+                            "Eine ehrliche Antwort, ob Ihr Haus geeignet ist – auch wenn zuerst Heizkörper, Vorlauftemperatur oder Schall geklärt werden müssen.",
+                            "Einen groben Kostenrahmen und die passenden Förderwege.",
+                            "Kostenlos und unverbindlich – durch die Anfrage entsteht kein Vertrag.",
+                            "Ein Angebot nur, wenn Sie es ausdrücklich möchten. Auch „nur informieren“ ist möglich.",
+                            "Es meldet sich genau ein Betrieb – keine Anrufe von mehreren Firmen.",
+                        ].map((item) => (
+                            <li class="flex items-start gap-3 text-text-muted text-sm leading-relaxed">
+                                <span class="text-primary font-bold shrink-0 mt-0.5">✓</span>
+                                {item}
+                            </li>
+                        ))
+                    }
+                </ul>
+                <div class="border-t border-border mt-6 pt-5">
+                    <p class="font-semibold text-text text-sm mb-2">
+                        Transparent: Wer die Einschätzung gibt
+                    </p>
+                    <p class="text-text-muted text-sm leading-relaxed">
+                        Die Einschätzung kommt von {partner.firmierung}
+                        {` (${partner.anschrift.strasse}, ${partner.anschrift.plz} ${partner.anschrift.ort})`},
+                        einem Bremer SHK-Betrieb, der Wärmepumpen auch selbst
+                        einbaut. bremer-waermepumpe.de ist eine private
+                        Empfehlungsseite; der Betreiber erhält für die
+                        Weiterleitung keine Provision. Einzugsgebiet: Bremen,
+                        Bremerhaven und Umland (PLZ 27xxx und 28xxx). Alle
+                        Angaben auf der Seite{" "}
+                        <a href="/fachpartner/" class="text-primary underline"
+                            >Fachpartner</a
+                        >.
+                    </p>
+                </div>
+            </div>
+            <div>
+                <p class="font-semibold text-text mb-4">
+                    So läuft die kostenlose Einschätzung ab:
+                </p>
+                <ol class="space-y-4">
+                    {
+                        nextSteps.map((s, i) => (
+                            <li class="flex items-start gap-4">
+                                <span class="shrink-0 w-8 h-8 rounded-full bg-primary text-white font-bold flex items-center justify-center text-sm">
+                                    {i + 1}
+                                </span>
+                                <span>
+                                    <span class="block font-semibold text-text">
+                                        {s.title}
+                                    </span>
+                                    <span class="block text-text-muted text-sm leading-relaxed">
+                                        {s.text}
+                                    </span>
+                                </span>
+                            </li>
+                        ))
+                    }
+                </ol>
+                <a href="/check/" class="btn-accent inline-block mt-6"
+                    >Kostenlose Einschätzung starten</a
+                >
+            </div>
         </div>
     </SectionShell>
 
@@ -865,11 +968,10 @@ const faqs = [
             richtigen Partners entscheidend. Ein guter Fachbetrieb verkauft
             nicht einfach irgendein Gerät, sondern betrachtet Heizlast,
             vorhandene Heizflächen, Schall, Leitungswege, Förderung und spätere
-            Einstellung zusammen. Für passende Anfragen vermittelt dieses Portal
-            an
+            Einstellung zusammen. Passende Anfragen leitet diese Seite an
             <a href="/fachpartner/" class="text-primary underline"
-                >geprüfte Bremer Fachbetriebe</a
-            >; die erste Einschätzung startet über den <a
+                >einen namentlich genannten Bremer SHK-Betrieb</a
+            > weiter; die erste Einschätzung startet über den <a
                 href="/check/"
                 class="text-primary underline">Check</a
             >.
@@ -881,22 +983,6 @@ const faqs = [
         heading="So läuft die Planung einer Wärmepumpe ab"
         steps={processSteps}
     />
-
-    <!-- Für Neubau und Sanierung -->
-    <SectionShell variant="alt">
-        <h2
-            class="text-2xl md:text-3xl font-bold tracking-tight text-text mb-6"
-        >
-            Wärmepumpe Bremen: Für Neubau und Sanierung eine starke Lösung
-        </h2>
-        <p class="text-text-muted leading-relaxed max-w-2xl">
-            Ob Neubau oder Modernisierung – die Wärmepumpe ist für viele Häuser
-            eine wirtschaftlich und technisch überzeugende Heizlösung. Wer heute
-            modernisiert, denkt an die nächsten Jahrzehnte. Genau deshalb lohnt
-            sich eine Lösung, die Energie spart, Fördermöglichkeiten nutzt und
-            langfristig Sicherheit bietet.
-        </p>
-    </SectionShell>
 
     <!-- Weiterführende Themen -->
     <CTASection

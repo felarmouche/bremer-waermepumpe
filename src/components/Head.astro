@@ -22,10 +22,10 @@ const siteUrl = "https://bremer-waermepumpe.de";
 const websiteId = `${siteUrl}/#website`;
 const organizationId = `${siteUrl}/#organization`;
 const personId = `${siteUrl}/#ferris-el-armouche`;
-const resolvedOgImage = ogImage
-    ? `${siteUrl}${ogImage}`
-    : `${siteUrl}/og-image.jpg`;
-const pageUrl = canonical ?? siteUrl;
+const resolvedOgImage = new URL(ogImage ?? "/og-image.jpg", siteUrl).href;
+// Public metadata always uses the production origin and excludes tracking queries.
+const canonicalPath = new URL(canonical ?? Astro.url.pathname, siteUrl).pathname;
+const pageUrl = new URL(canonicalPath, siteUrl).href;
 const publisherEntity = {
     "@type": "Organization",
     "@id": organizationId,
@@ -88,7 +88,7 @@ const howToJsonLd =
 
 <title>{title}</title>
 <meta name="description" content={description} />
-{canonical && <link rel="canonical" href={canonical} />}
+<link rel="canonical" href={pageUrl} />
 
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />

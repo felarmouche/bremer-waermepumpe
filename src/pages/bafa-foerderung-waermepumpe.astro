@@ -8,18 +8,19 @@ import FAQSection from "../components/FAQSection.astro";
 import SectionShell from "../components/SectionShell.astro";
 import NoticeSuccess from "../components/content/NoticeSuccess.astro";
 import CheckList from "../components/content/CheckList.astro";
+import NumberedSteps from "../components/content/NumberedSteps.astro";
 import InternalLinkCard from "../components/InternalLinkCard.astro";
 import heroImage from "../images/foerderung-bremen-hero.webp";
 
 import type { PageData } from "../types/page";
 
 const data: PageData = {
-    title: "BAFA Förderung Wärmepumpe 2026: Was BAFA wirklich zahlt",
-    description: "BAFA Förderung Wärmepumpe 2026: keine Anschaffung über BAFA, aber Heizungsoptimierung, Energieberatung und iSFP-Bonus.",
-    lastUpdated: "29. Mai 2026",
+    title: "BAFA Förderung Wärmepumpe 2026: Wer zahlt was? + BAFA-Liste",
+    description: "BAFA zahlt 2026 keine neue Wärmepumpe – der Zuschuss läuft über KfW 458 (bis 70 %). Was BAFA noch fördert, BAFA-Liste, Rechenbeispiele & Auszahlung.",
+    lastUpdated: "22. Oktober 2026",
     hero: {
-        headline: "BAFA Förderung Wärmepumpe 2026",
-        subtext: "BAFA zahlt 2026 nicht die Wärmepumpe selbst. Relevant bleiben Heizungsoptimierung, Energieberatung und iSFP – die Wärmepumpe läuft über KfW 458.",
+        headline: "BAFA Förderung Wärmepumpe 2026: Wer zahlt was?",
+        subtext: "Kurz gesagt: Die neue Wärmepumpe fördert die KfW (Programm 458), nicht das BAFA. Das BAFA fördert Heizungsoptimierung, Gebäudehülle und Energieberatung – und führt das Wärmeerzeuger-Portal, das die alte BAFA-Liste ersetzt.",
         primaryCTA: {
             label: "Förderweg prüfen",
             href: "/check/"
@@ -31,16 +32,16 @@ const data: PageData = {
     },
     trustItems: [
         {
-            text: "BAFA vs. KfW getrennt"
+            text: "Wärmepumpe: KfW 458, bis 70 / 80 %"
         },
         {
-            text: "Heizungsoptimierung 15 %"
+            text: "BAFA: 15 % + 5 % iSFP-Bonus"
         },
         {
-            text: "iSFP-Bonus 5 %"
+            text: "Neue Richtlinie vom 17.08.2026"
         },
         {
-            text: "Stand 29. Mai 2026"
+            text: "Stand 22. Oktober 2026"
         }
     ],
     breadcrumb: [
@@ -57,8 +58,8 @@ const data: PageData = {
         }
     ],
     ctaBlock: {
-        headline: "KfW oder BAFA: welcher Förderweg passt?",
-        text: "Der Check ordnet ein, ob es bei Ihrem Vorhaben um Heizungstausch, Optimierung oder vorbereitende Beratung geht.",
+        headline: "KfW oder BAFA: welcher Förderweg passt zu Ihrem Haus?",
+        text: "Der kostenlose Check ordnet ein, ob es bei Ihrem Vorhaben um Heizungstausch, Optimierung oder vorbereitende Beratung geht – als erste Orientierung vor Angebot und Antrag.",
         variant: "highlight",
         primaryCTA: {
             label: "Förderweg prüfen",
@@ -73,29 +74,45 @@ const data: PageData = {
     faqs: [
         {
             question: "Gibt es 2026 noch BAFA-Förderung für die Wärmepumpe selbst?",
-            answer: "Nein. Die Anschaffung und der Einbau einer Wärmepumpe im Wohngebäude laufen seit der Neuordnung der BEG-Heizungsförderung über die KfW, insbesondere KfW 458. Das BAFA bleibt für ergänzende Effizienzmaßnahmen, Heizungsoptimierung und Energieberatung relevant."
+            answer: "Nein. Laut der BAFA-Förderübersicht (Stand 28.07.2026) bewilligt die KfW die Förderung elektrisch angetriebener Wärmepumpen. Private Eigentümer beantragen den Zuschuss für Kauf und Einbau über KfW 458. Das BAFA bleibt für Heizungsoptimierung, Gebäudehülle, Anlagentechnik (außer Heizung), Gebäudenetze sowie die Energieberatung zuständig."
         },
         {
-            question: "Was fördert BAFA 2026 rund um die Heizung?",
-            answer: "Relevant sind vor allem Heizungsoptimierung zur Verbesserung der Anlageneffizienz, hydraulischer Abgleich, Pumpentausch, Einstellung der Heizkurve sowie Energieberatung. Der Grundfördersatz für Heizungsoptimierung liegt bei 15 Prozent; mit iSFP kann ein zusätzlicher Bonus von 5 Prozentpunkten möglich sein."
+            question: "Wie viel Förderung bekomme ich 2026 für eine Wärmepumpe?",
+            answer: "Über KfW 458 gibt es 30 Prozent Grundförderung, bis zu 16 Prozent Klimageschwindigkeitsbonus beim Austausch einer alten fossilen Heizung und bis zu 40 Prozent Einkommensbonus für selbstnutzende Eigentümer. Gedeckelt ist die Förderung bei 70 Prozent, bei einem zu versteuernden Haushaltseinkommen bis 30.000 Euro bei 80 Prozent. Förderfähig sind bis 28.000 Euro für die erste Wohneinheit – also maximal 19.600 bzw. 22.400 Euro Zuschuss."
+        },
+        {
+            question: "Wo finde ich die BAFA-Liste der förderfähigen Wärmepumpen 2026?",
+            answer: "Für die BEG-Einzelmaßnahmen gilt laut BAFA-Infoblatt (Version 09/2026): Wärmeerzeuger werden gefördert, wenn sie im Wärmeerzeuger-Portal (WEP) des BAFA als förderfähig gelistet sind. Den öffentlichen Bereich des WEP erreichen Sie ohne Anmeldung über bafa.de. Die frühere PDF-Liste der förderfähigen Wärmepumpen führt das BAFA unter den Unterlagen für Anträge bis 20.07.2026."
+        },
+        {
+            question: "Gibt es die BAFA-Wärmepumpenliste 2026 als PDF oder Excel?",
+            answer: "Für neue Anträge ist das Wärmeerzeuger-Portal maßgeblich, das Geräte mit technischen Daten und Filtern online zeigt. Eine Listung begründet laut BAFA noch keinen Förderanspruch; die Förderfähigkeit wird im Einzelfall geprüft. Lassen Sie sich die genaue Kombinationsbezeichnung von Außen- und Inneneinheit im Angebot nennen und vom Fachbetrieb bestätigen."
+        },
+        {
+            question: "Was fördert das BAFA 2026 rund um die Heizung?",
+            answer: "Die Heizungsoptimierung bestehender Anlagen mit 15 Prozent, etwa hydraulischer Abgleich, Pumpentausch, Rohrdämmung, Pufferspeicher, Niedertemperaturheizkörper oder Flächenheizungen. Der Wärmeerzeuger muss älter als zwei Jahre sein, fossile Heizungen dürfen höchstens 20 Jahre alt sein. Die Mindestinvestition liegt bei 300 Euro brutto."
+        },
+        {
+            question: "Wie bekomme ich die BAFA-Förderung ausgezahlt?",
+            answer: "Nach Umsetzung und Bezahlung aller Rechnungen erstellt das Fachunternehmen oder der Energieeffizienz-Experte einen Technischen Projektnachweis (TPN). Mit der TPN-ID reichen Sie den Verwendungsnachweis online im BAFA-Portal ein, spätestens sechs Monate nach Ende des 36-monatigen Bewilligungszeitraums. Nach positiver Prüfung folgt der Festsetzungsbescheid und die Auszahlung über die Bundeskasse."
         },
         {
             question: "Was ist der Unterschied zwischen BAFA und KfW?",
-            answer: "KfW 458 ist der zentrale Zuschuss für den eigentlichen Heizungstausch, also auch für neue Wärmepumpen. BAFA ist 2026 vor allem für Optimierung, Energieberatung und bestimmte Einzelmaßnahmen zuständig. Dieselben Kosten dürfen nicht doppelt gefördert werden."
+            answer: "KfW 458 ist der Zuschuss für den eigentlichen Heizungstausch, also auch für Wärmepumpen. Das BAFA fördert Effizienzmaßnahmen wie Heizungsoptimierung, Dämmung, Fenster und Energieberatung. Für dieselbe Maßnahme darf nur ein Antrag entweder bei der KfW oder beim BAFA gestellt werden; auch eine Kombination mit der steuerlichen Förderung derselben Maßnahme ist ausgeschlossen."
         },
         {
-            question: "Ist die BAFA-Liste förderfähiger Wärmepumpen 2026 noch wichtig?",
-            answer: "Für Suchende ist die Liste weiterhin ein Orientierungspunkt für technische Geräteinformationen. Für den eigentlichen Zuschussantrag zum Heizungstausch ist aber die KfW 458 der maßgebliche Förderweg."
+            question: "Gibt es BAFA-Förderung für eine Wärmepumpe im Neubau?",
+            answer: "Nein. Die Einzelmaßnahmen-Förderung von BAFA und KfW gilt für Bestandsgebäude. Im Neubau ist die Wärmepumpe Teil des Gebäudekonzepts; dafür kommen eigene Neubau-Förderprogramme der KfW infrage, nicht die Heizungsförderung 458 und nicht die BAFA-Heizungsoptimierung."
         },
         {
-            question: "Wann lohnt sich BAFA vor einer Wärmepumpe?",
-            answer: "BAFA kann sinnvoll sein, wenn die alte Heizung zunächst optimiert oder eine Energieberatung vorbereitet werden soll. Wer sehr bald auf Wärmepumpe wechselt, sollte prüfen, ob bestimmte Arbeiten besser direkt als Umfeldmaßnahme im KfW-458-Antrag laufen."
+            question: "Sinkt die Wärmepumpen-Förderung 2027?",
+            answer: "Ja, nach aktuellem Stand. Ab voraussichtlich dem ersten Quartal 2027 beträgt der Grundfördersatz für Wärmepumpen 15 Prozent; für Wärmepumpen mit Ursprung in der EU ist ein Wertschöpfungsbonus von 15 Prozent vorgesehen. Zusätzlich sinken ab dem 01.02.2027 halbjährlich der Klimageschwindigkeitsbonus um 4 Prozentpunkte und die förderfähigen Kosten der ersten Wohneinheit um 750 Euro."
         }
     ],
     schema: {
         type: "Article",
         datePublished: "2026-05-02",
-        dateModified: "2026-07-15"
+        dateModified: "2026-10-22"
     }
 };
 
@@ -124,7 +141,7 @@ const pageSchema = data.schema
     {dateLine && (
         <div class="bg-background border-b border-border">
             <p class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-3 text-xs text-text-muted">
-                {dateLine} · Redaktion bremer-waermepumpe.de · Alle Angaben ohne Gewähr
+                {dateLine} · geprüft an BAFA-Förderübersicht, BAFA-Merkblatt (10/2026) und KfW 458 · Redaktion bremer-waermepumpe.de · Alle Angaben ohne Gewähr
             </p>
         </div>
     )}
@@ -133,27 +150,34 @@ const pageSchema = data.schema
   <article class="max-w-3xl space-y-5 text-text-muted leading-relaxed">
     <div class="bg-highlight border border-border rounded p-5">
       <p class="font-bold text-text mb-2">
-        Kurzantwort: BAFA fördert 2026 nicht die neue Wärmepumpe selbst
+        Kurzantwort: Das BAFA fördert 2026 nicht die neue Wärmepumpe selbst
       </p>
-      <p class="text-sm">
-        Wer eine Wärmepumpe kaufen und einbauen lassen will, landet in der Regel bei{" "}
-        <strong class="text-text">KfW 458</strong>. Das BAFA bleibt wichtig, wenn es
-        um Heizungsoptimierung, hydraulischen Abgleich an der Bestandsheizung,
-        Energieberatung oder iSFP geht.
+      <p class="text-sm mb-3">
+        Wer eine Wärmepumpe kaufen und einbauen lassen will, beantragt den Zuschuss
+        bei der <strong class="text-text">KfW (Programm 458)</strong>. Das BAFA ist
+        zuständig, wenn es um Heizungsoptimierung, Dämmung, Fenster, Energieberatung
+        oder die Liste förderfähiger Geräte geht.
       </p>
+      <ul class="text-sm space-y-1">
+        <li><strong class="text-text">Wärmepumpe (KfW 458):</strong> 30 % Grundförderung + bis 16 % Klimabonus + bis 40 % Einkommensbonus, max. 70 % bzw. 80 %</li>
+        <li><strong class="text-text">Heizungsoptimierung (BAFA):</strong> 15 %, mit iSFP-Bonus 20 %</li>
+        <li><strong class="text-text">BAFA-Liste:</strong> heute das Wärmeerzeuger-Portal (WEP)</li>
+      </ul>
     </div>
     <p>
-      Viele Suchergebnisse sprechen noch von „BAFA Förderung Wärmepumpe". Das ist
-      für 2026 missverständlich. Für Bremer Eigentümer ist die saubere Trennung
-      entscheidend, weil sonst falsche Erwartungen an Antrag, Zuschusshöhe und
-      Reihenfolge entstehen.
+      Viele Ratgeber nennen noch „BAFA-Förderung bis 40 %“ oder „35 % BAFA-Zuschuss“.
+      Das stammt aus der Zeit vor 2024. Seit der Neuordnung der Bundesförderung für
+      effiziente Gebäude (BEG) bewilligt die KfW die Heizungsförderung. Mit der
+      neuen BEG-Richtlinie vom 17. August 2026 und den Konditionen ab dem
+      21. Juli 2026 haben sich außerdem Höchstgrenzen, Boni und der Antragsablauf
+      beim BAFA geändert.
     </p>
     <NoticeSuccess>
       <p>
         <strong>Merksatz:</strong> Neue Wärmepumpe einbauen = KfW 458.
-        Bestehende Heizung optimieren oder Energieberatung vorbereiten = BAFA.
-        Unterschiedliche Maßnahmen können zusammenpassen, dieselben Kosten aber nicht
-        doppelt gefördert werden.
+        Bestehende Heizung optimieren, dämmen oder Energieberatung = BAFA.
+        Unterschiedliche Maßnahmen können sich ergänzen, für dieselbe Maßnahme ist
+        aber nur ein Antrag bei KfW <em>oder</em> BAFA möglich.
       </p>
     </NoticeSuccess>
   </article>
@@ -161,102 +185,298 @@ const pageSchema = data.schema
 
 <SectionShell variant="alt">
   <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
-    BAFA vs. KfW 458: schnelle Einordnung
+    Wer fördert was? BAFA und KfW im Überblick
   </h2>
-  <div class="surface-card overflow-x-auto">
-    <table class="w-full text-sm">
+  <p class="text-text-muted max-w-3xl mb-6">
+    Grundlage ist die offizielle Förderübersicht des BAFA zur BEG
+    Einzelmaßnahmen (Stand 28.07.2026). Die Prozentsätze beziehen sich auf die
+    förderfähigen Ausgaben.
+  </p>
+  <div class="overflow-x-auto max-w-5xl">
+    <table class="w-full min-w-[640px] text-left text-sm border-collapse surface-card overflow-hidden">
       <thead class="bg-surface-alt border-b border-border">
         <tr>
-          <th class="text-left p-4 font-semibold text-text">Vorhaben</th>
-          <th class="text-left p-4 font-semibold text-text">Förderstelle</th>
-          <th class="text-left p-4 font-semibold text-text">Typische Rolle</th>
+          <th class="p-4 font-semibold text-text">Vorhaben</th>
+          <th class="p-4 font-semibold text-text">Zuständig</th>
+          <th class="p-4 font-semibold text-text">Grundförderung</th>
+          <th class="p-4 font-semibold text-text">Mögliche Boni</th>
         </tr>
       </thead>
       <tbody class="divide-y divide-border">
         <tr>
-          <td class="p-4 text-text">Neue Wärmepumpe einbauen</td>
-          <td class="p-4 text-text-muted">KfW 458</td>
-          <td class="p-4 text-text-muted"><a href="/kfw-458-waermepumpe/" class="text-primary underline">Aktuelle Konditionen und Antrag</a></td>
+          <td class="p-4 text-text font-medium">Neue Wärmepumpe (Bestandsgebäude)</td>
+          <td class="p-4 text-text-muted"><a href="/kfw-458-waermepumpe/" class="text-primary underline">KfW 458</a></td>
+          <td class="p-4 text-text-muted">30 %</td>
+          <td class="p-4 text-text-muted">Klimageschwindigkeit bis 16 %, Einkommen bis 40 %; Deckel 70 % bzw. 80 %</td>
         </tr>
         <tr>
-          <td class="p-4 text-text">Bestandsheizung optimieren</td>
+          <td class="p-4 text-text font-medium">Heizungsoptimierung</td>
           <td class="p-4 text-text-muted">BAFA</td>
-          <td class="p-4 text-text-muted">15 % Grundförderung, ggf. +5 % iSFP-Bonus</td>
+          <td class="p-4 text-text-muted">15 %</td>
+          <td class="p-4 text-text-muted">iSFP-Bonus 5 %</td>
         </tr>
         <tr>
-          <td class="p-4 text-text">Energieberatung / iSFP</td>
+          <td class="p-4 text-text font-medium">Dämmung, Fenster, Türen (Gebäudehülle)</td>
           <td class="p-4 text-text-muted">BAFA</td>
-          <td class="p-4 text-text-muted">Vorbereitung, Sanierungsfahrplan, Bonus-Auslöser</td>
+          <td class="p-4 text-text-muted">15 %</td>
+          <td class="p-4 text-text-muted">iSFP-Bonus 5 %, Worst-Performing-Building-Bonus 5 %</td>
         </tr>
         <tr>
-          <td class="p-4 text-text">Hydraulischer Abgleich beim Heizungstausch</td>
-          <td class="p-4 text-text-muted">meist KfW 458</td>
-          <td class="p-4 text-text-muted">Als Umfeldmaßnahme im Wärmepumpen-Projekt prüfen</td>
+          <td class="p-4 text-text font-medium">Anlagentechnik außer Heizung (z. B. Lüftung)</td>
+          <td class="p-4 text-text-muted">BAFA</td>
+          <td class="p-4 text-text-muted">15 %</td>
+          <td class="p-4 text-text-muted">iSFP-Bonus 5 %</td>
+        </tr>
+        <tr>
+          <td class="p-4 text-text font-medium">Fachplanung und Baubegleitung zu BAFA-Maßnahmen</td>
+          <td class="p-4 text-text-muted">BAFA</td>
+          <td class="p-4 text-text-muted">50 %</td>
+          <td class="p-4 text-text-muted">–</td>
+        </tr>
+        <tr>
+          <td class="p-4 text-text font-medium">Energieberatung mit iSFP</td>
+          <td class="p-4 text-text-muted">BAFA (eigenes Programm)</td>
+          <td class="p-4 text-text-muted">50 % des Honorars</td>
+          <td class="p-4 text-text-muted">max. 650 € (Ein-/Zweifamilienhaus), 850 € (ab 3 WE)</td>
+        </tr>
+        <tr>
+          <td class="p-4 text-text font-medium">Gebäudenetz errichten oder erweitern</td>
+          <td class="p-4 text-text-muted">BAFA</td>
+          <td class="p-4 text-text-muted">30 %</td>
+          <td class="p-4 text-text-muted">Klimageschwindigkeit bis 16 %, Einkommen bis 40 %</td>
         </tr>
       </tbody>
     </table>
   </div>
+  <p class="text-xs text-text-muted mt-4 max-w-3xl">
+    Quellen: BAFA-Förderübersicht BEG EM (Stand 28.07.2026), BAFA Energieberatung
+    für Wohngebäude, KfW 458. Gesamtdeckel laut BAFA: 80 % bei einem zu
+    versteuernden Haushaltsjahreseinkommen bis 30.000 €, sonst 70 %.
+  </p>
+</SectionShell>
+
+<SectionShell>
+  <h2 class="text-2xl md:text-3xl font-bold text-text mb-4 scroll-mt-28" id="bafa-liste">
+    BAFA-Liste förderfähiger Wärmepumpen 2026: jetzt das Wärmeerzeuger-Portal
+  </h2>
+  <div class="max-w-3xl space-y-4 text-text-muted leading-relaxed">
+    <p>
+      Auch wenn die KfW den Zuschuss bewilligt, prüft das BAFA weiterhin, welche
+      Geräte grundsätzlich förderfähig sind. Laut BAFA-Infoblatt zu den
+      förderfähigen Maßnahmen (Version 09/2026) gilt: <strong class="text-text">Wärmeerzeuger
+      werden in der BEG EM gefördert, wenn sie im Wärmeerzeuger-Portal (WEP) des BAFA
+      als förderfähig gelistet sind.</strong>
+    </p>
+    <p>
+      Die frühere „Liste der förderfähigen Wärmepumpen mit Prüf-/Effizienznachweis“
+      als PDF führt das BAFA unter den Unterlagen für Anträge bis 20.07.2026. Wer
+      heute plant, prüft sein Gerät im öffentlichen Bereich des WEP – ohne Login,
+      mit technischen Daten und Filtern nach Kategorie.
+    </p>
+  </div>
+  <h3 class="text-xl font-semibold text-text mt-8 mb-4">So prüfen Sie Ihr Angebot in 3 Schritten</h3>
+  <NumberedSteps
+    items={[
+      { title: "Exakte Gerätebezeichnung aus dem Angebot holen", text: "Bei Split- und Monoblock-Geräten zählt die vollständige Kombinationsbezeichnung aus Außen- und Inneneinheit, nicht nur die Serie. Fragen Sie den Fachbetrieb danach, falls sie im Angebot fehlt." },
+      { title: "Im Wärmeerzeuger-Portal suchen", text: "Im öffentlichen Bereich des WEP die Kategorie Wärmepumpen öffnen und nach Hersteller und Modell filtern. Die Seite ist über bafa.de erreichbar." },
+      { title: "Förderfähigkeit im Antrag bestätigen lassen", text: "Eine Listung ist laut BAFA kein Förderanspruch. Der Fachbetrieb oder Energieeffizienz-Experte bestätigt die Anforderungen in der Bestätigung zum Antrag (BzA) für die KfW." },
+    ]}
+  />
+  <div class="max-w-3xl mt-6 text-sm text-text-muted leading-relaxed">
+    <p>
+      <strong class="text-text">Luft-Luft-Wärmepumpen:</strong> Auch Split-Geräte,
+      die überwiegend heizen, können über KfW 458 förderfähig sein – die KfW nennt
+      selbst ein Rechenbeispiel mit einer Luft-Luft-Wärmepumpe. Voraussetzung ist,
+      dass das Gerät gelistet ist und die versorgten Räume danach zu mindestens
+      65 % mit erneuerbarer Energie beheizt werden.
+    </p>
+  </div>
+</SectionShell>
+
+<SectionShell variant="alt">
+  <h2 class="text-2xl md:text-3xl font-bold text-text mb-4 scroll-mt-28" id="rechenbeispiele">
+    Förderrechner: fünf Rechenbeispiele für 2026
+  </h2>
+  <p class="text-text-muted max-w-3xl mb-6">
+    Die Beträge sind beispielhafte Projektsummen, keine Preisangaben. Gerechnet
+    wird mit den Konditionen für Anträge ab dem 21.07.2026 und vor den ab
+    Februar 2027 geplanten Kürzungen.
+  </p>
+  <div class="overflow-x-auto max-w-5xl">
+    <table class="w-full min-w-[640px] text-left text-sm border-collapse surface-card overflow-hidden">
+      <thead class="bg-surface-alt border-b border-border">
+        <tr>
+          <th class="p-4 font-semibold text-text">Beispiel (Einfamilienhaus, selbst bewohnt)</th>
+          <th class="p-4 font-semibold text-text">Förderfähig</th>
+          <th class="p-4 font-semibold text-text">Satz</th>
+          <th class="p-4 font-semibold text-text">Zuschuss</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-border">
+        <tr>
+          <td class="p-4 text-text">Wärmepumpe ersetzt 25 Jahre alte Gasheizung, Einkommen über 50.000 €</td>
+          <td class="p-4 text-text-muted">28.000 €</td>
+          <td class="p-4 text-text-muted">30 % + 16 % = 46 %</td>
+          <td class="p-4 font-semibold text-text">12.880 €</td>
+        </tr>
+        <tr>
+          <td class="p-4 text-text">Wie oben, zu versteuerndes Einkommen 35.000 € (Einkommensbonus 30 %)</td>
+          <td class="p-4 text-text-muted">28.000 €</td>
+          <td class="p-4 text-text-muted">76 % → Deckel 70 %</td>
+          <td class="p-4 font-semibold text-text">19.600 €</td>
+        </tr>
+        <tr>
+          <td class="p-4 text-text">Wie oben, zu versteuerndes Einkommen bis 30.000 € (Einkommensbonus 40 %)</td>
+          <td class="p-4 text-text-muted">28.000 €</td>
+          <td class="p-4 text-text-muted">86 % → Deckel 80 %</td>
+          <td class="p-4 font-semibold text-text">22.400 €</td>
+        </tr>
+        <tr>
+          <td class="p-4 text-text">BAFA-Heizungsoptimierung: hydraulischer Abgleich, Pumpe, zwei Niedertemperaturheizkörper</td>
+          <td class="p-4 text-text-muted">5.000 €</td>
+          <td class="p-4 text-text-muted">15 %</td>
+          <td class="p-4 font-semibold text-text">750 €</td>
+        </tr>
+        <tr>
+          <td class="p-4 text-text">BAFA-Energieberatung mit iSFP, Honorar 1.800 €</td>
+          <td class="p-4 text-text-muted">1.800 €</td>
+          <td class="p-4 text-text-muted">50 %, max. 650 €</td>
+          <td class="p-4 font-semibold text-text">650 €</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="text-xs text-text-muted mt-4 max-w-3xl">
+    Der Klimageschwindigkeitsbonus gilt für selbstnutzende Eigentümer beim Ersatz
+    einer funktionstüchtigen Öl-, Kohle-, Gasetagen- oder Nachtspeicherheizung
+    oder einer mindestens 20 Jahre alten Gas- oder Biomasseheizung. Mit Kind unter
+    18 Jahren erhöhen sich die Einkommensgrenzen um 10.000 €. Details und
+    Mehrfamilienhäuser: <a href="/kfw-458-waermepumpe/" class="text-primary underline">KfW 458 förderfähige Kosten</a>.
+  </p>
 </SectionShell>
 
 <SectionShell>
   <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
-    Was BAFA 2026 rund um Wärmepumpen-Pläne noch fördert
+    BAFA-Heizungsoptimierung: was 2026 gefördert wird
   </h2>
   <p class="text-text-muted max-w-3xl mb-6">
-    BAFA ist nicht „weg", nur die Rolle hat sich verändert. Für Bremer
-    Bestandsgebäude sind vor allem diese Bausteine relevant:
+    Die Heizungsoptimierung ist der BAFA-Baustein, der am direktesten mit
+    Wärmepumpen-Plänen zusammenhängt: Wer die Vorlauftemperatur senkt, macht das
+    Haus fit für eine spätere Wärmepumpe.
   </p>
   <CheckList
     items={[
-      { lead: "Heizungsoptimierung:", text: "hydraulischer Abgleich, Pumpentausch, Heizkurve, Regelung und Effizienzverbesserungen an der bestehenden Heizung." },
-      { lead: "iSFP-Bonus:", text: "Wenn eine Maßnahme Teil eines geförderten individuellen Sanierungsfahrplans ist, kann ein zusätzlicher Bonus von 5 Prozentpunkten möglich sein." },
-      { lead: "Energieberatung:", text: "Sinnvoll, wenn Gebäudehülle, Heizflächen und Umsetzungsreihenfolge noch unklar sind." },
-      { lead: "Einzelmaßnahmen an der Gebäudehülle:", text: "Dämmung oder Fenster laufen nicht über KfW 458, können aber für die spätere Wärmepumpen-Eignung wichtig sein." },
+      { lead: "Gefördert:", text: "hydraulischer Abgleich inkl. Heizkurve, Austausch von Heizungspumpen, Rohrdämmung, Pufferspeicher, Niedertemperaturheizkörper (Vorlauf ≤ 55 °C), Flächenheizungen (≤ 35 °C), Mess-, Steuer- und Regelungstechnik." },
+      { lead: "Fördersatz:", text: "15 % der förderfähigen Ausgaben, Mindestinvestition 300 € brutto. Der iSFP-Bonus von 5 % greift erst ab 30.000 € Investition je Antrag (Einfamilienhaus) und nur auf den Betrag darüber." },
+      { lead: "Heizungsalter:", text: "Der Wärmeerzeuger muss älter als zwei Jahre sein; Heizungen mit fossilen Brennstoffen dürfen höchstens 20 Jahre alt sein." },
+      { lead: "Gebäude:", text: "Bestandsgebäude mit höchstens fünf Wohneinheiten; bei wassergeführten Systemen ist ein hydraulischer Abgleich Pflicht." },
+      { lead: "Nicht gefördert:", text: "der Einbau oder Austausch des Wärmeerzeugers selbst – dafür ist die KfW zuständig." },
+      { lead: "Antrag:", text: "mit einem Fachunternehmen; ein Energieeffizienz-Experte ist bei der Heizungsoptimierung möglich, aber nicht Pflicht." },
     ]}
   />
 </SectionShell>
 
 <SectionShell variant="alt">
+  <h2 class="text-2xl md:text-3xl font-bold text-text mb-4 scroll-mt-28" id="antrag-auszahlung">
+    BAFA-Antrag und Auszahlung: der Ablauf in 5 Schritten
+  </h2>
+  <p class="text-text-muted max-w-3xl mb-6">
+    Für Anträge ab dem 21.07.2026 beschreibt das BAFA-Merkblatt (Stand Oktober 2026)
+    ein zweistufiges Verfahren. Für die Wärmepumpe selbst gilt der eigene
+    KfW-Ablauf mit Bestätigung zum Antrag (BzA) im Portal „Meine KfW“.
+  </p>
+  <NumberedSteps
+    items={[
+      { title: "Vertrag mit Förderbedingung und TPB", text: "Spätestens bei Antragstellung muss ein Liefer- oder Leistungsvertrag vorliegen, der unter der Bedingung der Förderzusage steht und das voraussichtliche Umsetzungsdatum nennt. Fachunternehmen oder Energieeffizienz-Experte erstellen die Technische Projektbeschreibung; die TPB-ID ist zwei Monate gültig." },
+      { title: "Antrag im BAFA-Portal", text: "Online über „+ NEUER ANTRAG“ im BAFA-Benutzerkonto, für Privatpersonen auch mit BundID. Die TPB-ID wird im Formular abgefragt." },
+      { title: "Zuwendungsbescheid abwarten", text: "Der Bescheid reserviert den Zuschuss verbindlich für 36 Monate; verlängert wird dieser Bewilligungszeitraum nicht. Wer vorher beginnt, handelt auf eigenes Risiko." },
+      { title: "Umsetzen, bezahlen, TPN erstellen lassen", text: "Nach der Umsetzung alle Rechnungen bezahlen. Fachunternehmen oder Experte erstellen den Technischen Projektnachweis; die TPN-ID ist ebenfalls zwei Monate gültig." },
+      { title: "Verwendungsnachweis und Auszahlung", text: "Verwendungsnachweis online im BAFA-Portal einreichen, spätestens sechs Monate nach Ende des Bewilligungszeitraums. Nach positiver Prüfung folgen Festsetzungsbescheid und Auszahlung über die Bundeskasse." },
+    ]}
+  />
+</SectionShell>
+
+<SectionShell>
   <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
     Reihenfolge: Wann BAFA sinnvoll ist – und wann KfW Vorrang hat
   </h2>
   <div class="space-y-5 max-w-3xl">
     <div class="surface-card p-5">
-      <p class="font-semibold text-text mb-2">Fall 1: Wärmepumpe soll in den nächsten Monaten eingebaut werden</p>
+      <p class="font-semibold text-text mb-2">Fall 1: Die Wärmepumpe soll in den nächsten Monaten kommen</p>
       <p class="text-text-muted text-sm leading-relaxed">
-        Dann zuerst KfW 458 prüfen. Arbeiten wie hydraulischer Abgleich,
-        einzelne Heizkörperanpassungen oder Schallschutz können im Zusammenhang mit
-        dem Heizungstausch förderfähige Umfeldmaßnahmen sein.
+        Dann zuerst KfW 458 prüfen. Hydraulischer Abgleich, einzelne
+        Heizkörperanpassungen oder Schallschutz können im Zusammenhang mit dem
+        Heizungstausch als Umfeldmaßnahmen förderfähig sein. Ein zusätzlicher
+        BAFA-Antrag für dieselben Kosten ist ausgeschlossen.
       </p>
     </div>
     <div class="surface-card p-5">
-      <p class="font-semibold text-text mb-2">Fall 2: Heizungstausch erst in 1 bis 3 Jahren</p>
+      <p class="font-semibold text-text mb-2">Fall 2: Heizungstausch erst in ein bis drei Jahren</p>
       <p class="text-text-muted text-sm leading-relaxed">
-        Dann kann BAFA-Heizungsoptimierung sinnvoll sein, um die Bestandsheizung
-        effizienter zu betreiben und reale Vorlauftemperaturen besser einschätzen zu können.
+        Dann kann die BAFA-Heizungsoptimierung sinnvoll sein – sofern die
+        bestehende Gas- oder Ölheizung höchstens 20 Jahre alt ist. Niedrigere
+        Vorlauftemperaturen zeigen früh, ob die Heizkörper später für eine
+        Wärmepumpe reichen.
       </p>
     </div>
     <div class="surface-card p-5">
-      <p class="font-semibold text-text mb-2">Fall 3: Gebäudehülle ist unklar</p>
+      <p class="font-semibold text-text mb-2">Fall 3: Die Gebäudehülle ist unklar</p>
       <p class="text-text-muted text-sm leading-relaxed">
-        Eine Energieberatung oder ein iSFP kann helfen, ob zuerst Dach, Fenster,
-        Heizflächen oder direkt die Wärmepumpe wirtschaftlich sinnvoll sind.
+        Eine geförderte Energieberatung mit iSFP klärt, ob zuerst Dach, Fenster,
+        Heizflächen oder direkt die Wärmepumpe sinnvoll sind. Der iSFP-Bonus
+        lohnt sich vor allem bei größeren Hüllmaßnahmen ab 30.000 € Investition.
+      </p>
+    </div>
+    <div class="surface-card p-5">
+      <p class="font-semibold text-text mb-2">Fall 4: Neubau</p>
+      <p class="text-text-muted text-sm leading-relaxed">
+        Die Einzelmaßnahmen-Förderung von BAFA und KfW gilt nur für
+        Bestandsgebäude. Im Neubau läuft die Wärmepumpe über das Gebäudekonzept
+        und die Neubauförderung der KfW.
       </p>
     </div>
   </div>
 </SectionShell>
 
+<SectionShell variant="alt">
+  <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
+    Was sich 2027 ändert
+  </h2>
+  <CheckList
+    items={[
+      { lead: "Grundförderung Wärmepumpe:", text: "laut BAFA-Förderübersicht ab voraussichtlich Q1 2027 nur noch 15 %; für Wärmepumpen mit Ursprung in der EU ist ein Wertschöpfungsbonus von 15 % vorgesehen." },
+      { lead: "Klimageschwindigkeitsbonus:", text: "sinkt ab dem 01.02.2027 halbjährlich um 4 Prozentpunkte und entfällt für Anträge ab dem 01.08.2028." },
+      { lead: "Förderfähige Kosten:", text: "die Höchstgrenze der ersten Wohneinheit sinkt ab dem 01.02.2027 halbjährlich um 750 €, von 28.000 € bis auf 22.000 € ab August 2030." },
+      { lead: "Wärmenetzgebiete:", text: "das BAFA kündigt Details zum Förderausschluss dezentraler Wärmeerzeuger in Wärmenetzgebieten an, wenn eine kommunale Entscheidung oder ein verbindliches Anschlussangebot vorliegt." },
+    ]}
+  />
+  <p class="text-text-muted max-w-3xl mt-6 text-sm leading-relaxed">
+    Maßgeblich sind die Konditionen zum Zeitpunkt der Antragstellung. Den
+    vollständigen Kürzungsfahrplan mit Tabelle finden Sie auf der Seite
+    <a href="/kfw-458-waermepumpe/" class="text-primary underline">KfW 458</a>.
+  </p>
+</SectionShell>
+
 <SectionShell>
   <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
-    Bremer Einordnung: nicht im Förderdschungel hängen bleiben
+    Bremer Einordnung: Förderweg und Wärmeplan zusammen denken
   </h2>
-  <p class="text-text-muted max-w-3xl mb-6">
-    Auf bremer-waermepumpe.de werden Anfragen aus Bremen und Umland an den
-    namentlich genannten Fachpartner auf <a href="/fachpartner/" class="text-primary underline">/fachpartner/</a>
-    weitergeleitet. Es findet kein Verkauf an Lead-Aggregatoren statt. Für
-    Förderfragen bleibt trotzdem wichtig: KfW, BAFA, Energieeffizienz-Experten
-    und Fachbetrieb müssen sauber zusammenspielen.
-  </p>
+  <div class="max-w-3xl space-y-4 text-text-muted leading-relaxed mb-6">
+    <p>
+      In Bremen kommt neben KfW und BAFA der kommunale Wärmeplan hinzu. Wer in
+      einem möglichen Wärmenetzgebiet wohnt, sollte vor dem Antrag prüfen, wie
+      das eigene Quartier eingeordnet ist – die angekündigten Regeln zu
+      Wärmenetzgebieten können die Förderung beeinflussen. Orientierung bieten die
+      <a href="https://waermeplanung.bremen.de/waermeplan/karten-nach-19-eignungsgebiete-21246" class="text-primary underline" target="_blank" rel="noopener">Bremer Eignungskarten</a>.
+      Das frühere Bremer Landesprogramm ist geschlossen; den Stand erklärt die Seite
+      <a href="/bab-heizungstausch-bremen/" class="text-primary underline">BAB-Heizungstausch</a>.
+    </p>
+    <p>
+      Anfragen über bremer-waermepumpe.de gehen an den namentlich genannten
+      <a href="/fachpartner/" class="text-primary underline">Fachpartner</a>. Es
+      findet kein Verkauf an Lead-Aggregatoren statt.
+    </p>
+  </div>
   <div class="bg-highlight border border-border rounded p-5 flex flex-col sm:flex-row gap-4 sm:items-center sm:justify-between max-w-3xl">
     <div>
       <p class="font-semibold text-text">KfW oder BAFA für Ihr Vorhaben?</p>
@@ -271,8 +491,32 @@ const pageSchema = data.schema
     Quellen und redaktioneller Stand
   </h2>
   <div class="surface-card p-5 max-w-3xl text-sm text-text-muted leading-relaxed">
-    <p class="font-semibold text-text mb-3">Stand: 29. Mai 2026</p>
+    <p class="font-semibold text-text mb-3">Stand: 22. Oktober 2026</p>
     <ul class="space-y-2">
+      <li>
+        BAFA:
+        <a href="https://www.bafa.de/SharedDocs/Downloads/DE/Energie/beg_em_foerderuebersicht_neu.pdf?__blob=publicationFile&v=3" class="text-primary underline" target="_blank" rel="noopener">
+          Förderübersicht BEG Einzelmaßnahmen (Stand 28.07.2026)
+        </a>
+      </li>
+      <li>
+        BAFA:
+        <a href="https://www.bafa.de/SharedDocs/Downloads/DE/Energie/beg_merkblatt_allgemein_antragstellung_neu.pdf?__blob=publicationFile&v=17" class="text-primary underline" target="_blank" rel="noopener">
+          Allgemeines Merkblatt zur Antragstellung (Oktober 2026)
+        </a>
+      </li>
+      <li>
+        BAFA/KfW:
+        <a href="https://www.bafa.de/SharedDocs/Downloads/DE/Energie/beg_infoblatt_foerderfaehige_kosten_neu.pdf?__blob=publicationFile&v=15" class="text-primary underline" target="_blank" rel="noopener">
+          Infoblatt zu den förderfähigen Maßnahmen (Version 11.0, 09/2026)
+        </a>
+      </li>
+      <li>
+        BAFA:
+        <a href="https://www.bafa.de/DE/Energie/Effiziente_Gebaeude/Waermeerzeuger_Portal/waermeerzeuger_portal_node.html" class="text-primary underline" target="_blank" rel="noopener">
+          Wärmeerzeuger-Portal (WEP)
+        </a>
+      </li>
       <li>
         BAFA:
         <a href="https://www.bafa.de/DE/Energie/Effiziente_Gebaeude/Sanierung_Wohngebaeude/Heizungsoptimierung/heizungsoptimierung_node.html" class="text-primary underline" target="_blank" rel="noopener">
@@ -281,8 +525,8 @@ const pageSchema = data.schema
       </li>
       <li>
         BAFA:
-        <a href="https://www.bafa.de/SharedDocs/Kurzmeldungen/DE/Energie/Effiziente_Gebaeude/20240104_anpassung_beg.html" class="text-primary underline" target="_blank" rel="noopener">
-          Förderprogramm im Überblick
+        <a href="https://www.bafa.de/DE/Energie/Energieberatung/Energieberatung_Wohngebaeude/energieberatung_wohngebaeude_node.html" class="text-primary underline" target="_blank" rel="noopener">
+          Energieberatung für Wohngebäude
         </a>
       </li>
       <li>
@@ -301,7 +545,7 @@ const pageSchema = data.schema
     <InternalLinkCard
       href="/kfw-458-waermepumpe/"
       title="KfW 458 förderfähige Kosten"
-      description="Aktuelle Konditionen nach Wohneinheiten, mögliche Boni und Antragsschritte."
+      description="Konditionen nach Wohneinheiten, Boni, Kürzungsfahrplan ab 2027 und Antragsschritte."
     />
     <InternalLinkCard
       href="/waermepumpe-foerderung-bremen/"

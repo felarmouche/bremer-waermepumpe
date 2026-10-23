@@ -15,9 +15,9 @@ import heroImage from "../images/foerderung-bremen-hero.webp";
 import type { PageData } from "../types/page";
 
 const data: PageData = {
-  title: "Wärmepumpe Förderung Bremen 2026: Bis zu 70 % Zuschuss",
+  title: "Wärmepumpe Förderung Bremen 2026: KfW & BAB im Überblick",
   description:
-    "Wärmepumpe-Förderung in Bremen 2026: KfW 458 mit neuen Sätzen ab 21.07. (bis 70 %, Deckel 80 %), ab 02/2027 sinkt der Zuschuss. BAB-Status & Förderweg prüfen.",
+    "Wärmepumpen-Förderung in Bremen: KfW-Zuschuss und Voraussetzungen prüfen. BAB Heizungstausch ist geschlossen. Förderwege, Antrag und BAFA im Überblick.",
   lastUpdated: "15. Juli 2026",
   hero: {
     headline: "Wärmepumpe Förderung Bremen",
@@ -110,7 +110,7 @@ const data: PageData = {
   schema: {
     type: "Article",
     datePublished: "2026-05-02",
-    dateModified: "2026-07-15",
+    dateModified: "2026-10-20",
   },
 };
 
@@ -182,24 +182,46 @@ const pageSchema = data.schema
           <strong class="text-text">1. Februar 2027</strong> wird die
           KfW-Förderung planmäßig abgeschmolzen – der Höchstbetrag sinkt
           halbjährlich um 750 €, der Klimageschwindigkeitsbonus um
-          4 Prozentpunkte. Was Warten konkret kostet, zeigt der
+          4 Prozentpunkte. Was Warten konkret kostet, zeigt der{" "}
           <a
             href="/kfw-458-waermepumpe/#foerder-fahrplan"
             class="text-primary underline">Kürzungsfahrplan auf der KfW-458-Seite</a
           >.
         </p>
       </div>
-      <p class="text-text-muted leading-relaxed mt-6">
-        Diese Seite ordnet die Förderwege für Eigentümer in Bremen und
-        Bremerhaven ein: Was bezuschusst den Heizungstausch, wann ist BAFA
-        relevant und welcher lokale BAB-Status gilt am 15. Juli 2026?
-        Detailfragen zur Berechnung und zu Sonderfällen bleiben bewusst auf den
-        verlinkten Fachseiten, damit sich die Inhalte nicht gegenseitig
-        Konkurrenz machen.
-      </p>
+      <div class="mt-6">
+        <h2 class="text-xl font-semibold text-text mb-3">
+          Welcher Förderweg passt zu Ihrem Vorhaben in Bremen?
+        </h2>
+        <ul class="space-y-3 text-text-muted leading-relaxed list-disc pl-5">
+          <li>
+            <strong class="text-text">Sie ersetzen die alte Heizung:</strong>{" "}
+            Prüfen Sie zuerst den <a href="/kfw-458-waermepumpe/" class="text-primary underline">KfW-Zuschuss 458</a>{" "}
+            für bestehende Wohngebäude. Förderfähige Kosten und persönliche Boni
+            bestimmen den Zuschuss; ein Anspruch auf den Höchstsatz besteht nicht automatisch.
+          </li>
+          <li>
+            <strong class="text-text">Sie suchen den Bremer Zuschuss:</strong>{" "}
+            Für <a href="/bab-heizungstausch-bremen/" class="text-primary underline">BAB Heizungstausch</a>{" "}
+            sind keine neuen Anträge mehr möglich. Die BAB verweist für eine ergänzende
+            Finanzierung auf das <a href="https://www.bab-bremen.de/de/page/programm/heizungsfoerderung" class="text-primary underline">KfW-Ergänzungsdarlehen 358/359</a>.
+            Ein Darlehen muss zurückgezahlt werden und ist kein zusätzlicher Zuschuss.
+          </li>
+          <li>
+            <strong class="text-text">Sie planen den Antrag:</strong>{" "}
+            Klären Sie vor Beginn die <a href="/kfw-458-waermepumpe/" class="text-primary underline">Antragsvoraussetzungen und den bedingten Vertrag</a>.
+            Die Förderstelle entscheidet über die Zusage; unser Check bietet eine erste Einordnung.
+          </li>
+        </ul>
+        <p class="text-xs text-text-muted mt-3">
+          Förderweg-Auswahl geprüft am 20. Oktober 2026 anhand von{" "}
+          <a href="https://www.kfw.de/inlandsfoerderung/Privatpersonen/Bestehende-Immobilie/F%C3%B6rderprodukte/Heizungsf%C3%B6rderung-f%C3%BCr-Privatpersonen-Wohngeb%C3%A4ude-%28458%29/" class="text-primary underline">KfW 458</a>{" "}
+          und der oben verlinkten BAB-Programmseite. Für die übrigen Abschnitte gilt der dort genannte Quellenstand.
+        </p>
+      </div>
       <NoticeSuccess class="mt-6">
         <p>
-          <strong>Verfasser:</strong>
+          <strong>Verfasser:</strong>{" "}
           <a href="/kontakt/" class="text-primary underline"
             >Ferris El-Armouche</a
           >. Quellenstand: 15. Juli 2026. Diese private Informationsseite ersetzt
