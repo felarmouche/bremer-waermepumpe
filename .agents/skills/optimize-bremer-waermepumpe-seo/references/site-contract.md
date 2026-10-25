@@ -17,7 +17,7 @@ künstlichen Bremen-Zusatz. Andere Themen über beschreibende interne Links ersc
 | `/bafa-foerderung-waermepumpe/` | BAFA heating optimization and iSFP detail |
 | `/bab-heizungstausch-bremen/` | Closed BAB heating-replacement program and historical or legacy applications |
 | `/waermepumpe-foerderung-2026/` | Nationwide 2026 funding changes |
-| `/waermepumpe-kosten-bremen/` | Local Bremen heat-pump cost overview |
+| `/waermepumpe-kosten-bremen/` | Local Bremen heat-pump cost overview, focus swb heat-pump tariff |
 | `/waermepumpe-kosten-einfamilienhaus/` | Cost detail for detached houses |
 | `/luft-wasser-waermepumpe-kosten/` | Air-to-water heat-pump cost detail |
 | `/waermepumpe-altbau-bremen/` | Local suitability and decisions for existing buildings in Bremen |
@@ -32,6 +32,23 @@ künstlichen Bremen-Zusatz. Andere Themen über beschreibende interne Links ersc
 Support-/Conversion-Seiten: `/check/` = Eignungscheck, `/kontakt/` = Redaktion/Kontakt, `/fachpartner/` = transparente Partnerzuordnung. Rechtliche Seiten sind keine Keyword-Landingpages. `/check/danke/`, `/404.html` und `/dashboard/` bleiben noindex.
 
 Überschneidungen anhand der tatsächlichen Suchintention prüfen, bevor Seiten zusammengelegt werden.
+
+## Bremen-Bezug und Kannibalisierung
+
+Das lokale Bremen-Volumen ist klein (DataForSEO 2026-07-21: ~400 Suchen/Monat über sechs
+Keywords; `wärmepumpe kosten bremen` ohne messbares Volumen). Bremen in Title, H1, H2 und
+FAQ-Fragen nur auf `/`, `/waermepumpe-foerderung-bremen/`, `/waermepumpe-abstand-nachbar-bremen/`,
+`/waermepumpe-kosten-bremen/` (Fokus swb-Wärmepumpentarif) und `/bab-heizungstausch-bremen/`;
+ebenso auf `/waermepumpe-altbau-bremen/`, `/waermepumpe-oder-gasheizung-bremen/` und
+`/waermepumpe-genehmigung-bremen/` passend zu deren Intention. Förder- und Kostenspokes
+(2026, KfW 458, BAFA, Luft-Wasser, Altbau-Kosten) bleiben bundesweit.
+
+- Keine H2 oder FAQ-Frage enthält wörtlich das Primärkeyword einer anderen Seite. Ursache
+  der Kannibalisierung im Juli 2026: H2 „Wärmepumpe Förderung Bremen“ auf `/` und eine
+  Bremen-Förder-FAQ auf `/waermepumpe-kosten-bremen/`.
+- Fremde Themen in 2–3 Sätzen anreißen und mit dem Titel der Zielseite als Ankertext verlinken.
+- `InternalLinkCard` rendert den Titel als `<p>`, nicht als Überschrift.
+- `/check/` und `/kontakt/` sollen für keine inhaltliche Query ranken.
 
 Legacy URLs: `/waermepumpe-kosten-foerderung/` no longer exists and 301-redirects to `/waermepumpe-foerderung-bremen/`. It can still appear in GSC data (including cannibalization tables) until Google consolidates the redirect — treat such rows as redirect artifacts, not content problems.
 
