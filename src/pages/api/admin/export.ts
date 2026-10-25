@@ -29,6 +29,7 @@ const COLUMNS: { header: string; get: (l: LeadRow) => string | null }[] = [
   { header: "Heizungsalter", get: (l) => l.heating_age },
   { header: "Standort Heizung", get: (l) => l.heating_location },
   { header: "Zeitplan", get: (l) => l.timeline },
+  { header: "Herkunftsseite", get: (l) => l.source_page ?? null },
   { header: "Funnel-Status", get: (l) => l.status },
   { header: "SMS verifiziert am", get: (l) => l.sms_verified_at },
   { header: "Widerrufen am", get: (l) => l.revoked_at },

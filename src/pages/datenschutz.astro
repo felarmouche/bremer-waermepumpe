@@ -132,6 +132,12 @@ import Layout from "../layout/Layout.astro";
           zeitlicher Horizont)
         </li>
         <li>
+          die Unterseite dieser Website, von der aus Sie den Check geöffnet
+          haben (nur der Seitenpfad, ermittelt aus dem Referrer; bei Aufruf von
+          einer fremden Website lediglich der Vermerk „extern“), damit wir
+          auswerten können, welche Inhalte zu Anfragen führen
+        </li>
+        <li>
           SMS-Verifizierungsnachweis: gesendete Mobilfunknummer, Zeitstempel des
           Code-Versands, Zeitstempel der erfolgreichen Code-Bestätigung,
           IP-Adresse, User-Agent, Versandkennung des SMS-Dienstleisters
@@ -159,7 +165,8 @@ import Layout from "../layout/Layout.astro";
         Funktionskontrolle des Anfrageprozesses. Hierfür bilden wir im
         zugangsgeschützten Verwaltungsbereich aus den ohnehin gespeicherten Anfrage-
         und Statusdaten zusammengefasste Kennzahlen (z. B. Anzahl abgesendeter,
-        SMS-bestätigter und an den Fachbetrieb zugestellter Anfragen). Es entstehen
+        SMS-bestätigter und an den Fachbetrieb zugestellter Anfragen) und werten aus,
+        von welchen Unterseiten aus abgesendete Anfragen gestartet wurden. Es entstehen
         dabei keine zusätzlichen Tracking-Daten oder Nutzerprofile.
       </p>
       <p>
@@ -169,7 +176,8 @@ import Layout from "../layout/Layout.astro";
         von Ihnen ausdrücklich gewünschte Erstberatung). Soweit die anschließende
         telefonische Kontaktaufnahme durch den Experten zugleich als Werbung im Sinne
         des § 7 UWG einzuordnen ist, stützen wir uns defensiv zusätzlich auf § 7 Abs.
-        2 Nr. 2 UWG. Die interne, zusammengefasste Funktionskontrolle stützen wir auf
+        2 Nr. 2 UWG. Die interne, zusammengefasste Funktionskontrolle einschließlich der
+        Auswertung der Herkunftsseiten stützen wir auf
         Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an einem zuverlässigen und
         effizienten Anfrageprozess). Sie können dieser Verarbeitung nach Art. 21 DSGVO
         widersprechen (siehe Ziffer 10).
@@ -498,10 +506,14 @@ import Layout from "../layout/Layout.astro";
 
       <h2 class="text-xl font-semibold text-text">17. Stand</h2>
       <p>
-        Stand dieser Datenschutzerklärung: Juli 2026 (Version 1.7 – transparente
-        Klarstellung der internen, zusammengefassten Prozesskennzahlen aus bereits
-        abgesendeten Anfragen; keine zusätzliche Erhebung und weiterhin kein
-        Besucher-, Klick- oder Schritt-Tracking).
+        Stand dieser Datenschutzerklärung: Oktober 2026 (Version 1.8 – mit einer
+        abgesendeten Anfrage wird zusätzlich der Pfad der Unterseite gespeichert, von
+        der aus der Check geöffnet wurde; weiterhin kein Besucher-, Klick- oder
+        Schritt-Tracking).
+      </p>
+      <p class="text-xs text-text-muted">
+        Vorgängerversion 1.7 (Juli 2026) – transparente Klarstellung der internen,
+        zusammengefassten Prozesskennzahlen aus bereits abgesendeten Anfragen.
       </p>
       <p class="text-xs text-text-muted">
         Vorgängerversion 1.6 (Mai 2026) – Entfernung

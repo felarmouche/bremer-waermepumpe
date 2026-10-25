@@ -58,6 +58,7 @@ async function buildExtract(db: never, lead: LeadRow): Promise<string[]> {
     `Eigentümer:        ${lead.is_owner === 1 ? "ja" : lead.is_owner === 0 ? "nein" : "—"}`,
     `Aufstellort:       ${v(lead.heating_location)}`,
     `Zeitlicher Rahmen: ${v(lead.timeline)}`,
+    `Check gestartet:   ${v(lead.source_page)}`,
     ``,
     `── Status ─────────────────────────────────`,
     `Funnel-Status:       ${lead.status}`,

@@ -4,6 +4,7 @@ import { currentConsentVersion } from "../../../lib/consent";
 import {
   insertLead,
   updateLeadReference,
+  updateLeadSourcePage,
   updateLeadStatus,
   insertConsent,
   insertSmsVerification,
@@ -73,6 +74,14 @@ const FUNNEL_VALUES = {
   ],
   salutation: ["Herr", "Frau"],
 } as const;
+
+// Nur ein eigener Seitenpfad oder "extern" — keine Query-Strings, keine fremden URLs.
+function sanitizeSourcePage(value: unknown): string | null {
+  if (typeof value !== "string") return null;
+  if (value === "extern") return value;
+  if (value.length > 120 || !/^\/(?:[a-z0-9-]+\/)*(?:[a-z0-9-]+)?$/.test(value)) return null;
+  return value.endsWith("/") ? value : `${value}/`;
+}
 
 export const POST: APIRoute = async ({ request }) => {
   if (!request.headers.get("content-type")?.includes("application/json")) {
@@ -226,6 +235,15 @@ export const POST: APIRoute = async ({ request }) => {
     await updateLeadReference(db as never, leadId, reference);
   } catch (err) {
     console.error("Reference update failed:", err);
+  }
+
+  const sourcePage = sanitizeSourcePage(body.sourcePage);
+  if (sourcePage) {
+    try {
+      await updateLeadSourcePage(db as never, leadId, sourcePage);
+    } catch (err) {
+      console.error("Source page update failed:", err);
+    }
   }
 
   // Consent proof

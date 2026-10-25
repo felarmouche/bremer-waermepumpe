@@ -9,6 +9,7 @@ Interne Lead-Verwaltung, **nicht verlinkt und nicht indexiert** (noindex-Meta + 
 - Sessions: 32-Byte-Token in KV (`admin:sess:*`), 7 Tage, Cookie `__Host-bwp_admin` (HttpOnly/Secure/SameSite=Strict). Logout löscht die Session serverseitig.
 - Schutz: Rate-Limit 5 Logins/15 min pro IP (bei Erfolg zurückgesetzt) + 30/h global, Origin-Check gegen CSRF, strenge CSP.
 - Bearbeitungsstatus (`crm_status`) liegt getrennt vom Funnel-`status` in `leads` — Werte in `CRM_STATUSES` (`src/lib/leads.ts`), Änderung nur über `/api/admin/lead-update`.
+- `source_page`: Pfad der Seite, von der aus `/check/` geöffnet wurde (aus `document.referrer`, sonst `extern`/NULL), getrennt vom Insert per Best-Effort-Update gespeichert; erfasst ab Migration `scripts/d1-migration-2026-10-25-source-page.sql`. Dashboard-Karte „Herkunftsseite“, CSV-Export und Datenauszug.
 - Die Admin-Mail bei neuen Leads enthält einen Deep-Link `/dashboard?lead=<Referenz>`; das Dashboard filtert und öffnet den Lead automatisch.
 
 **DSGVO-Aktionen im Dashboard** (Logik folgt der Datenschutzerklärung, Ziff. 5/5a/11 — bei Änderungen dort auch hier nachziehen):

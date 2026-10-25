@@ -52,6 +52,22 @@ export type VerifyLeadResult =
 const TOTAL_STEPS = 10;
 const SUCCESS_STEP = 11;
 
+/**
+ * Seite, von der aus der Check geöffnet wurde: nur der Pfad einer eigenen
+ * Seite (aus dem Referrer), "extern" bei fremder Herkunft, sonst null.
+ * Wird nicht gespeichert, nur mit der Anfrage übermittelt.
+ */
+function detectSourcePage(): string | null {
+  if (typeof document === 'undefined' || !document.referrer) return null;
+  try {
+    const ref = new URL(document.referrer);
+    if (ref.origin !== window.location.origin) return 'extern';
+    return ref.pathname === window.location.pathname ? null : ref.pathname;
+  } catch {
+    return null;
+  }
+}
+
 function splitName(full: string): { vorname: string; nachname: string } {
   const parts = full.trim().split(/\s+/);
   if (parts.length === 1) return { vorname: parts[0], nachname: "" };
@@ -68,6 +84,7 @@ export default function FunnelParent() {
   const [pendingToken, setPendingToken] = useState<string | null>(null);
   const [phoneMasked, setPhoneMasked] = useState<string>("");
   const [reference, setReference] = useState<string>("");
+  const [sourcePage] = useState<string | null>(detectSourcePage);
 
   // Restore from localStorage on mount.
   //
@@ -196,6 +213,7 @@ export default function FunnelParent() {
       consent_marketing: input.consentMarketing,
       consent_terms: input.consentTerms,
       consent_version: currentConsentVersion.version,
+      sourcePage,
     };
 
     try {

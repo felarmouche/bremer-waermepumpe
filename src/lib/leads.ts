@@ -34,6 +34,7 @@ export type LeadRow = {
   is_owner: number | null;
   heating_location: string | null;
   timeline: string | null;
+  source_page?: string | null;
 
   sms_verified_at: string | null;
   sms_phone_verified: string | null;
@@ -136,6 +137,21 @@ export async function insertLead(
     )
     .run();
   return result.meta.last_row_id as number;
+}
+
+/**
+ * Speichert die Herkunftsseite getrennt vom Insert: fehlt die Spalte (Migration
+ * 2026-10-25 noch nicht ausgeführt), scheitert nur dieses Update, nicht der Lead.
+ */
+export async function updateLeadSourcePage(
+  db: D1Database,
+  id: number,
+  sourcePage: string,
+): Promise<void> {
+  await db
+    .prepare(`UPDATE leads SET source_page = ? WHERE id = ?`)
+    .bind(sourcePage, id)
+    .run();
 }
 
 export async function updateLeadReference(

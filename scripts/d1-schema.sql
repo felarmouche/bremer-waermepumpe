@@ -30,6 +30,7 @@ CREATE TABLE leads (
   is_owner INTEGER,
   heating_location TEXT,
   timeline TEXT,
+  source_page TEXT,
 
   sms_verified_at TEXT,
   sms_phone_verified TEXT,

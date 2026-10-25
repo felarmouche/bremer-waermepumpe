@@ -253,6 +253,8 @@ const statLeads = leads.filter((l) => !isDeleted(l));
 const distHeating = dist(statLeads.map((l) => l.heating_current));
 const distBuilding = dist(statLeads.map((l) => l.building_type));
 const distTimeline = dist(statLeads.map((l) => l.timeline));
+// Herkunft wird erst seit 2026-10-25 erfasst; ältere Leads zählen nicht mit.
+const distSource = dist(statLeads.map((l) => l.source_page ?? null), 10);
 const distPlz = dist(statLeads.map((l) => l.plz || null), 6);
 
 // CRM in fester Reihenfolge, Anteil an nicht-gelöschten Leads
@@ -815,6 +817,10 @@ function projektLine(l: LeadRow): string {
                                                                     {l.timeline && ` · ${l.timeline}`}
                                                                 </dd>
                                                             </div>
+                                                            <div>
+                                                                <dt>Check gestartet von</dt>
+                                                                <dd class="mono">{l.source_page ?? "—"}</dd>
+                                                            </div>
                                                         </>
                                                     )}
                                                     <div>
@@ -1127,6 +1133,21 @@ function projektLine(l: LeadRow): string {
                                         <p class="dist-empty">Keine Angaben.</p>
                                     )}
                                     {distTimeline.map((d) => (
+                                        <div class="dist-row" title={`${d.label}: ${d.count}`}>
+                                            <span class="dist-label">{d.label}</span>
+                                            <svg class="dist-bar" viewBox="0 0 100 8" preserveAspectRatio="none" aria-hidden="true">
+                                                <rect width={String(d.pct)} height="8" />
+                                            </svg>
+                                            <span class="dist-val mono">{d.count}</span>
+                                        </div>
+                                    ))}
+                                </section>
+                                <section class="stats-card">
+                                    <h2>Herkunftsseite</h2>
+                                    {distSource.length === 0 && (
+                                        <p class="dist-empty">Noch keine erfassten Herkunftsseiten.</p>
+                                    )}
+                                    {distSource.map((d) => (
                                         <div class="dist-row" title={`${d.label}: ${d.count}`}>
                                             <span class="dist-label">{d.label}</span>
                                             <svg class="dist-bar" viewBox="0 0 100 8" preserveAspectRatio="none" aria-hidden="true">
