@@ -67,7 +67,7 @@ export default function Step7Address({ data, onNext, onBack }: Step7Props) {
               id="zip"
               type="text"
               maxLength={5}
-              placeholder="e.g. 28195"
+              placeholder="z. B. 28195"
               className={`input-base ${errors.zip ? 'border-red-400 focus:border-red-500' : ''}`}
               {...register('zip')}
             />
@@ -83,7 +83,7 @@ export default function Step7Address({ data, onNext, onBack }: Step7Props) {
             <input
               id="city"
               type="text"
-              placeholder="e.g. Bremen"
+              placeholder="z. B. Bremen"
               className={`input-base ${errors.city ? 'border-red-400 focus:border-red-500' : ''}`}
               {...register('city')}
             />
@@ -101,7 +101,7 @@ export default function Step7Address({ data, onNext, onBack }: Step7Props) {
             <input
               id="street"
               type="text"
-              placeholder="e.g. Hauptstraße"
+              placeholder="z. B. Hauptstraße"
               className={`input-base ${errors.street ? 'border-red-400 focus:border-red-500' : ''}`}
               {...register('street')}
             />
@@ -117,7 +117,7 @@ export default function Step7Address({ data, onNext, onBack }: Step7Props) {
             <input
               id="houseNumber"
               type="text"
-              placeholder="e.g. 42a"
+              placeholder="z. B. 42a"
               className={`input-base ${errors.houseNumber ? 'border-red-400 focus:border-red-500' : ''}`}
               {...register('houseNumber')}
             />

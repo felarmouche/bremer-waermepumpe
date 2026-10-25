@@ -18,8 +18,8 @@ export default function DisqualifiedScreen({ onBack }: DisqualifiedProps) {
       
       <div className="space-y-4 text-sm text-text-muted leading-relaxed text-left bg-surface border border-border rounded-xl p-6 md:p-8 mb-6">
         <p>
-          Vielen Dank für Ihr Interesse an unserem Wärmepumpen-Check! Als regionaler Meisterbetrieb aus Bremen 
-          freuen wir uns über jede Anfrage zur Energiewende.
+          Vielen Dank für Ihr Interesse an unserem Wärmepumpen-Check! Wir freuen uns über jede
+          Anfrage zur Wärmepumpe in Bremen und Umland.
         </p>
         <p className="font-semibold text-text">
           Warum können wir für Mieter keine direkte Anfrage bearbeiten?
