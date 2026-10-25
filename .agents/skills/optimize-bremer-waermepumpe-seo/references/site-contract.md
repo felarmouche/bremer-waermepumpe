@@ -28,6 +28,7 @@ künstlichen Bremen-Zusatz. Andere Themen über beschreibende interne Links ersc
 | `/waermepumpe-lautstaerke-nachbar/` | Lärm, Schallpegel und Schallschutz; keine lokale Abstandsseite |
 | `/waermepumpe-genehmigung-bremen/` | Bremer Genehmigung, Anmeldung und Sonderfälle |
 | `/gasheizung-umruesten-auf-waermepumpe-kosten/` | Kosten und Planung des Umstiegs von Gas; keine allgemeine Kosten-Hub-Seite |
+| `/waermeplanung-bremen/` | Bremer Wärmeplan, Gebietsarten, Fernwärme oder Wärmepumpe fürs eigene Haus |
 
 Support-/Conversion-Seiten: `/check/` = Eignungscheck, `/kontakt/` = Redaktion/Kontakt, `/fachpartner/` = transparente Partnerzuordnung. Rechtliche Seiten sind keine Keyword-Landingpages. `/check/danke/`, `/404.html` und `/dashboard/` bleiben noindex.
 
@@ -40,7 +41,7 @@ Keywords; `wärmepumpe kosten bremen` ohne messbares Volumen). Bremen in Title, 
 FAQ-Fragen nur auf `/`, `/waermepumpe-foerderung-bremen/`, `/waermepumpe-abstand-nachbar-bremen/`,
 `/waermepumpe-kosten-bremen/` (Fokus swb-Wärmepumpentarif) und `/bab-heizungstausch-bremen/`;
 ebenso auf `/waermepumpe-altbau-bremen/`, `/waermepumpe-oder-gasheizung-bremen/` und
-`/waermepumpe-genehmigung-bremen/` passend zu deren Intention. Förder- und Kostenspokes
+`/waermepumpe-genehmigung-bremen/` und `/waermeplanung-bremen/` passend zu deren Intention. Förder- und Kostenspokes
 (2026, KfW 458, BAFA, Luft-Wasser, Altbau-Kosten) bleiben bundesweit.
 
 - Keine H2 oder FAQ-Frage enthält wörtlich das Primärkeyword einer anderen Seite. Ursache

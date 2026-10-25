@@ -1,0 +1,556 @@
+---
+import Layout from "../layout/Layout.astro";
+import Breadcrumb from "../components/Breadcrumb.astro";
+import HeroSection from "../components/HeroSection.astro";
+import TrustBar from "../components/TrustBar.astro";
+import CTASection from "../components/CTASection.astro";
+import FAQSection from "../components/FAQSection.astro";
+import SectionShell from "../components/SectionShell.astro";
+import NoticeSuccess from "../components/content/NoticeSuccess.astro";
+import CheckList from "../components/content/CheckList.astro";
+import NumberedSteps from "../components/content/NumberedSteps.astro";
+import InternalLinkCard from "../components/InternalLinkCard.astro";
+import heroImage from "../images/heat-pump-bremen-hero.webp";
+
+import type { PageData } from "../types/page";
+
+const data: PageData = {
+    title: "Wärmeplanung Bremen: Fernwärme oder Wärmepumpe fürs Haus?",
+    description: "Bremer Wärmeplan seit 21.04.2026: Was Wärmenetzgebiet, Prüfgebiet oder dezentral für Ihr Haus bedeutet – Karte, Fernwärme vs. Wärmepumpe, Fristen.",
+    lastUpdated: "25. Oktober 2026",
+    hero: {
+        headline: "Wärmeplanung Bremen: Was der Wärmeplan für Ihr Haus bedeutet",
+        subtext: "Kommt Fernwärme in Ihre Straße – oder ist eine Wärmepumpe der bessere Weg? So lesen Sie die Bremer Karte, ordnen die drei Gebietsarten ein und entscheiden ohne Zeitdruck.",
+        primaryCTA: {
+            label: "Wärmepumpe als Option prüfen",
+            href: "/check/"
+        },
+        secondaryCTA: {
+            label: "So finden Sie Ihr Haus",
+            href: "#karte-pruefen"
+        }
+    },
+    trustItems: [
+        {
+            text: "Wärmeplan vom 21.04.2026"
+        },
+        {
+            text: "Heizungsrecht seit 29.07.2026"
+        },
+        {
+            text: "Amtliche Quellen verlinkt"
+        },
+        {
+            text: "Stand 25. Oktober 2026"
+        }
+    ],
+    breadcrumb: [
+        {
+            label: "Startseite",
+            href: "/"
+        },
+        {
+            label: "Wärmeplanung Bremen"
+        }
+    ],
+    ctaBlock: {
+        headline: "Wärmepumpe als Alternative zur Fernwärme prüfen?",
+        text: "Der Check sammelt Gebäude- und Heizungsdaten für eine kostenlose Ersteinschätzung durch den genannten Bremer SHK-Fachpartner. Fernwärme-Angebote erhalten Sie nur vom Netzbetreiber.",
+        variant: "highlight",
+        primaryCTA: {
+            label: "Eignung prüfen",
+            href: "/check/"
+        },
+        secondaryCTA: {
+            label: "Kosten in Bremen",
+            href: "/waermepumpe-kosten-bremen/"
+        }
+    },
+    faqHeading: "FAQ: Wärmeplanung in Bremen",
+    faqs: [
+        {
+            question: "Muss ich mich in Bremen an die Fernwärme anschließen?",
+            answer: "Nein. Der Bremer Wärmeplan ist eine strategische Fachplanung ohne einklagbare Rechte oder Pflichten. Laut Stadt besteht auch in Wärmenetzgebieten kein Anschlusszwang. Sie wählen Ihre Heizung im Rahmen des Gebäudemodernisierungsgesetzes selbst."
+        },
+        {
+            question: "Was bedeutet „Prüfgebiet“ im Bremer Wärmeplan?",
+            answer: "Für diese Baublöcke konnte noch keine Versorgungsart festgelegt werden – meist wegen hoher Wärmedichte bei bislang negativer Wirtschaftlichkeitsrechnung für ein Wärmenetz. Die Stadt will Prüfgebiete bis spätestens 2028 untersuchen und mit der ersten Fortschreibung des Wärmeplans bis Ende 2028 möglichst einer Versorgungsart zuordnen."
+        },
+        {
+            question: "Wann kommt Fernwärme in meine Straße?",
+            answer: "Die Karte nach § 18 WPG zeigt, in welchem Zeitraum ein Wärmenetz voraussichtlich realisiert werden könnte. Verbindlich ist das nicht: Der Wärmeplan verpflichtet Netzbetreiber nicht zum Ausbau. Einen belastbaren Termin und ein Angebot erhalten Sie nur vom zuständigen Netzbetreiber."
+        },
+        {
+            question: "Darf ich in Bremen noch eine Gasheizung einbauen?",
+            answer: "Ja. Seit dem 29. Juli 2026 gilt das Gebäudemodernisierungsgesetz; die frühere 65-Prozent-Pflicht ist entfallen. Neu eingebaute Gas- und Ölheizungen im Bestand müssen aber ab 2029 steigende Anteile klimaneutraler Brennstoffe nutzen: 10 Prozent ab 2029, 15 Prozent ab 2030, 30 Prozent ab 2035 und 60 Prozent ab 2040."
+        },
+        {
+            question: "Lohnt sich eine Wärmepumpe, wenn mein Haus in einem Wärmenetzgebiet liegt?",
+            answer: "Das hängt vom Anschlusstermin, den Fernwärmekosten und der Eignung Ihres Hauses ab. Ist die Heizung alt oder defekt und gibt es noch keinen verbindlichen Anschlusstermin, kann eine Wärmepumpe die planbarere Lösung sein. Vergleichen Sie beide Varianten über mindestens 15 bis 20 Jahre."
+        },
+        {
+            question: "Wie teuer ist Fernwärme in Bremen?",
+            answer: "Die aktuellen Preise veröffentlicht der jeweilige Netzbetreiber in seinen Preisblättern. Zur Einordnung: Bundesweit lag der mittlere Fernwärmepreis 2024 bei etwa 17 Cent pro Kilowattstunde und stieg laut Statistischem Bundesamt gegenüber 2023 um 27 Prozent. Vergleichen Sie Grundpreis, Arbeitspreis, Anschlusskosten und Preisänderungsklausel."
+        },
+        {
+            question: "Wo finde ich die Karte zur Wärmeplanung Bremen?",
+            answer: "Die interaktiven Karten stehen im Geoportal unter geoportal.bremen.de/waermeplanung. Dort sind die Wärmeversorgungsgebiete und die Eignung für Luftwärmepumpen und Erdwärmesonden auf Baublockebene dargestellt."
+        },
+        {
+            question: "Gilt der Wärmeplan auch für Bremerhaven?",
+            answer: "Nein. Der beschlossene Wärmeplan gilt für die Stadtgemeinde Bremen. Die Pflicht zur Wärmeplanung wurde für Bremerhaven gesondert auf die Stadtgemeinde Bremerhaven übertragen."
+        }
+    ],
+    schema: {
+        type: "Article",
+        datePublished: "2026-10-25",
+        dateModified: "2026-10-25"
+    }
+};
+
+const canonical = data.canonical ?? Astro.url.href;
+const hero = { ...data.hero, imageSrc: heroImage };
+const dateLine = data.lastUpdated ? `Stand: ${data.lastUpdated}` : null;
+const pageSchema = data.schema
+    ? {
+          ...data.schema,
+          datePublished: data.schema.datePublished ?? data.schema.dateModified,
+          dateModified: data.schema.dateModified ?? data.schema.datePublished,
+      }
+    : undefined;
+---
+
+<Layout
+    title={data.title}
+    description={data.description}
+    canonical={canonical}
+    noindex={data.noindex}
+    pageSchema={pageSchema}
+>
+    {data.breadcrumb?.length > 0 && <Breadcrumb items={data.breadcrumb} />}
+    <HeroSection {...hero} />
+    {data.trustItems?.length > 0 && <TrustBar items={data.trustItems} />}
+    {dateLine && (
+        <div class="bg-background border-b border-border">
+            <p class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-3 text-xs text-text-muted">
+                {dateLine} · Redaktion bremer-waermepumpe.de · Alle Angaben ohne Gewähr
+            </p>
+        </div>
+    )}
+
+<SectionShell>
+  <article class="max-w-3xl space-y-4 text-text-muted leading-relaxed">
+    <div class="bg-highlight border border-border rounded p-5">
+      <p class="font-bold text-text mb-2">Kurzantwort: Was bedeutet der Wärmeplan für mich?</p>
+      <p class="text-sm leading-relaxed">
+        <strong class="text-text">Erst einmal keine Pflicht.</strong>{" "}
+        Die Bremische Stadtbürgerschaft hat den Wärmeplan am 21. April 2026 beschlossen. Er
+        teilt die Stadt Baublock für Baublock in Wärmenetzgebiete, Gebiete für dezentrale
+        Versorgung und Prüfgebiete ein. Einen Anschlusszwang gibt es nicht, und seit dem
+        29. Juli 2026 wählen Sie Ihre Heizung nach dem Gebäudemodernisierungsgesetz frei.
+        Der Plan ist aber die beste verfügbare Orientierung, ob Fernwärme oder eine
+        Wärmepumpe für Ihr Haus wahrscheinlicher ist.
+      </p>
+    </div>
+    <p>
+      Wichtig ist der Unterschied zwischen Planung und Zusage. Ein Wärmenetzgebiet in der
+      Karte heißt nicht, dass Ihre Straße zu einem bestimmten Datum angeschlossen wird –
+      der Wärmeplan verpflichtet keinen Netzbetreiber zum Ausbau. Umgekehrt schließt ein
+      Prüfgebiet ein späteres Netz nicht aus. Wer heute eine Heizung ersetzen muss, braucht
+      deshalb zwei Informationen: die Gebietsart aus der Karte und eine konkrete Auskunft,
+      was bei Ihrem Haus tatsächlich möglich ist.
+    </p>
+    <NoticeSuccess>
+      <p>
+        <strong>Der häufigste Denkfehler:</strong> „Wärmenetzgebiet“ bedeutet nicht
+        „Wärmepumpe verboten“. Auch dort ist eine Wärmepumpe zulässig, und Sie müssen nicht
+        auf das Netz warten.
+      </p>
+    </NoticeSuccess>
+  </article>
+</SectionShell>
+
+<SectionShell variant="alt">
+  <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
+    Der Bremer Wärmeplan in Zahlen und Fristen
+  </h2>
+  <p class="text-text-muted max-w-3xl mb-4">
+    Bremen musste als Großstadt mit mehr als 100.000 Einwohnern bis zum 30. Juni 2026
+    einen Wärmeplan nach dem Wärmeplanungsgesetz (WPG) vorlegen. Die wichtigsten Eckdaten:
+  </p>
+  <div class="overflow-x-auto max-w-4xl">
+    <table class="w-full min-w-[640px] text-left border-collapse surface-card overflow-hidden">
+      <thead class="bg-highlight text-text">
+        <tr>
+          <th class="p-4 font-semibold">Thema</th>
+          <th class="p-4 font-semibold">Stand</th>
+        </tr>
+      </thead>
+      <tbody class="text-sm text-text-muted">
+        <tr class="border-t border-border">
+          <td class="p-4 font-medium text-text">Beschluss</td>
+          <td class="p-4">21. April 2026 durch die Bremische Stadtbürgerschaft; Entwurf seit 14. Oktober 2025 öffentlich, Beteiligung bis 23. November 2025</td>
+        </tr>
+        <tr class="border-t border-border">
+          <td class="p-4 font-medium text-text">Zieljahr</td>
+          <td class="p-4">2038 – in beiden Umsetzungsszenarien des Plans</td>
+        </tr>
+        <tr class="border-t border-border">
+          <td class="p-4 font-medium text-text">Szenario 1</td>
+          <td class="p-4">2038 decken Wärmenetze und dezentrale Wärmepumpen zwei Drittel des Wärmebedarfs; fossiler Anteil unter einem Viertel</td>
+        </tr>
+        <tr class="border-t border-border">
+          <td class="p-4 font-medium text-text">Szenario 2</td>
+          <td class="p-4">2038 über 85 Prozent aus Wärmenetzen und dezentralen Wärmepumpen; fossiler Anteil bei null</td>
+        </tr>
+        <tr class="border-t border-border">
+          <td class="p-4 font-medium text-text">Prüfgebiete</td>
+          <td class="p-4">Untersuchung bis spätestens 2028</td>
+        </tr>
+        <tr class="border-t border-border">
+          <td class="p-4 font-medium text-text">Fortschreibung</td>
+          <td class="p-4">Erste Aktualisierung des Wärmeplans bis Ende 2028 geplant</td>
+        </tr>
+        <tr class="border-t border-border">
+          <td class="p-4 font-medium text-text">Rechtswirkung</td>
+          <td class="p-4">Keine einklagbaren Rechte oder Pflichten (§ 23 Nr. 4 WPG); kein Anschlusszwang</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="text-text-muted max-w-3xl mt-5">
+    Die Szenarien unterscheiden sich vor allem im Tempo: wie schnell Wärmenetze wachsen und
+    wie schnell Öl- und Gasheizungen durch Wärmepumpen ersetzt werden. Für Ihr Haus heißt
+    das: Beide Wege – Netz und Wärmepumpe – sind in der Bremer Planung ausdrücklich
+    vorgesehen.
+  </p>
+</SectionShell>
+
+<SectionShell id="karte-pruefen">
+  <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
+    So finden Sie Ihr Haus in der Wärmeplan-Karte
+  </h2>
+  <p class="text-text-muted max-w-3xl mb-6">
+    Die Stadt stellt alle Karten im Geoportal bereit. Planen Sie fünf Minuten ein und
+    notieren Sie das Ergebnis – es ist die Grundlage für jedes Gespräch mit Netzbetreiber
+    oder Fachbetrieb.
+  </p>
+  <NumberedSteps
+    items={[
+      { title: "Geoportal öffnen", text: "Unter geoportal.bremen.de/waermeplanung die Karte der voraussichtlichen Wärmeversorgungsgebiete nach § 18 WPG aufrufen und zu Ihrer Adresse zoomen." },
+      { title: "Gebietsart ablesen", text: "Ihr Baublock ist als Wärmenetzgebiet, Gebiet für dezentrale Versorgung oder Prüfgebiet eingefärbt. Bei Wärmenetzgebieten zeigt die Karte zusätzlich den voraussichtlichen Realisierungszeitraum." },
+      { title: "Eignungskarten nach § 19 prüfen", text: "Getrennte Karten zeigen die Eignung für Luftwärmepumpen und Erdwärmesonden. Für Luftwärmepumpen hat die Stadt drei Schallvarianten modelliert: ohne Haube sowie mit 5 oder 10 dB(A) Minderung; der Plan legt die mittlere Variante zugrunde." },
+      { title: "Ergebnis richtig lesen", text: "Die Karten bewerten Baublöcke, nicht einzelne Gebäude. Ihr Haus kann vom Blockergebnis abweichen – etwa wegen Grundstücksgröße, Dämmstand oder Aufstellmöglichkeit." },
+    ]}
+  />
+  <div class="bg-highlight border border-border rounded p-5 flex flex-col sm:flex-row gap-4 sm:items-center sm:justify-between max-w-3xl mt-6">
+    <div>
+      <p class="font-semibold text-text">Karte zeigt „dezentral“ oder „Prüfgebiet“?</p>
+      <p class="text-sm text-text-muted mt-1">Der Check erfasst Haus- und Heizungsdaten für die Einschätzung, ob eine Wärmepumpe passt.</p>
+    </div>
+    <a href="/check/" class="btn-accent shrink-0 text-center">Eignung prüfen</a>
+  </div>
+  <p class="text-sm text-text-muted max-w-3xl mt-5">
+    Zu den Karten: <a href="https://geoportal.bremen.de/waermeplanung/" class="text-primary underline" target="_blank" rel="noopener">Geoportal Wärmeplanung Bremen</a>
+    · <a href="https://waermeplanung.bremen.de/waermeplan/karte-nach-18-waermeversorgungsgebiete-21245" class="text-primary underline" target="_blank" rel="noopener">Erläuterung der Wärmeversorgungsgebiete</a>
+    · <a href="https://waermeplanung.bremen.de/waermeplan/karten-nach-19-eignungsgebiete-21246" class="text-primary underline" target="_blank" rel="noopener">Eignungskarten</a>
+  </p>
+</SectionShell>
+
+<SectionShell variant="alt">
+  <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
+    Wärmenetzgebiet, Prüfgebiet oder dezentral: Was jetzt sinnvoll ist
+  </h2>
+  <p class="text-text-muted max-w-3xl mb-6">
+    Die Gebietsart entscheidet nicht über Ihre Heizung, aber über die richtige nächste
+    Frage. So gehen Sie je nach Ergebnis vor:
+  </p>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-5xl">
+    <div class="surface-card p-5">
+      <p class="text-sm font-semibold text-primary mb-1">Wärmenetzgebiet</p>
+      <h3 class="font-semibold text-text">Netz wahrscheinlich – Termin klären</h3>
+      <p class="text-text-muted text-sm mt-2 leading-relaxed">
+        Hohe oder sehr hohe Eignung für Fern- oder Nahwärme, mit bestehendem oder
+        geplantem Netz. Fragen Sie den Netzbetreiber nach Anschlusstermin, Kosten und
+        Vertragsbedingungen. Muss Ihre Heizung vorher ersetzt werden, ist eine Wärmepumpe
+        die naheliegende Alternative.
+      </p>
+    </div>
+    <div class="surface-card p-5">
+      <p class="text-sm font-semibold text-primary mb-1">Prüfgebiet</p>
+      <h3 class="font-semibold text-text">Offen bis zur Fortschreibung</h3>
+      <p class="text-text-muted text-sm mt-2 leading-relaxed">
+        Noch keine Zuordnung, meist bei dichter Bebauung. Eine Entscheidung der Stadt ist
+        bis Ende 2028 geplant. Läuft Ihre Heizung zuverlässig, können Sie abwarten; ist sie
+        alt oder defekt, sollten Sie die Wärmepumpe nicht auf ein mögliches Netz hin
+        verschieben.
+      </p>
+    </div>
+    <div class="surface-card p-5">
+      <p class="text-sm font-semibold text-primary mb-1">Dezentrale Versorgung</p>
+      <h3 class="font-semibold text-text">Eigene Heizung bleibt der Weg</h3>
+      <p class="text-text-muted text-sm mt-2 leading-relaxed">
+        Nach heutigem Stand kein Wärmenetz. Die Stadt bewertet hier die Eignung für
+        Luft- oder Erdwärmepumpen als „wahrscheinlich“ oder „sehr wahrscheinlich“. Prüfen
+        Sie Heizlast, Heizkörper und Aufstellort Ihres Hauses.
+      </p>
+    </div>
+  </div>
+  <p class="text-text-muted max-w-3xl mt-5">
+    Daneben gibt es Baublöcke, die für Wärmenetze derzeit als nicht wirtschaftlich gelten,
+    sowie Initiativen für Anergienetze – kalte Nahwärmenetze mit niedrigen
+    Vorlauftemperaturen, an die Häuser über eigene Wärmepumpen angeschlossen werden. Die
+    Stadt will bis Ende 2026 Ergebnisse zu bis zu drei Pilotprojekten veröffentlichen.
+  </p>
+</SectionShell>
+
+<SectionShell>
+  <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
+    Fernwärme oder Wärmepumpe: der Vergleich für Bremer Häuser
+  </h2>
+  <p class="text-text-muted max-w-3xl mb-4">
+    Wenn beides möglich ist, entscheiden Zeitpunkt, laufende Kosten, Platz und
+    Abhängigkeit. Diese Punkte gehören in jeden Vergleich:
+  </p>
+  <div class="overflow-x-auto max-w-4xl">
+    <table class="w-full min-w-[680px] text-left border-collapse surface-card overflow-hidden">
+      <thead class="bg-highlight text-text">
+        <tr>
+          <th class="p-4 font-semibold">Kriterium</th>
+          <th class="p-4 font-semibold">Fernwärme</th>
+          <th class="p-4 font-semibold">Wärmepumpe</th>
+        </tr>
+      </thead>
+      <tbody class="text-sm text-text-muted">
+        <tr class="border-t border-border">
+          <td class="p-4 font-medium text-text">Verfügbarkeit</td>
+          <td class="p-4">Nur mit Netz in der Straße; Termin bestimmt der Netzbetreiber</td>
+          <td class="p-4">Unabhängig vom Netzausbau planbar</td>
+        </tr>
+        <tr class="border-t border-border">
+          <td class="p-4 font-medium text-text">Technik im Haus</td>
+          <td class="p-4">Kompakte Übergabestation, kein Außengerät, kein Schornsteinfeger für die Heizung</td>
+          <td class="p-4">Außen- oder Innengerät, Platz für Speicher; Schall und Aufstellort planen</td>
+        </tr>
+        <tr class="border-t border-border">
+          <td class="p-4 font-medium text-text">Laufende Kosten</td>
+          <td class="p-4">Grund-, Arbeits- und Messpreis des Netzbetreibers; Preisänderungen per Klausel</td>
+          <td class="p-4">Strombezug, abhängig von Effizienz und Tarif; Anbieterwechsel möglich</td>
+        </tr>
+        <tr class="border-t border-border">
+          <td class="p-4 font-medium text-text">Anbieterwahl</td>
+          <td class="p-4">In der Regel ein Anbieter je Netz</td>
+          <td class="p-4">Freie Wahl von Gerät, Fachbetrieb und Stromtarif</td>
+        </tr>
+        <tr class="border-t border-border">
+          <td class="p-4 font-medium text-text">Vertrag</td>
+          <td class="p-4">Laufzeit höchstens zehn Jahre; ohne Kündigung neun Monate vorher Verlängerung um fünf Jahre</td>
+          <td class="p-4">Kein Liefervertrag für die Wärme; Wartung frei wählbar</td>
+        </tr>
+        <tr class="border-t border-border">
+          <td class="p-4 font-medium text-text">Förderung</td>
+          <td class="p-4">Anschluss an ein Wärmenetz ist in KfW 458 förderfähig</td>
+          <td class="p-4">Elektrische Wärmepumpen sind in KfW 458 förderfähig</td>
+        </tr>
+        <tr class="border-t border-border">
+          <td class="p-4 font-medium text-text">Gut geeignet für</td>
+          <td class="p-4">Dichte Bebauung, wenig Platz, kein geeigneter Aufstellort</td>
+          <td class="p-4">Ein- und Zweifamilienhäuser mit Aufstellort und passender Heizlast</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="text-text-muted max-w-3xl mt-5">
+    Bei den Kosten lohnt ein nüchterner Blick: Bundesweit lag der mittlere Fernwärmepreis
+    2024 bei etwa 17 Cent pro Kilowattstunde, in fast jedem zehnten Netz bei 25 Cent, und
+    er stieg gegenüber 2023 um 27 Prozent. Die Bremische Bürgerschaft hat deshalb mehr
+    Preistransparenz für Fernwärmekunden gefordert. Rechnen Sie beide Varianten mit
+    konkreten Angeboten über 15 bis 20 Jahre durch – inklusive Anschluss-, Geräte- und
+    Wartungskosten. Was eine Wärmepumpe in Bremen realistisch kostet, zeigt unser Ratgeber
+    zu den <a href="/waermepumpe-kosten-bremen/" class="text-primary underline">Wärmepumpen-Kosten in Bremen</a>.
+  </p>
+</SectionShell>
+
+<SectionShell variant="alt">
+  <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
+    Was das neue Heizungsrecht für Bremer Eigentümer ändert
+  </h2>
+  <p class="text-text-muted max-w-3xl mb-5">
+    Bis Juli 2026 war die kommunale Wärmeplanung eng mit der 65-Prozent-Pflicht des
+    Gebäudeenergiegesetzes verknüpft. Das ist vorbei: Seit dem 29. Juli 2026 gilt das
+    Gebäudemodernisierungsgesetz (GModG).
+  </p>
+  <CheckList
+    items={[
+      { lead: "Freie Wahl:", text: "Beim Heizungstausch im Bestand nennt § 42 Absatz 2 GModG die zulässigen Optionen – darunter Wärmepumpe, Fernwärmeanschluss, Hybridheizung, Biomasse sowie Gas- und Ölheizungen." },
+      { lead: "65 Prozent entfallen:", text: "Die Pflicht, neue Heizungen zu mindestens 65 Prozent mit erneuerbaren Energien zu betreiben, gilt nicht mehr." },
+      { lead: "Bio-Treppe für Gas und Öl:", text: "Neu eingebaute Gas-, Öl- und Flüssiggasheizungen im Bestand brauchen steigende Anteile klimaneutraler Brennstoffe: 10 % ab 2029, 15 % ab 2030, 30 % ab 2035 und 60 % ab 2040." },
+      { lead: "Bremer Sonderregel:", text: "Nach § 15 des Bremischen Klimaschutz- und Energiegesetzes gelten in Bremen Einschränkungen für Stromdirektheizungen." },
+      { lead: "Wärmeplan bleibt Orientierung:", text: "Er löst keine Pflichten aus, zeigt aber, wo ein Netz wahrscheinlich ist – und damit, wie zukunftssicher eine Entscheidung ist." },
+    ]}
+  />
+  <p class="text-text-muted max-w-3xl mt-5">
+    Für die Wahl der Heizung zählt damit vor allem die Wirtschaftlichkeit. Bei einer neuen
+    Gasheizung sollten Sie die Kosten der Bio-Treppe und steigender CO₂-Preise
+    mitrechnen; bei Fernwärme die Preisentwicklung des Netzes; bei der Wärmepumpe Effizienz
+    und Strompreis. Welche Zuschüsse es aktuell gibt, erklärt unser Überblick zur
+    <a href="/kfw-458-waermepumpe/" class="text-primary underline">KfW-Heizungsförderung 458</a>.
+  </p>
+</SectionShell>
+
+<SectionShell>
+  <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
+    Heizung alt oder defekt? Ihr Entscheidungsweg in fünf Schritten
+  </h2>
+  <p class="text-text-muted max-w-3xl mb-6">
+    Die häufigste Frage nach dem Blick in die Karte lautet: Warten oder jetzt handeln? Diese
+    Reihenfolge verhindert teure Fehlentscheidungen:
+  </p>
+  <NumberedSteps
+    items={[
+      { title: "Gebietsart notieren", text: "Wärmenetzgebiet, Prüfgebiet oder dezentral – samt voraussichtlichem Zeitraum aus der Karte." },
+      { title: "Verbindliche Netzauskunft einholen", text: "Bei Wärmenetzgebiet: schriftlich nach Anschlusstermin, Hausanschlusskosten und Preisblatt fragen. Ohne Termin ist das Netz für Ihre Planung noch keine Option." },
+      { title: "Wärmepumpe parallel prüfen", text: "Heizlast, Vorlauftemperatur, Heizkörper und Aufstellort einschätzen lassen. Im Reihenhaus zusätzlich Abstand und Schall zum Nachbarn klären." },
+      { title: "Über 15 bis 20 Jahre vergleichen", text: "Investition minus Förderung plus laufende Kosten. Fernwärme-Preisklauseln und Strompreis realistisch ansetzen." },
+      { title: "Förderung vor Auftrag sichern", text: "Zuschüsse wie KfW 458 werden vor Vorhabenbeginn beantragt. Erst danach endgültig beauftragen." },
+    ]}
+  />
+  <p class="text-text-muted max-w-3xl mt-6">
+    Stehen Sie mit dem Außengerät nah an der Grundstücksgrenze, hilft unser Ratgeber zu
+    <a href="/waermepumpe-abstand-nachbar-bremen/" class="text-primary underline">Abstand und Aufstellort in Bremen</a>.
+    Für ältere Häuser lohnt der Blick auf die
+    <a href="/waermepumpe-altbau-bremen/" class="text-primary underline">Wärmepumpe im Bremer Altbau</a>.
+  </p>
+</SectionShell>
+
+<SectionShell variant="alt">
+  <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
+    Sechs Fragen an den Netzbetreiber vor einem Fernwärmevertrag
+  </h2>
+  <p class="text-text-muted max-w-3xl mb-5">
+    In Bremen betreibt vor allem wesernetz aus der swb-Gruppe die Fern- und Nahwärmenetze;
+    in Bremen-Nord baut enercity Contracting Nord seit 2024 ein neues Netz auf. Lassen Sie
+    sich vor der Unterschrift diese Punkte schriftlich geben:
+  </p>
+  <CheckList
+    items={[
+      { lead: "Termin:", text: "Wann ist der Anschluss Ihres Hauses verbindlich möglich – und was passiert bei Verzögerung?" },
+      { lead: "Einmalkosten:", text: "Hausanschluss, Baukostenzuschuss, Übergabestation und Umbau im Heizraum – getrennt ausgewiesen." },
+      { lead: "Preisblatt:", text: "Grund-, Arbeits- und Messpreis sowie die Preisänderungsklausel mit ihren Indizes." },
+      { lead: "Laufzeit:", text: "Vertragsdauer, Kündigungsfrist und automatische Verlängerung." },
+      { lead: "Technik:", text: "Wem gehört die Übergabestation, wer wartet sie und wer trägt Reparaturen?" },
+      { lead: "Erzeugung:", text: "Aus welchen Quellen stammt die Wärme heute, und wie sieht der Fahrplan zur Klimaneutralität aus?" },
+    ]}
+  />
+  <p class="text-sm text-text-muted max-w-3xl mt-5">
+    Rechtsgrundlage für Laufzeiten ist § 32 AVBFernwärmeV; eine Reform der Verordnung ist
+    auf Bundesebene angekündigt, aber noch nicht umgesetzt.
+  </p>
+</SectionShell>
+
+<SectionShell>
+  <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
+    Wo Bremen Wärmenetze ausbauen will
+  </h2>
+  <div class="max-w-3xl space-y-4 text-text-muted leading-relaxed">
+    <p>
+      Laut Umsetzungsstrategie des Wärmeplans (Stand 6. März 2026) gibt es in Bremen ein
+      erhebliches wirtschaftlich erschließbares Potenzial für Wärmenetze. Neben den
+      Hausanschlüssen müssen dafür mehrere hundert Kilometer Fernwärmeleitungen im
+      Straßenraum verlegt werden – abgestimmt mit anderen Baustellen und begrenzt durch
+      Tiefbau- und Personalkapazitäten.
+    </p>
+    <ul class="space-y-2 list-disc pl-5">
+      <li>wesernetz will seine bestehenden Fern- und Nahwärmenetze in den nächsten Jahren erheblich ausbauen.</li>
+      <li>In Bremen-Nord entsteht seit 2024 ein neues Fernwärmenetz, das vorrangig Wärme aus der Abfallverbrennung im Heizkraftwerk Blumenthal nutzen soll.</li>
+      <li>Auf der Überseeinsel entsteht ein neues Nahwärmenetz; ein ähnliches Projekt im Kornquartier in der Neustadt ist in Vorbereitung.</li>
+      <li>Viele Prüfgebiete haben eine hohe Wärmedichte und könnten sich später ebenfalls für Netze eignen.</li>
+    </ul>
+    <p>
+      Die Stadt prüft außerdem eine strategische Wärmepartnerschaft mit der swb-Gruppe, um
+      den Ausbau zu beschleunigen und verbindlicher zu machen. Bis daraus Anschlusstermine
+      für einzelne Straßen werden, vergehen erfahrungsgemäß Jahre – planen Sie mit dem, was
+      Ihnen schriftlich zugesagt wird.
+    </p>
+  </div>
+</SectionShell>
+
+<SectionShell variant="alt">
+  <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
+    Unabhängige Beratung in Bremen
+  </h2>
+  <p class="text-text-muted max-w-3xl mb-5">
+    Die Stadt empfiehlt für Fragen zum eigenen Gebäude unabhängige Beratungsstellen. Den
+    Wärmeplan können Sie auch im KlimaBauZentrum einsehen.
+  </p>
+  <CheckList
+    marker="arrow"
+    items={[
+      { lead: "energiekonsens:", text: "Klimaschutzagentur mit Informationen und Veranstaltungen, etwa „Wärmewende im Quartier“." },
+      { lead: "KlimaBauZentrum:", text: "Anlaufstelle für Fragen zu Sanierung und Heizungstausch." },
+      { lead: "Verbraucherzentrale Bremen:", text: "Energieberatung, auch zu Fernwärmeverträgen." },
+      { lead: "Förderlotse der Bremer Aufbau-Bank:", text: "Orientierung zu Förderprogrammen von Bund und Land." },
+    ]}
+  />
+  <p class="text-text-muted max-w-3xl mt-5">
+    Diese Seite ist eine private Empfehlungsseite. Fernwärme bieten wir nicht an; für eine
+    Wärmepumpe vermitteln wir auf Wunsch eine kostenlose Ersteinschätzung durch den unter
+    <a href="/fachpartner/" class="text-primary underline">Fachpartner</a> genannten Bremer
+    SHK-Betrieb.
+  </p>
+</SectionShell>
+
+<SectionShell>
+  <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
+    Quellen und redaktioneller Stand
+  </h2>
+  <div class="surface-card p-5 max-w-3xl text-sm text-text-muted leading-relaxed">
+    <p class="font-semibold text-text mb-3">Geprüft am 25. Oktober 2026</p>
+    <p class="mb-3">
+      Die Seite fasst den beschlossenen Wärmeplan der Stadtgemeinde Bremen und die
+      bundesrechtliche Lage am Prüftag zusammen. Sie ersetzt keine Beratung zum einzelnen
+      Gebäude und keine Auskunft des Netzbetreibers.
+    </p>
+    <ul class="space-y-2">
+      <li>
+        Freie Hansestadt Bremen: <a href="https://waermeplanung.bremen.de/" class="text-primary underline" target="_blank" rel="noopener">Wärmeplanung Bremen</a>, <a href="https://waermeplanung.bremen.de/faqs-1473" class="text-primary underline" target="_blank" rel="noopener">FAQ</a> und <a href="https://waermeplanung.bremen.de/waermeplan/zielszenario-21244" class="text-primary underline" target="_blank" rel="noopener">Zielszenario</a>
+      </li>
+      <li>
+        Freie Hansestadt Bremen: <a href="https://waermeplanung.bremen.de/sixcms/media.php/13/Umsetzungstrategie_W%C3%A4rmeplan_Stadt_Bremen.pdf" class="text-primary underline" target="_blank" rel="noopener">Umsetzungsstrategie nach § 20 WPG (Stand 6. März 2026)</a>
+      </li>
+      <li>
+        Senatorin für Umwelt, Klima und Wissenschaft: <a href="https://umwelt.bremen.de/klima/klima-energie/gebaeudeenergiegesetz-geg/anforderungen-an-bestehende-gebaeude-2387269" class="text-primary underline" target="_blank" rel="noopener">Anforderungen an bestehende Gebäude (GModG, BremKEG)</a>
+      </li>
+      <li>
+        Bundesregierung: <a href="https://www.bundesregierung.de/breg-de/service/fragen-und-anworten/neues-gebaeudemodernisierungsgesetz-2430284" class="text-primary underline" target="_blank" rel="noopener">Fragen und Antworten zum Gebäudemodernisierungsgesetz</a>; <a href="https://www.recht.bund.de/bgbl/1/2026/226/VO.html" class="text-primary underline" target="_blank" rel="noopener">BGBl. 2026 I Nr. 226</a>
+      </li>
+      <li>
+        Bremische Bürgerschaft: <a href="https://www.bremische-buergerschaft.de/dokumente/wp21/land/drucksache/D21L1611.pdf" class="text-primary underline" target="_blank" rel="noopener">Drucksache 21/1611 „Mehr Sicherheit für Fernwärmekund:innen!“</a>
+      </li>
+      <li>
+        Bundesrecht: <a href="https://www.gesetze-im-internet.de/avbfernw_rmev/__32.html" class="text-primary underline" target="_blank" rel="noopener">§ 32 AVBFernwärmeV</a>
+      </li>
+      <li>
+        KfW: <a href="https://www.kfw.de/inlandsfoerderung/Privatpersonen/Bestehende-Immobilie/F%C3%B6rderprodukte/Heizungsf%C3%B6rderung-f%C3%BCr-Privatpersonen-Wohngeb%C3%A4ude-%28458%29/" class="text-primary underline" target="_blank" rel="noopener">Heizungsförderung für Privatpersonen (458)</a>
+      </li>
+    </ul>
+  </div>
+</SectionShell>
+
+<SectionShell variant="alt">
+  <h2 class="text-2xl md:text-3xl font-bold text-text mb-6">Weiterlesen</h2>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-5xl">
+    <InternalLinkCard href="/waermepumpe-kosten-bremen/" title="Kosten Bremen" description="Anschaffung, Eigenanteil und swb-Wärmepumpentarif." />
+    <InternalLinkCard href="/waermepumpe-foerderung-bremen/" title="Förderung Bremen" description="KfW 458, ausgelaufene BAB-Zuschüsse und neue Kredite." />
+    <InternalLinkCard href="/waermepumpe-abstand-nachbar-bremen/" title="Abstand in Bremen" description="BremLBO, Reihenhaus und Aufstellort." />
+    <InternalLinkCard href="/waermepumpe-altbau-bremen/" title="Altbau Bremen" description="Machbarkeit im Bestandsgebäude prüfen." />
+    <InternalLinkCard href="/waermepumpe-genehmigung-bremen/" title="Genehmigung Bremen" description="Verfahrensfreiheit und wesernetz-Anmeldung." />
+    <InternalLinkCard href="/gasheizung-umruesten-auf-waermepumpe-kosten/" title="Gasheizung umrüsten" description="Kosten und Ablauf beim Wechsel von Gas." />
+  </div>
+</SectionShell>
+
+    {data.ctaBlock && <CTASection {...data.ctaBlock} />}
+    {data.faqs?.length > 0 && (
+        <FAQSection heading={data.faqHeading} items={data.faqs} />
+    )}
+</Layout>

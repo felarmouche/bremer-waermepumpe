@@ -15,11 +15,11 @@ import type { PageData } from "../types/page";
 
 const data: PageData = {
     title: "Wärmepumpe oder Gasheizung in Bremen: Was ist günstiger?",
-    description: "Wärmepumpe oder Gasheizung in Bremen? Kosten, Förderung, GEG 2026, CO2-Preis und Beispielrechnung für Bestandsgebäude.",
-    lastUpdated: "29. Mai 2026",
+    description: "Wärmepumpe oder Gasheizung in Bremen? Kosten, Förderung, neues Heizungsrecht (GModG), CO2-Preis und Beispielrechnung für Bestandsgebäude.",
+    lastUpdated: "29. Mai 2026 · Heizungsrecht aktualisiert am 25. Oktober 2026",
     hero: {
         headline: "Wärmepumpe oder Gasheizung in Bremen?",
-        subtext: "Was für Bremer Eigentümer 2026 günstiger ist – Anschaffung, Förderung, Betriebskosten und GEG-Pflicht im Überblick.",
+        subtext: "Was für Bremer Eigentümer 2026 günstiger ist – Anschaffung, Förderung, Betriebskosten und aktuelles Heizungsrecht im Überblick.",
         primaryCTA: {
             label: "Eignung & Förderung prüfen",
             href: "/check/"
@@ -34,13 +34,13 @@ const data: PageData = {
             text: "Bestand & Altbau"
         },
         {
-            text: "GEG ab 01.07.2026"
+            text: "GModG seit 29.07.2026"
         },
         {
             text: "Förderung separat geprüft"
         },
         {
-            text: "Stand 29. Mai 2026"
+            text: "Rechtsstand 25. Oktober 2026"
         }
     ],
     breadcrumb: [
@@ -77,7 +77,7 @@ const data: PageData = {
         },
         {
             question: "Darf ich 2026 in Bremen noch eine reine Gasheizung einbauen?",
-            answer: "Ab dem 1. Juli 2026 greift in Bremen beim Heizungstausch die 65-%-Erneuerbare-Energien-Pflicht. Eine reine Gasheizung ist dann nur noch in engen Übergangs- oder Sonderfällen sinnvoll und rechtlich sauber planbar."
+            answer: "Ja. Seit dem 29. Juli 2026 gilt das Gebäudemodernisierungsgesetz; die frühere 65-Prozent-Pflicht ist entfallen. Neu eingebaute Gas- und Ölheizungen im Bestand müssen aber ab 2029 steigende Anteile klimaneutraler Brennstoffe nutzen: 10 Prozent ab 2029, 15 Prozent ab 2030, 30 Prozent ab 2035 und 60 Prozent ab 2040. Diese Mehrkosten gehören zusammen mit dem CO₂-Preis in den Vergleich."
         },
         {
             question: "Wann lohnt sich Gas trotzdem?",
@@ -87,7 +87,7 @@ const data: PageData = {
     schema: {
         type: "Article",
         datePublished: "2026-05-29",
-        dateModified: "2026-07-15"
+        dateModified: "2026-10-25"
     }
 };
 
@@ -127,7 +127,7 @@ const pageSchema = data.schema
       <p class="font-bold text-text mb-2">Schnelle Antwort</p>
       <p class="text-sm leading-relaxed">
         Eine neue Gasheizung ist in Bremen meist günstiger in der Anschaffung.
-        Nach KfW-Förderung, Wärmepumpenstromtarif, CO2-Kosten und GEG-Risiko ist
+        Nach KfW-Förderung, Wärmepumpenstromtarif, CO2-Kosten und Bio-Treppe ist
         die Wärmepumpe für viele planbare Heizungstausche im Bestand aber die
         bessere erste Prüfung. Gas bleibt eher ein Sonderfall bei Havarie,
         schwieriger Gebäudetechnik oder Übergangslösung.
@@ -138,15 +138,16 @@ const pageSchema = data.schema
       <strong class="text-text">noch einmal Gasheizung</strong> oder direkt auf{" "}
       <strong class="text-text">Wärmepumpe</strong> wechseln? Die reine Anschaffung
       spricht oft für Gas. Die Gesamtbetrachtung aus Förderung, Betriebskosten,
-      CO2-Preis und GEG spricht im Bestand häufig für die Wärmepumpe.
+      CO2-Preis und Bio-Treppe spricht im Bestand häufig für die Wärmepumpe.
     </p>
     <NoticeSuccess>
       <p>
         <strong>Kurzfazit:</strong> Wenn Ihr Haus Eigentum ist, die alte Gas- oder
         Ölheizung ersetzt wird und die Vorlauftemperatur beherrschbar ist, sollte die
         Wärmepumpe zuerst geprüft werden. Die KfW-Förderung kann den Preisvorteil der
-        Gasheizung deutlich reduzieren. Wegen laufender politischer GEG-Debatten
-        sollte die Rechtslage vor Vertragsabschluss tagesaktuell geprüft werden.
+        Gasheizung deutlich reduzieren. Neue Gasheizungen sind seit dem 29. Juli 2026
+        zwar ohne 65-Prozent-Pflicht zulässig, ab 2029 greift aber die Bio-Treppe für
+        klimaneutrale Brennstoffe – rechnen Sie diese Kosten mit ein.
       </p>
     </NoticeSuccess>
     <div class="bg-highlight border border-border rounded p-5 flex flex-col sm:flex-row gap-4 sm:items-center sm:justify-between">
@@ -169,7 +170,7 @@ const pageSchema = data.schema
       <p class="text-3xl font-bold text-primary mb-2">12.000 - 18.000 €</p>
       <p class="text-text-muted text-sm leading-relaxed">
         Typischer Komplettpreis inklusive Montage. Kaum relevante Zuschüsse, spätere
-        Zusatzkosten durch CO2-Preis und GEG-Anforderungen möglich.
+        Zusatzkosten durch CO2-Preis und Bio-Treppe ab 2029 wahrscheinlich.
       </p>
     </div>
     <div class="surface-card p-5">
@@ -193,13 +194,18 @@ const pageSchema = data.schema
   </h2>
   <CheckList
     items={[
-      { lead: "GEG ab 01.07.2026:", text: "Beim Heizungstausch greift in Bremen die 65-%-EE-Pflicht. Wärmepumpen erfüllen diese Vorgabe direkt." },
+      { lead: "Bio-Treppe ab 2029:", text: "Die 65-%-Pflicht ist seit 29. Juli 2026 entfallen. Neue Gasheizungen müssen aber ab 2029 mindestens 10 %, ab 2030 15 %, ab 2035 30 % und ab 2040 60 % klimaneutrale Brennstoffe nutzen. Wärmepumpen betrifft das nicht." },
       { lead: "CO2-Kosten:", text: "Fossiles Gas wird durch CO2-Bepreisung tendenziell teurer. Das Risiko liegt über Jahre beim Eigentümer." },
       { lead: "Förderhebel:", text: "Eine mögliche KfW-Förderung kann den Investitionsvergleich verändern; aktuelle Konditionen müssen separat geprüft werden." },
       { lead: "Bremer Reihenhäuser:", text: "Viele ältere Häuser haben große Heizkörper. Das kann den Umstieg auf eine Wärmepumpe erleichtern." },
       { lead: "Stromtarif:", text: "Mit separatem Wärmepumpenzähler kann ein günstigerer Wärmepumpenstromtarif genutzt werden." },
     ]}
   />
+  <p class="text-text-muted max-w-3xl mt-5">
+    Ob in Ihrer Straße stattdessen ein Wärmenetz geplant ist, zeigt der Bremer Wärmeplan.
+    Was die Gebietsarten bedeuten, erklärt unser Ratgeber zur
+    <a href="/waermeplanung-bremen/" class="text-primary underline">Wärmeplanung in Bremen</a>.
+  </p>
 </SectionShell>
 
 <SectionShell variant="alt">
@@ -224,10 +230,13 @@ const pageSchema = data.schema
     Quellen und redaktioneller Stand
   </h2>
   <div class="surface-card p-5 max-w-3xl text-sm text-text-muted leading-relaxed">
-    <p class="font-semibold text-text mb-3">Stand: 29. Mai 2026</p>
+    <p class="font-semibold text-text mb-3">Stand: 29. Mai 2026; Heizungsrecht geprüft am 25. Oktober 2026</p>
     <ul class="space-y-2">
       <li>
-        Bremen: <a href="https://umwelt.bremen.de/klima/klima-energie/gebaeudeenergiegesetz-geg/anforderungen-an-bestehende-gebaeude-2387269" class="text-primary underline" target="_blank" rel="noopener">GEG-Anforderungen an bestehende Gebäude</a>
+        Bremen: <a href="https://umwelt.bremen.de/klima/klima-energie/gebaeudeenergiegesetz-geg/anforderungen-an-bestehende-gebaeude-2387269" class="text-primary underline" target="_blank" rel="noopener">Anforderungen an bestehende Gebäude (GModG, BremKEG)</a>
+      </li>
+      <li>
+        Bundesregierung: <a href="https://www.bundesregierung.de/breg-de/service/fragen-und-anworten/neues-gebaeudemodernisierungsgesetz-2430284" class="text-primary underline" target="_blank" rel="noopener">Fragen und Antworten zum Gebäudemodernisierungsgesetz</a>
       </li>
       <li>
         swb: <a href="https://www.swb.de/strom/thermo-pronatur" class="text-primary underline" target="_blank" rel="noopener">Wärmepumpenstrom swb thermo proNatur</a>

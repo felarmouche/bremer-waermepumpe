@@ -119,7 +119,12 @@ export const navClusters: NavCluster[] = [
       {
         href: "/waermepumpe-oder-gasheizung-bremen/",
         label: "Wärmepumpe oder Gasheizung",
-        description: "Kosten, Förderung und GEG-Pflicht im Vergleich.",
+        description: "Kosten, Förderung und neues Heizungsrecht im Vergleich.",
+      },
+      {
+        href: "/waermeplanung-bremen/",
+        label: "Wärmeplanung Bremen",
+        description: "Fernwärme oder Wärmepumpe? Der Bremer Wärmeplan für Ihr Haus.",
       },
       {
         href: "/waermepumpe-genehmigung-bremen/",

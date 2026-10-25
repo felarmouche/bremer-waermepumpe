@@ -18,7 +18,7 @@ const data: PageData = {
   title: "Wärmepumpe Förderung Bremen 2026: KfW & BAB im Überblick",
   description:
     "Wärmepumpen-Förderung in Bremen: KfW-Zuschuss und Voraussetzungen prüfen. BAB Heizungstausch ist geschlossen. Förderwege, Antrag und BAFA im Überblick.",
-  lastUpdated: "15. Juli 2026",
+  lastUpdated: "15. Juli 2026 · Heizungsrecht aktualisiert am 25. Oktober 2026",
   hero: {
     headline: "Wärmepumpe Förderung Bremen",
     subtext:
@@ -102,15 +102,15 @@ const data: PageData = {
         'Der KfW-Antrag muss vor Beginn der Maßnahme gestellt werden. Für den Antrag ist aber bereits ein Liefer- oder Leistungsvertrag erforderlich, der eine aufschiebende oder auflösende Förderbedingung enthält. Die korrekte Reihenfolge lautet: BzA erstellen lassen, bedingten Vertrag schließen, Antrag bei „Meine KfW" stellen, Förderzusage abwarten und erst danach mit der Umsetzung beginnen.',
     },
     {
-      question: "Was gilt durch das GEG seit dem 1. Juli 2026 in Bremen?",
+      question: "Was gilt beim Heizungstausch nach dem neuen Heizungsgesetz?",
       answer:
-        "Seit dem 1. Juli 2026 gilt die 65-%-EE-Anforderung des Gebäudeenergiegesetzes im Land Bremen auch für neue Heizungen in Bestandsgebäuden. Es bestehen verschiedene Erfüllungsoptionen, Übergangsfristen und Ausnahmen. Eine Wärmepumpe ist eine der zentralen Erfüllungsoptionen.",
+        "Seit dem 29. Juli 2026 gilt das Gebäudemodernisierungsgesetz statt des GEG. Die 65-%-EE-Anforderung ist entfallen; Eigentümer wählen zwischen den gesetzlichen Optionen, darunter Wärmepumpe, Fernwärme und Gas- oder Ölheizung. Neue Gas- und Ölheizungen müssen ab 2029 steigende Anteile klimaneutraler Brennstoffe nutzen (Bio-Treppe). Die KfW-Förderung für Wärmepumpen ist davon getrennt geregelt.",
     },
   ],
   schema: {
     type: "Article",
     datePublished: "2026-05-02",
-    dateModified: "2026-10-20",
+    dateModified: "2026-10-25",
   },
 };
 
@@ -357,22 +357,25 @@ const pageSchema = data.schema
     </div>
   </SectionShell>
 
-  {/* GEG §71 ab 01.07.2026 */}
+  {/* Heizungsrecht: GModG seit 29.07.2026 */}
   <SectionShell variant="alt">
     <h2 class="text-2xl md:text-3xl font-bold text-text mb-4">
-      GEG §71 seit 01.07.2026: Was gilt jetzt in Bremen?
+      Heizungsrecht seit 29.07.2026: Was gilt jetzt in Bremen?
     </h2>
     <p class="text-text-muted max-w-3xl mb-4">
-      Seit dem <strong class="text-text">1. Juli 2026</strong> gilt im Land Bremen die
-      65-%-EE-Anforderung des Gebäudeenergiegesetzes (GEG §71) auch für neue Heizungen
-      in Bestandsgebäuden. Es bestehen verschiedene Erfüllungsoptionen, Übergangsfristen
-      und Ausnahmen. Eine Wärmepumpe ist eine der zentralen Erfüllungsoptionen.
+      Seit dem <strong class="text-text">29. Juli 2026</strong> gilt das
+      Gebäudemodernisierungsgesetz (GModG) statt des GEG. Die frühere 65-%-EE-Anforderung
+      beim Heizungstausch ist entfallen. Neu eingebaute Gas- und Ölheizungen im Bestand
+      müssen ab 2029 steigende Anteile klimaneutraler Brennstoffe nutzen (10 % ab 2029 bis
+      60 % ab 2040). In Bremen gelten zusätzlich Einschränkungen für Stromdirektheizungen
+      nach § 15 BremKEG. Die Förderung ist davon getrennt geregelt.
     </p>
     <p class="text-text-muted max-w-3xl mb-4">
       Die <strong class="text-text">kommunale Wärmeplanung</strong> dient Eigentümern
       als Orientierungshilfe: Sie soll zeigen, welche klimafreundlichen Wärmeversorgungen
       sich für einzelne Gebiete eignen. Sie ersetzt weder die Prüfung des Gebäudes
-      noch eine konkrete Förderzusage.
+      noch eine konkrete Förderzusage. Mehr dazu im Ratgeber zur
+      <a href="/waermeplanung-bremen/" class="text-primary underline">Wärmeplanung in Bremen</a>.
     </p>
     <p class="text-text-muted max-w-3xl text-sm">
       Detail-Update zu allen 2026er-Änderungen auf der Seite <a
@@ -473,7 +476,7 @@ const pageSchema = data.schema
             href="https://umwelt.bremen.de/klima/energie/gebaeudeenergiegesetz-geg/anforderungen-an-bestehende-gebaeude-2387269"
             class="text-primary underline"
             target="_blank"
-            rel="noopener">GEG-Anforderungen an bestehende Gebäude</a
+            rel="noopener">Anforderungen an bestehende Gebäude (GModG, BremKEG)</a
           >
         </li>
         <li>
