@@ -506,6 +506,12 @@ export async function revokeLead(
   ip: string,
   token?: string,
 ): Promise<void> {
+  // Nur Leads dieser Website widerrufen; sonst auch keinen Nachweis-Eintrag anlegen.
+  const own = await db
+    .prepare(`SELECT id FROM leads WHERE id = ? AND origin_site = ?`)
+    .bind(lead_id, ORIGIN_SITE)
+    .first<{ id: number }>();
+  if (!own) return;
   const now = new Date().toISOString();
   await db
     .prepare(`UPDATE leads SET status = 'revoked', revoked_at = ? WHERE id = ? AND origin_site = ?`)
