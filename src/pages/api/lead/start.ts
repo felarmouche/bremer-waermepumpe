@@ -25,6 +25,7 @@ import {
   sendVerificationSms,
 } from "../../../lib/sms";
 import { currentPartnerVersion } from "../../../data/partners";
+import { LEAD_REFERENCE_PREFIX } from "../../../data/site";
 
 export const prerender = false;
 
@@ -230,7 +231,7 @@ export const POST: APIRoute = async ({ request }) => {
   }
 
   const year = new Date().getFullYear();
-  const reference = `BWP-${year}-${String(leadId).padStart(5, "0")}`;
+  const reference = `${LEAD_REFERENCE_PREFIX}-${year}-${String(leadId).padStart(5, "0")}`;
   try {
     await updateLeadReference(db as never, leadId, reference);
   } catch (err) {

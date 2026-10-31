@@ -9,6 +9,7 @@ import {
   markSmsSuperseded,
 } from "../../lib/leads";
 import { sendRevocationNoticeToAdmins } from "../../lib/email";
+import { ORIGIN_SITE } from "../../data/site";
 import {
   normalizeDePhone,
   generateNumericCode,
@@ -235,8 +236,8 @@ export const POST: APIRoute = async ({ request }) => {
     const revokedRefs: string[] = [];
     for (const id of ids) {
       const lead = await (db as never as D1Like).prepare(
-        `SELECT id, reference, revoked_at FROM leads WHERE id = ?`,
-      ).bind(id).first<{ id: number; reference: string; revoked_at: string | null }>();
+        `SELECT id, reference, revoked_at FROM leads WHERE id = ? AND origin_site = ?`,
+      ).bind(id, ORIGIN_SITE).first<{ id: number; reference: string; revoked_at: string | null }>();
       if (!lead || lead.revoked_at) continue;
       await revokeLead(db as never, lead.id, "phone_verify", ip, undefined);
       revokedRefs.push(lead.reference);

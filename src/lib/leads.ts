@@ -1,6 +1,15 @@
 // Minimal D1 shape we rely on. Avoids depending on @cloudflare/workers-types,
 // which is not installed and pulls in a heavy `globalThis` declaration that
 // conflicts with Astro's bundled worker types.
+import { ORIGIN_SITE } from "../data/site";
+
+/*
+ * Mandantentrennung: Die D1-Datenbank wird von mehreren Websites geteilt. Jede
+ * Abfrage auf `leads` ist mit `origin_site = ?` (ORIGIN_SITE) eingeschränkt, Abfragen
+ * auf Nachweis-Tabellen laufen über einen Join auf `leads`. Neue Abfragen hier
+ * zwingend genauso einschränken.
+ */
+
 type D1Database = {
   prepare(query: string): {
     bind(...values: unknown[]): {
@@ -35,6 +44,7 @@ export type LeadRow = {
   heating_location: string | null;
   timeline: string | null;
   source_page?: string | null;
+  origin_site?: string;
 
   sms_verified_at: string | null;
   sms_phone_verified: string | null;
@@ -113,8 +123,8 @@ export async function insertLead(
         reference, salutation, vorname, nachname, email, telefon, telefon_raw,
         strasse, hausnummer, plz, ort,
         heating_current, heating_age, building_type, is_owner,
-        heating_location, timeline
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        heating_location, timeline, origin_site
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
     )
     .bind(
       data.reference,
@@ -134,6 +144,7 @@ export async function insertLead(
       data.is_owner,
       data.heating_location,
       data.timeline,
+      ORIGIN_SITE,
     )
     .run();
   return result.meta.last_row_id as number;
@@ -149,8 +160,8 @@ export async function updateLeadSourcePage(
   sourcePage: string,
 ): Promise<void> {
   await db
-    .prepare(`UPDATE leads SET source_page = ? WHERE id = ?`)
-    .bind(sourcePage, id)
+    .prepare(`UPDATE leads SET source_page = ? WHERE id = ? AND origin_site = ?`)
+    .bind(sourcePage, id, ORIGIN_SITE)
     .run();
 }
 
@@ -160,8 +171,8 @@ export async function updateLeadReference(
   reference: string,
 ): Promise<void> {
   await db
-    .prepare(`UPDATE leads SET reference = ? WHERE id = ?`)
-    .bind(reference, id)
+    .prepare(`UPDATE leads SET reference = ? WHERE id = ? AND origin_site = ?`)
+    .bind(reference, id, ORIGIN_SITE)
     .run();
 }
 
@@ -174,14 +185,14 @@ export async function updateLeadStatus(
   if (adminEmailSentAt) {
     await db
       .prepare(
-        `UPDATE leads SET status = ?, admin_email_sent_at = ? WHERE id = ?`,
+        `UPDATE leads SET status = ?, admin_email_sent_at = ? WHERE id = ? AND origin_site = ?`,
       )
-      .bind(status, adminEmailSentAt, id)
+      .bind(status, adminEmailSentAt, id, ORIGIN_SITE)
       .run();
   } else {
     await db
-      .prepare(`UPDATE leads SET status = ? WHERE id = ?`)
-      .bind(status, id)
+      .prepare(`UPDATE leads SET status = ? WHERE id = ? AND origin_site = ?`)
+      .bind(status, id, ORIGIN_SITE)
       .run();
   }
 }
@@ -194,9 +205,9 @@ export async function markLeadSmsVerified(
   const now = new Date().toISOString();
   await db
     .prepare(
-      `UPDATE leads SET sms_verified_at = ?, sms_phone_verified = ?, status = 'sms_verified' WHERE id = ?`,
+      `UPDATE leads SET sms_verified_at = ?, sms_phone_verified = ?, status = 'sms_verified' WHERE id = ? AND origin_site = ?`,
     )
-    .bind(now, phoneE164, id)
+    .bind(now, phoneE164, id, ORIGIN_SITE)
     .run();
 }
 
@@ -205,8 +216,8 @@ export async function getLeadById(
   id: number,
 ): Promise<LeadRow | null> {
   return db
-    .prepare(`SELECT * FROM leads WHERE id = ?`)
-    .bind(id)
+    .prepare(`SELECT * FROM leads WHERE id = ? AND origin_site = ?`)
+    .bind(id, ORIGIN_SITE)
     .first<LeadRow>();
 }
 
@@ -215,8 +226,8 @@ export async function getLeadByReference(
   reference: string,
 ): Promise<LeadRow | null> {
   return db
-    .prepare(`SELECT * FROM leads WHERE reference = ?`)
-    .bind(reference)
+    .prepare(`SELECT * FROM leads WHERE reference = ? AND origin_site = ?`)
+    .bind(reference, ORIGIN_SITE)
     .first<LeadRow>();
 }
 
@@ -226,9 +237,9 @@ export async function getLeadsByPhone(
 ): Promise<LeadRow[]> {
   const result = await db
     .prepare(
-      `SELECT * FROM leads WHERE telefon = ? AND revoked_at IS NULL ORDER BY id DESC`,
+      `SELECT * FROM leads WHERE telefon = ? AND origin_site = ? AND revoked_at IS NULL ORDER BY id DESC`,
     )
-    .bind(phoneE164)
+    .bind(phoneE164, ORIGIN_SITE)
     .all<LeadRow>();
   return result.results;
 }
@@ -261,8 +272,9 @@ export async function getConsentsByLeadId(
   lead_id: number,
 ): Promise<ConsentRow[]> {
   const result = await db
-    .prepare(`SELECT * FROM lead_consents WHERE lead_id = ?`)
-    .bind(lead_id)
+    .prepare(`SELECT c.* FROM lead_consents c JOIN leads l ON l.id = c.lead_id
+       WHERE c.lead_id = ? AND l.origin_site = ?`)
+    .bind(lead_id, ORIGIN_SITE)
     .all<ConsentRow>();
   return result.results;
 }
@@ -272,8 +284,9 @@ export async function getSmsVerificationsByLeadId(
   lead_id: number,
 ): Promise<SmsVerificationRow[]> {
   const result = await db
-    .prepare(`SELECT * FROM sms_verifications WHERE lead_id = ? ORDER BY id`)
-    .bind(lead_id)
+    .prepare(`SELECT v.* FROM sms_verifications v JOIN leads l ON l.id = v.lead_id
+       WHERE v.lead_id = ? AND l.origin_site = ? ORDER BY v.id`)
+    .bind(lead_id, ORIGIN_SITE)
     .all<SmsVerificationRow>();
   return result.results;
 }
@@ -283,8 +296,9 @@ export async function getRevocationsByLeadId(
   lead_id: number,
 ): Promise<RevocationRow[]> {
   const result = await db
-    .prepare(`SELECT * FROM revocations WHERE lead_id = ? ORDER BY id`)
-    .bind(lead_id)
+    .prepare(`SELECT r.* FROM revocations r JOIN leads l ON l.id = r.lead_id
+       WHERE r.lead_id = ? AND l.origin_site = ? ORDER BY r.id`)
+    .bind(lead_id, ORIGIN_SITE)
     .all<RevocationRow>();
   return result.results;
 }
@@ -295,16 +309,17 @@ export type SmsAggregate = {
   avg_attempts: number | null;
 };
 
-/** Aggregat über alle SMS-Codes — für die Dashboard-Statistik (keine PII). */
+/** Aggregat über die SMS-Codes dieser Website — für die Dashboard-Statistik (keine PII). */
 export async function getSmsAggregate(db: D1Database): Promise<SmsAggregate> {
   const row = await db
     .prepare(
       `SELECT COUNT(*) AS codes_sent,
               COALESCE(SUM(CASE WHEN verified_at IS NOT NULL THEN 1 ELSE 0 END), 0) AS codes_verified,
               AVG(attempts) AS avg_attempts
-       FROM sms_verifications`,
+       FROM sms_verifications
+       WHERE lead_id IN (SELECT id FROM leads WHERE origin_site = ?)`,
     )
-    .bind()
+    .bind(ORIGIN_SITE)
     .first<SmsAggregate>();
   return row ?? { codes_sent: 0, codes_verified: 0, avg_attempts: null };
 }
@@ -320,12 +335,14 @@ export async function findLeadIdsByPhone(
 ): Promise<number[]> {
   const result = await db
     .prepare(
-      `SELECT DISTINCT lead_id AS id FROM sms_verifications WHERE phone_e164 = ?
+      `SELECT DISTINCT v.lead_id AS id FROM sms_verifications v
+         JOIN leads l ON l.id = v.lead_id
+         WHERE v.phone_e164 = ? AND l.origin_site = ?
        UNION
-       SELECT id FROM leads WHERE telefon = ?
+       SELECT id FROM leads WHERE telefon = ? AND origin_site = ?
        ORDER BY id`,
     )
-    .bind(phoneE164, phoneE164)
+    .bind(phoneE164, ORIGIN_SITE, phoneE164, ORIGIN_SITE)
     .all<{ id: number }>();
   return result.results.map((r) => r.id);
 }
@@ -346,9 +363,9 @@ export async function anonymizeLead(db: D1Database, id: number): Promise<void> {
         heating_current = NULL, heating_age = NULL, building_type = NULL,
         is_owner = NULL, heating_location = NULL, timeline = NULL,
         crm_notes = NULL, status = 'deleted', crm_updated_at = ?
-      WHERE id = ?`,
+      WHERE id = ? AND origin_site = ?`,
     )
-    .bind(new Date().toISOString(), id)
+    .bind(new Date().toISOString(), id, ORIGIN_SITE)
     .run();
 }
 
@@ -359,6 +376,13 @@ export async function anonymizeLead(db: D1Database, id: number): Promise<void> {
  * dort anonymizeLead verwenden.
  */
 export async function deleteLeadFull(db: D1Database, id: number): Promise<void> {
+  // Nachweis-Tabellen haben keine eigene Herkunft: erst prüfen, dass der Lead
+  // zu dieser Website gehört, sonst nichts löschen.
+  const own = await db
+    .prepare(`SELECT id FROM leads WHERE id = ? AND origin_site = ?`)
+    .bind(id, ORIGIN_SITE)
+    .first<{ id: number }>();
+  if (!own) return;
   await db.prepare(`DELETE FROM lead_admin_notified WHERE lead_id = ?`).bind(id).run();
   await db.prepare(`DELETE FROM lead_consents WHERE lead_id = ?`).bind(id).run();
   await db.prepare(`DELETE FROM revocations WHERE lead_id = ?`).bind(id).run();
@@ -368,8 +392,8 @@ export async function deleteLeadFull(db: D1Database, id: number): Promise<void> 
 
 export async function getAllLeads(db: D1Database): Promise<LeadRow[]> {
   const result = await db
-    .prepare(`SELECT * FROM leads ORDER BY id DESC`)
-    .bind()
+    .prepare(`SELECT * FROM leads WHERE origin_site = ? ORDER BY id DESC`)
+    .bind(ORIGIN_SITE)
     .all<LeadRow>();
   return result.results;
 }
@@ -383,19 +407,19 @@ export async function updateLeadCrm(
   if (fields.crm_status !== undefined && fields.crm_notes !== undefined) {
     await db
       .prepare(
-        `UPDATE leads SET crm_status = ?, crm_notes = ?, crm_updated_at = ? WHERE id = ?`,
+        `UPDATE leads SET crm_status = ?, crm_notes = ?, crm_updated_at = ? WHERE id = ? AND origin_site = ?`,
       )
-      .bind(fields.crm_status, fields.crm_notes, now, id)
+      .bind(fields.crm_status, fields.crm_notes, now, id, ORIGIN_SITE)
       .run();
   } else if (fields.crm_status !== undefined) {
     await db
-      .prepare(`UPDATE leads SET crm_status = ?, crm_updated_at = ? WHERE id = ?`)
-      .bind(fields.crm_status, now, id)
+      .prepare(`UPDATE leads SET crm_status = ?, crm_updated_at = ? WHERE id = ? AND origin_site = ?`)
+      .bind(fields.crm_status, now, id, ORIGIN_SITE)
       .run();
   } else if (fields.crm_notes !== undefined) {
     await db
-      .prepare(`UPDATE leads SET crm_notes = ?, crm_updated_at = ? WHERE id = ?`)
-      .bind(fields.crm_notes, now, id)
+      .prepare(`UPDATE leads SET crm_notes = ?, crm_updated_at = ? WHERE id = ? AND origin_site = ?`)
+      .bind(fields.crm_notes, now, id, ORIGIN_SITE)
       .run();
   }
 }
@@ -468,8 +492,9 @@ export async function getAdminNotified(
   lead_id: number,
 ): Promise<AdminNotifiedRow[]> {
   const result = await db
-    .prepare(`SELECT * FROM lead_admin_notified WHERE lead_id = ?`)
-    .bind(lead_id)
+    .prepare(`SELECT n.* FROM lead_admin_notified n JOIN leads l ON l.id = n.lead_id
+       WHERE n.lead_id = ? AND l.origin_site = ?`)
+    .bind(lead_id, ORIGIN_SITE)
     .all<AdminNotifiedRow>();
   return result.results;
 }
@@ -483,8 +508,8 @@ export async function revokeLead(
 ): Promise<void> {
   const now = new Date().toISOString();
   await db
-    .prepare(`UPDATE leads SET status = 'revoked', revoked_at = ? WHERE id = ?`)
-    .bind(now, lead_id)
+    .prepare(`UPDATE leads SET status = 'revoked', revoked_at = ? WHERE id = ? AND origin_site = ?`)
+    .bind(now, lead_id, ORIGIN_SITE)
     .run();
   await db
     .prepare(

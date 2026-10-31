@@ -31,6 +31,8 @@ CREATE TABLE leads (
   heating_location TEXT,
   timeline TEXT,
   source_page TEXT,
+  -- Website, über die der Lead kam (gemeinsame DB): 'bremen' | 'duesseldorf'
+  origin_site TEXT NOT NULL DEFAULT 'bremen',
 
   sms_verified_at TEXT,
   sms_phone_verified TEXT,
@@ -102,3 +104,4 @@ CREATE INDEX idx_sms_lead_id ON sms_verifications(lead_id);
 CREATE INDEX idx_sms_phone ON sms_verifications(phone_e164);
 CREATE INDEX idx_admin_notified_lead_id ON lead_admin_notified(lead_id);
 CREATE INDEX idx_leads_crm_status ON leads(crm_status);
+CREATE INDEX idx_leads_origin_site ON leads(origin_site, id DESC);

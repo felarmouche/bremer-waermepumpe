@@ -10,6 +10,7 @@ Interne Lead-Verwaltung, **nicht verlinkt und nicht indexiert** (noindex-Meta + 
 - Schutz: Rate-Limit 5 Logins/15 min pro IP (bei Erfolg zurückgesetzt) + 30/h global, Origin-Check gegen CSRF, strenge CSP.
 - Bearbeitungsstatus (`crm_status`) liegt getrennt vom Funnel-`status` in `leads` — Werte in `CRM_STATUSES` (`src/lib/leads.ts`), Änderung nur über `/api/admin/lead-update`.
 - `source_page`: Pfad der Seite, von der aus `/check/` geöffnet wurde (aus `document.referrer`, sonst `extern`/NULL), getrennt vom Insert per Best-Effort-Update gespeichert; erfasst ab Migration `scripts/d1-migration-2026-10-25-source-page.sql`. Dashboard-Karte „Herkunftsseite“, CSV-Export und Datenauszug.
+- **Gemeinsame DB, getrennte Dashboards:** `anonymous-leads` wird auch von duesseldorfer-waermepumpe.de genutzt. `leads.origin_site` (`'bremen'` | `'duesseldorf'`, Migration `scripts/d1-migration-2026-10-31-origin-site.sql`) trennt die Websites. Die Kennung kommt aus `src/data/site.ts` (`ORIGIN_SITE`); **jede** Abfrage in `src/lib/leads.ts` ist darauf eingeschränkt (Nachweis-Tabellen per Join). Dashboard, Export, Admin-APIs und Widerruf sehen und ändern nur Leads der eigenen Website. Neue Abfragen genauso einschränken. Kein Herkunfts-Umschalter.
 - Die Admin-Mail bei neuen Leads enthält einen Deep-Link `/dashboard?lead=<Referenz>`; das Dashboard filtert und öffnet den Lead automatisch.
 
 **DSGVO-Aktionen im Dashboard** (Logik folgt der Datenschutzerklärung, Ziff. 5/5a/11 — bei Änderungen dort auch hier nachziehen):
