@@ -11,6 +11,7 @@ import NoticeSuccess from "../components/content/NoticeSuccess.astro";
 import CheckList from "../components/content/CheckList.astro";
 import NumberedSteps from "../components/content/NumberedSteps.astro";
 import InternalLinkCard from "../components/InternalLinkCard.astro";
+import FoerderRechner from "../components/FoerderRechner.astro";
 import heroImage from "../images/foerderung-bremen-hero.webp";
 
 import type { PageData } from "../types/page";
@@ -446,6 +447,9 @@ const pageSchema = data.schema
       <a href="/check/" class="btn-accent shrink-0 text-center"
         >Jetzt Fördersatz prüfen</a
       >
+    </div>
+    <div class="mt-10">
+      <FoerderRechner heading="KfW-458-Rechner: Zuschuss und Eigenanteil" />
     </div>
   </SectionShell>
 

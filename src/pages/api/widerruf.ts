@@ -7,6 +7,7 @@ import {
   insertSmsVerification,
   getLatestSmsVerification,
   markSmsSuperseded,
+  consumeSmsAttempt,
 } from "../../lib/leads";
 import { sendRevocationNoticeToAdmins } from "../../lib/email";
 import { ORIGIN_SITE } from "../../data/site";
@@ -21,6 +22,9 @@ import {
   clientIp,
   jsonResponse,
   checkAndIncrementRate,
+  checkGlobalSmsBudget,
+  hashEqual,
+  smsPepper,
   type KvLike,
 } from "../../lib/lead-flow";
 
@@ -37,6 +41,7 @@ type Env = {
   SMS_PEPPER?: string;
   SMS_CODE_TTL_SECONDS?: string;
   ADMIN_NOTIFICATION_EMAILS?: string;
+  SMS_DAILY_LIMIT?: string;
 };
 
 type D1Like = {
@@ -108,7 +113,10 @@ export const POST: APIRoute = async ({ request }) => {
     }
 
     const rate = await checkAndIncrementRate(kv, `rate:wf:phone:${ip}`, 5, 3600);
-    if (!rate.ok) {
+    // Pro Nummer begrenzen (unabhängig davon, ob sie bekannt ist — sonst
+    // wäre das Limit ein Orakel): verhindert SMS-Bombing über wechselnde IPs.
+    const numRate = await checkAndIncrementRate(kv, `rate:wf:num:${phone.e164}`, 3, 86400);
+    if (!rate.ok || !numRate.ok) {
       return jsonResponse(
         { error: "Zu viele Anfragen. Bitte später erneut versuchen." },
         429,
@@ -136,7 +144,18 @@ export const POST: APIRoute = async ({ request }) => {
     // Use the most recent lead for code binding (latest id wins from getLeadsByPhone DESC)
     const lead = leads[0];
     const ttlSeconds = parseInt(e.SMS_CODE_TTL_SECONDS ?? "600", 10);
-    const pepper = e.SMS_PEPPER ?? "dev-pepper-only";
+    const pepper = smsPepper(e.SMS_PEPPER);
+    if (!pepper) {
+      console.error("SMS_PEPPER fehlt — Widerruf-SMS abgelehnt.");
+      return jsonResponse({ error: "Server misconfigured" }, 500);
+    }
+    if (!(await checkGlobalSmsBudget(kv, e.SMS_DAILY_LIMIT))) {
+      console.error("Globales SMS-Tageslimit erreicht.");
+      return jsonResponse(
+        { error: "SMS-Versand aktuell nicht möglich. Bitte per Referenznummer, E-Mail oder telefonisch widerrufen." },
+        429,
+      );
+    }
     const webOtpHost = e.WEBOTP_HOST ?? "bremer-waermepumpe.de";
     const code = generateNumericCode(6);
     const codeHash = await hashCode(code, lead.id, phone.e164, pepper);
@@ -224,12 +243,32 @@ export const POST: APIRoute = async ({ request }) => {
     // Verify code against the latest sms_verification of the FIRST (most recent) lead.
     const primaryLeadId = ids[0];
     const smsRow = await getLatestSmsVerification(db as never, primaryLeadId);
-    if (!smsRow || new Date(smsRow.expires_at).getTime() < Date.now()) {
+    if (
+      !smsRow ||
+      smsRow.phone_e164 !== phoneE164 ||
+      new Date(smsRow.expires_at).getTime() < Date.now()
+    ) {
       return jsonResponse({ error: "Code abgelaufen. Bitte erneut starten." }, 410);
     }
-    const pepper = e.SMS_PEPPER ?? "dev-pepper-only";
+    const pepper = smsPepper(e.SMS_PEPPER);
+    if (!pepper) {
+      console.error("SMS_PEPPER fehlt — Widerruf-Bestätigung abgelehnt.");
+      return jsonResponse({ error: "Server misconfigured" }, 500);
+    }
+    // Brute-Force-Schutz: max. 3 Versuche pro Code, atomar in D1 gezählt.
+    // Vorher gab es hier gar kein Limit — ein 6-stelliger Code ließ sich
+    // durchprobieren und damit fremde Einwilligungen widerrufen.
+    const attempts = await consumeSmsAttempt(db as never, smsRow.id, 3);
+    if (attempts === null) {
+      await kv.delete(`wf:phone:${token}`).catch(() => { });
+      await kv.delete(`wf:phone:phone:${token}`).catch(() => { });
+      return jsonResponse(
+        { error: "Zu viele Fehlversuche. Bitte fordern Sie einen neuen Code an." },
+        429,
+      );
+    }
     const inputHash = await hashCode(code, primaryLeadId, smsRow.phone_e164, pepper);
-    if (inputHash !== smsRow.code_hash) {
+    if (!hashEqual(inputHash, smsRow.code_hash)) {
       return jsonResponse({ error: "Falscher Code." }, 401);
     }
 
@@ -256,14 +295,33 @@ export const POST: APIRoute = async ({ request }) => {
   // ───────────────────────────────────────────────────────────
   // Mode 3 (default): Referenznummer
   // ───────────────────────────────────────────────────────────
-  const reference = typeof body.reference === "string" ? body.reference.trim().toUpperCase() : null;
+  // Referenznummern sind fortlaufend (…-2026-00042) und damit erratbar. Damit
+  // niemand fremde Anfragen per Durchzählen widerrufen kann, muss zusätzlich
+  // die zur Anfrage gehörende Mobilnummer angegeben werden.
+  const reference =
+    typeof body.reference === "string" ? body.reference.trim().toUpperCase().slice(0, 40) : null;
+  const refPhone = normalizeDePhone(typeof body.telefon === "string" ? body.telefon : "");
+  if (!reference || !refPhone) {
+    return jsonResponse(
+      { error: "Bitte Referenznummer und die bei der Anfrage angegebene Mobilnummer eingeben." },
+      400,
+    );
+  }
+
+  const refRate = await checkAndIncrementRate(kv, `rate:wf:ref:${ip}`, 10, 3600);
+  if (!refRate.ok) {
+    return jsonResponse(
+      { error: "Zu viele Anfragen. Bitte später erneut versuchen." },
+      429,
+    );
+  }
 
   type LeadLite = { id: number; reference: string; status: string; revoked_at: string | null };
   let leads: LeadLite[] = [];
 
-  if (reference) {
+  {
     const lead = await getLeadByReference(db as never, reference);
-    if (lead) {
+    if (lead && lead.telefon !== "" && lead.telefon === refPhone.e164) {
       leads = [{
         id: lead.id,
         reference: lead.reference,

@@ -1,0 +1,155 @@
+---
+/**
+ * KfW-458-Förderrechner (vereinfacht, selbstgenutztes Ein-/Zweifamilienhaus).
+ * Konditionen: KfW-Anpassung zum 21.07.2026 inkl. Kürzungsfahrplan (halbjährlich
+ * −750 € förderfähige Kosten 1. WE, −4 Prozentpunkte Klimabonus). Der Rechner
+ * wählt die Stufe nach dem heutigen Datum. Bei KfW-Änderungen SCHEDULE/EK unten
+ * anpassen und das Prüfdatum im sichtbaren Hinweis aktualisieren.
+ */
+interface Props {
+    heading?: string;
+    id?: string;
+}
+const { heading = "KfW-Förderrechner für Ihre Wärmepumpe", id = "foerderrechner" } = Astro.props;
+---
+
+<section id={id} class="surface-card p-5 sm:p-6 max-w-3xl scroll-mt-24" data-foerderrechner>
+    <h2 class="text-xl md:text-2xl font-bold text-text mb-2">{heading}</h2>
+    <p class="text-sm text-text-muted mb-5">
+        Vereinfachte Rechnung für selbst genutzte Ein- und Zweifamilienhäuser nach KfW 458
+        (Konditionen für Anträge <span data-out="stufe">ab 21.07.2026</span>). Verbindlich ist nur
+        die Förderzusage der KfW.
+    </p>
+    <form class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm" onsubmit="return false">
+        <label class="flex flex-col gap-1">
+            <span class="font-semibold text-text">Gesamtkosten inkl. Einbau (€)</span>
+            <input name="kosten" type="number" inputmode="numeric" min="0" step="500" value="30000" class="border border-border rounded px-3 py-2 bg-surface" />
+        </label>
+        <label class="flex flex-col gap-1">
+            <span class="font-semibold text-text">Wohneinheiten</span>
+            <select name="we" class="border border-border rounded px-3 py-2 bg-surface">
+                <option value="1">1 (Einfamilien-/Reihenhaus)</option>
+                <option value="2">2 (Zweifamilienhaus, eine Einheit selbst bewohnt)</option>
+            </select>
+        </label>
+        <label class="flex flex-col gap-1">
+            <span class="font-semibold text-text">Alte Heizung</span>
+            <select name="alt" class="border border-border rounded px-3 py-2 bg-surface">
+                <option value="1">Öl, Kohle, Gasetage, Nachtspeicher oder Gas ≥ 20 Jahre</option>
+                <option value="0">Gasheizung jünger als 20 Jahre / andere</option>
+            </select>
+        </label>
+        <label class="flex flex-col gap-1">
+            <span class="font-semibold text-text">Zu versteuerndes Haushaltseinkommen</span>
+            <select name="ek" class="border border-border rounded px-3 py-2 bg-surface">
+                <option value="30">bis 30.000 €</option>
+                <option value="40">30.001 – 40.000 €</option>
+                <option value="50">40.001 – 50.000 €</option>
+                <option value="60">50.001 – 60.000 €</option>
+                <option value="99" selected>über 60.000 €</option>
+            </select>
+        </label>
+        <label class="flex items-center gap-2 sm:col-span-2">
+            <input name="kind" type="checkbox" />
+            <span class="text-text">Mindestens ein Kind unter 18 im Haushalt</span>
+        </label>
+    </form>
+    <div class="mt-5 grid grid-cols-1 sm:grid-cols-3 gap-3" aria-live="polite">
+        <div class="bg-highlight rounded p-4">
+            <p class="text-xs text-text-muted">Fördersatz</p>
+            <p class="text-2xl font-bold text-primary" data-out="satz">–</p>
+            <p class="text-xs text-text-muted mt-1" data-out="satz-hinweis"></p>
+        </div>
+        <div class="bg-highlight rounded p-4">
+            <p class="text-xs text-text-muted">Zuschuss</p>
+            <p class="text-2xl font-bold text-primary" data-out="zuschuss">–</p>
+        </div>
+        <div class="bg-highlight rounded p-4">
+            <p class="text-xs text-text-muted">Ihr Eigenanteil</p>
+            <p class="text-2xl font-bold text-text" data-out="eigen">–</p>
+        </div>
+    </div>
+    <p class="text-sm text-text-muted mt-4" data-out="warten"></p>
+    <p class="text-xs text-text-muted mt-3">
+        Annahmen: 30 % Grundförderung; Klimageschwindigkeitsbonus und Einkommensbonus nur für
+        Selbstnutzer und nur für die selbst bewohnte Wohneinheit (Klimabonus beim Austausch einer
+        förderfähigen Altanlage). Deckel 70 %, mit höchstem Einkommensbonus 80 %. Förderfähige
+        Kosten: 1. Wohneinheit nach Kürzungsfahrplan, 2. Wohneinheit 15.000 €; beim
+        Zweifamilienhaus je zur Hälfte auf beide Einheiten verteilt. Stand 31.10.2026.
+    </p>
+    <a href="/check/" class="btn-accent inline-block mt-5">Förderung mit Fachbetrieb prüfen</a>
+</section>
+
+<script>
+    type Rule = { ab: string; label: string; base: number; extra: number; klima: number };
+    // Kürzungsfahrplan KfW 458 (Antragsdatum). Danach: Klimabonus 0, Basis vorerst 25.000 €.
+    const SCHEDULE: Rule[] = [
+        { ab: "2026-07-21", label: "ab 21.07.2026", base: 28000, extra: 15000, klima: 16 },
+        { ab: "2027-02-01", label: "ab 01.02.2027", base: 27250, extra: 15000, klima: 12 },
+        { ab: "2027-08-01", label: "ab 01.08.2027", base: 26500, extra: 15000, klima: 8 },
+        { ab: "2028-02-01", label: "ab 01.02.2028", base: 25750, extra: 15000, klima: 4 },
+        { ab: "2028-08-01", label: "ab 01.08.2028", base: 25000, extra: 15000, klima: 0 },
+    ];
+    // Einkommensbonus in % je Einkommensband: [ohne Kind, mit Kind]
+    // (Grenzen 30/40/50 Tsd. €, mit Kind einmalig +10.000 €)
+    const EK: Record<string, [number, number]> = {
+        "30": [40, 40],
+        "40": [30, 40],
+        "50": [10, 30],
+        "60": [0, 10],
+        "99": [0, 0],
+    };
+    const euro = (n: number) =>
+        n.toLocaleString("de-DE", { style: "currency", currency: "EUR", maximumFractionDigits: 0 });
+
+    const today = new Date().toISOString().slice(0, 10);
+    let idx = 0;
+    SCHEDULE.forEach((r, i) => {
+        if (r.ab <= today) idx = i;
+    });
+    const jetztRule = SCHEDULE[idx];
+    const naechsteRule = SCHEDULE[idx + 1];
+
+    function calc(kosten: number, we: number, alt: boolean, ek: string, kind: boolean, r: Rule) {
+        const foerderfaehig = Math.min(kosten, r.base + (we - 1) * r.extra);
+        const eink = (EK[ek] ?? [0, 0])[kind ? 1 : 0];
+        const deckel = eink === 40 ? 80 : 70;
+        const satzSelbst = Math.min(30 + (alt ? r.klima : 0) + eink, deckel);
+        // Boni nur auf die selbst bewohnte Einheit; Kosten gleichmäßig auf alle WE verteilt,
+        // höchstens bis zum Förderhöchstbetrag der 1. WE.
+        const anteilSelbst = Math.min(foerderfaehig / we, r.base);
+        const zuschuss = Math.round((anteilSelbst * satzSelbst + (foerderfaehig - anteilSelbst) * 30) / 100);
+        return { satzSelbst, zuschuss, eigen: Math.max(kosten - zuschuss, 0) };
+    }
+
+    document.querySelectorAll<HTMLElement>("[data-foerderrechner]").forEach((root) => {
+        const form = root.querySelector("form")!;
+        const out = (k: string) => root.querySelector<HTMLElement>(`[data-out="${k}"]`)!;
+        out("stufe").textContent = jetztRule.label;
+        const update = () => {
+            const f = new FormData(form);
+            const kosten = Math.max(Number(f.get("kosten")) || 0, 0);
+            const we = Number(f.get("we")) === 2 ? 2 : 1;
+            const alt = f.get("alt") === "1";
+            const ek = String(f.get("ek"));
+            const kind = f.get("kind") === "on";
+            const jetzt = calc(kosten, we, alt, ek, kind, jetztRule);
+            out("satz").textContent = `${jetzt.satzSelbst} %`;
+            out("satz-hinweis").textContent =
+                we === 2 && jetzt.satzSelbst > 30 ? "für Ihre Wohneinheit, 2. Einheit 30 %" : "";
+            out("zuschuss").textContent = euro(jetzt.zuschuss);
+            out("eigen").textContent = euro(jetzt.eigen);
+            let warten = "";
+            if (naechsteRule) {
+                const spaeter = calc(kosten, we, alt, ek, kind, naechsteRule);
+                const diff = jetzt.zuschuss - spaeter.zuschuss;
+                if (diff > 0) {
+                    warten = `Bei Antrag ${naechsteRule.label} (Kürzungsfahrplan) wären es ${euro(spaeter.zuschuss)} – also ${euro(diff)} weniger.`;
+                }
+            }
+            out("warten").textContent = warten;
+        };
+        form.addEventListener("input", update);
+        update();
+    });
+</script>

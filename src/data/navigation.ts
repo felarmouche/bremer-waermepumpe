@@ -162,6 +162,25 @@ export const navClusters: NavCluster[] = [
         navLabel: "Check",
         description: "Eignungs- und Fördercheck direkt im Browser.",
       },
+      {
+        href: "/waermepumpe-foerderung-bremen/#foerderrechner",
+        label: "Förderrechner",
+        description: "KfW-Zuschuss und Eigenanteil in einer Minute berechnen.",
+      },
+    ],
+  },
+  {
+    id: "rechner",
+    label: "Förderrechner",
+    inHeader: true,
+    headerDirect: true,
+    inFooter: false,
+    links: [
+      {
+        href: "/waermepumpe-foerderung-bremen/#foerderrechner",
+        label: "Förderrechner",
+        description: "KfW-Zuschuss und Eigenanteil in einer Minute berechnen.",
+      },
     ],
   },
   {

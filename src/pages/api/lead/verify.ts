@@ -3,7 +3,7 @@ import { env } from "cloudflare:workers";
 import {
   getLeadById,
   getLatestSmsVerification,
-  incrementSmsAttempts,
+  consumeSmsAttempt,
   markSmsVerified,
   markLeadSmsVerified,
   updateLeadStatus,
@@ -11,8 +11,9 @@ import {
   insertAdminNotified,
 } from "../../../lib/leads";
 import {
-  clientIp,
+  hashEqual,
   jsonResponse,
+  smsPepper,
   type KvLike,
 } from "../../../lib/lead-flow";
 import { hashCode, sendConfirmationSms } from "../../../lib/sms";
@@ -115,7 +116,15 @@ export const POST: APIRoute = async ({ request }) => {
   if (new Date(smsRow.expires_at).getTime() < Date.now()) {
     return jsonResponse({ error: "Code abgelaufen. Bitte erneut anfordern." }, 410);
   }
-  if (smsRow.attempts >= 3) {
+  const pepper = smsPepper(e.SMS_PEPPER);
+  if (!pepper) {
+    console.error("SMS_PEPPER fehlt — Verifizierung abgelehnt.");
+    return new Response("Server misconfigured", { status: 500 });
+  }
+
+  // Versuch atomar verbrauchen, bevor verglichen wird (kein Race-Bypass).
+  const attempts = await consumeSmsAttempt(db as never, smsRow.id, 3);
+  if (attempts === null) {
     try {
       await updateLeadStatus(db as never, leadId, "failed");
     } catch { }
@@ -125,10 +134,8 @@ export const POST: APIRoute = async ({ request }) => {
     );
   }
 
-  const pepper = e.SMS_PEPPER ?? "dev-pepper-only";
   const inputHash = await hashCode(code, leadId, smsRow.phone_e164, pepper);
-  if (inputHash !== smsRow.code_hash) {
-    const attempts = await incrementSmsAttempts(db as never, smsRow.id);
+  if (!hashEqual(inputHash, smsRow.code_hash)) {
     const left = Math.max(0, 3 - attempts);
     if (left === 0) {
       try {
@@ -145,13 +152,20 @@ export const POST: APIRoute = async ({ request }) => {
     );
   }
 
-  // Success path: mark verified
+  // Success path: Lead atomar übernehmen — nur ein Request darf Mails/SMS auslösen.
+  let claimed = false;
   try {
-    await markSmsVerified(db as never, smsRow.id);
-    await markLeadSmsVerified(db as never, leadId, smsRow.phone_e164);
-    await updateConsentSmsVerification(db as never, leadId, smsRow.id);
+    claimed = await markLeadSmsVerified(db as never, leadId, smsRow.phone_e164);
+    if (claimed) {
+      await markSmsVerified(db as never, smsRow.id);
+      await updateConsentSmsVerification(db as never, leadId, smsRow.id);
+    }
   } catch (err) {
     console.error("SMS verify update failed:", err);
+    return jsonResponse({ error: "Bestätigung fehlgeschlagen. Bitte erneut versuchen." }, 500);
+  }
+  if (!claimed) {
+    return jsonResponse({ error: "Anfrage befindet sich im falschen Status." }, 409);
   }
 
   // Admin notification (e-mail) + user confirmation (SMS)

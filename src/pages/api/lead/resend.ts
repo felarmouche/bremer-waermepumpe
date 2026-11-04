@@ -7,8 +7,10 @@ import {
   insertSmsVerification,
 } from "../../../lib/leads";
 import {
+  checkGlobalSmsBudget,
   clientIp,
   jsonResponse,
+  smsPepper,
   type KvLike,
 } from "../../../lib/lead-flow";
 import {
@@ -27,6 +29,7 @@ type Env = {
   WEBOTP_HOST?: string;
   SMS_PEPPER?: string;
   SMS_CODE_TTL_SECONDS?: string;
+  SMS_DAILY_LIMIT?: string;
 };
 
 type D1Like = {
@@ -60,6 +63,11 @@ export const POST: APIRoute = async ({ request }) => {
   const db = e.DB;
   const kv = e.SESSION;
   if (!db) return new Response("Server misconfigured", { status: 500 });
+  const pepper = smsPepper(e.SMS_PEPPER);
+  if (!pepper) {
+    console.error("SMS_PEPPER fehlt — Resend abgelehnt.");
+    return new Response("Server misconfigured", { status: 500 });
+  }
 
   const ip = clientIp(request);
   const leadIdStr = kv ? await kv.get(`pending:${pendingToken}`) : null;
@@ -120,6 +128,14 @@ export const POST: APIRoute = async ({ request }) => {
     await kv.put(phoneRateKey, String(count + 1), { expirationTtl: 86400 });
   }
 
+  if (!(await checkGlobalSmsBudget(kv, e.SMS_DAILY_LIMIT))) {
+    console.error("Globales SMS-Tageslimit erreicht.");
+    return jsonResponse(
+      { error: "Der SMS-Versand ist heute ausgelastet. Bitte morgen erneut versuchen." },
+      429,
+    );
+  }
+
   // Mark old code superseded
   const prev = await getLatestSmsVerification(db as never, leadId);
   if (prev) {
@@ -130,7 +146,6 @@ export const POST: APIRoute = async ({ request }) => {
 
   // Send new code
   const ttlSeconds = parseInt(e.SMS_CODE_TTL_SECONDS ?? "600", 10);
-  const pepper = e.SMS_PEPPER ?? "dev-pepper-only";
   const code = generateNumericCode(6);
   const codeHash = await hashCode(code, leadId, lead.telefon, pepper);
   const expiresAt = new Date(Date.now() + ttlSeconds * 1000).toISOString();

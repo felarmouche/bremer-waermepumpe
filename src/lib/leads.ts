@@ -197,18 +197,25 @@ export async function updateLeadStatus(
   }
 }
 
+/**
+ * Setzt den Lead atomar von `sms_pending` auf `sms_verified`. Liefert false,
+ * wenn ein paralleler Request den Lead bereits übernommen hat — dann darf der
+ * Aufrufer keine Benachrichtigungen mehr auslösen.
+ */
 export async function markLeadSmsVerified(
   db: D1Database,
   id: number,
   phoneE164: string,
-): Promise<void> {
+): Promise<boolean> {
   const now = new Date().toISOString();
-  await db
+  const row = await db
     .prepare(
-      `UPDATE leads SET sms_verified_at = ?, sms_phone_verified = ?, status = 'sms_verified' WHERE id = ? AND origin_site = ?`,
+      `UPDATE leads SET sms_verified_at = ?, sms_phone_verified = ?, status = 'sms_verified'
+       WHERE id = ? AND origin_site = ? AND status = 'sms_pending' RETURNING id`,
     )
     .bind(now, phoneE164, id, ORIGIN_SITE)
-    .run();
+    .first<{ id: number }>();
+  return row !== null;
 }
 
 export async function getLeadById(
@@ -563,27 +570,35 @@ export async function getLatestSmsVerification(
 ): Promise<SmsVerificationRow | null> {
   return db
     .prepare(
-      `SELECT * FROM sms_verifications
-       WHERE lead_id = ? AND superseded_at IS NULL
-       ORDER BY id DESC LIMIT 1`,
+      `SELECT v.* FROM sms_verifications v JOIN leads l ON l.id = v.lead_id
+       WHERE v.lead_id = ? AND l.origin_site = ? AND v.superseded_at IS NULL
+       ORDER BY v.id DESC LIMIT 1`,
     )
-    .bind(lead_id)
+    .bind(lead_id, ORIGIN_SITE)
     .first<SmsVerificationRow>();
 }
 
-export async function incrementSmsAttempts(
+/**
+ * Verbraucht atomar einen Prüfversuch für einen SMS-Code, BEVOR der Code
+ * verglichen wird. Liefert die neue Versuchszahl oder null, wenn das Limit
+ * bereits erreicht ist. Da D1 Schreibzugriffe serialisiert, lässt sich das
+ * Limit auch mit vielen parallelen Requests nicht überschreiten (vorher:
+ * Lesen → Vergleichen → Hochzählen, per Race beliebig viele Versuche).
+ */
+export async function consumeSmsAttempt(
   db: D1Database,
   id: number,
-): Promise<number> {
-  await db
-    .prepare(`UPDATE sms_verifications SET attempts = attempts + 1 WHERE id = ?`)
-    .bind(id)
-    .run();
+  maxAttempts: number,
+): Promise<number | null> {
   const row = await db
-    .prepare(`SELECT attempts FROM sms_verifications WHERE id = ?`)
-    .bind(id)
+    .prepare(
+      `UPDATE sms_verifications SET attempts = attempts + 1
+       WHERE id = ? AND attempts < ? AND verified_at IS NULL AND superseded_at IS NULL
+       RETURNING attempts`,
+    )
+    .bind(id, maxAttempts)
     .first<{ attempts: number }>();
-  return row?.attempts ?? 0;
+  return row ? row.attempts : null;
 }
 
 export async function markSmsVerified(

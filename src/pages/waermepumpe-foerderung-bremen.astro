@@ -10,6 +10,7 @@ import SectionShell from "../components/SectionShell.astro";
 import NoticeSuccess from "../components/content/NoticeSuccess.astro";
 import NumberedSteps from "../components/content/NumberedSteps.astro";
 import InternalLinkCard from "../components/InternalLinkCard.astro";
+import FoerderRechner from "../components/FoerderRechner.astro";
 import heroImage from "../images/foerderung-bremen-hero.webp";
 
 import type { PageData } from "../types/page";
@@ -231,6 +232,9 @@ const pageSchema = data.schema
         </p>
       </NoticeSuccess>
     </article>
+    <div class="mt-10">
+      <FoerderRechner heading="Förderrechner: Ihr KfW-Zuschuss in Bremen" />
+    </div>
   </SectionShell>
 
   {/* KfW 458: kompakte Hub-Einordnung */}

@@ -94,7 +94,8 @@ import Layout from "../layout/Layout.astro";
       </h2>
       <p class="text-sm text-text-muted mb-6">
         Falls Sie Ihre Referenznummer aus der Bestätigungs-SMS zur Hand haben,
-        können Sie auch direkt widerrufen.
+        können Sie auch direkt widerrufen. Zum Schutz vor Missbrauch geben Sie
+        bitte zusätzlich die Mobilnummer an, mit der Sie die Anfrage gestellt haben.
       </p>
       <form id="wf-ref-form" method="POST" action="/api/widerruf" class="space-y-4">
         <div>
@@ -111,6 +112,24 @@ import Layout from "../layout/Layout.astro";
             class="input-base font-mono"
             placeholder="BWP-2026-00042"
             pattern="BWP-\d{4}-\d{4,6}"
+            required
+          />
+        </div>
+        <div>
+          <label
+            for="wf-ref-telefon"
+            class="block font-semibold text-sm text-text mb-1"
+          >
+            Mobilnummer <span class="text-accent ml-1">*</span>
+          </label>
+          <input
+            id="wf-ref-telefon"
+            type="tel"
+            name="telefon"
+            autocomplete="tel"
+            inputmode="tel"
+            class="input-base"
+            placeholder="0151 12345678"
             required
           />
         </div>
@@ -242,7 +261,7 @@ import Layout from "../layout/Layout.astro";
           var res = await fetch("/api/widerruf", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ reference: fd.get("reference") }),
+            body: JSON.stringify({ reference: fd.get("reference"), telefon: fd.get("telefon") }),
           });
           var json = await res.json().catch(function () { return {}; });
           if (res.ok && json.ok) {
