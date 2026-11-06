@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import { load } from 'cheerio';
 import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
-import { resolve, join, relative } from 'node:path';
+import { resolve, join, relative, sep } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { ROOT } from './lib/environment.mjs';
 const SITE = 'https://bremer-waermepumpe.de';
@@ -13,10 +13,10 @@ export function checkBuild(dir, redirectsFile) {
   if (!existsSync(dir)) return {errors:['Build fehlt. Zuerst npm run build ausführen.'],warnings,pages:0};
   const html = files(dir).filter(f => f.endsWith('.html'));
   if (!html.length) return {errors:['Keine gebauten HTML-Seiten gefunden.'],warnings,pages:0};
-  const pages = new Map(html.map(f => [route(relative(dir,f)),load(readFileSync(f,'utf8'))]));
+  const pages = new Map(html.map(f => [route(relative(dir,f).split(sep).join("/")),load(readFileSync(f,'utf8'))]));
   const redirects = new Set(existsSync(redirectsFile ?? '') ? readFileSync(redirectsFile,'utf8').split('\n').filter(l => /^\//.test(l)).map(l => l.trim().split(/\s+/)[0]) : []);
   const documentAt = p => pages.get(p) ?? pages.get(p.endsWith('/') ? p : `${p}/`);
-  const assetAt = p => { try { const f = resolve(dir,`.${decodeURIComponent(p)}`); return f.startsWith(`${resolve(dir)}/`) && existsSync(f) && statSync(f).isFile(); } catch { return false; } };
+  const assetAt = p => { try { const f = resolve(dir,`.${decodeURIComponent(p)}`); return f.startsWith(`${resolve(dir)}${sep}`) && existsSync(f) && statSync(f).isFile(); } catch { return false; } };
   const titles = new Map(), descriptions = new Map(), indexable = new Set();
   for (const [pathname,$] of pages) {
     const fail = msg => errors.push(`${pathname}: ${msg}`);
